@@ -1,0 +1,46 @@
+{
+  "name": "planteaza-romania",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "description": "Planteaza pentru Romania",
+  "license": "comercial",
+  "devDependencies": {
+    "babel-cli": "latest",
+    "babel-eslint": "latest",
+    "finalhandler": "latest",
+    "jade": "latest",
+    "jshint": "latest",
+    "less": "latest",
+    "live-reload": "latest",
+    "serve-static": "latest",
+    "watcherless": "latest"
+  },
+  "scripts": {
+    "do-kill": "ps aux | grep node; killall -9 node; ps aux | grep node",
+
+    "do-dist": "mkdir -p dist/assets/css",
+
+    "do-less": "for file in src/assets/less/*.less; do lessc $file \"dist/assets/css/`basename ${file/.less/.css}`\" ; done",
+    "predo-less": "npm run do-dist",
+
+    "do-jade": "cd src && jade . -o ../dist",
+
+    "build": "echo 'Done.'",
+    "prebuild": "npm run do-less; npm run do-jade",
+
+    "watch-jade": "cd src && nohup jade -w . -o ../dist &",
+    "prewatch-jade": "npm run watch-less",
+
+    "watch-less": "nphup watcherless src/assets/less/ dist/assets/css &",
+    "prewatch-less": "npm run do-dist",
+
+    "watch": "npm run watch-jade",
+
+    "server": "node express.sh &",
+    "preserver": "npm run do-kill; npm run live-reload",
+
+    "live-reload": "nohup live-reload --port 9091 dist/ &",
+    "prelive-reload": "npm run watch"
+  }
+}
