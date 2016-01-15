@@ -1,20 +1,44 @@
 doctype html
 html(lang="en")
-  head
-    title= pageTitle
-    script(type='text/javascript').
-      if (foo) {
-         bar(1 + 5)
-      }
-  body
-    h1 Jade - node template engine
-    #container.col
-      if youAreUsingJade
-        p You are amazing
-      else
-        p Get on it!
-      p.
-        Jade is a terse and simple
-        templating language with a
-        strong focus on performance
-        and powerful features.
+    head
+        title Planteaza pentru Romania
+        //- CSS
+        //- Normalize stylesheet
+        link(rel='stylesheet', type='text/css', href='assets/css/normalize.css')
+
+        //- Revolution Slider
+        //- RS5.0 Main Stylesheet
+        link(rel='stylesheet', type='text/css', href='assets/plugins/revolution/css/settings.css')
+        //- RS5.0 Layers and Navigation Styles
+        link(rel='stylesheet', type='text/css', href='assets/plugins/revolution/css/layers.css')
+        link(rel='stylesheet', type='text/css', href='assets/plugins/revolution/css/navigation.css')
+
+        //- Custom stylesheet
+        link(rel='stylesheet', type='text/css', href='assets/css/styles.css')
+
+        //- JS
+        //- jQuery
+        script(type='text/javascript', src='assets/js/lib/jquery-2.2.0.min.js')
+
+        //- Revolution Slider
+        //- RS5.0 Core JS Files
+        script(type='text/javascript', src='assets/plugins/revolution/js/jquery.themepunch.tools.min.js?rev=5.0')
+        script(type='text/javascript', src='assets/plugins/revolution/js/jquery.themepunch.revolution.min.js?rev=5.0')
+    body
+        #wrapper
+            //- Carousel
+            .rev_slider_wrapper
+                #slider.rev_slider(data-version='5.0')
+                    ul
+                        li(data-transition='fade')
+                            img(src='/assets/img/img1.jpg', alt='', width='1920', height='1080')
+                            .tp-caption.News-Title(data-x='center', data-y='center', data-whitespace='normal', data-transform_idle='o:1;', data-transform_in='o:0', data-transform_out='o:0', data-start='500') DISCOVER THE WILD
+                        li(data-transition='fade')
+                            img(src='/assets/img/img2.jpg', alt='', width='1920', height='1080')
+                            .tp-caption.News-Title(data-x='center', data-y='center', data-whitespace='normal', data-transform_idle='o:1;', data-transform_in='o:0', data-transform_out='o:0', data-start='500') DISCOVER THE WILD
+                            li(data-transition='fade')
+                                img(src='/assets/img/img3.jpg', alt='', width='1920', height='1080')
+                                .tp-caption.News-Title(data-x='center', data-y='center', data-whitespace='normal', data-transform_idle='o:1;', data-transform_in='o:0', data-transform_out='o:0', data-start='500') DISCOVER THE WILD
+
+    //- Custom scripts
+    script(type='text/javascript', src='assets/js/scripts.js')
