@@ -17,11 +17,11 @@
     "watcherless": "latest"
   },
   "scripts": {
-    "do-kill": "ps aux | grep node; killall -9 node; ps aux | grep node",
+    "do-kill": "ps aux | grep node; killall -9 node; ps aux | grep node; sleep 1",
 
-    "do-dist": "mkdir -p dist/assets/css",
+    "do-dist": "mkdir -p dist/assets/css; sleep 1",
 
-    "do-less": "for file in src/assets/less/*.less; do lessc $file \"dist/assets/css/`basename ${file/.less/.css}`\" ; done",
+    "do-less": "lessc src/assets/less/style.less dist/assets/css/style.css",
     "predo-less": "npm run do-dist",
 
     "do-jade": "cd src && jade . -o ../dist",
