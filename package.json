@@ -9,6 +9,7 @@
     "babel-cli": "latest",
     "babel-eslint": "latest",
     "finalhandler": "latest",
+    "fsmonitor": "latest",
     "jade": "latest",
     "jshint": "latest",
     "less": "latest",
@@ -17,14 +18,28 @@
     "watcherless": "latest"
   },
   "scripts": {
-    "do-kill": "ps aux | grep node; killall -9 node; ps aux | grep node; sleep 1",
+    "cpl-js-with-babel": "cd src && babel . -d dist",
+    "cpl-js": "cd src && find . -iname \"*.js\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
+    "w-wpl-js": "fsmonitor -d src -s -p '+*.js' npm run cpl-js",
+
+    "cpl-css": "cd src && find . -iname \"*.css\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
+    "w-wpl-css": "fsmonitor -d src -s -p '+*.css' npm run cpl-css",
+
+    "cpl-less": "cd src && find . -iname \"*.less\" | while read f; do echo $f; d=\"`dirname $f`\"; b=\"`basename $f`\"; mkdir -p \"../dist/${d/less/css}\" lessc $f > \"../dist/${d/less/css}/${b/less/css}\"; done",
+    "precpl-less": "npm run cpl-css",
+    "w-wpl-less": "fsmonitor -d src -s -p '+*.less' npm run cpl-less",
+
+
+
+
+    "do-kill": "ps aux | grep node; killall -9 node; ps aux | grep node",
 
     "do-dist": "mkdir -p dist/assets/css; sleep 1",
 
     "do-less": "lessc src/assets/less/style.less dist/assets/css/style.css",
     "predo-less": "npm run do-dist",
 
-    "do-jade": "cd src && jade . -o ../dist",
+    "do-jade": "cd src && jade . -P -o ../dist",
 
     "build": "echo 'Done.'",
     "prebuild": "npm run do-less; npm run do-jade",
