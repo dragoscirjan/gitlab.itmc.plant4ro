@@ -18,7 +18,7 @@
   },
   "scripts": {
 
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist; killall -9 node || true; sleep 5",
 
     "cpl-css": "cd src && find . -iname \"*.css\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
     "precpl-css": "npm run cpl-img",
@@ -44,21 +44,24 @@
     "cpl-jade": "cd src && jade . -P -o ../dist",
     "precpl-jade": "npm run cpl-less && npm run cpl-js",
 
-    "w-cpl-jade": "fsmonitor -d src -s -p '+*.less' npm run cpl-jade",
+    "w-cpl-jade": "fsmonitor -d src -s -p '+*.jade' npm run cpl-jade",
     "prew-cpl-jade": "npm run w-cpl-less & npm run w-cpl-js &",
 
 
     "compile": "npm run clean && npm run cpl-jade",
 
-    "watch": "npm run clean && npm run w-cpl-jade",
+    "watch": "npm run w-cpl-jade",
+
+    "watch-stop": "ps aux | grep node | grep fsmonitor | awk '{ print $2 }' | while read f; do kill -s 9 $f; done",
 
     "server": "echo 'Server started on http://localhost:3000'",
-    "preserver": "killall -9 node; sleep 5; npm run express",
+    "preserver": "npm run express &",
 
-    "express": "node express.sh",
-    "preexpress": "sleep 5; node run live-reload &",
+    "server-stop": "ps aux | grep node | egrep \"express|live-reload\" | awk '{ print $2 }' | while read f; do kill -s 9 $f; done",
 
-    "live-reload": "nohup live-reload --port 9091 dist/",
-    "prelive-reload": "npm run watch &"
+    "express": "node ./express.sh",
+    "preexpress": "npm run live-reload &",
+
+    "live-reload": "live-reload --port 9091 dist/ &"
   }
 }
