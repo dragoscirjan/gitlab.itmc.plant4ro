@@ -14,48 +14,51 @@
     "jshint": "latest",
     "less": "latest",
     "live-reload": "latest",
-    "serve-static": "latest",
-    "watcherless": "latest"
+    "serve-static": "latest"
   },
   "scripts": {
-    "cpl-js-with-babel": "cd src && babel . -d dist",
-    "cpl-js": "cd src && find . -iname \"*.js\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
-    "w-wpl-js": "fsmonitor -d src -s -p '+*.js' npm run cpl-js",
+
+    "clean": "rm -rf dist",
 
     "cpl-css": "cd src && find . -iname \"*.css\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
-    "w-wpl-css": "fsmonitor -d src -s -p '+*.css' npm run cpl-css",
+    "precpl-css": "npm run cpl-img",
 
-    "cpl-less": "cd src && find . -iname \"*.less\" | while read f; do echo $f; d=\"`dirname $f`\"; b=\"`basename $f`\"; mkdir -p \"../dist/${d/less/css}\" lessc $f > \"../dist/${d/less/css}/${b/less/css}\"; done",
+    "w-cpl-css": "fsmonitor -d src -s -p '+*.css' npm run cpl-css",
+    "prew-cpl-css": "npm run w-cpl-img &",
+
+    "cpl-font": "cd src && find . -iname \"*.css\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
+    "w-cpl-font": "fsmonitor -d src -s -p '+*.css' npm run cpl-css",
+
+    "cpl-less": "cd src && find . -iname \"*.less\" | while read f; do echo $f; mkdir -p \"../dist/`dirname $f | sed -e 's/less/css/g'`\"; lessc $f > \"../dist/`echo $f | sed -e 's/less/css/g'`\"; done",
     "precpl-less": "npm run cpl-css",
-    "w-wpl-less": "fsmonitor -d src -s -p '+*.less' npm run cpl-less",
+
+    "w-cpl-less": "fsmonitor -d src -s -p '+*.less' npm run cpl-less",
+    "prew-cpl-less": "npm run w-cpl-css &",
+
+    "cpl-js": "cd src && find . -iname \"*.js\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
+    "w-cpl-js": "fsmonitor -d src -s -p '+*.js' npm run cpl-js",
+
+    "cpl-img": "cd src && find . \\( -iname \"*.jpg\" -or -iname \".gif\" -or -iname \".png\" \\) | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
+    "w-cpl-img": "fsmonitor -d src -s -p '+*.jpg' npm run cpl-img",
+
+    "cpl-jade": "cd src && jade . -P -o ../dist",
+    "precpl-jade": "npm run cpl-less && npm run cpl-js",
+
+    "w-cpl-jade": "fsmonitor -d src -s -p '+*.less' npm run cpl-jade",
+    "prew-cpl-jade": "npm run w-cpl-less & npm run w-cpl-js &",
 
 
+    "compile": "npm run clean && npm run cpl-jade",
 
+    "watch": "npm run clean && npm run w-cpl-jade",
 
-    "do-kill": "ps aux | grep node; killall -9 node; ps aux | grep node",
+    "server": "echo 'Server started on http://localhost:3000'",
+    "preserver": "killall -9 node; sleep 5; npm run express",
 
-    "do-dist": "mkdir -p dist/assets/css; sleep 1",
+    "express": "node express.sh",
+    "preexpress": "sleep 5; node run live-reload &",
 
-    "do-less": "lessc src/assets/less/style.less dist/assets/css/style.css",
-    "predo-less": "npm run do-dist",
-
-    "do-jade": "cd src && jade . -P -o ../dist",
-
-    "build": "echo 'Done.'",
-    "prebuild": "npm run do-less; npm run do-jade",
-
-    "watch-jade": "cd src && nohup jade -w . -o ../dist &",
-    "prewatch-jade": "npm run watch-less",
-
-    "watch-less": "nphup watcherless src/assets/less/ dist/assets/css &",
-    "prewatch-less": "npm run do-dist",
-
-    "watch": "npm run watch-jade",
-
-    "server": "node express.sh &",
-    "preserver": "npm run do-kill; npm run live-reload",
-
-    "live-reload": "nohup live-reload --port 9091 dist/ &",
-    "prelive-reload": "npm run watch"
+    "live-reload": "nohup live-reload --port 9091 dist/",
+    "prelive-reload": "npm run watch &"
   }
 }
