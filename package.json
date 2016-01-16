@@ -18,7 +18,7 @@
   },
   "scripts": {
 
-    "clean": "rm -rf dist; killall -9 node || true; sleep 5",
+    "clean": "rm -rf dist; which ipconfig || killall -9 node || true; sleep 5",
 
     "cpl-css": "cd src && find . -iname \"*.css\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
     "precpl-css": "npm run cpl-img",
@@ -52,12 +52,15 @@
 
     "watch": "npm run w-cpl-jade",
 
-    "watch-stop": "ps aux | grep node | grep fsmonitor | awk '{ print $2 }' | while read f; do kill -s 9 $f; done",
+    "watch-stop": "ps aux | grep node | grep fsmonitor | awk '{ print $2 }' | while read f; do which ipconfig || kill -s 9 $f; done",
 
     "server": "echo 'Server started on http://localhost:3000'",
     "preserver": "npm run express &",
 
     "server-stop": "ps aux | grep node | egrep \"express|live-reload\" | awk '{ print $2 }' | while read f; do kill -s 9 $f; done",
+
+    "deploy": "ssh root@gany.itmcd.ro rm -rf /home/stefysoft/www/planteaza-romania/www; scp -r dist root@gany.itmcd.ro:/home/stefysoft/www/planteaza-romania/www",
+    "deploy-rsync": "which rsync || { echo \"No Rsync on windows dude!\"; exit 1 }; rsync dist/* -e ssh root@gany.itmcd.ro:/home/stefysoft/www/planteaza-romania/www",
 
     "express": "node ./express.sh",
     "preexpress": "npm run live-reload &",
