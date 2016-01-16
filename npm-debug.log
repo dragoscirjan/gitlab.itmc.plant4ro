@@ -1,0 +1,27 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'run', 'cpl-less' ]
+2 info using npm@1.4.21
+3 info using node@v0.10.25
+4 verbose run-script [ 'precpl-less', 'cpl-less', 'postcpl-less' ]
+5 info precpl-less planteaza-romania@0.0.1
+6 verbose unsafe-perm in lifecycle true
+7 info cpl-less planteaza-romania@0.0.1
+8 verbose unsafe-perm in lifecycle true
+9 info planteaza-romania@0.0.1 Failed to exec cpl-less script
+10 error planteaza-romania@0.0.1 cpl-less: `cd src && find . -iname "*.less" | while read f; do echo $f; d="`dirname $f`"; b="`basename $f`"; lessc $f > "../dist/$d/${b/less/css}"; done`
+10 error Exit status 2
+11 error Failed at the planteaza-romania@0.0.1 cpl-less script.
+11 error This is most likely a problem with the planteaza-romania package,
+11 error not with npm itself.
+11 error Tell the author that this fails on your system:
+11 error     cd src && find . -iname "*.less" | while read f; do echo $f; d="`dirname $f`"; b="`basename $f`"; lessc $f > "../dist/$d/${b/less/css}"; done
+11 error You can get their info via:
+11 error     npm owner ls planteaza-romania
+11 error There is likely additional logging output above.
+12 error System Linux 3.19.0-43-generic
+13 error command "/usr/bin/nodejs" "/usr/bin/npm" "run" "cpl-less"
+14 error cwd /mnt/data/dragoss.Workspace/itmc/planteaza-romania
+15 error node -v v0.10.25
+16 error npm -v 1.4.21
+17 error code ELIFECYCLE
+18 verbose exit [ 1, true ]
