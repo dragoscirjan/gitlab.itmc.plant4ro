@@ -14,48 +14,57 @@
     "jshint": "latest",
     "less": "latest",
     "live-reload": "latest",
-    "serve-static": "latest",
-    "watcherless": "latest"
+    "serve-static": "latest"
   },
   "scripts": {
-    "cpl-js-with-babel": "cd src && babel . -d dist",
-    "cpl-js": "cd src && find . -iname \"*.js\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
-    "w-wpl-js": "fsmonitor -d src -s -p '+*.js' npm run cpl-js",
+
+    "clean": "rm -rf dist; which ipconfig || killall -9 node || true; sleep 5",
 
     "cpl-css": "cd src && find . -iname \"*.css\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
-    "w-wpl-css": "fsmonitor -d src -s -p '+*.css' npm run cpl-css",
+    "precpl-css": "npm run cpl-img",
 
-    "cpl-less": "cd src && find . -iname \"*.less\" | while read f; do echo $f; d=\"`dirname $f`\"; b=\"`basename $f`\"; lessc $f > \"../dist/$d/${b/less/css}\"; done",
+    "w-cpl-css": "fsmonitor -d src -s -p '+*.css' npm run cpl-css",
+    "prew-cpl-css": "npm run w-cpl-img &",
+
+    "cpl-font": "cd src && find . -iname \"*.css\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
+    "w-cpl-font": "fsmonitor -d src -s -p '+*.css' npm run cpl-css",
+
+    "cpl-less": "cd src && find . -iname \"*.less\" | while read f; do echo $f; mkdir -p \"../dist/`dirname $f | sed -e 's/less/css/g'`\"; lessc $f > \"../dist/`echo $f | sed -e 's/less/css/g'`\"; done",
     "precpl-less": "npm run cpl-css",
-    "w-wpl-less": "fsmonitor -d src -s -p '+*.less' npm run cpl-less",
+
+    "w-cpl-less": "fsmonitor -d src -s -p '+*.less' npm run cpl-less",
+    "prew-cpl-less": "npm run w-cpl-css &",
+
+    "cpl-js": "cd src && find . -iname \"*.js\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
+    "w-cpl-js": "fsmonitor -d src -s -p '+*.js' npm run cpl-js",
+
+    "cpl-img": "cd src && find . \\( -iname \"*.jpg\" -or -iname \".gif\" -or -iname \".png\" \\) | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
+    "w-cpl-img": "fsmonitor -d src -s -p '+*.jpg' npm run cpl-img",
+
+    "cpl-jade": "cd src && jade . -P -o ../dist",
+    "precpl-jade": "npm run cpl-less && npm run cpl-js",
+
+    "w-cpl-jade": "fsmonitor -d src -s -p '+*.jade' npm run cpl-jade",
+    "prew-cpl-jade": "npm run w-cpl-less & npm run w-cpl-js &",
 
 
+    "compile": "npm run clean && npm run cpl-jade",
 
+    "watch": "npm run w-cpl-jade",
 
-    "do-kill": "ps aux | grep node; killall -9 node; ps aux | grep node",
+    "watch-stop": "ps aux | grep node | grep fsmonitor | awk '{ print $2 }' | while read f; do which ipconfig || kill -s 9 $f; done",
 
-    "do-dist": "mkdir -p dist/assets/css",
+    "server": "echo 'Server started on http://localhost:3000'",
+    "preserver": "npm run express &",
 
-    "do-less": "for file in src/assets/less/*.less; do lessc $file \"dist/assets/css/`basename ${file/.less/.css}`\" ; done",
-    "predo-less": "npm run do-dist",
+    "server-stop": "ps aux | grep node | egrep \"express|live-reload\" | awk '{ print $2 }' | while read f; do kill -s 9 $f; done",
 
-    "do-jade": "cd src && jade . -P -o ../dist",
+    "deploy": "ssh root@gany.itmcd.ro rm -rf /home/stefysoft/www/planteaza-romania/www; scp -r dist root@gany.itmcd.ro:/home/stefysoft/www/planteaza-romania/www",
+    "deploy-rsync": "which rsync || { echo \"No Rsync on windows dude!\"; exit 1 }; rsync dist/* -e ssh root@gany.itmcd.ro:/home/stefysoft/www/planteaza-romania/www",
 
-    "build": "echo 'Done.'",
-    "prebuild": "npm run do-less; npm run do-jade",
+    "express": "node ./express.sh",
+    "preexpress": "npm run live-reload &",
 
-    "watch-jade": "cd src && nohup jade -w . -o ../dist &",
-    "prewatch-jade": "npm run watch-less",
-
-    "watch-less": "nphup watcherless src/assets/less/ dist/assets/css &",
-    "prewatch-less": "npm run do-dist",
-
-    "watch": "npm run watch-jade",
-
-    "server": "node express.sh &",
-    "preserver": "npm run do-kill; npm run live-reload",
-
-    "live-reload": "nohup live-reload --port 9091 dist/ &",
-    "prelive-reload": "npm run watch"
+    "live-reload": "live-reload --port 9091 dist/ &"
   }
 }

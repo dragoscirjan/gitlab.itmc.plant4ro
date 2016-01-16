@@ -24,6 +24,9 @@ html(lang="en")
         //- RS5.0 Core JS Files
         script(type='text/javascript', src='assets/plugins/revolution/js/jquery.themepunch.tools.min.js?rev=5.0')
         script(type='text/javascript', src='assets/plugins/revolution/js/jquery.themepunch.revolution.min.js?rev=5.0')
+        
+        script.
+            document.write('<script src="\/\/' + (window.location ? window.location.hostname : 'localhost') + ':9091"><\/script>')
     body
         #wrapper
             //- Carousel
