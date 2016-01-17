@@ -10,10 +10,10 @@
             sliderLayout: "fullscreen",
             delay: 10000,
             navigation: {
-                arrows: {enable: true},
+                arrows: {enable: false},
                 onHoverStop: 'off',
             },
-            responsiveLevels: [1280, 992, 768, 480],
+            responsiveLevels: [1200, 992, 768, 480],
             gridwidth: [1200, 992, 768, 480],
             gridheight: [500, 450, 400, 350]
         });
