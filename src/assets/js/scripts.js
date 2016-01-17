@@ -10,11 +10,12 @@
             sliderLayout: "fullscreen",
             delay: 10000,
             navigation: {
-                arrows: {enable: false},
+                arrows: {enable: true},
                 onHoverStop: 'off',
             },
-            gridwidth: 1230,
-            gridheight: 720
+            responsiveLevels: [1280, 992, 768, 480],
+            gridwidth: [1200, 992, 768, 480],
+            gridheight: [500, 450, 400, 350]
         });
     });
 
