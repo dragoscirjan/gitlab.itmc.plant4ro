@@ -38,8 +38,8 @@
     "cpl-js": "cd src && find . -iname \"*.js\" | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
     "w-cpl-js": "fsmonitor -d src -s -p '+*.js' npm run cpl-js",
 
-    "cpl-img": "cd src && find . \\( -iname \"*.jpg\" -or -iname \".gif\" -or -iname \".png\" \\) | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
-    "w-cpl-img": "fsmonitor -d src -s -p '+*.jpg' npm run cpl-img",
+    "cpl-img": "cd src && find . \\( -iname \"*.jpg\" -or -iname \"*.gif\" -or -iname \"*.png\" -or -iname \"*.svg\" \\) | while read f; do echo $f; d=\"`dirname $f`\"; mkdir -p \"../dist/$d\"; cp $f \"../dist/$d\"; done",
+    "w-cpl-img": "fsmonitor -d src -s -p '+*.jpg' '+*.gif' '+*.png' '+*.svg' npm run cpl-img",
 
     "cpl-jade": "cd src && jade . -P -o ../dist",
     "precpl-jade": "npm run cpl-less && npm run cpl-js",
