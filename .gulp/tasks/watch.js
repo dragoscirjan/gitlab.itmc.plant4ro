@@ -13,7 +13,7 @@ function reportChange(event) {
 // serve task, it will instantiate a browserSync session
 gulp.task('watch', ['serve'], function() {
 
-    // gulp.watch(paths.jadeIndex,  ['build-index-jade', browserSync.reload]).on('change', reportChange);
+    gulp.watch(paths.jadeIndex,  ['build-index-jade', browserSync.reload]).on('change', reportChange);
 
     // gulp.watch(paths.com.coffee, ['build-com-coffee', browserSync.reload]).on('change', reportChange);
     // gulp.watch(paths.com.dart,   ['build-com-dart',   browserSync.reload]).on('change', reportChange);
