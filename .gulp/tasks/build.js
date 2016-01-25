@@ -5,7 +5,6 @@ var gulp = require('gulp');
 var assign = Object.assign || require('object.assign');
 var browserSync = require('browser-sync');
 var changed = require('gulp-changed');
-var folders = require('gulp-folders');
 var jade = require('gulp-jade');
 var less = require('gulp-less');
 var notify = require("gulp-notify");
@@ -19,7 +18,7 @@ var jadeOptions = require('../jade-options');
 var lessOptions = require('../jade-options');
 
 gulp.task('build-index-jade', function() {
-    gulp.src(paths.jadeIndex)
+    return gulp.src(paths.jadeIndex)
         .pipe(jade(jadeOptions))
         .pipe(changed('.', {extension: '.html'}))
         .pipe(gulp.dest('.'))
@@ -44,7 +43,7 @@ gulp.task('build-com-js', function() {
 
 
 gulp.task('build-com-jade', function() {
-    gulp.src(paths.com.jade)
+    return gulp.src(paths.com.jade)
         .pipe(jade(jadeOptions))
         .pipe(changed(paths.output, {extension: '.html'}))
         .pipe(gulp.dest(paths.output))
@@ -61,37 +60,27 @@ gulp.task('build-com-html', function() {
 // copies changed css files to the output directory
 gulp.task('build-css', function() {
     return gulp.src(paths.assets.css)
-        // .pipe(changed(paths.output, {extension: '.css'}))
-        .pipe(gulp.dest(paths.output));
-        // .pipe(browserSync.stream());
+        .pipe(changed(paths.output, {extension: '.css'}))
+        .pipe(gulp.dest(paths.assets.output.styles))
+        .pipe(browserSync.stream());
 });
 
-// gulp.task('build-less', function() {
-//     return gulp.src(paths.assets.less)
-//         .pipe(less(lessOptions))
-//         // .pipe(changed(paths.output, {extension: '.css'}))
-//         // .pipe(gulp.dest(paths.output));
-//         .pipe(gulp.dest('./dist/assets/styles'));
-// });
-
-gulp.task('build-less', folders(pathToFolder, function(folder){
-	//This will loop over all folders inside pathToFolder main, secondary
-	//Return stream so gulp-folders can concatenate all of them
-	//so you still can use safely use gulp multitasking
-
-	return gulp.src(path.join(pathToFolder, folder, '*.js'))
-		.pipe(concat(folder + '.js'))
-		.pipe(gulp.dest('dist'));
-}));
+gulp.task('build-less', function() {
+    return gulp.src(paths.assets.less)
+        .pipe(less(lessOptions))
+        .pipe(changed(paths.output, {extension: '.css'}))
+        .pipe(gulp.dest(paths.assets.output.styles))
+        .pipe(browserSync.stream());
+});
 
 
 gulp.task('build-js', function() {
     return gulp.src(paths.assets.js)
         .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
         .pipe(changed(paths.assets.output.scripts, {extension: '.js'}))
-        // .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(sourcemaps.init({loadMaps: true}))
         .pipe(to5())
-        // .pipe(sourcemaps.write({includeContent: true}))
+        .pipe(sourcemaps.write({includeContent: true}))
         .pipe(gulp.dest(paths.assets.output.scripts));
 });
 
@@ -105,7 +94,7 @@ gulp.task('build', function(callback) {
     [
         'build-index-jade',
         'build-com-js', 'build-com-html', 'build-com-jade',
-        /*'build-css', */'build-less', 'build-js'
+        'build-css', 'build-less', 'build-js'
     ],
     callback
   );

@@ -24,7 +24,7 @@ gulp.task('watch', ['serve'], function() {
     gulp.watch(paths.com.jade,   ['build-com-jade',   browserSync.reload]).on('change', reportChange);
 
 
-    // gulp.watch(paths.assets.css,    ['build-css',    browserSync.reload]).on('change', reportChange);
+    gulp.watch(paths.assets.css,    ['build-css',    browserSync.reload]).on('change', reportChange);
     gulp.watch(paths.assets.less,   ['build-less',   browserSync.reload]).on('change', reportChange);
     // gulp.watch(paths.assets.sass,   ['build-sass',   browserSync.reload]).on('change', reportChange);
     // gulp.watch(paths.assets.scss,   ['build-scss',   browserSync.reload]).on('change', reportChange);
