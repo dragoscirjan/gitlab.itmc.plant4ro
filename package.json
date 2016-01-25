@@ -1,15 +1,19 @@
 {
-  "name": "planteaza-pentru-romania",
-  "version": "0.0.2-develop",
-  "description": "",
-  "keywords": [],
-  "homepage": "https://planteazapentruromania.ro",
+  "name": "aurelia-skeleton-navigation",
+  "version": "1.0.0-beta.1.0.5",
+  "description": "A starter kit for building a standard navigation-style app with Aurelia.",
+  "keywords": [
+    "aurelia",
+    "navigation",
+    "skeleton"
+  ],
+  "homepage": "http://aurelia.io",
   "bugs": {
-    "url": "https://redmine.itmcd.ro/projects/prietenii-padurilor-pp"
+    "url": "https://github.com/aurelia/skeleton-navigation/issues"
   },
   "license": "CC0-1.0",
-  "author": "Dragos Cirjan <dragos.cirjan@itmcd.ro> (http://itmediaconnect.ro/blog/dragos.cirjan/)",
-  "main": "dist/main.js",
+  "author": "Rob Eisenberg <rob@bluespire.com> (http://robeisenberg.com/)",
+  "main": "dist/assets/scripts/main.js",
   "repository": {
     "type": "git",
     "url": "http://github.com/aurelia/skeleton-navigation"
@@ -31,6 +35,9 @@
     "gulp-bump": "^0.3.1",
     "gulp-changed": "^1.1.0",
     "gulp-eslint": "^1.0.0",
+    "gulp-folders": "^1.1.0",
+    "gulp-jade": "^1.0.0",
+    "gulp-less": "^3.0.0",
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.0.1",
     "gulp-protractor": "1.0.0",

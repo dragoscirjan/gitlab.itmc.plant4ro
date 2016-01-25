@@ -1,15 +1,8 @@
-# IDE
-.project
-.idea
-
-# jspm/node/bower folders
 node_modules
 jspm_packages
 bower_components
-
-# vagrant
-.vagrant
-
+.idea
+.DS_STORE
 /dist
 build/reports
 coverage
