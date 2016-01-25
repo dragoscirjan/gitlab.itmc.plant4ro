@@ -1,6 +1,17 @@
-.vagrant
+# ide files
+.idea
+.project
+
+# compilation zone ???
 dist
+
+# package modules
 node_modules
+jspm_packages
+
+# logs
 nohup.out
 npm-debug.log*
-.idea
+
+# vagrant
+.vagrant
