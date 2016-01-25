@@ -1,17 +1,16 @@
-# ide files
-.idea
+# IDE
 .project
+.idea
 
-# compilation zone ???
-dist
-
-# package modules
+# jspm/node/bower folders
 node_modules
 jspm_packages
-
-# logs
-nohup.out
-npm-debug.log*
+bower_components
 
 # vagrant
 .vagrant
+
+/dist
+build/reports
+coverage
+test/e2e/dist
