@@ -18,6 +18,9 @@ html(lang="en")
         //- RS5.0 Layers and Navigation Styles
         link(rel='stylesheet', type='text/css', href='assets/plugins/revolution/css/layers.css')
         link(rel='stylesheet', type='text/css', href='assets/plugins/revolution/css/navigation.css')
+        
+        //- Magnific Popup
+        link(rel='stylesheet', type='text/css', href='assets/plugins/magnific-popup/css/magnific-popup.css')
 
         //- Custom stylesheet
         link(rel='stylesheet', type='text/css', href='assets/css/styles.css')
@@ -30,6 +33,9 @@ html(lang="en")
         //- RS5.0 Core JS Files
         script(type='text/javascript', src='assets/plugins/revolution/js/jquery.themepunch.tools.min.js?rev=5.0')
         script(type='text/javascript', src='assets/plugins/revolution/js/jquery.themepunch.revolution.min.js?rev=5.0')
+        
+        //- Magnific Popup
+        script(type='text/javascript', src='assets/plugins/magnific-popup/js/jquery.magnific-popup.min.js')
         
         script.
             document.write('<script src="\/\/' + ((window.location && window.location.hostname != 'planteazapentruromania.ro') ? window.location.hostname : 'localhost') + ':9091"><\/script>')
@@ -85,11 +91,46 @@ html(lang="en")
                                     li
                                         a.social__link.social__link--inst(href="")
                                             i.fa.fa-instagram
-                                p.footer__info Un proiect al asociatiei Prietenii Padurilor din Romania
+                                p.footer__info Un proiect al asociatiei Prietenii Padurilor din Romania. 
+                                    a.mfp-trigger(href="#moreInfoModal") Afla mai multe
                                 p.footer__info Telefon: +40 755 022 608 Email: 
                                     a(href="mailto:office@prieteniipadurilor.ro") office@prieteniipadurilor.ro
                                 p.footer__copy &copy2016 
                                     a(href="http://prieteniipadurilor.ro") Prietenii Padurilor
+    
+    //- Info modal
+    #moreInfoModal.mfp-hide.mfp-popup.mfp-popup-alt
+        .mfp-heading
+            h2.mfp-title Despre proiect
+            button.mfp-close(type="button", title="Close")
+                i.fa.fa-times
+        .mfp-body
+            p "Planteaza pentru Romania" este un proiect realizat de Asociatia "Prietenii Padurilor din Romania"
+            p Ne propunem sa:
+            ol
+                li 
+                    | Sa realizam cea mai mare actiune de plantat desfasurata pana acum in Romania 
+                    | (aditional sa aducem in padurile de la (locatie) peste (numar) puieti de (tip de copac).
+                li Sa protejam, refacem si sa conservam padurile. 
+                li Sa informam si sa educam opinia publica despre importanta si utilitatea padurilor.
+                li
+                    | Sa dezvoltam proiectul "Educatia Silvica", un program gratuit destinat copiilor din 
+                    | comunitatile partenere, prin utilizarea fondurilor proprii si prin atragerea unor surse 
+                    | alternative de investitie.
+                li 
+                    | Sa oferim sprijin institutional si consiliere institutiilor publice si partenerilor nostri 
+                    | din domeniul silvic cu privire la respectarea prevederilor capitolului XI din Codul Silvic.     
+            p 
+                | "Planteaza pentru Romania" ofera posibilitatea tuturor de a contribui la îmbunatatirea situatiei 
+                | padurilor romanesti prin implicarea directa. Orice individ, ONG sau institutie poate sa participe 
+                | la evenimentul nostru si sa transforme Romania în Campiona Mondiala la Plantat.  
+            p  
+                | "Planteaza pentru Romania" este un proiect 100% transparent prin care donatia ta ajuta la refacerea, 
+                | protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel 
+                | care decide soarta ecosistemelor forestiere. Fiecarei donatii îi va corespunde un arbore care va fi 
+                | plantat într-una din padurile din împrejurimea zonei Brasov.
+            p Te asteptam în comunitatea noastra si sa fii si tu prietenul Padurilor din Romania!
+    
                             
     //- Custom scripts
     script(type='text/javascript', src='assets/js/scripts.js')
