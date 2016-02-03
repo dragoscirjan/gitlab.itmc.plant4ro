@@ -17,7 +17,7 @@
     "watcherless": "latest"
   },
   "scripts": {
-    "do-kill": "ps aux | grep node; killall -9 node; ps aux | grep node",
+    "do-kill": "which killall && (ps aux | grep node; killall -9 node; ps aux | grep node)",
 
     "do-dist": "mkdir -p dist/assets/css",
 
