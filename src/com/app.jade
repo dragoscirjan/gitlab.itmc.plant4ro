@@ -1,9 +1,6 @@
 template
-  require(from='nav-bar.html')
-  |   
   require(from='bootstrap/css/bootstrap.css')
-  |   
-  nav-bar(router.bind='router')
-  |   
+  require(from='header-elem.html')
+  header-elem(router.bind='router')
   .page-host
     router-view
