@@ -1,5 +1,7 @@
 .vagrant
 dist
 node_modules
+jspm_packages
 nohup.out
+npm-debug.log*
 .idea
