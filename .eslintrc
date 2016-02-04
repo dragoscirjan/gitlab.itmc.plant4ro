@@ -1,3 +1,9 @@
 {
-  "extends": "./node_modules/aurelia-tools/.eslintrc"
+    "extends": "./node_modules/aurelia-tools/.eslintrc",
+    "rules": {
+/**
+ * Style
+ */
+        "indent": [2, 4, {"SwitchCase": 1}]
+    }
 }
