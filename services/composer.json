@@ -1,0 +1,15 @@
+{
+    "name": "ppr/service",
+    "description": "Planteaza Pentru Romania / Website Services",
+    "license": "Commercial",
+    "authors": [
+        {
+            "name": "Dragos Cirjan",
+            "email": "dragos.cirjan@itmediaconnect.ro"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "silex/silex": "~1.3"
+    }
+}
