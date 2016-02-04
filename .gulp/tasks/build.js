@@ -106,12 +106,12 @@ gulp.task('copy-plugins', function() {
         .pipe(browserSync.stream());
 });
 
-gulp.task('copy-plugins-js', function() {
-    return gulp.src(paths.assets.pluginsJs)
-        // .pipe(changed(paths.output, {extension: '.css'}))
-        .pipe(gulp.dest(paths.assets.output.plugins))
-        .pipe(rjs({baseUrl:paths.assets.output.plugins}));
-});
+// gulp.task('copy-plugins-js', function() {
+//     return gulp.src(paths.assets.pluginsJs)
+//         // .pipe(changed(paths.output, {extension: '.css'}))
+//         .pipe(gulp.dest(paths.assets.output.plugins))
+//         .pipe(rjs({baseUrl:paths.assets.output.plugins}));
+// });
 
 // this task calls the clean task (located
 // in ./clean.js), then runs the build-system
@@ -124,7 +124,7 @@ gulp.task('build', function(callback) {
         'build-index-jade',
         'build-com-js', 'build-com-html', 'build-com-jade',
         'build-css', 'build-less', 'build-js',
-        'copy-images-styles', 'copy-images-content', 'copy-plugins', 'copy-plugins-js'
+        'copy-images-styles', 'copy-images-content', 'copy-plugins'//, 'copy-plugins-js'
     ],
     callback
   );
