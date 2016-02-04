@@ -21,9 +21,17 @@ module.exports = {
         js:     appRoot + "assets/scripts/**/*.js",
         ts:     appRoot + "assets/scripts/**/*.ts",
 
+        plugins:   appRoot + 'assets/plugins/**/*.{js,css,jpg,gif,png,ttf,woff,eof,otf,svg}',
+        pluginsJs: appRoot + 'assets/plugins/**/*.js',
+        contentImages:  appRoot + 'assets/img/**/*.{gif,jpg,jpeg,png,svg}',
+        stylesImages:    appRoot + 'assets/styles/**/*.{gif,jpg,jpeg,png,svg}',
+
         output: {
             styles:  appOutput + 'assets/styles/',
             scripts: appOutput + 'assets/scripts/',
+            plugins: appOutput + 'assets/plugins/',
+            contentImages:  appOutput + 'assets/img/',
+            stylesImages:    appOutput + 'assets/styles/',
         }
     },
 

@@ -9,6 +9,7 @@ var jade = require('gulp-jade');
 var less = require('gulp-less');
 var notify = require("gulp-notify");
 var plumber = require('gulp-plumber');
+var rjs = require('gulp-rjs');
 var runSequence = require('run-sequence');
 var sourcemaps = require('gulp-sourcemaps');
 var to5 = require('gulp-babel');
@@ -84,6 +85,34 @@ gulp.task('build-js', function() {
         .pipe(gulp.dest(paths.assets.output.scripts));
 });
 
+gulp.task('copy-images-styles', function() {
+    return gulp.src(paths.assets.stylesImages)
+        // .pipe(changed(paths.output, {extension: '.css'}))
+        .pipe(gulp.dest(paths.assets.output.stylesImages))
+        .pipe(browserSync.stream());
+});
+
+gulp.task('copy-images-content', function() {
+    return gulp.src(paths.assets.contentImages)
+        // .pipe(changed(paths.output, {extension: '.css'}))
+        .pipe(gulp.dest(paths.assets.output.contentImages))
+        .pipe(browserSync.stream());
+});
+
+gulp.task('copy-plugins', function() {
+    return gulp.src(paths.assets.plugins)
+        // .pipe(changed(paths.output, {extension: '.css'}))
+        .pipe(gulp.dest(paths.assets.output.plugins))
+        .pipe(browserSync.stream());
+});
+
+gulp.task('copy-plugins-js', function() {
+    return gulp.src(paths.assets.pluginsJs)
+        // .pipe(changed(paths.output, {extension: '.css'}))
+        .pipe(gulp.dest(paths.assets.output.plugins))
+        .pipe(rjs({baseUrl:paths.assets.output.plugins}));
+});
+
 // this task calls the clean task (located
 // in ./clean.js), then runs the build-system
 // and build-html tasks in parallel
@@ -94,7 +123,8 @@ gulp.task('build', function(callback) {
     [
         'build-index-jade',
         'build-com-js', 'build-com-html', 'build-com-jade',
-        'build-css', 'build-less', 'build-js'
+        'build-css', 'build-less', 'build-js',
+        'copy-images-styles', 'copy-images-content', 'copy-plugins', 'copy-plugins-js'
     ],
     callback
   );
