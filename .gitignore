@@ -18,8 +18,9 @@ test/e2e/dist
 
 # php
 composer.phar
-service/composer.phar
-service/
+services/composer.phar
+services/composer.lock
+services/vendor
 
 # Vagrant
 .vagrant
