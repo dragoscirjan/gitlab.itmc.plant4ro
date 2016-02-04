@@ -1,6 +1,6 @@
 //import {computedFrom} from 'aurelia-framework';
 
-export class Bunvenit {
+export class Acasa {
     heading = 'Planteaza pentru Romania';
 
     /**
