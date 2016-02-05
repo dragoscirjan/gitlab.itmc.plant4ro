@@ -16,7 +16,7 @@ var to5 = require('gulp-babel');
 
 var babelOptions = require('../babel-options');
 var jadeOptions = require('../jade-options');
-var lessOptions = require('../jade-options');
+var lessOptions = require('../less-options');
 
 gulp.task('build-index-jade', function() {
     return gulp.src(paths.jadeIndex)
@@ -106,6 +106,13 @@ gulp.task('copy-plugins', function() {
         .pipe(browserSync.stream());
 });
 
+gulp.task('copy-fonts', function() {
+    return gulp.src(paths.assets.fonts)
+        // .pipe(changed(paths.output, {extension: '.css'}))
+        .pipe(gulp.dest(paths.assets.output.fonts))
+        .pipe(browserSync.stream());
+});
+
 // gulp.task('copy-plugins-js', function() {
 //     return gulp.src(paths.assets.pluginsJs)
 //         // .pipe(changed(paths.output, {extension: '.css'}))
@@ -124,7 +131,7 @@ gulp.task('build', function(callback) {
         'build-index-jade',
         'build-com-js', 'build-com-html', 'build-com-jade',
         'build-css', 'build-less', 'build-js',
-        'copy-images-styles', 'copy-images-content', 'copy-plugins'//, 'copy-plugins-js'
+        'copy-images-styles', 'copy-images-content', 'copy-plugins', 'copy-fonts'//, 'copy-plugins-js'
     ],
     callback
   );
