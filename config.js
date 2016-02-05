@@ -13,6 +13,12 @@ System.config({
     "npm:*": "jspm_packages/npm/*"
   },
 
+  meta: {
+    '../assets/plugins/revoslider/js/jquery.themepunch.tools.min.js': {
+      deps: ["jquery"]
+    }
+},
+
   map: {
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0-beta.1.0.3",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.0.2",

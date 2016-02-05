@@ -32,7 +32,7 @@ return array(
      */
     '/facebook' => array(
         'get' => function() {
-            
+
         }
     ),
 
