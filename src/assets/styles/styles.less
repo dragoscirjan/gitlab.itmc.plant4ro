@@ -18,8 +18,8 @@ Imports
     url('@{fonts-path}AvenirLTStd-Black_gdi.woff') format('woff'),
     url('@{fonts-path}AvenirLTStd-Black_gdi.ttf') format('truetype'),
     url('@{fonts-path}AvenirLTStd-Black_gdi.svg#AvenirLTStd-Black') format('svg');
-    src: url('@{fonts-path}AvenirLTStd-Black_gdi.eot');
-    unicode-range: U+0020-25CA;
+    // src: url('@{fonts-path}AvenirLTStd-Black_gdi.eot');
+    // unicode-range: U+0020-25CA;
 }
 
 @font-face {
@@ -32,8 +32,8 @@ Imports
     url('@{fonts-path}AvenirLTStd-Book_gdi.woff') format('woff'),
     url('@{fonts-path}AvenirLTStd-Book_gdi.ttf') format('truetype'),
     url('@{fonts-path}AvenirLTStd-Book_gdi.svg#AvenirLTStd-Book') format('svg');
-    src: url('@{fonts-path}AvenirLTStd-Book_gdi.eot');
-    unicode-range: U+0020-25CA;
+    // src: url('@{fonts-path}AvenirLTStd-Book_gdi.eot');
+    // unicode-range: U+0020-25CA;
 }
 
 @font-face {
@@ -46,8 +46,8 @@ Imports
     url('@{fonts-path}AvenirLTStd-Light_gdi.woff') format('woff'),
     url('@{fonts-path}AvenirLTStd-Light_gdi.ttf') format('truetype'),
     url('@{fonts-path}AvenirLTStd-Light_gdi.svg#AvenirLTStd-Light') format('svg');
-    src: url('@{fonts-path}AvenirLTStd-Light_gdi.eot');
-    unicode-range: U+0020-25CA;
+    // src: url('@{fonts-path}AvenirLTStd-Light_gdi.eot');
+    // unicode-range: U+0020-25CA;
 }
 
 /* ==========================================================================
@@ -55,7 +55,7 @@ Base
 ========================================================================== */
 
 body {
-    background-color: @bg-color;
+    background-color: #ccc;
 
     font-family: 'AvenirBook', sans-serif;
     font-size: 16px;
@@ -123,7 +123,7 @@ Navbar
             .is-nav-open & {
                 top: 45px;
 
-                transition-delay: .5s;
+                transition-delay: .25s;
             }
         }
 
@@ -180,7 +180,7 @@ Navbar
             left: 50%;
 
             content: '';
-            transition: border-color .5s ease-in-out;
+            transition: all .5s .25s ease-in-out;
             transform: translate(-50%, -50%);
 
             border-width: 72px 72px 0 72px;
@@ -188,7 +188,13 @@ Navbar
             border-color: #fff transparent transparent;
 
             .is-nav-open & {
-                border-color: @bg-color;
+                opacity: 0;
+                border-color: @bg-color transparent transparent;
+                // transition-delay: 0;
+
+                @media (min-width: 768px) {
+                    opacity: 1;
+                }
             }
         }
 
@@ -205,14 +211,13 @@ Navbar
             content: '';
             transform: translate(-50%, -50%);
 
-            border-radius: 50%;
-            // @TODO: check what's wrong with the animation!
-            box-shadow: 44px -44px 0 2px @bg-color, -44px -44px 0 2px @bg-color, -44px 44px 0 2px @bg-color, 44px 44px 0 2px @bg-color, 0 0 0 2px @bg-color;
+            @media (max-width: 767px) {
+                border-radius: 50%;
+                box-shadow: 22px -22px 0 2px @bg-color, -22px -22px 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @bg-color;
 
-            .is-nav-open & {
-                display: block;
-                // border-color: @bg-color;
-                animation: border 5s ease .5s 1 forwards;
+                .is-nav-open & {
+                    animation: border .5s ease .5s 1 forwards;
+                }
             }
         }
     }
@@ -317,15 +322,15 @@ Keyframes
     }
     50% {
         opacity: 1;
-        box-shadow: 0 49px 0 2px @bg-color, 49px 0 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @primary-color;
     }
     75% {
         opacity: 1;
-        box-shadow: 0 -49px 0 2px @bg-color, 49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @primary-color;
     }
     100% {
         opacity: 1;
-        box-shadow: 0 49px 0 2px @bg-color, 49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 44px 15px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 44px 20px 0 2px @bg-color, 0 0 0 2px @primary-color;
     }
 }
 
