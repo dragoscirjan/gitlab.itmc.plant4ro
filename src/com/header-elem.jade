@@ -2,7 +2,12 @@ template(bindable='router')
 	header
 		nav.navbar.navbar-fixed-top(role='navigation')
 			.navbar-header
-				button.navbar-toggler(type='button')               
+				//- Spinner Candidates
+				//- http://codepen.io/GiVe/pen/LEEWqX - Lucky winner
+				//- http://codepen.io/jonathanhooker/pen/wKaXPV
+				//- http://codepen.io/Haasbroek/pen/gbqYyj
+				//- http://codepen.io/teodormoq/pen/WbXRWj
+				button(type='button', class.bind="router.isNavigating ? 'navbar-toggler spinner' : 'navbar-toggler'")               
 					span.icon-bar            
 					span.icon-bar             
 					span.icon-bar

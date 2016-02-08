@@ -1,3 +1,5 @@
+var fs = require('fs');
+
 var paths = require('../paths');
 
 var gulp = require('gulp');
@@ -5,6 +7,7 @@ var gulp = require('gulp');
 var assign = Object.assign || require('object.assign');
 var browserSync = require('browser-sync');
 var changed = require('gulp-changed');
+var data = require('gulp-data');
 var jade = require('gulp-jade');
 var less = require('gulp-less');
 var notify = require("gulp-notify");
@@ -45,6 +48,13 @@ gulp.task('build-com-js', function() {
 
 gulp.task('build-com-jade', function() {
     return gulp.src(paths.com.jade)
+        .pipe(data(function(file) {
+            try {
+                return require(file.path + '.json');
+            } catch (e) {
+                return {};
+            }
+        }))
         .pipe(jade(jadeOptions))
         .pipe(changed(paths.output, {extension: '.html'}))
         .pipe(gulp.dest(paths.output))

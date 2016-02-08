@@ -1,10 +1,10 @@
 /**
- * Main stylesheet
- */
+* Main stylesheet
+*/
 
 /* ==========================================================================
-   Imports
-   ========================================================================== */
+Imports
+========================================================================== */
 @import 'variables.less';
 // @import 'fonts/fonts.less';
 //
@@ -51,8 +51,8 @@
 }
 
 /* ==========================================================================
-   Base
-   ========================================================================== */
+Base
+========================================================================== */
 
 body {
     background-color: @bg-color;
@@ -63,8 +63,8 @@ body {
 }
 
 /* ==========================================================================
-   Layout
-   ========================================================================== */
+Layout
+========================================================================== */
 
 #wrapper {
     padding: 25px;
@@ -75,12 +75,12 @@ body {
 }
 
 /* ==========================================================================
-   Modules
-   ========================================================================== */
+Modules
+========================================================================== */
 
 /*
-   Navbar
-   ========================================================================== */
+Navbar
+========================================================================== */
 
 .navbar {
     min-height: 250px;
@@ -280,31 +280,31 @@ body {
 }
 
 /* ==========================================================================
-   States
-   ========================================================================== */
+States
+========================================================================== */
 
 
 /* ==========================================================================
-   Keyframes
-   ========================================================================== */
+Keyframes
+========================================================================== */
 
-   // @keyframes border{
-   //   0% {
-   //     box-shadow: 60px -60px 0 2px @bg-color, -60px -60px 0 2px @bg-color, -60px 60px 0 2px @bg-color, 60px 60px 0 2px @bg-color, 0 0 0 2px @bg-color;
-   //   }
-   //   25% {
-   //     box-shadow: 0 -125px 0 2px @bg-color, -60px -60px 0 2px @bg-color, -60px 60px 0 2px @bg-color, 60px 60px 0 2px @bg-color, 0 0 0 2px @primary-color;
-   //   }
-   //   50% {
-   //     box-shadow: 0 -125px 0 2px @bg-color, -125px 0px 0 2px @bg-color, -60px 60px 0 2px @bg-color, 60px 60px 0 2px @bg-color, 0 0 0 2px @primary-color;
-   //   }
-   //   75% {
-   //     box-shadow: 0 -125px 0 2px @bg-color, -125px 0px 0 2px @bg-color, 0px 125px 0 2px @bg-color, 60px 60px 0 2px @bg-color, 0 0 0 2px @primary-color;
-   //   }
-   //   100% {
-   //     box-shadow: 0 -125px 0 2px @bg-color, -125px 0px 0 2px @bg-color, 0px 125px 0 2px @bg-color, 120px 40px 0 2px @bg-color, 0 0 0 2px @primary-color;
-   //   }
-   // }
+// @keyframes border{
+//   0% {
+//     box-shadow: 60px -60px 0 2px @bg-color, -60px -60px 0 2px @bg-color, -60px 60px 0 2px @bg-color, 60px 60px 0 2px @bg-color, 0 0 0 2px @bg-color;
+//   }
+//   25% {
+//     box-shadow: 0 -125px 0 2px @bg-color, -60px -60px 0 2px @bg-color, -60px 60px 0 2px @bg-color, 60px 60px 0 2px @bg-color, 0 0 0 2px @primary-color;
+//   }
+//   50% {
+//     box-shadow: 0 -125px 0 2px @bg-color, -125px 0px 0 2px @bg-color, -60px 60px 0 2px @bg-color, 60px 60px 0 2px @bg-color, 0 0 0 2px @primary-color;
+//   }
+//   75% {
+//     box-shadow: 0 -125px 0 2px @bg-color, -125px 0px 0 2px @bg-color, 0px 125px 0 2px @bg-color, 60px 60px 0 2px @bg-color, 0 0 0 2px @primary-color;
+//   }
+//   100% {
+//     box-shadow: 0 -125px 0 2px @bg-color, -125px 0px 0 2px @bg-color, 0px 125px 0 2px @bg-color, 120px 40px 0 2px @bg-color, 0 0 0 2px @primary-color;
+//   }
+// }
 
 @keyframes border {
     0% {
@@ -326,5 +326,76 @@ body {
     100% {
         opacity: 1;
         box-shadow: 0 49px 0 2px @bg-color, 49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 44px 15px 0 2px @bg-color, 0 0 0 2px @primary-color;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// .spinner {
+//   margin: 105px auto;
+//   width: 40px;
+//   height: 10px;
+//   font-size: 10px;
+// }
+
+.spinner > span {
+    height: 100%;
+    width: 100%;
+    display: block;
+    margin-bottom: 0.6em;
+    -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
+    animation: stretchdelay 1.2s infinite ease-in-out;
+}
+.spinner span:nth-child(1) {
+    -webkit-animation-delay: -1s;
+    animation-delay: -1s;
+}
+.spinner span:nth-child(2) {
+    -webkit-animation-delay: -0.8s;
+    animation-delay: -0.8s;
+}
+
+@-webkit-keyframes stretchdelay {
+    0%, 40%, 100% {
+        -webkit-transform: scaleX(0.8);
+        background-color: #2e5865;
+        box-shadow: 0 0 0 rgba(10, 10, 10, 0.1);
+    }
+    20% {
+        -webkit-transform: scaleX(1);
+        background-color: #00b192;
+        box-shadow: 0 5px 6px rgba(10, 10, 10, 0.4);
+    }
+}
+@keyframes stretchdelay {
+    0%, 40%, 100% {
+        background-color: #2e5865;
+        transform: scaleX(0.8);
+        -webkit-transform: scaleX(0.8);
+        box-shadow: 0 0 0 rgba(10, 10, 10, 0.1);
+    }
+    20% {
+        background-color: #00b192;
+        transform: scaleY(1);
+        -webkit-transform: scaleX(1);
+        box-shadow: 0 5px 6px rgba(10, 10, 10, 0.4);
     }
 }
