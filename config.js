@@ -14,10 +14,12 @@ System.config({
   },
 
   meta: {
-    '../assets/plugins/revoslider/js/jquery.themepunch.tools.min.js': {
-      deps: ["jquery"]
+    "../assets/plugins/revoslider/js/jquery.themepunch.tools.min.js": {
+      "deps": [
+        "jquery"
+      ]
     }
-},
+  },
 
   map: {
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0-beta.1.0.3",

@@ -25,6 +25,14 @@ let logger = LogManager.getLogger('sustine-facebook');
 export class Facebook {
     heading = 'Sustine Proiectul pe Facebook';
 
+    isNavigating = false;
+
+    activate(params, routeConfig) {
+        // obtain router so we can activate the loading toggle
+        // console.log(routeConfig.navModel.router);
+        this.router = routeConfig.navModel.router;
+    }
+
     /**
     * [attached description]
     * @method attached
@@ -59,11 +67,13 @@ export class Facebook {
      * @return {[type]}     [description]
      */
     fbLoadImages() {
+        this.router.isNavigating = true;
         logger.debug('Facebook: Actually loading the images ;)');
         FB.api('/me/picture', 'get', {width: 300, height: 300 }, function(mrp) {
             logger.debug('Facebook API loaded /me/picture', mrp, mrp.data.url);
             FB.api('/me?fields=cover', function(mrc) {
                 logger.debug('Facebook API loaded /me?fields=cover', mrc, mrc.cover.source);
+                // self.router.isNavigating = false;
                 $('.main-profile').each((i, img) => {
                     $(img).css('background-image', `url('${mrp.data.url}')`);
                 });
@@ -89,16 +99,19 @@ export class Facebook {
      */
     fbLoginCheck(resolve, reject) {
         const self = this;
+        this.router.isNavigating = true;
         logger.debug('Facebook: Checking login permissions', resolve, reject);
 
-        $('.navbar-toggler').addClass('spinner');
+        // $('.navbar-toggler').addClass('spinner');
 
         // if FB api does not exists, show a warning message along with FB login button
         if (typeof FB === 'undefined' || !FB) {
             logger.warn('Facebook: FB variable not present. Trying again in .5 s');
             if (this.fbLoginCheckAttempts++ < 10) {
+                self.isNavigating = false;
                 setTimeout(() => { self.fbLoginCheck(resolve, reject); }, 500);
             } else {
+                self.isNavigating = false;
                 reject.call(null);
             }
             return;
@@ -108,7 +121,7 @@ export class Facebook {
             switch (response.status) {
                 case 'connected':
                     logger.debug('Facebook: Permission granted.');
-                    $('.navbar-toggler').removeClass('spinner');
+                    // $('.navbar-toggler').removeClass('spinner');
                     resolve.call(null);
                     break;
                 case 'not_authorized':

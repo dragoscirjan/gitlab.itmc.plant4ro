@@ -22,7 +22,7 @@ export class App {
 
         this.router = router;
 
-        logger.debug('router', this.router);
+        // logger.debug('router', this.router);
     }
 
     /**
@@ -31,6 +31,7 @@ export class App {
      * @return {[type]} [description]
      */
     attached() {
+        // console.log(this);
         this.menuToggleInit();
         this.fbAttach();
     }
