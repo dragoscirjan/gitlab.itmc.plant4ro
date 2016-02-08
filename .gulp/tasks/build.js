@@ -68,6 +68,7 @@ gulp.task('build-com-html', function() {
 });
 
 
+
 // copies changed css files to the output directory
 gulp.task('build-css', function() {
     return gulp.src(paths.assets.css)
