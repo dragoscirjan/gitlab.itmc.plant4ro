@@ -9,8 +9,11 @@
 import {LogManager} from 'aurelia-framework';
 let logger = LogManager.getLogger('sustine-facebook');
 
-//import {computedFrom} from 'aurelia-framework';
+import {inject} from 'aurelia-framework';
+import {HttpClient} from 'aurelia-fetch-client';
+import 'fetch';
 
+//import {computedFrom} from 'aurelia-framework';
 // https://developers.facebook.com/docs/graph-api/using-graph-api
 // https://developers.facebook.com/docs/php/howto/uploadphoto
 // https://developers.facebook.com/docs/php/howto/uploadphoto
@@ -22,68 +25,71 @@ let logger = LogManager.getLogger('sustine-facebook');
  * Component for changing Facebook Profile Picture or Profile Cover
  *
  */
+@inject([HttpClient])
 export class Facebook {
+
     heading = 'Sustine Proiectul pe Facebook';
 
-    isNavigating = false;
+    /**
+     * [constructor description]
+     * @method constructor
+     * @param  {HttpClient}    http [description]
+     * @return {this}               [description]
+     */
+    constructor(http) {
+    }
 
+    /**
+     * [activate description]
+     * @method activate
+     * @return {[type]} [description]
+     */
     activate(params, routeConfig) {
-        // obtain router so we can activate the loading toggle
-        // console.log(routeConfig.navModel.router);
-        this.router = routeConfig.navModel.router;
-    }
-
-    /**
-    * [attached description]
-    * @method attached
-    * @return {[type]} [description]
-    */
-    attached() {
-        this.fbCanLoadImages();
-    }
-
-    /**
-     * [fbCanLoadImages description]
-     * @method fbCanLoadImages
-     * @return {[type]}        [description]
-     */
-    fbCanLoadImages() {
         const self = this;
-        logger.debug('Facebook: Load image attempt');
-        this.fbLoginCheck(
-            () => {
-                self.fbAlertHide();
-                self.fbLoadImages();
-            },
-            () => {
-                self.fbAlertShow();
-            }
-        );
-    }
 
-    /**
-     * [fbLoadImages description]
-     * @method fbLoadImages
-     * @return {[type]}     [description]
-     */
-    fbLoadImages() {
-        this.router.isNavigating = true;
-        logger.debug('Facebook: Actually loading the images ;)');
-        FB.api('/me/picture', 'get', {width: 300, height: 300 }, function(mrp) {
-            logger.debug('Facebook API loaded /me/picture', mrp, mrp.data.url);
-            FB.api('/me?fields=cover', function(mrc) {
-                logger.debug('Facebook API loaded /me?fields=cover', mrc, mrc.cover.source);
-                // self.router.isNavigating = false;
-                $('.main-profile').each((i, img) => {
-                    $(img).css('background-image', `url('${mrp.data.url}')`);
-                });
-                $('.main-cover').each((i, img) => {
-                    $(img).css('background-image', `url('${mrc.cover.source}')`);
-                });
-                $('.facebook-choice').removeClass('hide');
-            });
+        this.router = routeConfig.navModel.router;
+        // console.log(routeConfig.navModel);
+
+        return new Promise((resolve, reject) => {
+            self.fbLoginCheck(resolve, reject);
+        }).then(() => {
+            self.fbIsLoggedIn = true;
+            return new Promise((resolve2, reject2) => {
+                setTimeout(() => {
+                    console.log('Pics loaded here');
+                    resolve2.call(null);
+                }, 3000);
+                // return self.fbLoadImages(resolved, reject);
+            })
+        }).catch(() => {
+            self.fbIsLoggedIn = false;
         });
     }
+
+
+    // /**
+    //  * [fbLoadImages description]
+    //  * @method fbLoadImages
+    //  * @return {[type]}     [description]
+    //  */
+    // fbLoadImages() {
+    //     this.router.isNavigating = true;
+    //     logger.debug('Facebook: Actually loading the images ;)');
+    //     FB.api('/me/picture', 'get', {width: 300, height: 300 }, function(mrp) {
+    //         logger.debug('Facebook API loaded /me/picture', mrp, mrp.data.url);
+    //         FB.api('/me?fields=cover', function(mrc) {
+    //             logger.debug('Facebook API loaded /me?fields=cover', mrc, mrc.cover.source);
+    //             // self.router.isNavigating = false;
+    //             $('.main-profile').each((i, img) => {
+    //                 $(img).css('background-image', `url('${mrp.data.url}')`);
+    //             });
+    //             $('.main-cover').each((i, img) => {
+    //                 $(img).css('background-image', `url('${mrc.cover.source}')`);
+    //             });
+    //             $('.facebook-choice').removeClass('hide');
+    //         });
+    //     });
+    // }
 
     /**
      * [fbLoginCheckAttempts description]
@@ -92,26 +98,29 @@ export class Facebook {
     fbLoginCheckAttempts = 0;
 
     /**
-     * [fbLoginCheck description]
+     * [fbIsLoggedIn description]
+     * @type {Boolean}
+     */
+    fbIsLoggedIn = false;
+
+    /**
+     * Recursively (only if Facebook SDK has not been loaded yet), try to determine if the application has access
+     * to Facebook or not
+     *
      * @method fbLoginCheck
      * @param  {Function}     resolve [description]
      * @param  {Function}     reject  [description]
      */
     fbLoginCheck(resolve, reject) {
         const self = this;
-        this.router.isNavigating = true;
-        logger.debug('Facebook: Checking login permissions', resolve, reject);
-
-        // $('.navbar-toggler').addClass('spinner');
+        logger.debug('Facebook SDK: Checking login permissions');
 
         // if FB api does not exists, show a warning message along with FB login button
         if (typeof FB === 'undefined' || !FB) {
-            logger.warn('Facebook: FB variable not present. Trying again in .5 s');
+            logger.warn('Facebook SDK: "FB" not present. Trying again in .5 s');
             if (this.fbLoginCheckAttempts++ < 10) {
-                self.isNavigating = false;
                 setTimeout(() => { self.fbLoginCheck(resolve, reject); }, 500);
             } else {
-                self.isNavigating = false;
                 reject.call(null);
             }
             return;
@@ -120,13 +129,12 @@ export class Facebook {
         FB.getLoginStatus(function(response) {
             switch (response.status) {
                 case 'connected':
-                    logger.debug('Facebook: Permission granted.');
-                    // $('.navbar-toggler').removeClass('spinner');
+                    logger.debug('Facebook SDK: Permission granted.');
                     resolve.call(null);
                     break;
                 case 'not_authorized':
                 default:
-                    logger.debug('Facebook: Permission denied. Attepmting auth.');
+                    logger.debug('Facebook SDK: Permission denied.');
                     reject.call(null);
             }
         });
@@ -138,46 +146,27 @@ export class Facebook {
      * @param  {Function}    callback [description]
      */
     fbLogin() {
-        const self = this;
-        FB.login(() => {
-            self.fbCanLoadImages();
-        }, {scope: 'publish_actions'});
+        logger.debug('Facebook SDK: Attempting login.');
+        // try facebook login and reload location
+        FB.login(() => { location.reload(); }, {scope: 'publish_actions'});
     }
 
-    /**
-     * [fbAlertHide description]
-     * @method fbAlertHide
-     * @return {[type]}    [description]
-     */
-    fbAlertHide() {
-        $('.alert-facebook-auth').removeClass('show');
-    }
-
-    /**
-     * [fbAlertShow description]
-     * @method fbAlertShow
-     * @return {[type]}    [description]
-     */
-    fbAlertShow() {
-        $('.alert-facebook-auth').removeClass('hide');
-    }
-
-    /**
-     * [fbChangePicture description]
-     * @method fbChangePicture
-     * @return {[type]}        [description]
-     */
-    fbChangePicture() {
-
-    }
-
-    /**
-     * [fbChangeCover description]
-     * @method fbChangeCover
-     * @return {[type]}      [description]
-     */
-    fbChangeCover() {
-
-    }
+    // /**
+    //  * [fbChangePicture description]
+    //  * @method fbChangePicture
+    //  * @return {[type]}        [description]
+    //  */
+    // fbChangePicture() {
+    //
+    // }
+    //
+    // /**
+    //  * [fbChangeCover description]
+    //  * @method fbChangeCover
+    //  * @return {[type]}      [description]
+    //  */
+    // fbChangeCover() {
+    //
+    // }
 
 }

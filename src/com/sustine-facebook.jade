@@ -11,7 +11,8 @@ template
 		| Perspiciatis harum exercitationem voluptates modi assumenda soluta similique vel, quo provident veritatis 
 		| reiciendis velit architecto vitae minima distinctio nisi, incidunt, placeat corporis voluptatem aliquid 
 		| recusandae accusamus quia dolore. Fuga, aliquam.
-		.alert.alert-warning.alert-facebook-auth.hide(role='alert')
+		
+		.alert.alert-warning.alert-facebook-auth(role='alert', if.bind='!fbIsLoggedIn')
 			//- button.close(type='button', data-dismiss='alert', aria-label='Close')
 			//- 	span(aria-hidden='true') &times;
 			p
