@@ -1,4 +1,6 @@
 
+import {LogManager} from 'aurelia-framework';
+
 export class ViewModelAbstract  {
 
     /**
@@ -6,17 +8,9 @@ export class ViewModelAbstract  {
      * @method constructor
      * @return {this}    [description]
      */
-    constructor() {}
-
-    /**
-     * [canActivate description]
-     * @method canActivate
-     * @param  {[type]}    params                [description]
-     * @param  {[type]}    routeConfig           [description]
-     * @param  {[type]}    navigationInstruction [description]
-     * @return {[type]}                          [description]
-     */
-    // canActivate(params, routeConfig, navigationInstruction) {  }
+    constructor() {
+        this.logger = LogManager.getLogger('view-model-abstract');
+    }
 
     /**
      * [activate description]
@@ -28,8 +22,18 @@ export class ViewModelAbstract  {
      */
     activate(params, routeConfig, navigationInstruction) {
         this.routeConfig = routeConfig;
-        console.log('PULA BA!', this.routeConfig);
+        this.logger = LogManager.getLogger(`view-model-${this.routeConfig.name}`);
     }
+
+    /**
+     * [canActivate description]
+     * @method canActivate
+     * @param  {[type]}    params                [description]
+     * @param  {[type]}    routeConfig           [description]
+     * @param  {[type]}    navigationInstruction [description]
+     * @return {[type]}                          [description]
+     */
+    // canActivate(params, routeConfig, navigationInstruction) {  }
 
     /**
      * [canDeactivate description]
@@ -44,4 +48,22 @@ export class ViewModelAbstract  {
      * @return {[type]}   [description]
      */
     // decativate() {  }
+
+    /**
+     * [loadScript description]
+     * @method loadScript
+     * @param  {String}    id  [description]
+     * @param  {String}    src [description]
+     * @return {Promise}       [description]
+     */
+    loadScript(id, src) {
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.id = id;
+            script.src = src;
+            script.onload = () => { resolve.call(this); };
+            document.head.appendChild(script);
+            setTimeout(() => { reject.call(this, new Error(`Script ${src} exceeded timeout.`)); }, 10000);
+        });
+    }
 }
