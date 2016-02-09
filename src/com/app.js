@@ -21,8 +21,6 @@ export class App {
         ]);
 
         this.router = router;
-
-        // logger.debug('router', this.router);
     }
 
     /**

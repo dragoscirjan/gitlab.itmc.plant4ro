@@ -1,6 +1,12 @@
 //import {computedFrom} from 'aurelia-framework';
 
-export class Proiect {
-  heading = 'Proiect';
+import {ViewModelAbstract} from 'lib/view/model/abstract';
+
+export class Proiect extends ViewModelAbstract {
+
+    /**
+     * @type {String}
+     */
+    heading = 'Proiect';
 
 }

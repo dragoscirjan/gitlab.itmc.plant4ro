@@ -1,12 +1,12 @@
 template
 	// Revolution Slider Styles
 	// RS5.0 Main Stylesheet
-	require(from='../assets/plugins/revolution/css/settings.css')
+	//- require(from='../assets/plugins/revolution/css/settings.css')
 	// RS5.0 Layers and Navigation Styles
-	require(from='../assets/plugins/revolution/css/layers.css')
-	require(from='../assets/plugins/revolution/css/navigation.css')
+	//- require(from='../assets/plugins/revolution/css/layers.css')
+	//- require(from='../assets/plugins/revolution/css/navigation.css')
 
-	.au-animate
+	.au-animate(class.bind="'au-animate ' + routeConfig.name")
 		//- Carousel
 		.rev_slider_wrapper
 			#slider.rev_slider(data-version='5.0')

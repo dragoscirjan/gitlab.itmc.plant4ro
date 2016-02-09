@@ -1,6 +1,6 @@
 template
 	//- require(from='bootstrap/css/bootstrap.css')
-	#wrapper
+	#wrapper(class.bind="'au-animate ' + routeConfig.name")
 		require(from='header-elem.html')
 		header-elem(router.bind='router')
 		main#main

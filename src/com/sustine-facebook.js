@@ -48,7 +48,7 @@ export class Facebook {
         const self = this;
 
         this.router = routeConfig.navModel.router;
-        // console.log(routeConfig.navModel);
+        // console.log(this.router);
 
         return new Promise((resolve, reject) => {
             self.fbLoginCheck(resolve, reject);
@@ -56,11 +56,11 @@ export class Facebook {
             self.fbIsLoggedIn = true;
             return new Promise((resolve2, reject2) => {
                 setTimeout(() => {
-                    console.log('Pics loaded here');
+                    // console.log('Pics loaded here');
                     resolve2.call(null);
                 }, 3000);
                 // return self.fbLoadImages(resolved, reject);
-            })
+            });
         }).catch(() => {
             self.fbIsLoggedIn = false;
         });
