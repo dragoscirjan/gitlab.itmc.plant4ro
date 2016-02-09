@@ -1,5 +1,5 @@
 template
-  section.au-animate
+  section(class.bind="'au-animate ' + routeConfig.name")
     .container
       h1 ${heading}
       .media.media--showcase.media--responsive.media--reverse.media--center
