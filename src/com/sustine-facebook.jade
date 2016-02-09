@@ -26,7 +26,7 @@ template
 				i.fa.fa-facebook
 				| Autorizeaza aplicatia
 		
-		.row.facebook-choice.hide  
+		div(class.bind="'row facebook-choice ' + (fbIsLoggedIn ? '' : 'hide')")
 			//- .col-md-6.facebook-image-profile
 			.row
 			each src, i in pictures

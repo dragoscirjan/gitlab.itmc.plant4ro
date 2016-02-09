@@ -3,9 +3,27 @@
  */
 
 import {LogManager} from 'aurelia-framework';
-let logger = LogManager.getLogger('sustine-facebook');
 
+/**
+ *
+ */
 export class App {
+
+    /**
+     * Application contructor
+     * @method constructor
+     * @return {this}      [description]
+     */
+    constructor() {
+        this.logger = LogManager.getLogger('application');
+    }
+
+    /**
+     * [configureRouter description]
+     * @method configureRouter
+     * @param  {[type]}        config [description]
+     * @param  {[type]}        router [description]
+     */
     configureRouter(config, router) {
         config.title = 'Planteaza pentru Romania';
         config.map([
@@ -24,6 +42,14 @@ export class App {
     }
 
     /**
+     * [activate description]
+     * @method activate
+     */
+    activate() {
+        return this.fbLoadScript();
+    }
+
+    /**
      * [attached description]
      * @method attached
      * @return {[type]} [description]
@@ -31,7 +57,6 @@ export class App {
     attached() {
         // console.log(this);
         this.menuToggleInit();
-        this.fbAttach();
     }
 
     /**
@@ -55,8 +80,8 @@ export class App {
      * @type {Object}
      */
     fbConfig = {
-        appId: '188346134855747', // test
-        // appId: '187326271624400', // live
+        // appId: '188346134855747', // test
+        appId: '187326271624400', // live
         status: true, // check login status
         cookie: true,  // enable cookies to allow the server to access the session
         xfbml: true, // parse social plugins on this page
@@ -66,12 +91,23 @@ export class App {
 
     /**
      * Attaching Facebook Js API to our application
-     * @method fbAttach
+     * @method fbLoadScript
      */
-    fbAttach() {
+    fbLoadScript() {
         const self = this;
         window.fbAsyncInit = () => { self.fbInit(); };
-        $(document.head).append('<script id="facebook-sdk" src="//connect.facebook.net/en_US/sdk.js" />');
+        return new Promise((resolve, reject) => {
+            const script = document.createElement('script');
+            script.id = 'fb-sdk';
+            script.src = '//connect.facebook.net/en_US/sdk.js';
+            script.onload = () => { resolve.call(this); };
+            document.head.appendChild(script);
+            setTimeout(() => { reject.call(this, new Error(`Script ${script.src} exceeded timeout.`)); }, 10000);
+        }).then(() => {
+            self.logger.debug('fb-sdk / script loaded');
+        }).catch((e) => {
+            self.logger.error('fb-sdk / script failed', e);
+        });
     }
 
     /**
@@ -82,6 +118,6 @@ export class App {
         // https://developers.facebook.com/docs/javascript/reference/FB.api
         // https://developers.facebook.com/docs/graph-api/reference/
         FB.init(this.fbConfig);
-        logger.debug('Facebook API Initialized', FB);
+        this.logger.debug('fb-sdk / inited', FB);
     }
 }
