@@ -9,15 +9,15 @@ export class App {
     configureRouter(config, router) {
         config.title = 'Planteaza pentru Romania';
         config.map([
-            { route: ['', 'acasa'],     name: 'acasa',        moduleId: 'acasa',        nav: true,  title: 'Acasa' },
-            { route: 'despre-proiect',  name: 'proiect',      moduleId: 'proiect',      nav: true,  title: 'Despre Proiect' },
-            { route: 'parteneri',       name: 'parteneri',    moduleId: 'parteneri',    nav: true,  title: 'Parteneri' },
-            { route: 'planteaza',       name: 'planteaza',    moduleId: 'planteaza',    nav: true,  title: 'Planteaza' },
-            { route: 'sustine',         name: 'sustine',      moduleId: 'sustine',      nav: true,  title: 'Sustine-ne' },
+            { route: ['', 'acasa'],     name: 'hp',        moduleId: 'acasa',        nav: true,  title: 'Acasa' },
+            { route: 'despre-proiect',  name: 'about',      moduleId: 'proiect',      nav: true,  title: 'Despre Proiect' },
+            { route: 'parteneri',       name: 'partners',    moduleId: 'parteneri',    nav: true,  title: 'Parteneri' },
+            { route: 'planteaza',       name: 'plant',    moduleId: 'planteaza',    nav: true,  title: 'Planteaza' },
+            { route: 'sustine',         name: 'support',      moduleId: 'sustine',      nav: true,  title: 'Sustine-ne' },
             { route: 'contact',         name: 'contact',      moduleId: 'contact',      nav: true,  title: 'Contact' },
-            { route: 'intrebari',       name: 'intrebari',    moduleId: 'intrebari',    nav: false, title: 'Intrebari Frecvente' },
-            { route: 'termeni',         name: 'termeni',      moduleId: 'termeni',      nav: false, title: 'Termeni si Conditii' },
-            { route: 'securitate',      name: 'securitate',   moduleId: 'securitate',   nav: false, title: 'Politica de Securitate' }
+            { route: 'intrebari',       name: 'faq',    moduleId: 'intrebari',    nav: false, title: 'Intrebari Frecvente' },
+            { route: 'termeni',         name: 'terms',      moduleId: 'termeni',      nav: false, title: 'Termeni si Conditii' },
+            { route: 'securitate',      name: 'security',   moduleId: 'securitate',   nav: false, title: 'Politica de Securitate' }
         ]);
 
         this.router = router;
