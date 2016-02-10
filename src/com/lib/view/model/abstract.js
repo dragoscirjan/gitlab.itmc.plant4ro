@@ -25,7 +25,6 @@ export class ViewModelAbstract  {
         this.logger = LogManager.getLogger(`view-model-${this.routeConfig.name}`);
 
         this.routeConfig.navModel.router.activeRoute = this.routeConfig;
-        console.log('Bai PULA!', this.routeConfig);
     }
 
     /**

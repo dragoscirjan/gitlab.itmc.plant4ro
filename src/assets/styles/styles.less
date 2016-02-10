@@ -78,6 +78,10 @@ a {
     &:active {
         color: @secondary-color;
     }
+
+    &:focus {
+        outline: none;
+    }
 }
 
 b,
@@ -131,33 +135,39 @@ Layout
 }
 
 #footer {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display:         flex;
-
-    margin: 0 -15px;
+    position: relative;
     padding: 25px;
 
-    -webkit-align-items: flex-end;
-    -webkit-box-align: flex-end;
-    -ms-flex-align: flex-end;
-        align-items: flex-end;
-
     @media (min-width: 768px) {
-        margin: 0 -25px;
         padding: 70px;
-
-        -webkit-align-items: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
     }
 }
 
-@media (min-width: 992px) {
-    .container {
+.container {
+    @media (min-width: 992px) {
         width: 990px;
+    }
+
+    &--carousel,
+    &--carousel-pagination  {
+        position: absolute;
+        top: 65%;
+        left: 50%;
+
+        -webkit-transform: translateX(-50%);
+                transform: translateX(-50%);
+
+        @media (min-width: 1400px) {
+            width: 1300px;
+        }
+    }
+
+    &--carousel {
+        top: 65%;
+    }
+
+    &--carousel-pagination {
+        top: 60%;
     }
 }
 
@@ -413,6 +423,8 @@ Navbar
     }
 
     &-brand {
+        position: relative;
+        z-index: 1;
         display: block;
         float: none;
         width: 200px;
@@ -654,10 +666,88 @@ Navbar
 }
 
 /*
+   Carousel
+   ========================================================================== */
+.owl {
+    &-carousel {
+        &--hp {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+
+            .owl-carousel__slide {
+                height: 100vh;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-position: center;
+            }
+        }
+        &__text {
+            font-size: 28px;
+            text-transform: uppercase;
+        }
+    }
+
+    &-controls {
+        .owl-pagination {
+            margin: 0 -8px;
+        }
+
+        .owl-page {
+            display: inline-block;
+            padding: 0 8px;
+
+            span {
+                display: block;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background-color: rgba(255, 255, 255, .75);
+
+                -webkit-transition: all .3s ease-in-out;
+                transition: all .3s ease-in-out;
+            }
+
+            &:hover,
+            &.active {
+                span {
+                    background-color: #fff;
+                    -webkit-transform: scale(1.8);
+                            transform: scale(1.8);
+                }
+            }
+        }
+    }
+}
+
+
+/*
    Footer
    ========================================================================== */
 
 .footer {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+
+    margin: 0 -15px;
+
+    -webkit-align-items: flex-end;
+    -webkit-box-align: flex-end;
+    -ms-flex-align: flex-end;
+        align-items: flex-end;
+
+    @media (min-width: 768px) {
+        margin: 0 -25px;
+
+        -webkit-align-items: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    }
+
     &__info {
         display: flex;
         flex-direction: column;
@@ -716,6 +806,19 @@ States
 
 // Various margins - check mixins.less for more info
 .h-margins(0);
+
+// Floaters
+.h-pull {
+    @media (min-width: 768px) {
+        &-left-lrg {
+            float: left;
+        }
+
+        &-right-lrg {
+            float: right;
+        }
+    }
+}
 
 
 /* ==========================================================================
@@ -803,30 +906,4 @@ Keyframes
         background-color: #00b192;
         box-shadow: 0 5px 6px rgba(10, 10, 10, .4);
     }
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#owl-demo .owl-item div{
-  padding:5px;
-}
-#owl-demo .owl-item img{
-  display: block;
-  width: 100%;
-  height: auto;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
 }
