@@ -49,7 +49,7 @@ export class Facebook extends ViewModelAbstract {
      * @method activate
      */
     activate(params, routeConfig) {
-        super.activate(params, routeConfig);
+        super(params, routeConfig);
         const self = this;
         return this.fbLoginCheck().then(() => {
             self.fbIsLoggedIn = true;
@@ -72,12 +72,14 @@ export class Facebook extends ViewModelAbstract {
      */
     attached() {
         const self = this;
-        $('.main-profile').each((i, img) => {
-            $(img).css('background-image', `url('${self.mrp.data.url}')`);
-        });
-        $('.main-cover').each((i, img) => {
-            $(img).css('background-image', `url('${self.mrc.cover.source}')`);
-        });
+        if (this.mrp) {
+            $('.main-profile').each((i, img) => {
+                $(img).css('background-image', `url('${self.mrp.data.url}')`);
+            });
+            $('.main-cover').each((i, img) => {
+                $(img).css('background-image', `url('${self.mrc.cover.source}')`);
+            });
+        }
     }
 
     /**
