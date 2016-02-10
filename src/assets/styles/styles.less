@@ -6,6 +6,7 @@
 Imports
 ========================================================================== */
 @import 'variables.less';
+@import 'mixins.less';
 
 @font-face {
     font-family: 'AvenirBlack';
@@ -55,7 +56,7 @@ Base
 
 body {
     color: @primary-color;
-    background-color: #ccc;
+    background-color: @bg-color;
 
     font-family: 'AvenirBook', sans-serif;
     font-size: 16px;
@@ -83,6 +84,10 @@ b,
 strong {
     font-family: AvenirBlack, sans-serif;
     font-weight: 400;
+}
+
+ul {
+    padding-left: 15px;
 }
 
 /* ==========================================================================
@@ -219,6 +224,49 @@ Modules
 ========================================================================== */
 
 /*
+   Page title
+   ========================================================================== */
+
+.page-title {
+    margin-bottom: 50px;
+    font-family: AvenirBlack, sans-serif;
+    font-size: 40px;
+    color: @secondary-color;
+    text-transform: uppercase;
+
+    @media (min-width: 768px) {
+        margin-bottom: 70px;
+        font-size: 72px;
+    }
+
+    em {
+        color: @primary-color;
+    }
+}
+
+
+/*
+   Button
+   ========================================================================== */
+
+.btn--primary {
+    padding: 25px 75px;
+
+    -webkit-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+
+    text-transform: uppercase;
+    border: 1px solid @secondary-color;
+    border-radius: 4em;
+
+    &:hover {
+        color: #fff;
+        background-color: @secondary-color;
+    }
+}
+
+
+/*
    Media
    ========================================================================== */
 
@@ -241,12 +289,14 @@ Modules
                 flex: 1;
     }
 
-    &--center {
-        -webkit-box-align: center;
-        -webkit-align-items: center;
-            -ms-flex-align: center;
-                    -ms-grid-row-align: center;
-                align-items: center;
+    @media (min-width: 768px) {
+        &--center {
+            -webkit-box-align: center;
+            -webkit-align-items: center;
+                -ms-flex-align: center;
+                        -ms-grid-row-align: center;
+                    align-items: center;
+        }
     }
 
     &--reverse {
@@ -276,7 +326,7 @@ Modules
     }
 
     &--showcase {
-        margin: 0 -15px 50px;
+        margin: 0 -15px 70px;
         // flex-direction: column;
 
         > .media__body {
@@ -287,6 +337,14 @@ Modules
         > .media__figure {
             padding: 0 15px;
             order: 1;
+
+            @media (max-width: 767px) {
+                padding: 0;
+
+                img {
+                    width: 100%;
+                }
+            }
         }
 
         @media (min-width: 768px) {
@@ -355,8 +413,21 @@ Navbar
     }
 
     &-brand {
-        width: 250px;
+        display: block;
+        float: none;
+        width: 200px;
         height: auto;
+        margin: 40px auto 0;
+        padding: 0;
+
+        @media (min-width: 768px) {
+            width: 250px;
+            margin: 0;
+        }
+
+        @media (min-width: 1600px) {
+            position: fixed;
+        }
 
         img {
             max-width: 100%;
@@ -364,7 +435,7 @@ Navbar
     }
 
     &-toggler {
-        position: absolute;
+        position: fixed;
         z-index: 10;
         top: 15px;
         left: 50%;
@@ -637,6 +708,14 @@ Navbar
 /* ==========================================================================
 States
 ========================================================================== */
+
+
+/*
+   Helpers
+   ========================================================================== */
+
+// Various margins - check mixins.less for more info
+.h-margins(0);
 
 
 /* ==========================================================================

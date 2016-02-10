@@ -1,7 +1,7 @@
 template
   section(class.bind="'au-animate ' + routeConfig.name")
     .container
-      h1 ${heading}
+      h1.page-title ${heading}
       .media.media--showcase.media--responsive.media--reverse.media--center
         .media__figure
           img.img-responsive.center-block(src="http://placehold.it/434x362/666666/222222?text=Img", alt="")
@@ -26,6 +26,9 @@ template
           p 
             strong Planteaza pentru Romania 
             |  ofera posibilitatea tuturor de a contribui la imbunatatirea situatiei padurilor romanesti prin implicarea directa. Orice individ, ONG sau institutie poate sa participe la evenimentul nostru si sa transforme Romania in Campiona Mondiala la Plantat.
-      p 
+      p.h-margin-bottom-70 
         strong Planteaza pentru Romania 
         |  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
+        
+      .text-center.h-margin-bottom-50
+        a.btn.btn--primary(href="#") Doneaza un copac

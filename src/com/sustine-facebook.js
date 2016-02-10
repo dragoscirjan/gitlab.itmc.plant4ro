@@ -49,7 +49,7 @@ export class Facebook extends ViewModelAbstract {
      * @method activate
      */
     activate(params, routeConfig) {
-        super(params, routeConfig);
+        super.activate(params, routeConfig);
         const self = this;
         return this.fbLoginCheck().then(() => {
             self.fbIsLoggedIn = true;
