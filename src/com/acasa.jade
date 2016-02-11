@@ -5,34 +5,43 @@ template
 	// RS5.0 Layers and Navigation Styles
 	//- require(from='../assets/plugins/revolution/css/layers.css')
 	//- require(from='../assets/plugins/revolution/css/navigation.css')
-	require(from='../assets/plugins/owl.carousel/owl-carousel/owl.carousel.css')
-	require(from='../assets/plugins/owl.carousel/owl-carousel/owl.theme.css')
-	require(from='../assets/plugins/owl.carousel/owl-carousel/owl.transitions.css')
+	//- require(from='../assets/plugins/owl.carousel/owl-carousel/owl.carousel.css')
+	//- //- require(from='../assets/plugins/owl.carousel/owl-carousel/owl.theme.css')
+	//- require(from='../assets/plugins/owl.carousel/owl-carousel/owl.transitions.css')
 	require(from='../assets/plugins/owl.carousel/owl-carousel/owl.carousel.min.js')
 
 	.au-animate(class.bind="'au-animate ' + routeConfig.name")
 		//- Carousel
-		#owl-demo.owl-carousel
-			div
-				img(src='http://placehold.it/1170x300/42bdc2/FFFFFF')
-			div
-				img(src='http://placehold.it/1170x400/42bdc2/FFFFFF')
-			div
-				img(src='http://placehold.it/1170x500/42bdc2/FFFFFF')
-			div
-				img(src='http://placehold.it/1170x200/42bdc2/FFFFFF')
-			div
-				img(src='http://placehold.it/1170x500/42bdc2/FFFFFF')
-			div
-				img(src='http://placehold.it/1170x250/42bdc2/FFFFFF')
-			div
-				img(src='http://placehold.it/1170x350/42bdc2/FFFFFF')
-			div
-				img(src='http://placehold.it/1170x300/42bdc2/FFFFFF')
-			div
-				img(src='http://placehold.it/1170x100/42bdc2/FFFFFF')
-			div
-				img(src='http://placehold.it/1170x500/42bdc2/FFFFFF')
+		#owlCarouselHP.owl-carousel.owl-carousel--hp
+			.owl-carousel__slide(style="background-image: url('/dist/assets/img/slider/img1.jpg')")
+				.container.container--carousel
+					.owl-carousel__caption
+						.l-flex.l-flex--lrg.l-flex--vcenter
+							.l-flex__item
+								.owl-carousel__text
+									strong Padurile Romaniei 
+									|  reprezinta cea mai importanta 
+									strong resursa naturala regenerabila
+									|  a tarii si indeplineste multiple roluri
+							.l-flex__item
+								a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
+			.owl-carousel__slide(style="background-image: url('/dist/assets/img/slider/img2.jpg')")
+				.owl-carousel__caption
+					.l-flex.l-flex--lrg.l-flex--vcenter
+						.l-flex__item
+							.owl-carousel__text
+								| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam cumque, nostrum, laboriosam ducimus qui officia provident eaque numquam minus enim?
+						.l-flex__item
+							a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
+			.owl-carousel__slide(style="background-image: url('/dist/assets/img/slider/img3.jpg')")
+				.owl-carousel__caption
+					.l-flex.l-flex--lrg.l-flex--vcenter
+						.l-flex__item
+							.owl-carousel__text
+								| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, ut!
+						.l-flex__item
+							a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
+					
 
 
 		//- .rev_slider_wrapper

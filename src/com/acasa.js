@@ -32,15 +32,18 @@ export class Acasa extends ViewModelAbstract {
      */
     initSliders() {
         this.logger.debug('Starting owl-slider');
-        $('#owl-demo').owlCarousel({
-            autoPlay: 3000,
+        $('#owlCarouselHP').owlCarousel({
+            autoPlay: false,
             stopOnHover: true,
-            navigation: true,
+            navigation: false,
             paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
-            autoHeight: true,
-            transitionStyle: 'fade'
+            // autoHeight: true,
+            transitionStyle: 'fade',
+            afterInit: function() {
+                $('.owl-controls').addClass('container container--carousel-pagination hidden-xs');
+            }
         });
     }
 
