@@ -31,7 +31,7 @@ return array(
      *
      */
     '/sustine-facebook/{picture}/{cover}' => array(
-        'post' => require 'views/post-sustine-facebook.php'
+        'get' => require 'views/post-sustine-facebook.php'
     ),
 
 );

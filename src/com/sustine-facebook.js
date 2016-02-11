@@ -8,7 +8,7 @@
 
 import {ViewModelAbstract} from 'lib/view/model/abstract';
 
-import {inject} from 'aurelia-framework';
+// import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
 
@@ -24,10 +24,17 @@ import 'fetch';
  * Component for changing Facebook Profile Picture or Profile Cover
  *
  */
-@inject([HttpClient])
+// @inject([HttpClient])
 export class Facebook extends ViewModelAbstract {
 
     heading = 'Sustine Proiectul pe Facebook';
+
+    /**
+     * because @inject doesn't work.
+     * @method inject
+     * @return {Array}
+     */
+    static inject() { return [HttpClient]; }
 
     /**
      * constructor
@@ -41,6 +48,7 @@ export class Facebook extends ViewModelAbstract {
         this.mrc = null;
         this.mrp = null;
         this.http = http;
+        // console.log('http', this.http, new HttpClient);
     }
 
     /**
@@ -76,9 +84,13 @@ export class Facebook extends ViewModelAbstract {
             $('.main-profile').each((i, img) => {
                 $(img).css('background-image', `url('${self.mrp.data.url}')`);
             });
-            $('.main-cover').each((i, img) => {
-                $(img).css('background-image', `url('${self.mrc.cover.source}')`);
-            });
+            if (self.mrc.cover) {
+                $('.main-cover').each((i, img) => {
+                    $(img).css('background-image', `url('${self.mrc.cover.source}')`);
+                });
+            } else {
+                $('.main-cover:gt(3)').hide();
+            }
         }
     }
 
@@ -139,15 +151,20 @@ export class Facebook extends ViewModelAbstract {
         FB.login(() => { location.reload(); }, {scope: 'publish_actions'});
     }
 
-    // /**
-    //  * [fbChangePicture description]
-    //  * @method fbChangePicture
-    //  * @return {[type]}        [description]
-    //  */
-    // fbChangePicture() {
-    //
-    // }
-    //
+    /**
+     * [fbChangePicture description]
+     * @method fbChangePicture
+     * @return {[type]}        [description]
+     */
+    fbChangePicture() {
+        this.http
+            .fetch('/services/index.php/sustine-facebook/1/0')
+            .then(response => response.json())
+            .then(data => {
+                console.log(data);
+            });
+    }
+
     // /**
     //  * [fbChangeCover description]
     //  * @method fbChangeCover
