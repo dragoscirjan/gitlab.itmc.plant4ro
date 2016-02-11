@@ -144,14 +144,21 @@ Layout
 }
 
 .container {
+    width: 100%;
+    padding: 0 25px;
+
+    @media (min-width: 768px) {
+        padding: 0 70px;
+    }
+
     @media (min-width: 992px) {
         width: 990px;
     }
 
     &--carousel,
-    &--carousel-pagination  {
+    &--carousel-pagination,
+    &--carousel-cta  {
         position: absolute;
-        top: 65%;
         left: 50%;
 
         -webkit-transform: translateX(-50%);
@@ -163,11 +170,23 @@ Layout
     }
 
     &--carousel {
-        top: 65%;
+        top: 47%;
+
+        @media (min-width: 768px) {
+            top: 65%;
+        }
     }
 
     &--carousel-pagination {
         top: 60%;
+    }
+
+    &--carousel-cta {
+        top: 60%;
+
+        @media (min-width: 768px) {
+            top: 65%;
+        }
     }
 }
 
@@ -336,7 +355,7 @@ Modules
     }
 
     &--showcase {
-        margin: 0 -15px 70px;
+        margin: 0 -25px 70px; // make it fullscreen, so negate the container's left and right padding
         // flex-direction: column;
 
         > .media__body {
@@ -429,7 +448,7 @@ Navbar
         float: none;
         width: 200px;
         height: auto;
-        margin: 40px auto 0;
+        margin-top: 40px;
         padding: 0;
 
         @media (min-width: 768px) {
@@ -668,55 +687,121 @@ Navbar
 /*
    Carousel
    ========================================================================== */
-.owl {
-    &-carousel {
-        &--hp {
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100vh;
+.owl-carousel {
+    &--hp {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        height: 100vh;
 
-            .owl-carousel__slide {
-                height: 100vh;
-                background-repeat: no-repeat;
-                background-size: cover;
-                background-position: center;
+        .owl-carousel__img {
+            height: 100vh;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .owl-carousel__caption {
+            font-size: 20px;
+            text-transform: uppercase;
+
+            @media (min-width: 768px) {
+                width: 50%;
+            }
+
+            @media (min-width: 992px) {
+                font-size: 24px;
+            }
+
+            @media (min-width: 1400px) {
+                font-size: 28px;
             }
         }
-        &__text {
-            font-size: 28px;
-            text-transform: uppercase;
+
+        .owl-controls {
+            .owl-pagination {
+                margin: 0 -8px;
+            }
+
+            .owl-page {
+                display: inline-block;
+                padding: 0 8px;
+
+                span {
+                    display: block;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                    background-color: rgba(255, 255, 255, .75);
+
+                    -webkit-transition: all .3s ease-in-out;
+                    transition: all .3s ease-in-out;
+                }
+
+                &:hover,
+                &.active {
+                    span {
+                        background-color: #fff;
+                        -webkit-transform: scale(1.8);
+                                transform: scale(1.8);
+                    }
+                }
+            }
+        }
+    }
+}
+
+/*
+   Donation
+   ========================================================================== */
+
+.donation {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+
+    &__btn {
+        display: block;
+        width: 50px;
+        height: 50px;
+        margin: 0 auto 25px;
+        padding: 0;
+        border: 0;
+        background-color: @secondary-color;
+        color: #fff;
+
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+
+        -webkit-transition: all .3s ease-in-out;
+                transition: all .3s ease-in-out;
+
+        i {
+            font-size: 24px;
+            line-height: 50px;
+        }
+
+        &:hover {
+            background-color: darken(@secondary-color, 5%);
         }
     }
 
-    &-controls {
-        .owl-pagination {
-            margin: 0 -8px;
-        }
+    &__title {
+        font-family: AvenirBlack, sans-serif;
+        font-size: 20px;
+        text-transform: uppercase;
+        text-decoration: underline;
+    }
 
-        .owl-page {
-            display: inline-block;
-            padding: 0 8px;
+    &__amount {
+        display: block;
+        margin-top: 15px;
+        font-family: AvenirBlack, sans-serif;
+        font-size: 75px;
+        line-height: 1;
 
-            span {
-                display: block;
-                width: 10px;
-                height: 10px;
-                border-radius: 50%;
-                background-color: rgba(255, 255, 255, .75);
-
-                -webkit-transition: all .3s ease-in-out;
-                transition: all .3s ease-in-out;
-            }
-
-            &:hover,
-            &.active {
-                span {
-                    background-color: #fff;
-                    -webkit-transform: scale(1.8);
-                            transform: scale(1.8);
-                }
-            }
+        @media (min-width: 768px) {
+            font-size: 168px;
         }
     }
 }

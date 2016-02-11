@@ -11,20 +11,21 @@ template
 	require(from='../assets/plugins/owl.carousel/owl-carousel/owl.carousel.min.js')
 
 	.au-animate(class.bind="'au-animate ' + routeConfig.name")
+		.donation
+			button#donationToggler.donation__btn(type="button")
+				i.fa.fa-search
+			span.donation__title Copaci donati
+			span#donationAmount.donation__amount 203.491
 		//- Carousel
 		#owlCarouselHP.owl-carousel.owl-carousel--hp
-			.owl-carousel__slide(style="background-image: url('/dist/assets/img/slider/img1.jpg')")
+			.owl-carousel__slide
+				.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img1.jpg')")
 				.container.container--carousel
 					.owl-carousel__caption
-						.l-flex.l-flex--lrg.l-flex--vcenter
-							.l-flex__item
-								.owl-carousel__text
-									strong Padurile Romaniei 
-									|  reprezinta cea mai importanta 
-									strong resursa naturala regenerabila
-									|  a tarii si indeplineste multiple roluri
-							.l-flex__item
-								a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
+						strong Padurile Romaniei 
+						|  reprezinta cea mai importanta 
+						strong resursa naturala regenerabila
+						|  a tarii si indeplineste multiple roluri
 			.owl-carousel__slide(style="background-image: url('/dist/assets/img/slider/img2.jpg')")
 				.owl-carousel__caption
 					.l-flex.l-flex--lrg.l-flex--vcenter
@@ -41,7 +42,8 @@ template
 								| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, ut!
 						.l-flex__item
 							a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
-					
+		.container.container--carousel-cta				
+			a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
 
 
 		//- .rev_slider_wrapper
