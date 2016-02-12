@@ -6,11 +6,12 @@
  * @license   http://planteazapentruromania.ro/#/application-license Commercial
  */
 
-import {ViewModelAbstract} from 'lib/view/model/abstract';
-
-// import {inject} from 'aurelia-framework';
+import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
+
+import {AppConfig} from 'lib/app/config';
+import {ViewModelAbstract} from 'lib/view/model/abstract';
 
 //import {computedFrom} from 'aurelia-framework';
 // https://developers.facebook.com/docs/graph-api/using-graph-api
@@ -24,7 +25,7 @@ import 'fetch';
  * Component for changing Facebook Profile Picture or Profile Cover
  *
  */
-// @inject([HttpClient])
+@inject(AppConfig, HttpClient)
 export class Facebook extends ViewModelAbstract {
 
     heading = 'Sustine Proiectul pe Facebook';
@@ -34,7 +35,7 @@ export class Facebook extends ViewModelAbstract {
      * @method inject
      * @return {Array}
      */
-    static inject() { return [HttpClient]; }
+    // static inject() { return [HttpClient]; }
 
     /**
      * constructor
@@ -43,8 +44,8 @@ export class Facebook extends ViewModelAbstract {
      * @param  {HttpClient}    http [description]
      * @return {this}
      */
-    constructor(http) {
-        super();
+    constructor(appConfig, http) {
+        super(appConfig);
         this.mrc = null;
         this.mrp = null;
         this.http = http;
@@ -157,10 +158,11 @@ export class Facebook extends ViewModelAbstract {
      * @return {[type]}        [description]
      */
     fbChangePicture() {
-        this.http
-            .fetch('/services/index.php/sustine-facebook/1/0')
-            .then(response => response.json())
-            .then(data => {
+        $.get(this.appConfig.getPhpUrl('sustine-facebook/1/0'))
+        // this.http
+        //     .fetch(this.appConfig.getPhpUrl('sustine-facebook/1/0'))
+        //     .then(response => response.json())
+            .then((data) => {
                 console.log(data);
             });
     }

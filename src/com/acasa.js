@@ -32,8 +32,9 @@ export class Acasa extends ViewModelAbstract {
      */
     initSliders() {
         this.logger.debug('Starting owl-slider');
+
         $('#owlCarouselHP').owlCarousel({
-            autoPlay: false,
+            autoPlay: true,
             stopOnHover: true,
             navigation: false,
             paginationSpeed: 1000,

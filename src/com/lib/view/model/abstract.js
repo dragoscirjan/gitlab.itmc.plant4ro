@@ -1,14 +1,26 @@
 
+import {inject} from 'aurelia-framework';
 import {LogManager} from 'aurelia-framework';
 
+import {AppConfig} from 'lib/app/config';
+
+@inject(AppConfig)
 export class ViewModelAbstract  {
+
+    /**
+     * [inject description]
+     * @method inject
+     * @return {Array} [description]
+     */
+    // static inject() { return [AppConfig]; }
 
     /**
      * [constructor description]
      * @method constructor
      * @return {this}    [description]
      */
-    constructor() {
+    constructor(appConfig) {
+        this.appConfig = appConfig;
         this.logger = LogManager.getLogger('view-model-abstract');
     }
 
