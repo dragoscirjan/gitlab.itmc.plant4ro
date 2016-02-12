@@ -158,36 +158,36 @@ Layout
     &--carousel,
     &--carousel-pagination,
     &--carousel-cta  {
-        position: absolute;
-        left: 50%;
-
-        -webkit-transform: translateX(-50%);
-                transform: translateX(-50%);
+        // position: absolute;
+        // left: 50%;
+        //
+        // -webkit-transform: translateX(-50%);
+        //         transform: translateX(-50%);
 
         @media (min-width: 1400px) {
             width: 1300px;
         }
     }
 
-    &--carousel {
-        top: 47%;
-
-        @media (min-width: 768px) {
-            top: 65%;
-        }
-    }
-
-    &--carousel-pagination {
-        top: 60%;
-    }
-
-    &--carousel-cta {
-        top: 60%;
-
-        @media (min-width: 768px) {
-            top: 65%;
-        }
-    }
+    // &--carousel {
+    //     top: 47%;
+    //
+    //     @media (min-width: 768px) {
+    //         top: 65%;
+    //     }
+    // }
+    //
+    // &--carousel-pagination {
+    //     top: 60%;
+    // }
+    //
+    // &--carousel-cta {
+    //     top: 60%;
+    //
+    //     @media (min-width: 768px) {
+    //         top: 65%;
+    //     }
+    // }
 }
 
 .l-flex {
@@ -214,6 +214,20 @@ Layout
         }
     }
 
+    &--vcenter {
+        -webkit-align-items: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -ms-grid-row-align: center;
+            align-items: center;
+    }
+
+    &--hcenter {
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+    }
 
     &--lrg {
         -webkit-box-direction: normal;
@@ -285,7 +299,7 @@ Modules
             transition: all .3s ease-in-out;
 
     text-transform: uppercase;
-    border: 1px solid @secondary-color;
+    border: 2px solid @secondary-color;
     border-radius: 4em;
 
     &:hover {
@@ -685,14 +699,28 @@ Navbar
 }
 
 /*
+   Bg image
+   ========================================================================== */
+.bg-img {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    // transition: background-image 1s ease-in-out;
+}
+
+
+/*
    Carousel
    ========================================================================== */
 .owl-carousel {
     &--hp {
-        position: absolute;
-        top: 0;
-        width: 100%;
-        height: 100vh;
+        // position: absolute;
+        // top: 0;
+        // width: 100%;
+        // height: 100vh;
+        // z-index: -1;
 
         .owl-carousel__img {
             height: 100vh;
@@ -756,8 +784,6 @@ Navbar
    ========================================================================== */
 
 .donation {
-    position: relative;
-    z-index: 1;
     text-align: center;
 
     &__btn {
@@ -804,7 +830,165 @@ Navbar
             font-size: 168px;
         }
     }
+
+    &__toggle {
+        position: fixed;
+        z-index: 4;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        padding: 50px 25px 50px 100px;
+
+        -webkit-transition: -webkit-transform .3s ease-in-out;
+                transition: -webkit-transform .3s ease-in-out;
+                transition:         transform .3s ease-in-out;
+                transition:         transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+        -webkit-transform: translateX(100%);
+                transform: translateX(100%);
+
+        color: @primary-color;
+        background-color: @bg-color;
+
+        @media (min-width: 768px) {
+            left: auto;
+
+            padding: 100px 70px 100px 200px;
+        }
+
+        .is-donation-open & {
+            -webkit-transform: translateX(0);
+                    transform: translateX(0);
+        }
+    }
+
+    &__wrap {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+
+        height: 100%;
+    }
+
+    &__close {
+        position: absolute;
+        top: 30px;
+        left: 50%;
+
+        width: 44px;
+        height: 44px;
+
+        -webkit-transform: translateX(-50%);
+                transform: translateX(-50%);
+
+        border: 1px solid @primary-color;
+        border-radius: 50%;
+        background-color: transparent;
+
+        font-size: 20px;
+    }
+
+
+    &__side-title {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+
+        -webkit-transform: translate(-80%, -50%) rotate(-90deg);
+                transform: translate(-80%, -50%) rotate(-90deg);
+        text-transform: uppercase;
+
+        color: #fff;
+
+        font-family: AvenirBlack, sans-serif;
+        font-size: 44px;
+
+        @media (min-width: 768px) {
+            font-size: 88px;
+        }
+    }
+
+    &__list {
+        margin: 0;
+        padding: 0;
+        border-top: 1px solid @primary-color;
+        border-bottom: 1px solid @primary-color;
+        list-style: none;
+    }
+
+    &__item {
+        padding: 25px 0;
+
+        & + .donation__item {
+            border-top: 1px solid @primary-color;
+        }
+    }
 }
+
+/*
+   Donator
+   ========================================================================== */
+
+.donator {
+    &__details {
+        position: relative;
+
+        padding-bottom: 20px;
+
+        text-align: center;
+        text-transform: uppercase;
+
+        font-size: 14px;
+
+        &:after {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+
+            content: '\f002';
+            -webkit-transform: translateX(-50%) rotate(45deg);
+                    transform: translateX(-50%) rotate(45deg);
+
+            color: @secondary-color;
+
+            font-family: FontAwesome;
+        }
+    }
+
+    &__name {
+        display: block;
+
+        text-align: center;
+
+        color: @secondary-color;
+
+        font-family: AvenirBlack, sans-serif;
+    }
+
+    &__location {
+        display: block;
+
+        text-align: center;
+
+        font-family: AvenirBook, sans-serif;
+    }
+
+    &__donation {
+        font-family: AvenirBlack, sans-serif;
+        font-size: 30px;
+    }
+}
+
 
 
 /*

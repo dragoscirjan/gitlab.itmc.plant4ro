@@ -1,13 +1,13 @@
 template(bindable='router')
 	header#header
 		nav.navbar(role='navigation')
-			.navbar-header
+			.navbar-header(class.bind="menuToggleActive ? 'is-nav-open' : ''")
 				//- Spinner Candidates
 				//- http://codepen.io/GiVe/pen/LEEWqX - Lucky winner
 				//- http://codepen.io/jonathanhooker/pen/wKaXPV
 				//- http://codepen.io/Haasbroek/pen/gbqYyj
 				//- http://codepen.io/teodormoq/pen/WbXRWj
-				button(type='button', class.bind="router.isNavigating ? 'navbar-toggler spinner' : 'navbar-toggler'")               
+				button(type='button', class.bind="router.isNavigating ? 'navbar-toggler spinner' : 'navbar-toggler'", click.delegate="menuToggle")               
 					span.icon-bar            
 					span.icon-bar             
 					span.icon-bar
