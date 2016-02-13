@@ -7,6 +7,6 @@ export class Proiect extends ViewModelAbstract {
     /**
      * @type {String}
      */
-    heading = 'Proiect';
+    heading = 'Planteaza pentru Romania';
 
 }

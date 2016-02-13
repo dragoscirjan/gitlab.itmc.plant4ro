@@ -19,28 +19,18 @@ export class Acasa extends ViewModelAbstract {
     heading = 'Planteaza pentru Romania';
 
     /**
+     * [donatorsCount description]
+     * @type {String}
+     */
+    donatorsCount = '203.491'
+
+    /**
      * [attached description]
      * @method attached
      */
     attached() {
         this.initSliders();
-        this.donationToggleInit();
-    }
-
-    /**
-     * [imgTrigger description]
-     * @param  {[type]} $currentSlide [description]
-     * @return {[type]}               [description]
-     */
-    imgTrigger($currentSlide) {
-        const imgSrc = $currentSlide.data('img');
-        const imgUrl = 'url("' + imgSrc + '")';
-
-        if (!$('#bgImg').length) {
-            $('#wrapper').prepend('<div id="bgImg" class="bg-img"/>');
-        } else {
-            $('#bgImg').css('background-image', imgUrl);
-        }
+        // this.donationToggleInit();
     }
 
     /**
@@ -95,6 +85,12 @@ export class Acasa extends ViewModelAbstract {
             const number = $(this).data('owlPage');
             $sliderImg.trigger('owl.goTo', number);
         });
+    }
+
+    toggleDonatorsActive = false;
+
+    toggleDonators() {
+        this.toggleDonatorsActive = !this.toggleDonatorsActive;
     }
 
     /**
