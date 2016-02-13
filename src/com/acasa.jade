@@ -19,6 +19,10 @@ template
 					.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img2.jpg')")
 				.owl-carousel__slide
 					.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img3.jpg')")
+				.owl-carousel__slide
+					.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img4.jpg')")
+				.owl-carousel__slide
+					.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img5.jpg')")
 			#donation.donation(class.bind="toggleDonatorsActive ? 'is-donation-open' : ''")
 				button#donationToggler.donation__btn(type="button", click.trigger="toggleDonators()")
 					i.fa.fa-search
@@ -28,6 +32,8 @@ template
 					button#donationClose.donation__close(type="button", click.trigger="toggleDonators()") x
 					.donation__side-title Donatori
 					.donation__wrap
+						.donation__side-title 
+							.donation__rotate Donatori
 						ul#donationList.donation__list
 							li.donation__item
 								.donator
@@ -87,7 +93,7 @@ template
 									//- | Intra si tu in "Echipa Nationala de Plantat a Romaniei"  plantand pentru Romania si hai sa scriem 
 									//- | istoria impreuna!
 					.l-flex__item.col-xs-12.col-sm-6
-						a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
+						a.btn.btn--secondary.h-pull-right-lrg(href="#") Doneaza un copac
 		
 		
 		
@@ -108,7 +114,7 @@ template
 		//- 						| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam cumque, 
 		//- 						| nostrum, laboriosam ducimus qui officia provident eaque numquam minus enim?
 		//- 				.l-flex__item
-		//- 					a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
+		//- 					a.btn.btn--secondary.h-pull-right-lrg(href="#") Doneaza un copac
 		//- 	.owl-carousel__slide(style="background-image: url('/dist/assets/img/slider/img3.jpg')")
 		//- 		.owl-carousel__caption
 		//- 			.l-flex.l-flex--lrg.l-flex--vcenter
@@ -116,6 +122,6 @@ template
 		//- 					.owl-carousel__text
 		//- 						| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, ut!
 		//- 				.l-flex__item
-		//- 					a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
+		//- 					a.btn.btn--secondary.h-pull-right-lrg(href="#") Doneaza un copac
 		//- .container.container--carousel-cta				
-		//- 	a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
+		//- 	a.btn.btn--secondary.h-pull-right-lrg(href="#") Doneaza un copac

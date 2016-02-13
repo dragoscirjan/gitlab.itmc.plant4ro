@@ -3,21 +3,25 @@ template
 		.container
 			h1.page-title ${heading}
 			p 
-			| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis similique ab eligendi est corporis 
-			| aperiam ex architecto, aliquam nobis nam iste, unde totam assumenda mollitia autem in suscipit quod quasi.
-			p
-			| Deserunt velit at perspiciatis iste quia, officia autem quo suscipit debitis nobis consequuntur placeat magnam 
-			| ipsa dolorum odio a voluptatum earum cupiditate possimus rerum odit illum. Tempore facere voluptatem cum.
-			p
-			| Perspiciatis harum exercitationem voluptates modi assumenda soluta similique vel, quo provident veritatis 
-			| reiciendis velit architecto vitae minima distinctio nisi, incidunt, placeat corporis voluptatem aliquid 
-			| recusandae accusamus quia dolore. Fuga, aliquam.
-			
-			.alert-facebook-auth(role='alert', if.bind='!fbIsLoggedIn')
-				button#facebook-login.btn.btn-default.btn-facebook-login(click.delegate="fbLogin()")
+				strong Planteaza pentru Romania 
+				|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
+			.fb-head
+				.fb-head__cover
+					img.img-responsive(src="dist/assets/img/fb/fb-default-cover-img.jpg", alt="")
+					.fb-head__profile
+						img.img-responsive(src="dist/assets/img/fb/fb-default-profile-img.jpg", alt="")
+				.tooltip.top.tooltip--fb-cover.hidden-xs
+					.tooltip-arrow
+					.tooltip-inner Alege un cover
+				.tooltip.top.tooltip--fb-profile.hidden-xs
+					.tooltip-arrow
+					.tooltip-inner Alege o imagine de profil
+
+			.alert-facebook-auth.text-center(role='alert', if.bind='!fbIsLoggedIn')
+				button#facebook-login.btn.btn--tertiary(click.delegate="fbLogin()")
 					i.fa.fa-facebook
 					| Autentifica-te
-			
+
 			div(class.bind="'row facebook-choice ' + (fbIsLoggedIn ? '' : 'hide')")
 				//- .col-md-6.facebook-image-profile
 				.row
@@ -27,8 +31,8 @@ template
 						div
 							input(type="radio", name="fb-image-profile-radio", value=i)
 				.row
-					button.btn.btn-default(click.delegate="fbChangePicture()") Schimba-ti imaginea de profil
-				
+					button.btn.btn--secondary(click.delegate="fbChangePicture()") Schimba-ti imaginea de profil
+
 			//- .col-md-6.facebook-image-cover
 			.row
 			each src, i in covers
@@ -40,6 +44,6 @@ template
 			.row
 				button.btn.btn-default(click.delegate="fbChangeCover()") Schimba-ti imaginea de cover
 
-			
+
 		//- .fb-login-button
 		//- .fb-like(data-share='true', data-width='450', data-show-faces='true')
