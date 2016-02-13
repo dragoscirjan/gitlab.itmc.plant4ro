@@ -13,14 +13,16 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class Facebook extends FacebookSdk\Facebook {
 
-
+    /**
+     * @param Request $request
+     * @return Response
+     */
     function run(Request $request) {
         return $this->tryCall(function() {
             // https://developers.facebook.com/docs/php/howto/example_access_token_from_javascript
             // try to obtaining facebook js access token
-            return $this->getJavaScriptHelper()->getAccessToken();
+            return $this->getAccessToken();
         }, function($token) use ($request) {
-            var_dump($token);
             // if success
             // if cover selected, try to upload cover
             if ($request->get('cover')) {
@@ -38,6 +40,38 @@ class Facebook extends FacebookSdk\Facebook {
             return $this->response500($message);
         });
     }
+
+    /**
+     * @param $id    int
+     * @param $token string
+     * @return Response
+     */
+    function picture($id, $token)
+    {
+        // prepare image upload
+        $image = array(
+            'caption' => 'Sustin Planteaza pentru Romania',
+            'source' => $this->fileToUpload('pictures/picture-1.jpg'),
+        );
+        // try to upload image
+        return $this->tryCall(function() use ($image, $token) {
+            // post image
+            return $this->post('/me/photos', $image, $token);
+        }, function($response) use ($token) {
+            // return picture id
+            return $this->response(array(
+                'error' => 0,
+                'id' => $response->getDecodedBody()['id']
+            ));
+        }, function($message) {
+            // send error in any other case
+            return $this->response500($message);
+        });
+    }
+
+    /**********************************************************************************************
+     * Response
+     **********************************************************************************************/
 
     /**
      * @param $message
@@ -61,7 +95,6 @@ class Facebook extends FacebookSdk\Facebook {
             Response::HTTP_BAD_REQUEST
         );
     }
-
     /**
      * @param $message
      * @return Response
@@ -73,54 +106,11 @@ class Facebook extends FacebookSdk\Facebook {
         );
     }
 
-    //https://github.com/ashwin47/Net-Neutral/blob/master/update.php
-    function picture($id, $token)
-    {die();
-        // prepare image upload
-        $image = array(
-            'caption' => 'Sustin Planteaza pentru Romania',
-            'source' => $this->fileToUpload('pictures/picture-1.jpg'),
-        );
-
-        return $this->tryCall(function() use ($image, $token) {
-            // post image
-            return $this->post('/me/photos', $image, $token);
-        }, function($response) use ($token) {
-            // return picture id
-            return $this->response(array(
-                'error' => 0,
-                'id' => $response->getDecodedBody()['id']
-            ));
-//            $graphNode = $response->getGraphNode();
-//            var_dump($response);
-//            echo '<hr />';
-//            var_dump($graphNode);
-//            echo '<hr />';
-//            var_dump($response->getDecodedBody());
-//            echo '<hr />';
-//            var_dump($this->get('/' . $response->getDecodedBody()['id'], $token));
-//            die();
-//            http://stackoverflow.com/questions/4370669/facebook-api-php-is-it-possible-to-change-a-users-profile-image-via-fb-graph
-//            http://www.sanwebe.com/2012/09/change-facebook-cover-or-profile-pic-with-php
-//            object(Facebook\GraphNodes\GraphNode)#86 (1) {
-//            ["items":protected]=>
-//  array(2) {
-//                ["id"]=>
-//    string(16) "1231598333535995"
-//    ["post_id"]=>
-//    string(33) "1230886800273815_1231598333535995"
-//  }
-//}
-//            return $this->response(array('error' => 0, 'message' => 'Te pup, pa pa!'));
-        }, function($message) {
-            // send error in any other case
-            return $this->response500($message);
-        });
-
-    }
-
     /**
-     * @param $callback closure
+     * @param $try     callback
+     * @param $resolve callback
+     * @param $reject  callback
+     * @return Response
      */
     function tryCall($try, $resolve, $reject) {
         try {
@@ -131,20 +121,68 @@ class Facebook extends FacebookSdk\Facebook {
             return call_user_func_array($reject, array(array(
                 'error' => 'Facebook Graph API returned an error.',
                 'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             )));
         } catch(FacebookSdk\Exceptions\FacebookSDKException $e) {
             return call_user_func_array($reject, array(array(
                 array(
                     'error' => 'Facebook SDK returned an error.',
                     'message' => $e->getMessage(),
+                    'trace' => $e->getTraceAsString(),
                 )
             )));
         } catch(\Exception $e) {
             return call_user_func_array($reject, array(array(
                 'error' => 'Facebook SDK failed.',
                 'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
             )));
         }
+
+
+    }
+
+    /**********************************************************************************************
+     * Access Token
+     **********************************************************************************************/
+
+    /**
+     * @return \Facebook\Authentication\AccessToken|string|null
+     */
+    function getAccessToken() {
+        if ($this->hasSessionAccessToken()) {
+            return $this->getSessionAccessToken();
+        }
+        $token = $this->getJavaScriptHelper()->getAccessToken();
+        $ltToken = json_decode(
+            $this->get('/oauth/access_token?grant_type=fb_exchange_token&client_id=' . $this->getApp()->getId() .
+                '&client_secret=' . $this->getApp()->getSecret() . '&fb_exchange_token=' . ((string) $token), $token)->getBody()
+        );
+        $this->setSessionAccessToken($ltToken->access_token);
+        return $this->getSessionAccessToken();
+    }
+
+    /**
+     * @return string
+     */
+    function getSessionAccessToken() {
+        return $_SESSION['fb_access_token'];
+    }
+
+    /**
+     * @return bool
+     */
+    function hasSessionAccessToken() {
+        return !empty($_SESSION['fb_access_token']);
+    }
+
+    /**
+     * @param string $token
+     * @return string
+     */
+    function setSessionAccessToken($token) {
+        $_SESSION['fb_access_token'] = (string) $token;
+        return $_SESSION['fb_access_token'];
     }
 
 }

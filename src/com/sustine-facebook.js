@@ -149,7 +149,7 @@ export class Facebook extends ViewModelAbstract {
     fbLogin() {
         this.logger.debug('fb-sdk / attempting login');
         // try facebook login and reload location
-        FB.login(() => { location.reload(); }, {scope: 'publish_actions'});
+        FB.login(() => { location.reload(); }, {scope: 'publish_actions,read_stream,publish_stream,offline_access'});
     }
 
     /**
