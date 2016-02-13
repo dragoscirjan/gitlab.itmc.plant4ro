@@ -52,28 +52,50 @@ export class Acasa extends ViewModelAbstract {
         const self = this;
         this.logger.debug('Starting owl-slider');
 
-        $('#owlCarouselHP').owlCarousel({
+        // HP has two carousel that need to be synced
+        const $sliderImg = $('#owlCarouselHPImg');
+        const $sliderTxt = $('#owlCarouselHPTxt');
+
+        $('#owlCarouselHPImg').owlCarousel({
+            stopOnHover: true,
+            navigation: false,
+            pagination: false,
+            goToFirstSpeed: 2000,
+            singleItem: true,
+            // autoHeight: true,
+            transitionStyle: 'fade'
+        });
+
+        $('#owlCarouselHPTxt').owlCarousel({
             // autoPlay: true,
             stopOnHover: true,
             navigation: false,
             paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
-            // autoHeight: true,
+            autoHeight: true,
             transitionStyle: 'fade',
-            afterInit: function() {
+            afterInit: function(slider) {
                 // $('.owl-controls').addClass('container container--carousel-pagination hidden-xs');
-                const $currentSlide = $(this.owl.userItems[this.owl.currentItem]);
-                self.imgTrigger($currentSlide);
+                // const $currentSlide = $(this.owl.userItems[this.owl.currentItem]);
+                // self.imgTrigger($currentSlide);
+                // Move the controls before the content
+                this.owlControls.prependTo(slider);
             },
             beforeMove: function() {
                 // $('#bgImg').fadeOut('fast');
             },
             afterMove: function() {
-                const $currentSlide = $(this.owl.userItems[this.owl.currentItem]);
-                self.imgTrigger($currentSlide);
+                // const $currentSlide = $(this.owl.userItems[this.owl.currentItem]);
+                // self.imgTrigger($currentSlide);
                 // $('#bgImg').fadeIn('fast');
             }
+        });
+
+        $sliderTxt.on('click', '.owl-page', function(e){
+            // e.preventDefault();
+            const number = $(this).data('owlPage');
+            $sliderImg.trigger('owl.goTo', number);
         });
     }
 

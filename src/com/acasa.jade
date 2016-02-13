@@ -10,62 +10,69 @@ template
 	//- require(from='../assets/plugins/owl.carousel/owl-carousel/owl.transitions.css')
 	require(from='../assets/plugins/owl.carousel/owl-carousel/owl.carousel.min.js')
 
-	.au-animate(class.bind="'au-animate ' + routeConfig.name")
-		#donation.donation
-			button#donationToggler.donation__btn(type="button")
-				i.fa.fa-search
-			span.donation__title Copaci donati
-			span#donationAmount.donation__amount 203.491
-			.donation__toggle
-				button#donationClose.donation__close(type="button") x
-				.donation__side-title Donatori
-				.donation__wrap
-					ul#donationList.donation__list
-						li.donation__item
-							.donator
-								.donator__details
-									span.donator__name Samsung
-									span.donator__location Bucuresti, Romania
-								span.donator__donation 200
-						li.donation__item
-							.donator
-								.donator__details
-									span.donator__name Marius Popa
-									span.donator__location Baia Mare, Romania
-								span.donator__donation 40
-						li.donation__item
-							.donator
-								.donator__details
-									span.donator__name Cristina Stoica
-									span.donator__location Cluj-Napoca, Romania
-								span.donator__donation 40
-						li.donation__item
-							.donator
-								.donator__details
-									span.donator__name John Timmons
-									span.donator__location London, UK
-								span.donator__donation 100
-		//- Carousel
-		#owlCarouselHP.owl-carousel.owl-carousel--hp
-			.owl-carousel__slide(data-img="/dist/assets/img/slider/img1.jpg")
-				//- .owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img1.jpg')")
-				.container.container--carousel
-					.owl-carousel__caption
-						strong Padurile Romaniei 
-						|  reprezinta cea mai importanta 
-						strong resursa naturala regenerabila
-						|  a tarii si indeplineste multiple roluri
-			.owl-carousel__slide(data-img="/dist/assets/img/slider/img2.jpg")
-				.container.container--carousel
-					.owl-carousel__caption
-						| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam cumque, 
-						| nostrum, laboriosam ducimus qui officia provident eaque numquam minus enim?
-			.owl-carousel__slide(data-img="/dist/assets/img/slider/img3.jpg")
-				.container.container--carousel
-					.owl-carousel__caption
-						| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, ut!
-		.container.container--carousel-cta				
-			a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
+	#content
+		.l-content-wrap.au-animate(class.bind="'au-animate ' + routeConfig.name")
+			#owlCarouselHPImg.owl-carousel--hp-img
+				.owl-carousel__slide
+					.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img1.jpg')")
+				.owl-carousel__slide
+					.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img2.jpg')")
+				.owl-carousel__slide
+					.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img3.jpg')")
+			#donation.donation
+				button#donationToggler.donation__btn(type="button")
+					i.fa.fa-search
+				span.donation__title Copaci donati
+				span#donationAmount.donation__amount 203.491
+				.donation__toggle
+					button#donationClose.donation__close(type="button") x
+					.donation__side-title Donatori
+					.donation__wrap
+						ul#donationList.donation__list
+							li.donation__item
+								.donator
+									.donator__details
+										span.donator__name Samsung
+										span.donator__location Bucuresti, Romania
+									span.donator__donation 200
+							li.donation__item
+								.donator
+									.donator__details
+										span.donator__name Marius Popa
+										span.donator__location Baia Mare, Romania
+									span.donator__donation 40
+							li.donation__item
+								.donator
+									.donator__details
+										span.donator__name Cristina Stoica
+										span.donator__location Cluj-Napoca, Romania
+									span.donator__donation 40
+							li.donation__item
+								.donator
+									.donator__details
+										span.donator__name John Timmons
+										span.donator__location London, UK
+									span.donator__donation 100
+			.container.container--hp
+				.l-flex.l-flex--lrg.l-flex--vcenter.row
+					.l-flex__item.col-xs-12.col-sm-6
+						//- Carousel
+						#owlCarouselHPTxt.owl-carousel.owl-carousel--hp-txt
+							.owl-carousel__slide(data-img="/dist/assets/img/slider/img1.jpg")
+								.owl-carousel__caption
+									strong Padurile Romaniei 
+									|  reprezinta cea mai importanta 
+									strong resursa naturala regenerabila
+									|  a tarii si indeplineste multiple roluri
+							.owl-carousel__slide(data-img="/dist/assets/img/slider/img2.jpg")
+								.owl-carousel__caption
+									| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam cumque, 
+									| nostrum, laboriosam ducimus qui officia provident eaque numquam minus enim?
+							.owl-carousel__slide(data-img="/dist/assets/img/slider/img3.jpg")
+								.owl-carousel__caption
+									| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, ut!
+					.l-flex__item.col-xs-12.col-sm-6
+						a.btn.btn--primary.h-pull-right-lrg(href="#") Doneaza un copac
 		
 		
 		

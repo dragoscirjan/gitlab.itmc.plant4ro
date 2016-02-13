@@ -56,13 +56,9 @@ export class App {
      */
     attached() {
         // console.log(this);
-        // this.menuToggleInit();
+        this.menuToggleInit();
     }
-    menuToggleActive = false;
-    menuToggle() {
-        this.menuToggleActive = !this.menuToggleActive;
-        console.log(this.menuToggleActive);
-    }
+
     /**
      * [menuInit description]
      * @method menuInit
