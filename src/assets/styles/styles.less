@@ -118,6 +118,8 @@ Layout
         -ms-flex-direction: column;
             flex-direction: column; // [3]
 
+    overflow: hidden;
+
     &.wrapper-hp {
         position: relative;
         color: #fff;
@@ -129,10 +131,14 @@ Layout
 }
 
 #header {
-    height: 200px;
+    height: 230px;
 
-    @media (min-width: 768px) {
-        height: 20vmin; /* height of the fixed navbar */
+    .wrapper-hp & {
+        height: 200px;
+
+        @media (min-width: 768px) {
+            height: 20vmin; /* height of the fixed navbar */
+        }
     }
 }
 
@@ -682,7 +688,7 @@ Navbar
                 color: @primary-color;
 
                 font-size: 24px;
-                line-height: inherit;
+                line-height: 1;
 
                 &:hover,
                 &:focus {
@@ -799,7 +805,18 @@ Navbar
     margin-bottom: 5vmin;
     text-align: center;
 
+    /**
+     * This prevents creating a new stacking context if applied
+     * directly to the .direction__btn element. In turn, this prevents
+     * the pseudo-element to appear below it.
+     */
+    &__btn-wrap {
+        -webkit-transform: rotate(45deg);
+                transform: rotate(45deg);
+    }
+
     &__btn {
+        position: relative;
         display: block;
         width: 50px;
         height: 50px;
@@ -808,9 +825,6 @@ Navbar
         border: 0;
         background-color: @secondary-color;
         color: #fff;
-
-        -webkit-transform: rotate(45deg);
-                transform: rotate(45deg);
 
         -webkit-transition: all .3s ease-in-out;
                 transition: all .3s ease-in-out;
@@ -823,9 +837,29 @@ Navbar
         &:hover {
             background-color: darken(@secondary-color, 5%);
         }
+
+        &:before {
+            position: absolute;
+            z-index: -1;
+            top: 50%;
+            left: 50%;
+
+            display: block;
+
+            width: 963px;
+            height: 963px;
+
+            content: '';
+            -webkit-transform: translate(-50%, -50%);
+                    transform: translate(-50%, -50%);
+
+            background: transparent url('img/triangles.png') no-repeat center;
+        }
+
     }
 
     &__title {
+        position: relative;
         font-family: AvenirBlack, sans-serif;
         font-size: 20px;
         text-transform: uppercase;
@@ -833,6 +867,7 @@ Navbar
     }
 
     &__amount {
+        position: relative;
         display: block;
         margin-top: 15px;
         font-family: AvenirBlack, sans-serif;
@@ -851,8 +886,9 @@ Navbar
         right: 0;
         bottom: 0;
         left: 0;
+        z-index: 15;
 
-        padding: 50px 25px 50px 100px;
+        padding: 100px 25px;
 
         -webkit-transition: -webkit-transform .3s ease-in-out;
                 transition: -webkit-transform .3s ease-in-out;
@@ -867,7 +903,8 @@ Navbar
         @media (min-width: 768px) {
             left: auto;
 
-            padding: 100px 70px 100px 200px;
+            padding-left: 70px;
+            padding-right: 70px;
         }
 
         .is-donation-open & {
@@ -911,23 +948,40 @@ Navbar
         font-size: 20px;
     }
 
-
     &__side-title {
-        position: absolute;
-        top: 50%;
-        left: 50%;
+        // position: absolute;
+        // top: 50%;
+        // left: 50%;
 
-        -webkit-transform: translate(-80%, -50%) rotate(-90deg);
-                transform: translate(-80%, -50%) rotate(-90deg);
+        display: inline-block;
+        overflow: hidden;
+
+        width: 1.5em;
+        margin-right: 10%;
+
         text-transform: uppercase;
 
         color: #fff;
 
         font-family: AvenirBlack, sans-serif;
-        font-size: 44px;
+        font-size: 68px;
+        line-height: 1.5;
 
         @media (min-width: 768px) {
-            font-size: 88px;
+            font-size: 80px;
+        }
+    }
+
+    &__rotate {
+        display: inline-block;
+        -webkit-transform: translate(0, 100%) rotate(-90deg);
+                transform: translate(0, 100%) rotate(-90deg);
+        transform-origin: 0 0;
+
+        &:before {
+            content: '';
+            float: left;
+            margin-top: 100%;
         }
     }
 
