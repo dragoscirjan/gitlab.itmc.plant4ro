@@ -158,13 +158,29 @@ export class Facebook extends ViewModelAbstract {
      * @return {[type]}        [description]
      */
     fbChangePicture() {
-        $.get(this.appConfig.getPhpUrl('sustine-facebook/1/0'))
-        // this.http
-        //     .fetch(this.appConfig.getPhpUrl('sustine-facebook/1/0'))
-        //     .then(response => response.json())
-            .then((data) => {
-                console.log(data);
-            });
+        const self = this;
+        this.fbLoginCheck().then(() => {
+            self.logger.debug('fb-sdk / permissions granted');
+            $.ajax({
+                url: this.appConfig.getPhpUrl('sustine-facebook/1/0'),
+                dataType: 'json'
+            })
+            // self.http
+                // .fetch(self.appConfig.getPhpUrl('sustine-facebook/1/0'))
+                // .then(response => response.json())
+                .then((data) => {
+                    window.open(
+                        `https://mobile.facebook.com/photo.php?fbid=1232098750152620&id=100000575215180&prof&ls=your_photo_permalink&ref_component=mbasic_photo_permalink`,
+                        'Sustin Planteaza pentru Romania',
+                        'width=400,height=400'
+                    );
+                    console.log(data);
+                    console.log(`http://www.facebook.com/photo.php?fbid=${data.id}&type=1&makeprofile=1&makeuserprofile=1`);
+                    console.log(`http://www.facebook.com/photo.php?pid=${data.id}&id=${FB.getUserID()}&makeprofile=1`);
+                });
+        }).catch((x, e) => {
+            self.logger.warn('fb-sdk / permission denied', x, e);
+        });
     }
 
     // /**
