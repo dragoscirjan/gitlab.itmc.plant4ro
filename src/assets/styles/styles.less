@@ -55,7 +55,7 @@ Base
 ========================================================================== */
 
 body {
-    color: @primary-color;
+    color: @text-color;
     background-color: @bg-color;
 
     font-family: 'AvenirBook', sans-serif;
@@ -67,7 +67,7 @@ a {
     -webkit-transition: color .3s ease-in-out;
             transition: color .3s ease-in-out;
 
-    color: @primary-color;
+    color: @text-color;
 
     .wrapper-hp & {
         color: #fff;
@@ -131,13 +131,9 @@ Layout
 }
 
 #header {
-    height: 230px;
-
     .wrapper-hp & {
-        height: 200px;
-
         @media (min-width: 768px) {
-            height: 20vmin; /* height of the fixed navbar */
+            height: 22vmin;
         }
     }
 }
@@ -190,8 +186,8 @@ Layout
         padding: 0 70px;
     }
 
-    @media (min-width: 992px) {
-        width: 990px;
+    @media (min-width: 1200px) {
+        width: 1130px;
     }
 
     &--hp {
@@ -277,7 +273,7 @@ Modules
     margin-bottom: 50px;
     font-family: AvenirBlack, sans-serif;
     font-size: 40px;
-    color: @secondary-color;
+    color: @primary-color;
     text-transform: uppercase;
 
     @media (min-width: 768px) {
@@ -286,7 +282,7 @@ Modules
     }
 
     em {
-        color: @primary-color;
+        color: @secondary-color;
     }
 }
 
@@ -295,23 +291,70 @@ Modules
    Button
    ========================================================================== */
 
-.btn--primary {
+.btn {
     padding: 20px 50px;
 
     -webkit-transition: all .3s ease-in-out;
             transition: all .3s ease-in-out;
 
     text-transform: uppercase;
-    border: 2px solid @secondary-color;
+    border-style: solid;
+    border-width: 2px;
     border-radius: 4em;
 
     @media (min-width: 768px) {
         padding: 25px 75px;
     }
 
-    &:hover {
+    i {
+        padding-right: 25px;
+
+        -webkit-transition: color .3s ease-in-out;
+                transition: color .3s ease-in-out;
+
+        font-size: 1.2em;
+    }
+
+
+    &:hover,
+    &:hover i {
         color: #fff;
-        background-color: @secondary-color;
+    }
+
+    &--primary {
+        border-color: @primary-color;
+
+        i {
+            color: @primary-color;
+        }
+
+        &:hover {
+            background-color: @primary-color;
+        }
+    }
+
+    &--secondary {
+        border-color: @secondary-color;
+
+        i {
+            color: @secondary-color;
+        }
+
+        &:hover {
+            background-color: @secondary-color;
+        }
+    }
+
+    &--tertiary {
+        border-color: @tertiary-color;
+
+        i {
+            color: @tertiary-color;
+        }
+
+        &:hover {
+            background-color: @tertiary-color;
+        }
     }
 }
 
@@ -381,11 +424,11 @@ Modules
 
         > .media__body {
             margin-bottom: 50px;
-            padding: 0 15px;
+            padding: 0 25px;
         }
 
         > .media__figure {
-            padding: 0 15px;
+            padding: 0 25px;
             order: 1;
 
             @media (max-width: 767px) {
@@ -451,7 +494,7 @@ Navbar
 ========================================================================== */
 
 .navbar {
-    min-height: 250px;
+    min-height: unset;
     padding: 0 25px;
 
     @media (min-width: 768px) {
@@ -465,16 +508,14 @@ Navbar
     &-brand {
         position: relative;
         z-index: 1;
-        display: block;
+        display: inline-block;
         float: none;
-        width: 200px;
         height: auto;
-        margin-top: 40px;
+        margin-top: 90px;
         padding: 0;
 
         @media (min-width: 768px) {
-            width: 250px;
-            margin: 0;
+            margin-top: 70px;
         }
 
         @media (min-width: 1600px) {
@@ -528,7 +569,7 @@ Navbar
                     transform: rotate(0deg);
 
             opacity: 1;
-            background-color: @primary-color;
+            background-color: @text-color;
 
             &:nth-child(1) {
                 top: 0;
@@ -685,7 +726,7 @@ Navbar
 
                 text-transform: uppercase;
 
-                color: @primary-color;
+                color: @text-color;
 
                 font-size: 24px;
                 line-height: 1;
@@ -897,7 +938,7 @@ Navbar
         -webkit-transform: translateX(100%);
                 transform: translateX(100%);
 
-        color: @primary-color;
+        color: @text-color;
         background-color: @bg-color;
 
         @media (min-width: 768px) {
@@ -941,7 +982,7 @@ Navbar
         -webkit-transform: translateX(-50%);
                 transform: translateX(-50%);
 
-        border: 1px solid @primary-color;
+        border: 1px solid @text-color;
         border-radius: 50%;
         background-color: transparent;
 
@@ -988,8 +1029,8 @@ Navbar
     &__list {
         margin: 0;
         padding: 0;
-        border-top: 1px solid @primary-color;
-        border-bottom: 1px solid @primary-color;
+        border-top: 1px solid @text-color;
+        border-bottom: 1px solid @text-color;
         list-style: none;
     }
 
@@ -997,7 +1038,7 @@ Navbar
         padding: 25px 0;
 
         & + .donation__item {
-            border-top: 1px solid @primary-color;
+            border-top: 1px solid @text-color;
         }
     }
 }
@@ -1053,6 +1094,125 @@ Navbar
     &__donation {
         font-family: AvenirBlack, sans-serif;
         font-size: 30px;
+    }
+}
+
+/*
+   Facebook head
+   ========================================================================== */
+
+.fb-head {
+    position: relative;
+    margin: 50px 0;
+    text-align: center;
+
+    @media (min-width: 768px) {
+        margin: 100px 0 120px;
+    }
+
+    &__cover {
+        position: relative;
+        display: inline-block;
+
+        img {
+            margin: 0 auto;
+            border: 3px solid #dcd8d3;
+        }
+    }
+
+    &__profile {
+        position: absolute;
+        bottom: -9%;
+        left: 2%;
+        width: 20%;
+
+        img {
+            border: 3px solid #dcd8d3;
+        }
+    }
+}
+
+
+/*
+   Tooltip
+   ========================================================================== */
+
+.tooltip {
+    &--fb-cover,
+    &--fb-profile {
+        opacity: 1;
+        top: 15%;
+
+        border: 1px solid #dcd8d3;
+        font-family: AvenirBook, sans-serif;
+        text-align: center;
+
+        &.top {
+            margin: 0;
+            padding: 0;
+        }
+
+        .tooltip-inner {
+            width: 225px;
+            max-width: unset;
+            padding: 20px 25px;
+            border-radius: 0;
+            background-color: #fff;
+            font-size: 16px;
+            color: inherit;
+            text-transform: uppercase;
+
+            em {
+                font-family: AvenirBlack, sans-serif;
+                color: @primary-color;
+            }
+        }
+
+        &.top .tooltip-arrow {
+            bottom: -40px;
+            margin: 0;
+            border-width: 40px 15px 0;
+            border-top-color: #fff;
+
+            &:before {
+                content: '';
+                position: absolute;
+                top: -40px;
+                left: -16px;
+                display: block;
+                width: 0;
+                height: 0;
+                z-index: -1;
+                border-style: inherit;
+                border-width: 41px 16px 0;
+                border-color: #dcd8d3 transparent transparent transparent;
+            }
+        }
+    }
+
+    &--fb-cover {
+        right: 0;
+
+        &.top .tooltip-arrow {
+            left: 50%;
+
+            @media (min-width: 1030px) {
+                left: 5%;
+            }
+        }
+    }
+
+    &--fb-profile {
+        left: 0;
+
+        &.top .tooltip-arrow {
+            right: 50%;
+            left: auto;
+
+            @media (min-width: 1030px) {
+                right: 5%;
+            }
+        }
     }
 }
 
@@ -1168,19 +1328,19 @@ Keyframes
     }
     25% {
         opacity: 1;
-        box-shadow: 0 -49px 0 2px @bg-color, -22px -22px 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -22px -22px 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @text-color;
     }
     50% {
         opacity: 1;
-        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @text-color;
     }
     75% {
         opacity: 1;
-        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @text-color;
     }
     100% {
         opacity: 1;
-        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 44px 20px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 44px 20px 0 2px @bg-color, 0 0 0 2px @text-color;
     }
 }
 
@@ -1191,19 +1351,19 @@ Keyframes
     }
     25% {
         opacity: 1;
-        box-shadow: 0 -49px 0 2px @bg-color, -22px -22px 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -22px -22px 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @text-color;
     }
     50% {
         opacity: 1;
-        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, -22px 22px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @text-color;
     }
     75% {
         opacity: 1;
-        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 22px 22px 0 2px @bg-color, 0 0 0 2px @text-color;
     }
     100% {
         opacity: 1;
-        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 44px 20px 0 2px @bg-color, 0 0 0 2px @primary-color;
+        box-shadow: 0 -49px 0 2px @bg-color, -49px 0 0 2px @bg-color, 0 49px 0 2px @bg-color, 44px 20px 0 2px @bg-color, 0 0 0 2px @text-color;
     }
 }
 
