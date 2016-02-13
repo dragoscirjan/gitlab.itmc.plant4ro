@@ -1,41 +1,33 @@
 template
-	section.au-animate
-		h2 ${heading}
-		p 
-		| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis similique ab eligendi est corporis 
-		| aperiam ex architecto, aliquam nobis nam iste, unde totam assumenda mollitia autem in suscipit quod quasi.
-		p
-		| Deserunt velit at perspiciatis iste quia, officia autem quo suscipit debitis nobis consequuntur placeat magnam 
-		| ipsa dolorum odio a voluptatum earum cupiditate possimus rerum odit illum. Tempore facere voluptatem cum.
-		p
-		| Perspiciatis harum exercitationem voluptates modi assumenda soluta similique vel, quo provident veritatis 
-		| reiciendis velit architecto vitae minima distinctio nisi, incidunt, placeat corporis voluptatem aliquid 
-		| recusandae accusamus quia dolore. Fuga, aliquam.
-		
-		.alert.alert-warning.alert-facebook-auth(role='alert', if.bind='!fbIsLoggedIn')
-			//- button.close(type='button', data-dismiss='alert', aria-label='Close')
-			//- 	span(aria-hidden='true') &times;
+	section(class.bind="'au-animate ' + routeConfig.name")
+		.container
+			h1.page-title ${heading}
+			p 
+			| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reiciendis similique ab eligendi est corporis 
+			| aperiam ex architecto, aliquam nobis nam iste, unde totam assumenda mollitia autem in suscipit quod quasi.
 			p
-			| Din pacate nu am putut identifica ai autorizat aceasta aplicatie. Acest lucru de poate intampla din doua motive.
-			ul
-				li Nu esti autentificat pe Facebook sau
-				li Nu ai mai folosit aceasta aplicatie pana acum
-			| De aceea, trebuie mai intai sa ne ajuti sa autorizam aplicatia pentru contul tau de Facebook.
-			hr
-			button#facebook-login.btn.btn-default.btn-facebook-login(click.delegate="fbLogin()")
-				i.fa.fa-facebook
-				| Autorizeaza aplicatia
-		
-		div(class.bind="'row facebook-choice ' + (fbIsLoggedIn ? '' : 'hide')")
-			//- .col-md-6.facebook-image-profile
-			.row
-			each src, i in pictures
-				.col-md-2
-					img.main-profile(src=src, alt="", style="width: 100%;")
-					div
-						input(type="radio", name="fb-image-profile-radio", value=i)
-			.row
-				button.btn.btn-default(click.delegate="fbChangePicture()") Schimba-ti imaginea de profil
+			| Deserunt velit at perspiciatis iste quia, officia autem quo suscipit debitis nobis consequuntur placeat magnam 
+			| ipsa dolorum odio a voluptatum earum cupiditate possimus rerum odit illum. Tempore facere voluptatem cum.
+			p
+			| Perspiciatis harum exercitationem voluptates modi assumenda soluta similique vel, quo provident veritatis 
+			| reiciendis velit architecto vitae minima distinctio nisi, incidunt, placeat corporis voluptatem aliquid 
+			| recusandae accusamus quia dolore. Fuga, aliquam.
+			
+			.alert-facebook-auth(role='alert', if.bind='!fbIsLoggedIn')
+				button#facebook-login.btn.btn-default.btn-facebook-login(click.delegate="fbLogin()")
+					i.fa.fa-facebook
+					| Autentifica-te
+			
+			div(class.bind="'row facebook-choice ' + (fbIsLoggedIn ? '' : 'hide')")
+				//- .col-md-6.facebook-image-profile
+				.row
+				each src, i in pictures
+					.col-md-2
+						img.main-profile(src=src, alt="", style="width: 100%;")
+						div
+							input(type="radio", name="fb-image-profile-radio", value=i)
+				.row
+					button.btn.btn-default(click.delegate="fbChangePicture()") Schimba-ti imaginea de profil
 				
 			//- .col-md-6.facebook-image-cover
 			.row

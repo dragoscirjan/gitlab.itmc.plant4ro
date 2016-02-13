@@ -41,7 +41,6 @@ export class Acasa extends ViewModelAbstract {
         } else {
             $('#bgImg').css('background-image', imgUrl);
         }
-
     }
 
     /**
@@ -49,7 +48,6 @@ export class Acasa extends ViewModelAbstract {
      * @method initSliders
      */
     initSliders() {
-        const self = this;
         this.logger.debug('Starting owl-slider');
 
         // HP has two carousel that need to be synced
@@ -92,7 +90,7 @@ export class Acasa extends ViewModelAbstract {
             }
         });
 
-        $sliderTxt.on('click', '.owl-page', function(e){
+        $sliderTxt.on('click', '.owl-page', function(e) {
             // e.preventDefault();
             const number = $(this).data('owlPage');
             $sliderImg.trigger('owl.goTo', number);
