@@ -1110,14 +1110,33 @@ Navbar
         margin: 100px 0 120px;
     }
 
+    &__wrap {
+        max-width: 850px;
+        margin: 0 auto;
+    }
+
     &__cover {
         position: relative;
-        display: inline-block;
+        padding-bottom: 37%; // min aspect ratio of fb cover img
 
         img {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            min-width: 100%;
+            min-height: 100%;
             margin: 0 auto;
-            border: 3px solid #dcd8d3;
         }
+    }
+
+    &__inner {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        overflow: hidden;
+        border: 3px solid #dcd8d3;
     }
 
     &__profile {
@@ -1125,10 +1144,8 @@ Navbar
         bottom: -9%;
         left: 2%;
         width: 20%;
-
-        img {
-            border: 3px solid #dcd8d3;
-        }
+        padding-bottom: 20%;
+        overflow: hidden;
     }
 }
 

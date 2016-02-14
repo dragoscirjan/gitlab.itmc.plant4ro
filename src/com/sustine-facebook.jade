@@ -6,13 +6,16 @@ template
 				strong Planteaza pentru Romania 
 				|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
 			.fb-head
-				.fb-head__cover
-					img.img-responsive(src="dist/assets/img/fb/fb-default-cover-img.jpg", alt="")
-					.fb-head__profile
-						img.img-responsive(src="dist/assets/img/fb/fb-default-profile-img.jpg", alt="")
+				.fb-head__wrap
+					.fb-head__cover
+						.fb-head__inner
+							img#image-cover(src="dist/assets/img/fb/fb-default-cover-img.jpg", alt="")
+						.fb-head__profile
+							.fb-head__inner
+								img#image-profile(src="dist/assets/img/fb/fb-default-profile-img.jpg", alt="")
 				.tooltip.top.tooltip--fb-cover.hidden-xs
 					.tooltip-arrow
-					.tooltip-inner Alege un cover
+					.tooltip-inner Alege o imagine pentru cover
 				.tooltip.top.tooltip--fb-profile.hidden-xs
 					.tooltip-arrow
 					.tooltip-inner Alege o imagine de profil
