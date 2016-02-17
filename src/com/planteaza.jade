@@ -1,51 +1,66 @@
 template
 	section.au-animate
-		h2 ${heading}
-		form.form-horizontal(action="")
-			fieldset
-				.form-group
-					label.col-sm-2.control-label(for="name") Nume
-					.col-sm-10
-						input#name.form-control(type="text", name="name")
-				.form-group
-					label.col-sm-2.control-label(for="email") Email
-					.col-sm-10
-						input#email.form-control(type="email", name="email")
-				//- @TODO: add slider + input based on design
-				.form-group
-					.col-sm-offset-2.col-sm-10
-						.checkbox
-							label
-								input#anonymous(type="checkbox", name="anonymous") 
-								| Doresc sa raman anonim
-				.form-group
-					.col-sm-offset-2.col-sm-10
-						.checkbox
-							label
-								input#agreement(type="checkbox", name="agreement") 
-								| Sunt de acord cu #[a(href="#") termenii si conditiile]
-				.form-group
-					label.col-sm-2.control-label(for="total") Total donatie
-					.col-sm-10
-						input#total.form-control(type="text", name="total", readonly="readonly")
-				//- @TODO: reCAPTCHA
-				.form-group
-					.col-sm-offset-2.col-sm-10
-						button.btn.btn-default(type="submit") Planteaza
-						
-			fieldset
-				.form-group
-					label.col-sm-2.control-label(for="donateName1") Nume
-					.col-sm-10
-						input#donateName1.form-control(type="text", name="donateName1")
-				.form-group
-					label.col-sm-2.control-label(for="donateEmail1") Email
-					.col-sm-10
-						input#donateEmail1.form-control(type="email", name="donateEmail1")
-				.form-group
-					label.col-sm-2.control-label(for="donateAmount1") Suma
-					.col-sm-10
-						input#donateAmount1.form-control(type="text", name="donateAmount1")
-				.form-group
-					.col-sm-offset-2.col-sm-10
-						button#addDonationGift.btn.btn-default(type="button") Donatie cadou noua
+		.container
+			h1.page-title ${heading}
+			.tabs
+				ul.nav.nav-tabs(role="tablist")
+					li.active(role="presentation")
+						a(href="#individualDonations", role="tab", aria-controls="individualDonations", data-toggle="tab") Donatii individuale
+					li(role="presentation")
+						a(href="#corporateDonations", role="tab", aria-controls="corporateDonations", data-toggle="tab") Donatii corporate
+				.tab-content
+					#individualDonations.tab-pane.active(role="tabpanel")
+						p
+							strong Planteaza pentru Romania 
+							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
+						form.form--plant(action="")
+							.form-group
+								label(for="name") Nume
+								input#name.form-control(type="text", name="name")
+							.form-group
+								label(for="email") Email
+								input#email.form-control(type="email", name="email")
+							//- @TODO: add slider + input based on design
+							.collapsable.collapsable--border
+								a(role='button', data-toggle='collapse', href='#plantFriend', aria-expanded='false', aria-controls='plantFriend') 
+									| Planteaza cu un prieten
+									i.fa.fa-caret-down
+									i.fa.fa-caret-up
+								#plantFriend.collapse
+									.form-group
+										label.col-sm-2.control-label(for="donateName1") Nume
+										.col-sm-10
+											input#donateName1.form-control(type="text", name="donateName1")
+									.form-group
+										label.col-sm-2.control-label(for="donateEmail1") Email
+										.col-sm-10
+											input#donateEmail1.form-control(type="email", name="donateEmail1")
+									.form-group
+										label.col-sm-2.control-label(for="donateAmount1") Suma
+										.col-sm-10
+											input#donateAmount1.form-control(type="text", name="donateAmount1")
+									.form-group
+										.col-sm-offset-2.col-sm-10
+											button#addDonationGift.btn.btn--secondary(type="button") Donatie cadou noua
+							.form-group
+								.col-sm-offset-2.col-sm-10
+									.checkbox
+										label
+											input#anonymous(type="checkbox", name="anonymous") 
+											| Doresc sa raman anonim
+							.form-group
+								.col-sm-offset-2.col-sm-10
+									.checkbox
+										label
+											input#agreement(type="checkbox", name="agreement") 
+											| Sunt de acord cu #[a(href="#") termenii si conditiile]
+							.form-group
+								label.col-sm-2.control-label(for="total") Total donatie
+								.col-sm-10
+									input#total.form-control(type="text", name="total", readonly="readonly")
+							//- @TODO: reCAPTCHA
+							.form-group
+								.col-sm-offset-2.col-sm-10
+									button.btn.btn--secondary(type="submit") Planteaza
+					#corporateDonations.tab-pane(role="tabpanel")
+			

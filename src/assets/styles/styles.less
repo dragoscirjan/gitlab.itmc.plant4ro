@@ -488,6 +488,64 @@ Modules
     }
 }
 
+/*
+   Form
+   ========================================================================== */
+
+.form--plant {
+    max-width: 620px;
+    margin: 30px auto 0;
+
+    @media (min-width: 768px) {
+        margin-top: 90px;
+    }
+}
+
+
+
+/*
+   Navs
+   ========================================================================== */
+
+.nav {
+    > li > a:focus,
+    > li > a:hover {
+        border: 0;
+        background-color: transparent;
+    }
+
+    &-tabs {
+        margin: 0 -15px 30px;
+        border: 0;
+
+        > li {
+            > a {
+                border: 0;
+                text-transform: uppercase;
+
+                &:hover,
+                &:focus {
+                    background-color: transparent;
+                    font-weight: 700;
+                    color: @primary-color;
+                }
+            }
+
+            &.active a,
+            &.active a:hover,
+            &.active a:focus {
+                border: 0;
+                background-color: transparent;
+                font-weight: 700;
+                color: @primary-color;
+            }
+        }
+
+
+    }
+}
+
+
 
 /*
 Navbar
