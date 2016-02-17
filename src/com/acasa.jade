@@ -23,14 +23,14 @@ template
 					.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img4.jpg')")
 				.owl-carousel__slide
 					.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img5.jpg')")
-			#donation.donation
+			#donation.donation(class.bind="toggleDonatorsActive ? 'is-donation-open' : ''")
 				.donation__btn-wrap
-					button#donationToggler.donation__btn(type="button")
+					button#donationToggler.donation__btn(type="button", click.trigger="toggleDonators()")
 						i.fa.fa-search
 				span.donation__title Copaci donati
-				span#donationAmount.donation__amount 203.491
+				span#donationAmount.donation__amount(innerHtml.bind="donatorsCount")
 				.donation__toggle
-					button#donationClose.donation__close(type="button") x
+					button#donationClose.donation__close(type="button", click.trigger="toggleDonators()") x
 					.donation__wrap
 						.donation__side-title 
 							.donation__rotate Donatori
@@ -72,11 +72,26 @@ template
 									|  a tarii si indeplineste multiple roluri
 							.owl-carousel__slide(data-img="/dist/assets/img/slider/img2.jpg")
 								.owl-carousel__caption
-									| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam cumque, 
-									| nostrum, laboriosam ducimus qui officia provident eaque numquam minus enim?
+									|  Pana in prezent am decimat ca specie
+									strong  50%
+									|   din padurile planetei iar ca popor am redus suprafata impadurita a tarii de la
+									strong  80%
+									|   la 
+									strong  26%
 							.owl-carousel__slide(data-img="/dist/assets/img/slider/img3.jpg")
 								.owl-carousel__caption
-									| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, ut!
+									| Odata cu distrugerea padurilor pierdem si sansa de a trai alaturi de copiii nostri intr-o lume 
+									| mai buna si mai sigura.
+							.owl-carousel__slide(data-img="/dist/assets/img/slider/img4.jpg")
+								.owl-carousel__caption
+									| De existenta si starea padurilor depinde pe langa viata fiecaruia dintre noi si viata a mii de 
+									| alte specii de animale, insecte si plante.
+							.owl-carousel__slide(data-img="/dist/assets/img/slider/img5.jpg")
+								.owl-carousel__caption
+									| O lume mai buna poate incepe aici si acum cu tine... hai sa trecem impreuna de la vorbe la fapte.
+									//- br
+									//- | Intra si tu in "Echipa Nationala de Plantat a Romaniei"  plantand pentru Romania si hai sa scriem 
+									//- | istoria impreuna!
 					.l-flex__item.col-xs-12.col-sm-6
 						a.btn.btn--secondary.h-pull-right-lrg(href="#") Doneaza un copac
 		

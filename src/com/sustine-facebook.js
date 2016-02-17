@@ -80,18 +80,16 @@ export class Facebook extends ViewModelAbstract {
      * @method attached
      */
     attached() {
-        const self = this;
-        if (this.mrp) {
-            $('.main-profile').each((i, img) => {
-                $(img).css('background-image', `url('${self.mrp.data.url}')`);
+        // const self = this;
+        if (this.mrp && this.mrp.data) {
+            this.logger.debug('picture', this.mrp);
+            $('#image-profile').attr('src', this.mrp.data.url);
+        }
+        if (this.mrc && this.mrc.cover) {
+            this.logger.debug('cover', this.mrc);
+            $('#image-cover').attr('src', this.mrc.cover.source).css({
+                'top': `-${this.mrc.cover.offset_y}%`
             });
-            if (self.mrc.cover) {
-                $('.main-cover').each((i, img) => {
-                    $(img).css('background-image', `url('${self.mrc.cover.source}')`);
-                });
-            } else {
-                $('.main-cover:gt(3)').hide();
-            }
         }
     }
 
