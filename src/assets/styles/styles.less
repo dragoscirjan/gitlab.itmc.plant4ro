@@ -67,6 +67,8 @@ a {
     -webkit-transition: color .3s ease-in-out;
             transition: color .3s ease-in-out;
 
+    font-family: AvenirBlack, sans-serif;
+    text-decoration: underline;
     color: @text-color;
 
     .wrapper-hp & {
@@ -76,7 +78,7 @@ a {
     &:hover,
     &:focus,
     &:active {
-        color: @secondary-color;
+        color: @primary-color;
     }
 
     &:focus {
@@ -355,6 +357,61 @@ Modules
         &:hover {
             background-color: @tertiary-color;
         }
+    }
+
+    &--link {
+        padding: 0;
+        color: @primary-color;
+        font-family: AvenirBlack, sans-serif;
+        font-size: 16px;
+        text-transform: none;
+        text-decoration: underline;
+
+        &:hover {
+            color: @primary-color;
+        }
+    }
+}
+
+
+
+/*
+   Form
+   ========================================================================== */
+
+.form-control {
+    height: 50px;
+    padding: 15px 30px;
+    border-color: @border-color;
+    border-radius: 0;
+    background-color: transparent;
+
+    &:focus {
+        border-color: @border-color;
+        box-shadow: none;
+    }
+}
+
+.checkbox {
+    label {
+        position: relative;
+        padding-left: 30px; // make room for the checkbox and spacing
+
+        &:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 18px;
+            height: 18px;
+            border: 1px solid @border-color;
+            transform: translateY(-50%);
+        }
+    }
+
+    input:checked + label:before {
+        background-color: @secondary-color;
+        box-shadow: inset 0 0 0 2px #fff;
     }
 }
 
@@ -897,6 +954,65 @@ Navbar
 }
 
 /*
+   Range slider
+   ========================================================================== */
+
+.slider {
+    position: relative;
+    padding: 15px 12px;
+    background-color: lighten(@primary-color, 10%);
+
+    &-wrapper {
+        padding: 30px 50px;
+        background-color: @primary-color;
+        text-align: center;
+
+        @media (min-width: 768px) {
+            padding: 70px 135px 30px;
+        }
+    }
+
+    &-track {
+        position: relative;
+        height: 2px;
+        background-color: @primary-color;
+        cursor: pointer;
+    }
+
+    &-selection,
+    &-track-low,
+    &-track-high {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        height: 100%;
+    }
+
+    &-selection {
+        background-color: @secondary-color;
+    }
+
+    &-handle {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        margin-top: -5px;
+        margin-left: -6px;
+        border-radius: 50%;
+        background-color: @secondary-color;
+    }
+
+    &-value {
+        display: inline-block;
+        margin-bottom: 50px;
+        font-family: AvenirBlack, sans-serif;
+        font-size: 72px;
+        color: #fff;
+    }
+}
+
+
+/*
    Donation
    ========================================================================== */
 
@@ -1040,7 +1156,7 @@ Navbar
         -webkit-transform: translateX(-50%);
                 transform: translateX(-50%);
 
-        border: 1px solid @text-color;
+        border: 1px solid @border-color;
         border-radius: 50%;
         background-color: transparent;
 
@@ -1194,7 +1310,7 @@ Navbar
         bottom: 0;
         left: 0;
         overflow: hidden;
-        border: 3px solid #dcd8d3;
+        border: 3px solid @border-color;
     }
 
     &__profile {
@@ -1218,7 +1334,7 @@ Navbar
         opacity: 1;
         top: 15%;
 
-        border: 1px solid #dcd8d3;
+        border: 1px solid @border-color;
         font-family: AvenirBook, sans-serif;
         text-align: center;
 
@@ -1288,6 +1404,35 @@ Navbar
                 right: 5%;
             }
         }
+    }
+}
+
+
+/*
+   Collapsible
+   ========================================================================== */
+
+.collapsible {
+    a {
+        font-family: AvenirBlack, sans-serif;
+        color: @primary-color;
+
+        &:hover,
+        &:focus,
+        &:active {
+            text-decoration: none;
+        }
+    }
+
+    &__content {
+        margin-top: 30px;
+    }
+
+    &--form {
+        margin: 40px 0;
+        padding: 25px 0;
+        border-top: 1px solid @border-color;
+        border-bottom: 1px solid @border-color;
     }
 }
 
