@@ -1,3 +1,66 @@
 template
   section.au-animate
-    h2 ${heading}
+    .container
+      h1.page-title ${heading}
+      .tabs
+        ul.nav.nav-tabs(role="tablist")
+          li.active(role="presentation")
+            a(href="#institutionalPartners", role="tab", aria-controls="institutionalPartners", data-toggle="tab") Parteneri institutionali
+          li(role="presentation")
+            a(href="#companyPartners", role="tab", aria-controls="companyPartners", data-toggle="tab") Companii partenere
+          li(role="presentation")
+            a(href="#individual", role="tab", aria-controls="individual", data-toggle="tab") Individual
+          li(role="presentation")
+            a(href="#mediaPartners", role="tab", aria-controls="mediaPartners", data-toggle="tab") Parteneri media    
+        .tab-content
+          #institutionalPartners.tab-pane.active(role="tabpanel")
+            .row
+              .col-sm-4
+                .box.box--partners-l1
+                  .box__img
+                    a(href="")
+                      img(src="http://placehold.it/240x140", alt="")
+              .col-sm-4
+                .box.box--partners-l1
+                  .box__img
+                    a(href="")
+                      img(src="http://placehold.it/240x140", alt="")
+              .col-sm-4
+                .box.box--partners-l1
+                  .box__img
+                    a(href="")
+                      img(src="http://placehold.it/240x140", alt="")
+            .row
+              .col-xs-6.col-sm-2
+                .box.box--partners-l2
+                  .box__img
+                    a(href="")
+                      img(src="http://placehold.it/185x85", alt="")
+              .col-xs-6.col-sm-2
+                .box.box--partners-l2
+                  .box__img
+                    a(href="")
+                      img(src="http://placehold.it/185x85", alt="")
+              .col-xs-6.col-sm-2
+                .box.box--partners-l2
+                  .box__img
+                    a(href="")
+                      img(src="http://placehold.it/185x85", alt="")
+              .col-xs-6.col-sm-2
+                .box.box--partners-l2
+                  .box__img
+                    a(href="")
+                      img(src="http://placehold.it/185x85", alt="")
+              .col-xs-6.col-sm-2
+                .box.box--partners-l2
+                  .box__img
+                    a(href="")
+                      img(src="http://placehold.it/185x85", alt="")
+              .col-xs-6.col-sm-2
+                .box.box--partners-l2
+                  .box__img
+                    a(href="")
+                      img(src="http://placehold.it/185x85", alt="")
+          #companyPartners.tab-pane.active(role="tabpanel")
+          #individual.tab-pane.active(role="tabpanel")
+          #mediaPartners.tab-pane.active(role="tabpanel")

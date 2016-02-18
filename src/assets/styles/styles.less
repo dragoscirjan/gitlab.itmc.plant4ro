@@ -272,15 +272,23 @@ Modules
    ========================================================================== */
 
 .page-title {
-    margin-bottom: 50px;
+    margin: 40px 0 50px;
     font-family: AvenirBlack, sans-serif;
     font-size: 40px;
     color: @primary-color;
     text-transform: uppercase;
 
     @media (min-width: 768px) {
-        margin-bottom: 70px;
+        margin: 65px 0 70px;
+        font-size: 62px;
+    }
+
+    @media (min-width: 992px) {
         font-size: 72px;
+    }
+
+    @media (min-width: 1600px) {
+        margin-top: 300px;
     }
 
     em {
@@ -415,6 +423,15 @@ Modules
     }
 }
 
+.form--plant {
+    max-width: 620px;
+    margin: 30px auto 0;
+
+    @media (min-width: 768px) {
+        margin-top: 90px;
+    }
+}
+
 
 /*
    Media
@@ -545,19 +562,6 @@ Modules
     }
 }
 
-/*
-   Form
-   ========================================================================== */
-
-.form--plant {
-    max-width: 620px;
-    margin: 30px auto 0;
-
-    @media (min-width: 768px) {
-        margin-top: 90px;
-    }
-}
-
 
 
 /*
@@ -578,6 +582,8 @@ Modules
         > li {
             > a {
                 border: 0;
+                font-family: AvenirBook, sans-serif;
+                text-decoration: none;
                 text-transform: uppercase;
 
                 &:hover,
@@ -839,6 +845,8 @@ Navbar
                 width: 100%;
                 padding: 10px 0;
 
+                font-family: AvenirBook, sans-serif;
+                text-decoration: none;
                 text-transform: uppercase;
 
                 color: @text-color;
@@ -871,6 +879,43 @@ Navbar
     bottom: 0;
     left: 0;
     // transition: background-image 1s ease-in-out;
+}
+
+/*
+   Box
+   ========================================================================== */
+
+.box {
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid @border-color;
+
+    &__img {
+        text-align: center;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    &--partners-l1 {
+        img {
+            width: auto;
+            max-width: 100%;
+            max-height: 140px;
+        }
+    }
+
+    &--partners-l2 {
+        padding: 0;
+        border: 0;
+
+        img {
+            width: auto;
+            max-width: 100%;
+            max-height: 85px;
+        }
+    }
 }
 
 
