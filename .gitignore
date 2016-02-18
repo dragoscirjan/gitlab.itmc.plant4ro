@@ -25,3 +25,6 @@ services/vendor
 
 # Vagrant
 .vagrant
+
+# PSD
+.psd
