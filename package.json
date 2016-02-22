@@ -78,17 +78,13 @@
       "bootstrap-slider": "github:seiyria/bootstrap-slider@^6.0.17",
       "fetch": "github:github/fetch@^0.10.1",
       "font-awesome": "npm:font-awesome@^4.5.0",
+      "itmcdev/aurelia-google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@0.0.2",
       "text": "github:systemjs/plugin-text@^0.0.3"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.6.4",
       "babel-runtime": "npm:babel-runtime@^5.6.4",
       "core-js": "npm:core-js@^1.2.6"
-    },
-    "overrides": {
-      "npm:core-js@1.2.6": {
-        "main": "client/shim.min"
-      }
     }
   }
 }

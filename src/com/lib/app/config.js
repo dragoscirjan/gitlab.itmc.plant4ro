@@ -1,4 +1,15 @@
+/**
+ * Planteaza pentru Romania (http://planteazapentruromania.ro/)
+ *
+ * @copyright Copyright (c) 2016-present Prietenii Padurilor din Romania (http://prieteniipadurilor.ro)
+ * @copyright Copyright (c) 2016-present IT Media Connect (http://itmediaconnect.ro)
+ * @license   http://planteazapentruromania.ro/#/application-license Commercial
+ */
 
+/**
+ * Component for donations
+ *
+ */
 export class AppConfig {
 
     ENV_DEVELOP = 'dev';
@@ -8,7 +19,7 @@ export class AppConfig {
 
     env = this.ENV_DEVELOP;
 
-    constructor() {
+    constructor(http) {
         this.initDev();
 
         try {
@@ -19,8 +30,33 @@ export class AppConfig {
         }
     }
 
+    /**
+     * [initDev description]
+     * @method initDev
+     * @return {[type]} [description]
+     */
     initDev() {
-        this.phpAppBase = `//planteazapentruromania.local/services/index.php/`;
+        this.phpAppBase = '//planteazapentruromania.local/services/index.php/';
+    }
+
+    /**
+     * [configHttp description]
+     * @method configHttp
+     * @param  {aurelia-fetch-client/HttpClient}   http [description]
+     * @return {aurelia-fetch-client/HttpClient}        [description]
+     */
+    configHttp(http) {
+        http.configure(config => {
+            config
+                .withBaseUrl('services/index.php/')
+                .withDefaults({
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'AureliaAPI'
+                    }
+                });
+        });
+        return http;
     }
 
     /**

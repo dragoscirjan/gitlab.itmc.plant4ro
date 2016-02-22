@@ -31,7 +31,14 @@ return array(
      *
      */
     '/sustine-facebook/{picture}/{cover}' => array(
-        'get' => require 'views/post-sustine-facebook.php'
+        'get' => require 'views/post-sustine-facebook.php',
+    ),
+
+    /**
+     * 
+     */
+    '/curs-valutar' => array(
+        'get' => require 'views/exchange-rate.php',
     ),
 
 );
