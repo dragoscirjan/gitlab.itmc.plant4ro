@@ -2,27 +2,13 @@ template(bindable='router')
 	header#header
 		nav.navbar(role='navigation')
 			.navbar-header
-				//- Spinner Candidates
-				//- http://codepen.io/GiVe/pen/LEEWqX - Lucky winner
-				//- http://codepen.io/jonathanhooker/pen/wKaXPV
-				//- http://codepen.io/Haasbroek/pen/gbqYyj
-				//- http://codepen.io/teodormoq/pen/WbXRWj
 				button(type='button', class.bind="router.isNavigating ? 'navbar-toggler spinner' : 'navbar-toggler'", click.delegate="menuToggle")               
 					span.icon-bar            
 					span.icon-bar             
 					span.icon-bar
-					//- span.icon-bar
-
 				a.navbar-brand(href='#')            
 					img(src='/dist/assets/img/logo.png', alt='${router.title} Logo')
-
 				.navbar-wrapper
 					ul.nav.navbar-nav
 						li(repeat.for='row of router.navigation', class="${row.isActive ? 'active' : ''}")
 							a(data-toggle='collapse', data-target='#skeleton-navigation-navbar-collapse.in', href.bind='row.href') ${row.title}
-					//
-						<ul class="nav navbar-nav navbar-right">
-						<li class="loader" if.bind="router.isNavigating">
-						<i class="fa fa-spinner fa-spin fa-2x"></i>
-						</li>
-						</ul>

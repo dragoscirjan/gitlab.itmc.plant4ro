@@ -11,7 +11,7 @@ import {ViewModelAbstract} from 'lib/view/model/abstract';
 /**
  *
  */
-export class Acasa extends ViewModelAbstract {
+export class Component extends ViewModelAbstract {
 
     /**
      * @type {String}

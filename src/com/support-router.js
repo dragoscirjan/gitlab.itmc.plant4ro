@@ -24,7 +24,8 @@ export class Component extends ViewModelAbstract {
     configureRouter(config, router) {
         config.map([
             { route: ['', 'index'],  name: 'support-index',        moduleId: 'support/index',        nav: true,  title: 'Implica-te' },
-            { route: 'planteaza',    name: 'plant',                moduleId: 'planteaza',            nav: true,  title: 'Planteaza' },
+            // TODO: Donate route doesn't work
+            { route: 'planteaza',    name: 'plant',                moduleId: 'donate',               nav: true,  title: 'Planteaza' },
             { route: 'facebook',     name: 'support-facebook',     moduleId: 'support/facebook',     nav: true,  title: 'Sustine-ne' },
             { route: 'participa',    name: 'support-participate',  moduleId: 'support/participate',  nav: true,  title: 'Participa' }
             //   { route: 'users',         name: 'users',         moduleId: 'users',         nav: true, title: 'Github Users' },
