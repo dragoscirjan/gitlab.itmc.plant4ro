@@ -31,7 +31,7 @@ export class App {
             { route: 'despre-proiect',  name: 'about',     moduleId: 'proiect',      nav: true,   title: 'Despre Proiect' },
             { route: 'parteneri',       name: 'partners',  moduleId: 'parteneri',    nav: true,   title: 'Parteneri' },
             { route: 'planteaza',       name: 'plant',     moduleId: 'planteaza',    nav: true,   title: 'Planteaza' },
-            { route: 'multumim',        name: 'thnkas',    moduleId: 'multumim',     nav: false,  title: 'Ai Plantat' },
+            { route: 'multumim',        name: 'thanks',    moduleId: 'multumim',     nav: false,  title: 'Ai Plantat' },
             { route: 'sustine',         name: 'support',   moduleId: 'sustine',      nav: true,   title: 'Sustine-ne' },
             { route: 'contact',         name: 'contact',   moduleId: 'contact',      nav: true,   title: 'Contact' },
             { route: 'intrebari',       name: 'faq',       moduleId: 'intrebari',    nav: false,  title: 'Intrebari Frecvente' },
