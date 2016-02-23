@@ -10,8 +10,8 @@ import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
 
-import {AppConfig} from 'lib/app/config';
-import {ViewModelAbstract} from 'lib/view/model/abstract';
+import {AppConfig} from '../lib/app/config';
+import {ViewModelAbstract} from '../lib/view/model/abstract';
 
 //import {computedFrom} from 'aurelia-framework';
 // https://developers.facebook.com/docs/graph-api/using-graph-api

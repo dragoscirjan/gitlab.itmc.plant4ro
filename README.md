@@ -1,7 +1,18 @@
-# aurelia-skeleton-navigation
+# Planteaza pentru Romania
 
-[![ZenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.io)
-[![Join the chat at https://gitter.im/aurelia/discuss](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/aurelia/discuss?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+## Development Setup
+
+1. Make sure you have [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads) installed.
+2. Run Vagrant up (`vagrant up`)
+3. Run Vagrant ssh (`vagrant ssh`) and ...
+    1. Got to /vagrant folder: `cd /vagrant`
+    2. Run: `npm install`
+    3. Run: `jspm install`
+
+
+## Deployment Setup
+
+1. ...
 
 This skeleton is part of the [Aurelia](http://www.aurelia.io/) platform. It sets up a standard navigation-style app using gulp to build your ES6 code with the Babel compiler. Karma/Protractor/Jasmine testing is also configured.
 

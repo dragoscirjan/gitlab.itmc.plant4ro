@@ -6,6 +6,8 @@ apt-get install -y npm
 
 npm install -g n && n latest
 
+npm install -g gulp jspm
+
 # cd /vagrant
 # sudo -u vagrant -- npm install
 # sudo -u vagrant -- jspm install

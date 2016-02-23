@@ -11,9 +11,9 @@ import {ViewModelAbstract} from 'lib/view/model/abstract';
 /**
  *
  */
-export class Sustine extends ViewModelAbstract {
+export class Component extends ViewModelAbstract {
 
-    heading = 'Sustine-ne';
+    heading = 'Implica-te';
 
     /**
      * [configureRouter description]
@@ -23,7 +23,10 @@ export class Sustine extends ViewModelAbstract {
      */
     configureRouter(config, router) {
         config.map([
-            { route: ['', 'facebook'], name: 'facebook', moduleId: 'sustine-facebook', nav: true, title: 'Facebook' } //,
+            { route: ['', 'index'],  name: 'support-index',        moduleId: 'support/index',        nav: true,  title: 'Implica-te' },
+            { route: 'planteaza',    name: 'plant',                moduleId: 'planteaza',            nav: true,  title: 'Planteaza' },
+            { route: 'facebook',     name: 'support-facebook',     moduleId: 'support/facebook',     nav: true,  title: 'Sustine-ne' },
+            { route: 'participa',    name: 'support-participate',  moduleId: 'support/participate',  nav: true,  title: 'Participa' }
             //   { route: 'users',         name: 'users',         moduleId: 'users',         nav: true, title: 'Github Users' },
             //   { route: 'child-router',  name: 'child-router',  moduleId: 'child-router',  nav: true, title: 'Child Router' }
         ]);
