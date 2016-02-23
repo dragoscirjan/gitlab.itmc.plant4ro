@@ -25,12 +25,26 @@ export class Acasa extends ViewModelAbstract {
     donatorsCount = '203.491'
 
     /**
+     * @see ViewModelAbstract#activate
+     */
+    activate(params, routeConfig) {
+        super.activate(params, routeConfig);
+
+        // return new Promise();
+        // TODO: Load numer of trees
+    }
+
+    /**
      * [attached description]
      * @method attached
      */
     attached() {
+        const self = this;
+
         this.initSliders();
-        // this.donationToggleInit();
+
+        setTimeout(() => { self.updateTreeCount(); }, this.setTimeoutTreeCount);
+        setTimeout(() => { self.updateDonatorList(); }, this.setTimeoutDonatorList);
     }
 
     /**
@@ -45,19 +59,22 @@ export class Acasa extends ViewModelAbstract {
         const $sliderTxt = $('#owlCarouselHPTxt');
 
         $('#owlCarouselHPImg').owlCarousel({
-            stopOnHover: true,
+            autoPlay: true,
+            stopOnHover: false,
             navigation: false,
             pagination: false,
+            paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
-            // autoHeight: true,
+            autoHeight: false,
             transitionStyle: 'fade'
         });
 
         $('#owlCarouselHPTxt').owlCarousel({
-            // autoPlay: true,
-            stopOnHover: true,
+            autoPlay: true,
+            stopOnHover: false,
             navigation: false,
+            pagination: true,
             paginationSpeed: 1000,
             goToFirstSpeed: 2000,
             singleItem: true,
@@ -87,46 +104,52 @@ export class Acasa extends ViewModelAbstract {
         });
     }
 
+    /**
+     * [toggleDonatorsActive description]
+     * @type {Boolean}
+     */
     toggleDonatorsActive = false;
 
+    /**
+     * [toggleDonators description]
+     * @method toggleDonators
+     */
     toggleDonators() {
         this.toggleDonatorsActive = !this.toggleDonatorsActive;
     }
 
     /**
-     * Initialize donation toggle sidebar
-     * @return {[type]} [description]
+     * [setTimeoutTreeCount description]
+     * @type {Number}
      */
-    donationToggleInit() {
-        const $donation = $('#donation');
+    setTimeoutTreeCount = 5000;
 
-        $('#donationToggler').on('click', function() {
-            if (!$donation.hasClass('is-donation-open')) {
-                $donation.addClass('is-donation-open');
-                return;
-            }
-            $donation.removeClass('is-donation-open');
-        });
-
-        $('#donationClose').on('click', function() {
-            $donation.removeClass('is-donation-open');
-        });
+    /**
+     * [updateTreeCount description]
+     * @method updateTreeCount
+     * @return {Promise}          [description]
+     */
+    updateTreeCount() {
+        const self = this;
+        setTimeout(() => { self.updateTreeCount(); }, this.setTimeoutTreeCount);
+        // TODO: Create the HTTP call for tree count
     }
 
-    // updateTreeCount() {
-    //     //
-    // }
-    //
-    // updateDonatorLit() {
-    //     //
-    // }
-    //
-    // doShowDontaorList() {
-    //     //
-    // }
-    //
-    // doHideDonatorList() {
-    //     //
-    // }
+    /**
+     * [setTimeoutDonatorList description]
+     * @type {Number}
+     */
+    setTimeoutDonatorList = 10000;
+
+    /**
+     * [updateDonatorList description]
+     * @method updateDonatorList
+     * @return {Promise}          [description]
+     */
+    updateDonatorList() {
+        const self = this;
+        setTimeout(() => { self.updateDonatorList(); }, this.setTimeoutDonatorList);
+        // TODO: Create the HTTP call for donator list
+    }
 
 }

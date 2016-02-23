@@ -2,6 +2,13 @@ template
 	require(from='./lib/renderer/recaptcha')
 	//- require(from='aurelia-google-recaptcha')
 	section.au-animate
+	//- TODO: #122 Slider doesn't work on click
+	//- TODO: #116 Finish Design for corporate
+	//- TODO: #118 Finish Payment options
+	//- TODO: #117 Implement payment functionality with both Paypal and mobilpay
+	//- TODO: #119 Frinish Recaptcha plugin
+	//- TODO: #120 Finish functionality on 'planteaza cu un prieten'
+	//- TODO: #121 Form validation
 		.container
 			h1.page-title ${heading}
 			.tabs
@@ -66,7 +73,7 @@ template
 								.radio
 									label
 										input#payMethodPP(type='radio', name="payMethod", value='paypal', value.bind='payMethod')
-										| Paypal ${totalInEur} (curs valutar 1 EUR = ${eurCurrency} RON)
+										| Paypal ${totalInEur} EUR (curs valutar 1 EUR = ${eurCurrency} RON)
 							.form-group
 								recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='onRecaptchaVerified')
 							.form-group.text-center

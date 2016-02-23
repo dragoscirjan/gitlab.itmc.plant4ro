@@ -27,6 +27,7 @@ template
 				.donation__btn-wrap
 					button#donationToggler.donation__btn(type="button", click.trigger="toggleDonators()")
 						i.fa.fa-search
+					//- TODO: Should pulse once every 10 seconds
 				span.donation__title Copaci donati
 				span#donationAmount.donation__amount(innerHtml.bind="donatorsCount")
 				.donation__toggle
