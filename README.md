@@ -5,9 +5,12 @@
 1. Make sure you have [Vagrant](https://www.vagrantup.com/) and [VirtualBox](https://www.virtualbox.org/wiki/Downloads) installed.
 2. Run Vagrant up (`vagrant up`)
 3. Run Vagrant ssh (`vagrant ssh`) and ...
-    1. Got to /vagrant folder: `cd /vagrant`
-    2. Run: `npm install`
-    3. Run: `jspm install`
+    1. Go to /vagrant folder: `cd /vagrant`
+        1. Install npm packages: `npm install`
+        2. Install jspm packages: `jspm install`
+    2. Go to /vagrant/services folder: `cd /vagrant/services`
+        1. Install composer: `php -r "readfile('https://getcomposer.org/installer');" | php`
+        2. Install php composer dependencies: `./composer.phar install`
 
 
 ## Deployment Setup
