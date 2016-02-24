@@ -20,7 +20,7 @@ import 'bootstrap-slider';
  *
  */
 @inject(AppConfig, HttpClient)
-export class Planteaza extends ViewModelAbstract {
+export class Component extends ViewModelAbstract {
 
     /**
      * Component Title

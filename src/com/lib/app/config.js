@@ -33,10 +33,17 @@ export class AppConfig {
     /**
      * [initDev description]
      * @method initDev
-     * @return {[type]} [description]
      */
     initDev() {
         this.phpAppBase = '//planteazapentruromania.local/services/index.php/';
+    }
+
+    /**
+     * [initStg description]
+     * @method initStg
+     */
+    initStg() {
+        this.phpAppBase = '//20160315.planteazapentruromania.ro/services/index.php/';
     }
 
     /**

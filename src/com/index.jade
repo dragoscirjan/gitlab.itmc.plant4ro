@@ -29,37 +29,37 @@ template
 						i.fa.fa-search
 					//- TODO: Should pulse once every 10 seconds
 				span.donation__title Copaci donati
-				span#donationAmount.donation__amount(innerHtml.bind="donatorsCount")
+				span#donationAmount.donation__amount(innerHtml.bind="treeCount")
 				.donation__toggle
 					button#donationClose.donation__close(type="button", click.trigger="toggleDonators()") x
 					.donation__wrap
 						.donation__side-title 
 							.donation__rotate Donatori
 						ul#donationList.donation__list
-							li.donation__item
-								.donator
-									.donator__details
-										span.donator__name Samsung
-										span.donator__location Bucuresti, Romania
-									span.donator__donation 200
-							li.donation__item
-								.donator
-									.donator__details
-										span.donator__name Marius Popa
-										span.donator__location Baia Mare, Romania
-									span.donator__donation 40
-							li.donation__item
-								.donator
-									.donator__details
-										span.donator__name Cristina Stoica
-										span.donator__location Cluj-Napoca, Romania
-									span.donator__donation 40
-							li.donation__item
-								.donator
-									.donator__details
-										span.donator__name John Timmons
-										span.donator__location London, UK
-									span.donator__donation 100
+							//- li.donation__item
+							//- 	.donator
+							//- 		.donator__details
+							//- 			span.donator__name Samsung
+							//- 			span.donator__location Bucuresti, Romania
+							//- 		span.donator__donation 200
+							//- li.donation__item
+							//- 	.donator
+							//- 		.donator__details
+							//- 			span.donator__name Marius Popa
+							//- 			span.donator__location Baia Mare, Romania
+							//- 		span.donator__donation 40
+							//- li.donation__item
+							//- 	.donator
+							//- 		.donator__details
+							//- 			span.donator__name Cristina Stoica
+							//- 			span.donator__location Cluj-Napoca, Romania
+							//- 		span.donator__donation 40
+							//- li.donation__item
+							//- 	.donator
+							//- 		.donator__details
+							//- 			span.donator__name John Timmons
+							//- 			span.donator__location London, UK
+							//- 		span.donator__donation 100
 			.container.container--hp
 				.l-flex.l-flex--lrg.l-flex--vcenter.row
 					.l-flex__item.col-xs-12.col-sm-6

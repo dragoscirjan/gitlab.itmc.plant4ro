@@ -4,27 +4,15 @@ return array(
     /**
      *
      */
-    '/copaci-pantati' => array(
-
-        /**
-         *
-         */
-        'get' => function() {
-            return time();
-        },
+    '/tree-count' => array(
+        'get' => require 'views/tree-count.php',
     ),
 
     /**
      *
      */
-    '/lista-donatori' => array(
-
-        /**
-         *
-         */
-        'get' => function() {
-
-        }
+    '/donator-list' => array(
+        'get' => require 'views/donator-list.php',
     ),
 
     /**
@@ -35,7 +23,7 @@ return array(
     ),
 
     /**
-     * 
+     *
      */
     '/curs-valutar' => array(
         'get' => require 'views/exchange-rate.php',
