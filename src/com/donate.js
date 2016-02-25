@@ -140,10 +140,10 @@ export class Component extends ViewModelAbstract {
      */
     initRangeSlider() {
         const self = this;
-        $('#treesQty').slider()
-            .on('slide', function(slideEvt) {
+        $('#treesQty')
+            .slider()
+            .on('slide slideStop', function(slideEvt) {
                 self.treesQty = slideEvt.value;
-                // $('#treesQtyVal').text(slideEvt.value);
             });
     }
 

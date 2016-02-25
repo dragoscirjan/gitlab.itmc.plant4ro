@@ -70,6 +70,8 @@ Vagrant.configure(2) do |config|
   #   # end
   # end
 
+
+
   # Ubuntu Machine
   config.vm.define :ubuntu do |ubuntu|
     # --provider lxc
@@ -82,6 +84,9 @@ Vagrant.configure(2) do |config|
     # --provider virtualbox
     ubuntu.vm.provider :virtualbox do |virtualbox, override|
       override.vm.network "private_network", ip: "192.168.50.101"
+
+      virtualbox.memory = 2048
+      # virtualbox.cpus = 1
 
       # override.vm.box = "ubuntu/xenial64" # 16.04 - NOT LAUNCHED
       # override.vm.box = "ubuntu/wily64" # 15.10

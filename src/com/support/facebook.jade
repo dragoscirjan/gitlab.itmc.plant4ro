@@ -1,24 +1,87 @@
 template
+	require(from='../../assets/plugins/owl.carousel/owl-carousel/owl.carousel.min.js')
+
 	section(class.bind="'au-animate ' + routeConfig.name")
 		.container
 			h1.page-title ${heading}
 			p 
 				strong Planteaza pentru Romania 
 				|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
-			.fb-head
-				.fb-head__wrap
-					.fb-head__cover
-						.fb-head__inner
-							img#image-cover(src="dist/assets/img/fb/fb-default-cover-img.jpg", alt="")
-						.fb-head__profile
-							.fb-head__inner
-								img#image-profile(src="dist/assets/img/fb/fb-default-profile-img.jpg", alt="")
-				.tooltip.top.tooltip--fb-cover.hidden-xs
-					.tooltip-arrow
-					.tooltip-inner Alege o imagine pentru cover
-				.tooltip.top.tooltip--fb-profile.hidden-xs
-					.tooltip-arrow
-					.tooltip-inner Alege o imagine de profil
+
+			//- @TODO: show the tabs ONLY when logged in to FB
+			.tabs
+				ul.nav.nav-tabs(role="tablist")
+					li.active(role="presentation")
+						a(href="#fbProfileImg", role="tab", aria-controls="fbProfileImg", data-toggle="tab") Alege poza de profil
+					li(role="presentation")
+						a(href="#fbCoverImg", role="tab", aria-controls="fbCoverImg", data-toggle="tab") Alege cover
+				.tab-content
+					#fbProfileImg.tab-pane.active(role="tabpanel")
+						.fb-head
+							.fb-head__wrap
+								.fb-head__cover
+									.fb-head__inner
+										img.fb-head__cover-img(src="dist/assets/img/fb/fb-default-cover-img.jpg", alt="")
+									.fb-head__profile
+										.fb-head__inner
+											img.fb-head__profile-img(src="dist/assets/img/fb/fb-default-profile-img.jpg", alt="")
+											#owlCarouselFBProfile.owl-carousel--fb
+												.owl-carousel__slide
+													.owl-carousel__img
+														img(src="dist/assets/img/fb/fb-default-profile-img.jpg", alt="")
+												.owl-carousel__slide
+													.owl-carousel__img
+														img(src="http://placehold.it/170x170", alt="")
+												//- .owl-carousel__slide
+												//- 	.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img3.jpg')")
+												//- .owl-carousel__slide
+												//- 	.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img4.jpg')")
+												//- .owl-carousel__slide
+												//- 	.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img5.jpg')")
+							#owlCarouselFBProfileNav.owl-navigation
+								.owl-prev
+									i.fa.fa-angle-left
+								.owl-next
+									i.fa.fa-angle-right
+					#fbCoverImg.tab-pane(role="tabpanel")
+						.fb-head
+							.fb-head__wrap
+								.fb-head__cover
+									.fb-head__inner
+										img.fb-head__cover-img(src="dist/assets/img/fb/fb-default-cover-img.jpg", alt="")
+										#owlCarouselFBCover.owl-carousel--fb
+											.owl-carousel__slide
+												.owl-carousel__img
+													img(src="dist/assets/img/fb/fb-default-cover-img.jpg", alt="")
+											.owl-carousel__slide
+												.owl-carousel__img
+													img(src="http://placehold.it/850x314", alt="")
+									.fb-head__profile
+										.fb-head__inner
+											img.fb-head__profile-img(src="dist/assets/img/fb/fb-default-profile-img.jpg", alt="")
+							#owlCarouselFBCoverNav.owl-navigation
+								.owl-prev
+									i.fa.fa-angle-left
+								.owl-next
+									i.fa.fa-angle-right
+				
+				//- @TODO: show the default if not logged in 
+				
+				//- .fb-head
+				//- 	.fb-head__wrap
+				//- 		.fb-head__cover
+				//- 			.fb-head__inner
+				//- 				img#image-cover(src="dist/assets/img/fb/fb-default-cover-img.jpg", alt="")
+				//- 			.fb-head__profile
+				//- 				.fb-head__inner
+				//- 					img#image-profile(src="dist/assets/img/fb/fb-default-profile-img.jpg", alt="")
+
+				//- .tooltip.top.tooltip--fb-cover.hidden-xs
+				//- 	.tooltip-arrow
+				//- 	.tooltip-inner Alege o imagine pentru cover
+				//- .tooltip.top.tooltip--fb-profile.hidden-xs
+				//- 	.tooltip-arrow
+				//- 	.tooltip-inner Alege o imagine de profil
 
 			.alert-facebook-auth.text-center(role='alert', if.bind='!fbIsLoggedIn')
 				button#facebook-login.btn.btn--tertiary(click.delegate="fbLogin()")
@@ -51,5 +114,5 @@ template
 	//- TODO: #107 Create sliders
 	//- TODO: #108 Finish Upload Functionality
 	//- TODO: #109 Tooltip remake 
-		//- .fb-login-button
-		//- .fb-like(data-share='true', data-width='450', data-show-faces='true')
+	//- .fb-login-button
+	//- .fb-like(data-share='true', data-width='450', data-show-faces='true')

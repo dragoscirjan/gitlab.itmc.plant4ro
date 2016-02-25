@@ -83,14 +83,67 @@ export class Facebook extends ViewModelAbstract {
         // const self = this;
         if (this.mrp && this.mrp.data) {
             this.logger.debug('picture', this.mrp);
-            $('#image-profile').attr('src', this.mrp.data.url);
+            $('.fb-head__profile-img').attr('src', this.mrp.data.url);
         }
         if (this.mrc && this.mrc.cover) {
             this.logger.debug('cover', this.mrc);
-            $('#image-cover').attr('src', this.mrc.cover.source).css({
+            $('.fb-head__cover-img').attr('src', this.mrc.cover.source).css({
                 'top': `-${this.mrc.cover.offset_y}%`
             });
         }
+
+        this.initSliders();
+    }
+
+    /**
+     * Initialize sliders on this page
+     * @method initSliders
+     */
+    initSliders() {
+        this.logger.debug('Starting owl-slider');
+
+        const $sliderFB = $('.owl-carousel--fb');
+        const $sliderFBProfile = $('#owlCarouselFBProfile');
+        const $sliderFBCover = $('#owlCarouselFBCover');
+        const $sliderFBProfileNav = $('#owlCarouselFBProfileNav');
+        const $sliderFBCoverNav = $('#owlCarouselFBCoverNav');
+
+        $sliderFB.owlCarousel({
+            autoPlay: false,
+            stopOnHover: false,
+            navigation: false,
+            // navigationText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            pagination: false,
+            paginationSpeed: 500,
+            singleItem: true,
+            autoHeight: false,
+            transitionStyle: 'fade'
+        });
+
+        // Map custom nav to each carousel
+        $sliderFBProfileNav
+            .find('.owl-prev')
+            .on('click', function() {
+                $sliderFBProfile.trigger('owl.prev');
+            });
+
+        $sliderFBProfileNav
+            .find('.owl-next')
+            .on('click', function() {
+                $sliderFBProfile.trigger('owl.next');
+            });
+
+        $sliderFBCoverNav
+            .find('.owl-prev')
+            .on('click', function() {
+                $sliderFBCover.trigger('owl.prev');
+            });
+
+        $sliderFBCoverNav
+            .find('.owl-next')
+            .on('click', function() {
+                $sliderFBCover.trigger('owl.next');
+            });
     }
 
     /**

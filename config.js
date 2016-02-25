@@ -41,6 +41,7 @@ System.config({
     "fetch": "github:github/fetch@0.10.1",
     "font-awesome": "npm:font-awesome@4.5.0",
     "itmcdev/aurelia-google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@0.0.2",
+    "owlfonk/owlcarousel": "github:owlfonk/owlcarousel@1.3.2",
     "text": "github:systemjs/plugin-text@0.0.3",
     "github:itmcdev/aurelia-google-recaptcha@0.0.2": {
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.0.8"
