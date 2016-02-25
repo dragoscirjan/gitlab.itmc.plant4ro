@@ -30,19 +30,27 @@ template
 					div(class.bind="'form-group' + (isCorporate ? '' : ' hide')")
 						.form-group
 							label(for="company") Companie
+								span.h-text-primary &nbsp;*
 							input#company.form-control(type="text", name="name", value.bind="company")
 						.form-group
 							label(for="vatNumber") Numar de inregistrare
+								span.h-text-primary &nbsp;*
 							input#vatNumber.form-control(type="text", name="name", value.bind="vatNumber")
 					.form-group
-						label(for="name", innerHtml.bind="isCorporate ? 'Persoana de contact' : 'Nume'")
+						label(for="name")
+							span(innerHtml.bind="isCorporate ? 'Persoana de contact' : 'Nume'")
+							span.h-text-primary &nbsp;*
 						input#name.form-control(type="text", name="name", value.bind="name")
 					.form-group
 						label(for="email") Email
+							span.h-text-primary &nbsp;*
 						input#email.form-control(type="email", name="email", value.bind="email")
-					.slider-wrapper
-						span#treesQtyVal.slider-value ${treesQty}
-						input#treesQty(type="text", name="trees", data-slider-min="1", data-slider-max="200", data-slider-step="1" data-slider-value="${treesQty}", value.bind="treesQty", data-slider-tooltip="hide")
+					.form-group
+						label(for="treesQty") Cati copaci vrei sa plantezi?
+							span.h-text-primary &nbsp;*
+						.slider-wrapper
+							span#treesQtyVal.slider-value ${treesQty}
+							input#treesQty(type="text", name="trees", data-slider-min="1", data-slider-max="200", data-slider-step="1" data-slider-value="${treesQty}", value.bind="treesQty", data-slider-tooltip="hide")
 					div(class.bind="'collapsible collapsible--form' + (isCorporate ? ' hide' : '')")
 						a(role='button', data-toggle='collapse', href='#plantFriend', aria-expanded='false', aria-controls='plantFriend') 
 							| Planteaza cu un prieten
@@ -50,9 +58,11 @@ template
 						#plantFriend.collapse.collapsible__content
 							.form-group
 								label(for="donateName1") Numele si prenumele
+									span.h-text-primary &nbsp;*
 								input#donateName1.form-control(type="text", name="donateName1")
 							.form-group
 								label(for="donateEmail1") Email
+									span.h-text-primary &nbsp;*
 								input#donateEmail1.form-control(type="email", name="donateEmail1")
 							.form-group
 								label(for="donateAmount1") Cati copaci vrei sa plantezi pentru prietenul tau?
@@ -65,31 +75,31 @@ template
 							.input-group-addon RON
 							input#total.form-control(type="text", name="total", readonly="readonly", value="${total}")
 							//- .input-group-addon RON
-					p.h-margin-bottom-40
+					p
 						| Dragi prieteni ai padurilor, pentru donatii mai mari de 2000 RON va rugam sa ne 
 						a(href="/#/contact") contactati
-					.form-grup
+					hr
+					p.h-margin-bottom-20.h-text-primary
+						strong Modalitatea de donatie
+					.form-group
 						.radio
-							label
-								input#payMethodM(type='radio', name="payMethod", value='mobilpay', value.bind='payMethod', checked='checked')
-								| MobilPay ${total} RON
+							input#payMethodM.sr-only(type='radio', name="payMethod", value='mobilpay', value.bind='payMethod', checked='checked')
+							label(for="payMethodM") MobilPay ${total} RON
 						.radio
-							label
-								input#payMethodPP(type='radio', name="payMethod", value='paypal', value.bind='payMethod')
-								| Paypal ${totalInEur} EUR (curs valutar 1 EUR = ${eurCurrency} RON)
+							input#payMethodPP.sr-only(type='radio', name="payMethod", value='paypal', value.bind='payMethod')
+							label(for="payMethodPP") Paypal ${totalInEur} EUR (curs valutar 1 EUR = ${eurCurrency} RON)
 						div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
-							label
-								input#payMethodPP(type='radio', name="payMethod", value='transfer', value.bind='payMethod')
-								| Transfer bancar ${total} RON
+							input#payMethoTB.sr-only(type='radio', name="payMethod", value='transfer', value.bind='payMethod')
+							label(for="payMethoTB") Transfer bancar ${total} RON
+					hr
 					.form-group
 						.checkbox
 							input#anonymous.sr-only(type="checkbox", name="anonymous", value.bind="anonymous") 
 							label(for="anonymous") Doresc sa raman anonim (Numele tau nu va aparea in nicio zona a site-ului)
-					.form-group
 						.checkbox
 							input#agreement.sr-only(type="checkbox", name="agreement", value.bind="agreement")
 							label(for="agreement") Sunt de acord cu #[a(href="/#/termeni-si-conditii") termenii si conditiile]
-					.form-group
+					.form-group.h-margin-top-40.h-margin-bottom-40
 						recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='onRecaptchaVerified')
 					.form-group.text-center
 						button.btn.btn--secondary(type="submit") Planteaza
