@@ -6,11 +6,12 @@
  * @license   http://planteazapentruromania.ro/#/application-license Commercial
  */
 
+import {Validation} from 'aurelia-validation';
+// import {ensure} from 'aurelia-validation';
+
 import {inject} from 'aurelia-framework';
 import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
-
-import {Validation} from 'aurelia-validation';
 
 // import {Recaptcha} from 'google-recaptcha';
 
@@ -36,6 +37,7 @@ export class Component extends ViewModelAbstract {
      * Payment Form => Name
      * @type {String}
      */
+    // @ensure(function(it) { it.isNotEmpty(); })
     name = '';
 
     /**
@@ -54,6 +56,7 @@ export class Component extends ViewModelAbstract {
      * Payment Form => Email
      * @type {String}
      */
+    // @ensure(function(it) { it.isNotEmpty().isEmail(); })
     email = '';
 
     /**
@@ -126,6 +129,7 @@ export class Component extends ViewModelAbstract {
         super(appConfig);
         this.exchange = appConfig.configHttp(http);
         this.validation = this.configValidation(validation);
+        // this.validation = validation.on(this);
     }
 
     /**
@@ -152,30 +156,42 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * [configValidation description]
+     * Attached event
+     * @see ViewModelAbstract#attached
+     * @method attached
+     */
+    attached() {
+        this.toggleRangeSlider();
+    }
+
+    /**
+     * Configure validation model
      * @method configValidation
      * @param  {[type]}         validation [description]
      * @return {[type]}                    [description]
      */
     configValidation(validation) {
         return validation.on(this)
+            // .ensure('company', (config) => { config.computedFrom(['isCorporate', 'company']); })
+            //     .if(() => { return subject.isCorporate; })
+            //         .isNotEmpty()
+            //     .endIf()
+            // .ensure('vatNumber', (config) => { config.computedFrom('isCorporate'); })
+            //     .if(() => { return subject.isCorporate; })
+            //         .isNotEmpty()
+            //         .matches(/^(RO)?\d{6,10}$/)
+            //     .endIf()
             .ensure('name')
+                .isNotEmpty('Numele este obligatoriu')
+            .ensure('email')
                 .isNotEmpty()
-                .hasMinLength(3)
-                .hasMaxLength(10);
-    }
-
-    /**
-     * Initialize range slider
-     * @return {[type]} [description]
-     */
-    initRangeSlider() {
-        const self = this;
-        $('#treesQty')
-            .slider()
-            .on('slide slideStop', function(slideEvt) {
-                self.treesQty = slideEvt.value;
-            });
+                .isEmail()
+            // .ensure('phone', (config) => { config.computedFrom('isCorporate'); } )
+            //     .if(() => { return subject.isCorporate; })
+            //         .isNotEmpty()
+            //         .matches(/^(\+|00)?\d+$/)
+            //     .endIf()
+            ;
     }
 
     /**
@@ -184,30 +200,20 @@ export class Component extends ViewModelAbstract {
      * @return {[type]}         [description]
      */
     proceedToPayment() {
-        this.validation
-            .validate() //the validate will fulfil when validation is valid, and reject if not
-            .then(() => {
-                alert(`Welcome, ${this.name}! `);
-            })
-            .catch((e) => {
-                console.log(e);
-            });
-    }
-
-    /**
-     * Attached event
-     * @see ViewModelAbstract#attached
-     * @method attached
-     */
-    attached() {
-        this.initRangeSlider();
+        const self = this;
+         //the validate will fulfil when validation is valid, and reject if not
+        this.validation.validate().then(() => {
+            alert(`Welcome, ${this.name}! `);
+        }).catch((e) => {
+            self.logger.warn(e);
+        });
     }
 
     /**
      * Mark if donation is corporate or not
      * @type {Boolean}
      */
-    isCorporate = false;
+    isCorporate = true;
 
     /**
      * Toggle if donation is corporate or not
@@ -218,11 +224,31 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
+     * Mark if ranger slider was started
+     * @type {Boolean}
+     */
+    isRangerSliderActive = false;
+
+    /**
+     * Initialize range slider
+     */
+    toggleRangeSlider() {
+        const self = this;
+        if (!this.isRangerSliderActive) {
+            $('#treesQty')
+                .slider()
+                .on('slide slideStop', function(slideEvt) {
+                    self.treesQty = slideEvt.value;
+                });
+        }
+    }
+
+    /**
      * [onRecaptchaVerified description]
      * @method onRecaptchaVerified
      * @return {[type]}            [description]
      */
-    onRecaptchaVerified(e) {
+    toggleRecaptchaValidate(e) {
         this.logger.debug(e);
         this.notRobot = true;
     }
