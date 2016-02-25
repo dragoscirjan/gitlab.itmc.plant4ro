@@ -10,6 +10,7 @@
   ],
   "minimum-stability": "dev",
   "require": {
+    "braintree/braintree_php" : "3.9.0",
     "markwilson/xml-to-json": "~0.1.4",
     "facebook/php-sdk-v4": "^5.0",
     "silex/silex": "~1.3"

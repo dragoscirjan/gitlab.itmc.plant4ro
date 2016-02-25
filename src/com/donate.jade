@@ -6,8 +6,8 @@
 //- TODO: #120 Finish functionality on 'planteaza cu un prieten'
 //- TODO: #121 Form validation
 template
-	require(from='./lib/renderer/recaptcha')
-	//- require(from='aurelia-google-recaptcha')
+	//- require(from='./lib/renderer/recaptcha')
+	//- require(from='google-recaptcha')
 	section.au-animate
 		.container
 			h1.page-title ${heading}
@@ -22,7 +22,7 @@ template
 						p
 							strong Planteaza pentru Romania 
 							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
-						form.form--plant(action="", submit.delegate="proceedToPayment()")
+						form.form--plant(action="", validate.bind="validation" submit.delegate="proceedToPayment()")
 							.form-group
 								label(for="name") Nume
 								input#name.form-control(type="text", name="name", value.bind="name")

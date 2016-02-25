@@ -5,7 +5,8 @@ export function configure(aurelia) {
         .standardConfiguration()
         .developmentLogging()
 
-        // .plugin('itmcdev/aurelia-google-recaptcha')
+        .plugin('aurelia-validation')
+        .plugin('google-recaptcha')
 
         ;
 

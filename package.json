@@ -74,11 +74,13 @@
       "aurelia-templating-binding": "npm:aurelia-templating-binding@^1.0.0-beta.1.0.2",
       "aurelia-templating-resources": "npm:aurelia-templating-resources@^1.0.0-beta.1.0.4",
       "aurelia-templating-router": "npm:aurelia-templating-router@^1.0.0-beta.1.0.5",
+      "aurelia-validation": "github:aurelia/validation@0.6.2",
       "bootstrap": "github:twbs/bootstrap@^3.3.5",
       "bootstrap-slider": "github:seiyria/bootstrap-slider@^6.0.17",
       "fetch": "github:github/fetch@^0.10.1",
       "font-awesome": "npm:font-awesome@^4.5.0",
-      "itmcdev/aurelia-google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@0.0.2",
+      "google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@master",
+      "itmcdev/aurelia-google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@master",
       "text": "github:systemjs/plugin-text@^0.0.3"
     },
     "devDependencies": {

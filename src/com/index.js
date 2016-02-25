@@ -127,7 +127,7 @@ export class Component extends ViewModelAbstract {
      * [toggleDonatorsActive description]
      * @type {Boolean}
      */
-    toggleDonatorsActive = true;
+    toggleDonatorsActive = false;
 
     /**
      * [toggleDonators description]
@@ -177,11 +177,14 @@ export class Component extends ViewModelAbstract {
     /**
      * [updateDonatorList description]
      * @method updateDonatorList
-     * @return {Promise}          [description]
+     * @return {Promise|null}          [description]
      */
     updateDonatorList() {
         const self = this;
         setTimeout(() => { self.updateDonatorList(); }, this.setTimeoutDonatorList);
+        if (this.donatorList.length > 0 && !this.toggleDonatorsActive) {
+            return;
+        }
         this.logger.debug('Calling /services/donator-list');
         return this.http.fetch('donator-list')
             .then(response => response.json())
@@ -218,6 +221,11 @@ export class Component extends ViewModelAbstract {
 
         if ($ul.find('li').length > 0) {
             const $li = $ul.find('li:first');
+
+            if (!this.toggleDonatorsActive) {
+                return;
+            }
+
             $li.slideUp('slow', () => { $li.remove(); });
             $ul.append(this.drawDonator(this.donatorList.shift()));
             $ul.find('li:last').hide().slideDown('slow');
