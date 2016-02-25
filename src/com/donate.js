@@ -39,6 +39,18 @@ export class Component extends ViewModelAbstract {
     name = '';
 
     /**
+     * [company description]
+     * @type {String}
+     */
+    company = '';
+
+    /**
+     * [vatNumber description]
+     * @type {String}
+     */
+    vatNumber = '';
+
+    /**
      * Payment Form => Email
      * @type {String}
      */
@@ -159,10 +171,10 @@ export class Component extends ViewModelAbstract {
      */
     initRangeSlider() {
         const self = this;
-        $('#treesQty').slider()
-            .on('slide', function(slideEvt) {
+        $('#treesQty')
+            .slider()
+            .on('slide slideStop', function(slideEvt) {
                 self.treesQty = slideEvt.value;
-                // $('#treesQtyVal').text(slideEvt.value);
             });
     }
 
@@ -189,6 +201,20 @@ export class Component extends ViewModelAbstract {
      */
     attached() {
         this.initRangeSlider();
+    }
+
+    /**
+     * Mark if donation is corporate or not
+     * @type {Boolean}
+     */
+    isCorporate = false;
+
+    /**
+     * Toggle if donation is corporate or not
+     * @method toggleCorporate
+     */
+    toggleCorporate() {
+        this.isCorporate = !this.isCorporate;
     }
 
     /**

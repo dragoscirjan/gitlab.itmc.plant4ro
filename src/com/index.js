@@ -77,7 +77,7 @@ export class Component extends ViewModelAbstract {
         const $sliderImg = $('#owlCarouselHPImg');
         const $sliderTxt = $('#owlCarouselHPTxt');
 
-        $('#owlCarouselHPImg').owlCarousel({
+        $sliderImg.owlCarousel({
             autoPlay: true,
             stopOnHover: false,
             navigation: false,
@@ -89,7 +89,7 @@ export class Component extends ViewModelAbstract {
             transitionStyle: 'fade'
         });
 
-        $('#owlCarouselHPTxt').owlCarousel({
+        $sliderTxt.owlCarousel({
             autoPlay: true,
             stopOnHover: false,
             navigation: false,
@@ -100,19 +100,8 @@ export class Component extends ViewModelAbstract {
             autoHeight: true,
             transitionStyle: 'fade',
             afterInit: function(slider) {
-                // $('.owl-controls').addClass('container container--carousel-pagination hidden-xs');
-                // const $currentSlide = $(this.owl.userItems[this.owl.currentItem]);
-                // self.imgTrigger($currentSlide);
                 // Move the controls before the content
                 this.owlControls.prependTo(slider);
-            },
-            beforeMove: function() {
-                // $('#bgImg').fadeOut('fast');
-            },
-            afterMove: function() {
-                // const $currentSlide = $(this.owl.userItems[this.owl.currentItem]);
-                // self.imgTrigger($currentSlide);
-                // $('#bgImg').fadeIn('fast');
             }
         });
 
@@ -150,7 +139,7 @@ export class Component extends ViewModelAbstract {
      */
     updateTreeCount() {
         const self = this;
-        // setTimeout(() => { self.updateTreeCount(); }, this.setTimeoutTreeCount);
+        setTimeout(() => { self.updateTreeCount(); }, this.setTimeoutTreeCount);
         if (window.location.hostname === 'localhost') {
             this.logger.warn(`You're running under ${window.location}. /services/tree-count is not available.`);
             return null;

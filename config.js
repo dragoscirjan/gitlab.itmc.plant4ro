@@ -12,6 +12,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   meta: {
     "../assets/plugins/revoslider/js/jquery.themepunch.tools.min.js": {
       "deps": [
@@ -19,6 +20,7 @@ System.config({
       ]
     }
   },
+
   map: {
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0-beta.1.0.3",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.0.2",
@@ -40,7 +42,6 @@ System.config({
     "fetch": "github:github/fetch@0.10.1",
     "font-awesome": "npm:font-awesome@4.5.0",
     "google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@0.0.1",
-    "itmcdev/aurelia-google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@0.0.1",
     "text": "github:systemjs/plugin-text@0.0.3",
     "github:aurelia/validation@0.6.2": {
       "aurelia-binding": "npm:aurelia-binding@1.0.0-beta.1.1.3",
@@ -231,4 +232,4 @@ System.config({
       "process": "github:jspm/nodelibs-process@0.1.2"
     }
   }
-})
+});

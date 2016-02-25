@@ -14,68 +14,83 @@ template
 			.tabs
 				ul.nav.nav-tabs(role="tablist")
 					li.active(role="presentation")
-						a(href="#individualDonations", role="tab", aria-controls="individualDonations", data-toggle="tab") Donatii individuale
+						a(href="#individualDonations", role="tab", aria-controls="individualDonations", data-toggle="tab", click.trigger="toggleCorporate()") Donatii individuale
 					li(role="presentation")
-						a(href="#corporateDonations", role="tab", aria-controls="corporateDonations", data-toggle="tab") Donatii corporate
+						a(href="#corporateDonations", role="tab", aria-controls="corporateDonations", data-toggle="tab", click.trigger="toggleCorporate()") Donatii corporate
 				.tab-content
 					#individualDonations.tab-pane.active(role="tabpanel")
 						p
 							strong Planteaza pentru Romania 
 							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
-						form.form--plant(action="", validate.bind="validation" submit.delegate="proceedToPayment()")
-							.form-group
-								label(for="name") Nume
-								input#name.form-control(type="text", name="name", value.bind="name")
-							.form-group
-								label(for="email") Email
-								input#email.form-control(type="email", name="email", value.bind="email")
-							.slider-wrapper
-								span#treesQtyVal.slider-value ${treesQty}
-								input#treesQty(type="text", name="trees", data-slider-min="1", data-slider-max="200", data-slider-step="1" data-slider-value="${treesQty}", value.bind="treesQty", data-slider-tooltip="hide")
-							.collapsible.collapsible--form
-								a(role='button', data-toggle='collapse', href='#plantFriend', aria-expanded='false', aria-controls='plantFriend') 
-									| Planteaza cu un prieten
-									i.caret
-								#plantFriend.collapse.collapsible__content
-									.form-group
-										label(for="donateName1") Numele si prenumele
-										input#donateName1.form-control(type="text", name="donateName1")
-									.form-group
-										label(for="donateEmail1") Email
-										input#donateEmail1.form-control(type="email", name="donateEmail1")
-									.form-group
-										label(for="donateAmount1") Cati copaci vrei sa plantezi pentru prietenul tau?
-										input#donateAmount1.form-control(type="text", name="donateAmount1")
-									.form-group
-										button#addDonationGift.btn.btn--link(type="button") Adauga alt prieten
-							.form-group
-								.checkbox
-									input#anonymous.sr-only(type="checkbox", name="anonymous", value.bind="anonymous") 
-									label(for="anonymous") Doresc sa raman anonim
-							.form-group
-								.checkbox
-									input#agreement.sr-only(type="checkbox", name="agreement", value.bind="agreement")
-									label(for="agreement") Sunt de acord cu #[a(href="#") termenii si conditiile]
-							.form-group.h-margin-top-40.h-margin-bottom-40
-								label(for="total") Total de plata
-								.input-group
-									.input-group-addon RON
-									input#total.form-control(type="text", name="total", readonly="readonly", value="${total}")
-									//- .input-group-addon RON
-							p.h-margin-bottom-40
-								| Dragi prieteni ai padurilor, pentru donatii mai mari de 2000 RON va rugam sa ne 
-								a(href="/#/contact") contactati
-							.form-grup
-								.radio
-									label
-										input#payMethodM(type='radio', name="payMethod", value='mobilpay', value.bind='payMethod', checked='checked')
-										| MobilPay ${total} RON
-								.radio
-									label
-										input#payMethodPP(type='radio', name="payMethod", value='paypal', value.bind='payMethod')
-										| Paypal ${totalInEur} EUR (curs valutar 1 EUR = ${eurCurrency} RON)
-							.form-group
-								recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='onRecaptchaVerified')
-							.form-group.text-center
-								button.btn.btn--secondary(type="submit") Planteaza
 					#corporateDonations.tab-pane(role="tabpanel")
+						p
+							strong Planteaza pentru Romania (corporate)
+							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
+				form.form--plant(action="", validate.bind="validation" submit.delegate="proceedToPayment()")
+					div(class.bind="'form-group' + (isCorporate ? '' : ' hide')")
+						.form-group
+							label(for="company") Companie
+							input#company.form-control(type="text", name="name", value.bind="company")
+						.form-group
+							label(for="vatNumber") Numar de inregistrare
+							input#vatNumber.form-control(type="text", name="name", value.bind="vatNumber")
+					.form-group
+						label(for="name", innerHtml.bind="isCorporate ? 'Persoana de contact' : 'Nume'")
+						input#name.form-control(type="text", name="name", value.bind="name")
+					.form-group
+						label(for="email") Email
+						input#email.form-control(type="email", name="email", value.bind="email")
+					.slider-wrapper
+						span#treesQtyVal.slider-value ${treesQty}
+						input#treesQty(type="text", name="trees", data-slider-min="1", data-slider-max="200", data-slider-step="1" data-slider-value="${treesQty}", value.bind="treesQty", data-slider-tooltip="hide")
+					div(class.bind="'collapsible collapsible--form' + (isCorporate ? ' hide' : '')")
+						a(role='button', data-toggle='collapse', href='#plantFriend', aria-expanded='false', aria-controls='plantFriend') 
+							| Planteaza cu un prieten
+							i.caret
+						#plantFriend.collapse.collapsible__content
+							.form-group
+								label(for="donateName1") Numele si prenumele
+								input#donateName1.form-control(type="text", name="donateName1")
+							.form-group
+								label(for="donateEmail1") Email
+								input#donateEmail1.form-control(type="email", name="donateEmail1")
+							.form-group
+								label(for="donateAmount1") Cati copaci vrei sa plantezi pentru prietenul tau?
+								input#donateAmount1.form-control(type="text", name="donateAmount1")
+							.form-group
+								button#addDonationGift.btn.btn--link(type="button") Adauga alt prieten
+					.form-group.h-margin-top-40.h-margin-bottom-40
+						label(for="total") Total de plata
+						.input-group
+							.input-group-addon RON
+							input#total.form-control(type="text", name="total", readonly="readonly", value="${total}")
+							//- .input-group-addon RON
+					p.h-margin-bottom-40
+						| Dragi prieteni ai padurilor, pentru donatii mai mari de 2000 RON va rugam sa ne 
+						a(href="/#/contact") contactati
+					.form-grup
+						.radio
+							label
+								input#payMethodM(type='radio', name="payMethod", value='mobilpay', value.bind='payMethod', checked='checked')
+								| MobilPay ${total} RON
+						.radio
+							label
+								input#payMethodPP(type='radio', name="payMethod", value='paypal', value.bind='payMethod')
+								| Paypal ${totalInEur} EUR (curs valutar 1 EUR = ${eurCurrency} RON)
+						div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
+							label
+								input#payMethodPP(type='radio', name="payMethod", value='transfer', value.bind='payMethod')
+								| Transfer bancar ${total} RON
+					.form-group
+						.checkbox
+							input#anonymous.sr-only(type="checkbox", name="anonymous", value.bind="anonymous") 
+							label(for="anonymous") Doresc sa raman anonim (Numele tau nu va aparea in nicio zona a site-ului)
+					.form-group
+						.checkbox
+							input#agreement.sr-only(type="checkbox", name="agreement", value.bind="agreement")
+							label(for="agreement") Sunt de acord cu #[a(href="/#/termeni-si-conditii") termenii si conditiile]
+					.form-group
+						recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='onRecaptchaVerified')
+					.form-group.text-center
+						button.btn.btn--secondary(type="submit") Planteaza
+							

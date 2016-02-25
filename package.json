@@ -79,8 +79,7 @@
       "bootstrap-slider": "github:seiyria/bootstrap-slider@^6.0.17",
       "fetch": "github:github/fetch@^0.10.1",
       "font-awesome": "npm:font-awesome@^4.5.0",
-      "google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@master",
-      "itmcdev/aurelia-google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@master",
+      "google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@^0.0.1",
       "text": "github:systemjs/plugin-text@^0.0.3"
     },
     "devDependencies": {
