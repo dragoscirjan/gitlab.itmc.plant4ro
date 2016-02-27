@@ -544,14 +544,26 @@ hr,
         }
     }
 
-    &.error:after {
-        content: '\f00d';
-        color: @form-error-color;
+    &.error {
+        label:before {
+            border-color: @form-error-color;
+        }
+
+        &:after {
+            content: '\f00d';
+            color: @form-error-color;
+        }
     }
 
-    &.success:after {
-        content: '\f00c';
-        color: @form-success-color;
+    &.success {
+        label:before {
+            border-color: @form-success-color;
+        }
+        
+        &:after {
+            content: '\f00c';
+            color: @form-success-color;
+        }
     }
 }
 
