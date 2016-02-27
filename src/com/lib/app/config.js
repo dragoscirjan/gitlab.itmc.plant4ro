@@ -55,7 +55,8 @@ export class AppConfig {
     configHttp(http) {
         http.configure(config => {
             config
-                .withBaseUrl('services/index.php/')
+                // .withBaseUrl('services/index.php/')
+                .withBaseUrl(this.phpAppBase)
                 .withDefaults({
                     headers: {
                         'Accept': 'application/json',

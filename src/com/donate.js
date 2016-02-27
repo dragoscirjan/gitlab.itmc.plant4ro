@@ -137,6 +137,10 @@ export class Component extends ViewModelAbstract {
         // this.validation = validation.on(this);
 
         window.Parsley.on('field:error', (e) => {
+            // if (e.validationResult) {
+            //     return;
+            // }
+            console.log(e);
             e.$element.closest('.form-group').removeClass('success').addClass('error');
             setTimeout(() => {
                 let $errorList = e.$element.closest('.form-group').find('.parsley-errors-list');
@@ -149,11 +153,13 @@ export class Component extends ViewModelAbstract {
             }, 100);
         });
         window.Parsley.on('field:success', (e) => {
+            if (!e.validationResult) {
+                return;
+            }
             e.$element.closest('.form-group').removeClass('error').addClass('success');
             $(e.$eleemnt).tooltip('destroy');
         });
         window.Parsley.setLocale('ro');
-        window.ParsleyValidator.setLocale('ro');
     }
 
     /**

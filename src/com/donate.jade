@@ -26,7 +26,7 @@ template
 						p
 							strong Planteaza pentru Romania (corporate)
 							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
-				form#donationsForm.form--plant(action="", validate.bind="validation" submit.delegate="proceedToPayment()")
+				form#donationsForm.form--plant(action="", validate.bind="validation", submit.delegate="proceedToPayment()", data-parsley-excluded="input[type=button], input[type=submit], input[type=reset], input[type=hidden], [disabled], :hidden, #anonymous")
 					div(class.bind="'form-group' + (isCorporate ? '' : ' sr-only')")
 						.form-group
 							label(for="company") Companie
@@ -37,7 +37,7 @@ template
 							label(for="vatNumber") Numar de inregistrare
 								span.h-text-primary &nbsp;*
 							.form-wrap
-								input#vatNumber.form-control(type="text", name="name", value.bind="vatNumber")
+								input#vatNumber.form-control(type="text", name="name", value.bind="vatNumber", required.bind="isCorporate", data-parsley-pattern.bind="isCorporate ? '(RO)?\\\\d{}' : '.*'")
 					.form-group
 						label(for="name")
 							span(innerHtml.bind="isCorporate ? 'Persoana de contact' : 'Nume'")
