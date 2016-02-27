@@ -42,6 +42,8 @@ System.config({
     "fetch": "github:github/fetch@0.10.1",
     "font-awesome": "npm:font-awesome@4.5.0",
     "google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@0.0.1",
+    "guillaumepotier/Parsley.js": "github:guillaumepotier/Parsley.js@2.3.4",
+    "parsleyjs": "github:guillaumepotier/Parsley.js@2.3.4",
     "text": "github:systemjs/plugin-text@0.0.3",
     "github:aurelia/validation@0.6.2": {
       "aurelia-binding": "npm:aurelia-binding@1.0.0-beta.1.1.3",

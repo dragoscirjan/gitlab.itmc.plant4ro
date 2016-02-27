@@ -99,7 +99,7 @@ export class App {
         return new Promise((resolve, reject) => {
             const script = document.createElement('script');
             script.id = 'fb-sdk';
-            script.src = '//connect.facebook.net/en_US/sdk.js';
+            script.src = 'https://connect.facebook.net/en_US/sdk.js';
             script.onload = () => { resolve.call(this); };
             document.head.appendChild(script);
             setTimeout(() => { reject.call(this, new Error(`Script ${script.src} exceeded timeout.`)); }, 10000);

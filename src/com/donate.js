@@ -19,6 +19,11 @@ import {AppConfig} from 'lib/app/config';
 import {ViewModelAbstract} from 'lib/view/model/abstract';
 
 import 'bootstrap-slider';
+import 'parsleyjs';
+import 'parsleyjs/dist/i18n/ro';
+
+// ParsleyDefaults.classHandler = function (ParsleyField) {};
+// ParsleyDefaults.errorsContainer = function (ParsleyField) {};
 
 /**
  * Component for donations
@@ -128,8 +133,27 @@ export class Component extends ViewModelAbstract {
     constructor(appConfig, http, validation) {
         super(appConfig);
         this.exchange = appConfig.configHttp(http);
-        this.validation = this.configValidation(validation);
+        // this.validation = this.configValidation(validation);
         // this.validation = validation.on(this);
+
+        window.Parsley.on('field:error', (e) => {
+            e.$element.closest('.form-group').removeClass('success').addClass('error');
+            setTimeout(() => {
+                let $errorList = e.$element.closest('.form-group').find('.parsley-errors-list');
+                $(e.$element).tooltip({
+                    html: $errorList.text(),
+                    placement: 'right',
+                    trigger: 'hover focus'
+                }).tooltip('show');
+                $errorList.remove();
+            }, 100);
+        });
+        window.Parsley.on('field:success', (e) => {
+            e.$element.closest('.form-group').removeClass('error').addClass('success');
+            $(e.$eleemnt).tooltip('destroy');
+        });
+        window.Parsley.setLocale('ro');
+        window.ParsleyValidator.setLocale('ro');
     }
 
     /**
@@ -162,37 +186,38 @@ export class Component extends ViewModelAbstract {
      */
     attached() {
         this.toggleRangeSlider();
+        this.toggleCorporate();
     }
 
-    /**
-     * Configure validation model
-     * @method configValidation
-     * @param  {[type]}         validation [description]
-     * @return {[type]}                    [description]
-     */
-    configValidation(validation) {
-        return validation.on(this)
-            // .ensure('company', (config) => { config.computedFrom(['isCorporate', 'company']); })
-            //     .if(() => { return subject.isCorporate; })
-            //         .isNotEmpty()
-            //     .endIf()
-            // .ensure('vatNumber', (config) => { config.computedFrom('isCorporate'); })
-            //     .if(() => { return subject.isCorporate; })
-            //         .isNotEmpty()
-            //         .matches(/^(RO)?\d{6,10}$/)
-            //     .endIf()
-            .ensure('name')
-                .isNotEmpty('Numele este obligatoriu')
-            .ensure('email')
-                .isNotEmpty()
-                .isEmail()
-            // .ensure('phone', (config) => { config.computedFrom('isCorporate'); } )
-            //     .if(() => { return subject.isCorporate; })
-            //         .isNotEmpty()
-            //         .matches(/^(\+|00)?\d+$/)
-            //     .endIf()
-            ;
-    }
+    // /**
+    //  * Configure validation model
+    //  * @method configValidation
+    //  * @param  {[type]}         validation [description]
+    //  * @return {[type]}                    [description]
+    //  */
+    // configValidation(validation) {
+    //     return validation.on(this)
+    //         .ensure('company', (config) => { config.computedFrom(['isCorporate', 'company']); })
+    //             .if(() => { return subject.isCorporate; })
+    //                 .isNotEmpty()
+    //             .endIf()
+    //         .ensure('vatNumber', (config) => { config.computedFrom('isCorporate'); })
+    //             .if(() => { return subject.isCorporate; })
+    //                 .isNotEmpty()
+    //                 .matches(/^(RO)?\d{6,10}$/)
+    //             .endIf()
+    //         .ensure('name')
+    //             .isNotEmpty()
+    //         .ensure('email')
+    //             .isNotEmpty()
+    //             .isEmail()
+    //         .ensure('phone', (config) => { config.computedFrom('isCorporate'); } )
+    //             .if(() => { return subject.isCorporate; })
+    //                 .isNotEmpty()
+    //                 .matches(/^(\+|00)?\d+$/)
+    //             .endIf()
+    //         ;
+    // }
 
     /**
      * [proceedToPayment description]
@@ -200,13 +225,29 @@ export class Component extends ViewModelAbstract {
      * @return {[type]}         [description]
      */
     proceedToPayment() {
-        const self = this;
+        this.formInstance.validate();
+        // const self = this;
          //the validate will fulfil when validation is valid, and reject if not
-        this.validation.validate().then(() => {
-            alert(`Welcome, ${this.name}! `);
-        }).catch((e) => {
-            self.logger.warn(e);
-        });
+        // this.validation.validate().then(() => {
+        //     alert(`Welcome, ${this.name}! `);
+        // }).catch((result) => {
+        //     self.logger.warn(result);
+        //     for (const p in result.properties) {
+        //         if (result.properties.hasOwnProperty(p)) {
+        //             if (result.properties[p].hasOwnProperty('failingRule')) {
+        //                 switch (result.properties[p].failingRule) {
+        //                     case 'isRequired':
+        //                         $('#' + p).prev().html('este camp obligatoriu');
+        //                         break;
+        //                     case 'isEmail':
+        //                         $('#' + p).prev().html('nu este vaild');
+        //                         break;
+        //                     default:
+        //                 }
+        //             }
+        //         }
+        //     }
+        // });
     }
 
     /**
@@ -221,6 +262,7 @@ export class Component extends ViewModelAbstract {
      */
     toggleCorporate() {
         this.isCorporate = !this.isCorporate;
+        this.formInstance = $('#donationsForm').parsley();
     }
 
     /**

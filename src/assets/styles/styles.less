@@ -307,7 +307,10 @@ Modules
     -webkit-transition: all .3s ease-in-out;
             transition: all .3s ease-in-out;
 
+    font-family: AvenirBook, sans-serif;
+    font-weight: 400;
     text-transform: uppercase;
+    text-decoration: none;
     border-style: solid;
     border-width: 2px;
     border-radius: 4em;
@@ -381,11 +384,31 @@ Modules
     }
 }
 
+/*
+   Spacers
+   ========================================================================== */
+
+hr,
+.hr {
+    height: 1px;
+    margin: 40px 0;
+    background-color: @border-color;
+}
+
+
 
 
 /*
    Form
    ========================================================================== */
+
+.form-group {
+    &--inline {
+        display: inline-block;
+        margin: 0 10px;
+        vertical-align: middle;
+    }
+}
 
 .form-control {
     height: 50px;
@@ -393,6 +416,7 @@ Modules
     border-color: @border-color;
     border-radius: 0;
     background-color: transparent;
+    box-shadow: none;
 
     &:focus {
         border-color: @border-color;
@@ -400,7 +424,8 @@ Modules
     }
 }
 
-.checkbox {
+.checkbox,
+.radio {
     label {
         position: relative;
         padding-left: 30px; // make room for the checkbox and spacing
@@ -423,12 +448,56 @@ Modules
     }
 }
 
+.radio {
+    label {
+        &:before {
+            border-radius: 50%;
+        }
+    }
+}
+
+.input-group-addon {
+    border-color: @border-color;
+    border-radius: 0;
+}
+
 .form--plant {
     max-width: 620px;
     margin: 30px auto 0;
 
     @media (min-width: 768px) {
         margin-top: 90px;
+    }
+}
+
+.form--contact {
+    max-width: 800px;
+    margin: 70px auto 0;
+    text-align: center;
+
+    span {
+        display: inline-block;
+        font-size: 20px;
+        line-height: 3.5;
+        vertical-align: middle;
+        text-transform: uppercase;
+    }
+
+    .form-control {
+        padding: 10px 0;
+        border-color: transparent transparent @border-color transparent;
+        font-size: 20px;
+        text-transform: uppercase;
+    }
+
+    .form-group--inline .form-control {
+        width: 320px;
+    }
+
+    textarea.form-control {
+        height: 200px;
+        // border-color: @border-color transparent;
+        resize: none;
     }
 }
 
@@ -1658,6 +1727,11 @@ States
             float: right;
         }
     }
+}
+
+// Text colors
+.h-text-primary {
+    color: @primary-color;
 }
 
 
