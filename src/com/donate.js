@@ -147,7 +147,7 @@ export class Component extends ViewModelAbstract {
                     placement: 'right',
                     trigger: 'hover focus'
                 });
-                // $errorList.remove();
+                $errorList.remove();
             }, 100);
         });
         window.Parsley.on('field:success', (e) => {

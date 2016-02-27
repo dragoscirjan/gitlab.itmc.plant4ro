@@ -518,9 +518,9 @@ hr,
     }
 }
 
-.error,
-.success {
-    .form-wrap {
+.form-wrap {
+    &.success,
+    &.error {
         position: relative;
 
         &.checkbox,
@@ -543,23 +543,15 @@ hr,
                     transform: translateY(-50%);
         }
     }
-}
 
-.error {
-    .form-wrap {
-        &:after {
-            content: '\f057';
-            color: @form-error-color;
-        }
+    &.error:after {
+        content: '\f00d';
+        color: @form-error-color;
     }
-}
 
-.success {
-    .form-wrap {
-        &:after {
-            content: '\f058';
-            color: @form-success-color;
-        }
+    &.success:after {
+        content: '\f00c';
+        color: @form-success-color;
     }
 }
 
