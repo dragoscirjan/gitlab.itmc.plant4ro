@@ -165,19 +165,17 @@ export class Component extends ViewModelAbstract {
     activate(params, routeConfig) {
         super.activate(params, routeConfig);
         const self = this;
-        if (window.location.hostname !== 'localhost') {
-            return this.exchange.fetch('curs-valutar')
-                .catch(error => { self.logger.warn('Getting exchange rates failed with error', error); })
-                .then(response => response.json())
-                .then((data) => {
-                    self.logger.debug('Exchange rates obtained:', data);
-                    if (!data.error) {
-                        self.exchangeRate = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
-                    } else {
-                        self.exchangeRate = 0;
-                    }
-                });
-        }
+        return this.exchange.fetch('curs-valutar')
+            .catch(error => { self.logger.warn('Getting exchange rates failed with error', error); })
+            .then(response => response.json())
+            .then((data) => {
+                self.logger.debug('Exchange rates obtained:', data);
+                if (!data.error) {
+                    self.exchangeRate = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
+                } else {
+                    self.exchangeRate = 0;
+                }
+            });
     }
 
     /**

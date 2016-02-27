@@ -140,10 +140,6 @@ export class Component extends ViewModelAbstract {
     updateTreeCount() {
         const self = this;
         setTimeout(() => { self.updateTreeCount(); }, this.setTimeoutTreeCount);
-        if (window.location.hostname === 'localhost') {
-            this.logger.warn(`You're running under ${window.location}. /services/tree-count is not available.`);
-            return null;
-        }
         this.logger.debug('Calling /services/tree-count');
         return this.http.fetch('tree-count')
             .then(response => response.json())
