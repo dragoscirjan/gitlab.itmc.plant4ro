@@ -151,8 +151,7 @@ export class Component extends ViewModelAbstract {
             }, 100);
         });
         window.Parsley.on('field:success', (e) => {
-            e.$element.closest('.form-wrap').removeClass('error').addClass('success');
-            $(e.$eleemnt).tooltip('destroy');
+            e.$element.closest('.form-wrap').removeClass('error').addClass('success').tooltip('destroy');
         });
         window.Parsley.setLocale('ro');
     }
