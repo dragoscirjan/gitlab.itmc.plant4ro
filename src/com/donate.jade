@@ -31,24 +31,29 @@ template
 						.form-group
 							label(for="company") Companie
 								span.h-text-primary &nbsp;*
-							input#company.form-control(type="text", name="name", value.bind="company", required.bind="isCorporate", data-parsley-minlength.bind="isCorporate ? 6 : 0")
+							.form-wrap
+								input#company.form-control(type="text", name="name", value.bind="company", required.bind="isCorporate", data-parsley-minlength.bind="isCorporate ? 6 : 0")
 						.form-group
 							label(for="vatNumber") Numar de inregistrare
 								span.h-text-primary &nbsp;*
-							input#vatNumber.form-control(type="text", name="name", value.bind="vatNumber")
+							.form-wrap
+								input#vatNumber.form-control(type="text", name="name", value.bind="vatNumber")
 					.form-group
 						label(for="name")
 							span(innerHtml.bind="isCorporate ? 'Persoana de contact' : 'Nume'")
 							span.h-text-primary &nbsp;*
-						input#name.form-control(type="text", name="name", value.bind="name", required="", data-parsley-minlength="3")
+						.form-wrap
+							input#name.form-control(type="text", name="name", value.bind="name", required="", data-parsley-minlength="3")
 					.form-group
 						label(for="email") Email
 							span.h-text-primary &nbsp;*
-						input#email.form-control(type="email", name="email", value.bind="email", required="", data-parsley-type="email")
+						.form-wrap
+							input#email.form-control(type="email", name="email", value.bind="email", required="", data-parsley-type="email")
 					div(class.bind="'form-group' + (isCorporate ? '' : ' sr-only')")
 						.form-group
 							label(for="phone") Telefon
-							input#phone.form-control(type="text", name="phone", value.bind="phone", required.bind="isCorporate", data-parsley-pattern.bind="isCorporate ? '(\\\\+|00)?\\\\d{5,}' : '.*'")
+							.form-wrap
+								input#phone.form-control(type="text", name="phone", value.bind="phone", required.bind="isCorporate", data-parsley-pattern.bind="isCorporate ? '(\\\\+|00)?\\\\d{5,}' : '.*'")
 					.form-group
 						label(for="treesQty") Cati copaci vrei sa plantezi?
 							span.h-text-primary &nbsp;*
@@ -63,21 +68,25 @@ template
 							.form-group
 								label(for="donateName1") Numele si prenumele
 									span.h-text-primary &nbsp;*
-								input#donateName1.form-control(type="text", name="donateName1")
+								.form-wrap
+									input#donateName1.form-control(type="text", name="donateName1")
 							.form-group
 								label(for="donateEmail1") Email
 									span.h-text-primary &nbsp;*
-								input#donateEmail1.form-control(type="email", name="donateEmail1")
+								.form-wrap
+									input#donateEmail1.form-control(type="email", name="donateEmail1")
 							.form-group
 								label(for="donateAmount1") Cati copaci vrei sa plantezi pentru prietenul tau?
-								input#donateAmount1.form-control(type="text", name="donateAmount1")
+								.form-wrap
+									input#donateAmount1.form-control(type="text", name="donateAmount1")
 							.form-group
 								button#addDonationGift.btn.btn--link(type="button") Adauga alt prieten
 					.form-group.h-margin-top-40.h-margin-bottom-40
 						label(for="total") Total de plata
-						.input-group
-							.input-group-addon RON
-							input#total.form-control(type="text", name="total", readonly="readonly", value="${total}")
+						.form-wrap
+							.input-group
+								.input-group-addon RON
+								input#total.form-control(type="text", name="total", readonly="readonly", value="${total}")
 							//- .input-group-addon RON
 					p
 						| Dragi prieteni ai padurilor, pentru donatii mai mari de 2000 RON va rugam sa ne 
@@ -97,10 +106,10 @@ template
 							label(for="payMethoTB") Transfer bancar ${total} RON
 					hr
 					.form-group
-						.checkbox
-							input#anonymous.sr-only(type="checkbox", name="anonymous", value.bind="anonymous") 
+						.checkbox.form-wrap
+							input#anonymous.sr-only(type="checkbox", name="anonymous", value.bind="anonymous")
 							label(for="anonymous") Doresc sa raman anonim (Numele tau nu va aparea in nicio zona a site-ului)
-						.checkbox
+						.checkbox.form-wrap
 							input#agreement.sr-only(type="checkbox", name="agreement", value.bind="agreement", required="")
 							label(for="agreement") Sunt de acord cu #[a(href="/#/termeni-si-conditii") termenii si conditiile]
 					.form-group.h-margin-top-40.h-margin-bottom-40

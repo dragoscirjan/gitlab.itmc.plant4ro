@@ -24,6 +24,7 @@ template
 				.owl-carousel__slide
 					.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img5.jpg')")
 			#donation.donation(class.bind="toggleDonatorsActive ? 'is-donation-open' : ''")
+				.donation__shadow
 				.donation__btn-wrap
 					button#donationToggler.donation__btn(type="button", click.trigger="toggleDonators()")
 						i.fa.fa-search
