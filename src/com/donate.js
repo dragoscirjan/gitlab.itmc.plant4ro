@@ -137,26 +137,21 @@ export class Component extends ViewModelAbstract {
         // this.validation = validation.on(this);
 
         window.Parsley.on('field:error', (e) => {
-            // if (e.validationResult) {
-            //     return;
-            // }
             console.log(e);
-            e.$element.closest('.form-group').removeClass('success').addClass('error');
+            e.$element.closest('.form-wrap').removeClass('success').addClass('error');
             setTimeout(() => {
-                let $errorList = e.$element.closest('.form-group').find('.parsley-errors-list');
-                $(e.$element).tooltip({
+                let $errorList = e.$element.closest('.form-wrap').find('.parsley-errors-list');
+                // $(e.$element).tooltip({
+                e.$element.closest('.form-wrap').tooltip({
                     title: $errorList.text(),
                     placement: 'right',
                     trigger: 'hover focus'
                 });
-                $errorList.remove();
+                // $errorList.remove();
             }, 100);
         });
         window.Parsley.on('field:success', (e) => {
-            if (!e.validationResult) {
-                return;
-            }
-            e.$element.closest('.form-group').removeClass('error').addClass('success');
+            e.$element.closest('.form-wrap').removeClass('error').addClass('success');
             $(e.$eleemnt).tooltip('destroy');
         });
         window.Parsley.setLocale('ro');

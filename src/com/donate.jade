@@ -107,13 +107,18 @@ template
 					hr
 					.form-group
 						.checkbox.form-wrap
-							input#anonymous.sr-only(type="checkbox", name="anonymous", value.bind="anonymous")
-							label(for="anonymous") Doresc sa raman anonim (Numele tau nu va aparea in nicio zona a site-ului)
+							div
+								input#anonymous.sr-only(type="checkbox", name="anonymous", value.bind="anonymous")
+								label(for="anonymous") Doresc sa raman anonim (Numele tau nu va aparea in nicio zona a site-ului)
 						.checkbox.form-wrap
-							input#agreement.sr-only(type="checkbox", name="agreement", value.bind="agreement", required="")
-							label(for="agreement") Sunt de acord cu #[a(href="/#/termeni-si-conditii") termenii si conditiile]
+							div
+								input#agreement.sr-only(type="checkbox", name="agreement", value.bind="agreement", required="")
+								label(for="agreement") Sunt de acord cu #[a(href="/#/termeni-si-conditii") termenii si conditiile]
 					.form-group.h-margin-top-40.h-margin-bottom-40
-						recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='toggleRecaptchaValidate')
+						.form-wrap
+							div
+								recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='toggleRecaptchaValidate')
+								input#rc.sr-only(type="checkbox", name="rc", value.bind="notRobot", required="")
 					.form-group.text-center
 						button.btn.btn--secondary(type="submit") Planteaza
 						//- button.btn.btn--secondary(type="submit", disabled.bind="!validation.result.isValid") Planteaza
