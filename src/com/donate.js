@@ -141,10 +141,10 @@ export class Component extends ViewModelAbstract {
             setTimeout(() => {
                 let $errorList = e.$element.closest('.form-group').find('.parsley-errors-list');
                 $(e.$element).tooltip({
-                    html: $errorList.text(),
+                    title: $errorList.text(),
                     placement: 'right',
                     trigger: 'hover focus'
-                }).tooltip('show');
+                });
                 $errorList.remove();
             }, 100);
         });
