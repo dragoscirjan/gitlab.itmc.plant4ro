@@ -29,4 +29,19 @@ return array(
         'get' => require 'views/exchange-rate.php',
     ),
 
+    /**
+     *
+     */
+    '/donate-paypal' => require 'views/donate-braintree.php',
+
+    /**
+     *
+     */
+    '/donate-mobilpay' => require 'views/donate-mobilpay.php',
+
+    /**
+     *
+     */
+    '/donate-wire' => require 'views/donate-wire.php',
+
 );

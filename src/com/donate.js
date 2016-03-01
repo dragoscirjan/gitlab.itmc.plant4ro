@@ -132,12 +132,14 @@ export class Component extends ViewModelAbstract {
      */
     constructor(appConfig, http, validation) {
         super(appConfig);
+        let self = this;
         this.exchange = appConfig.configHttp(http);
-        // this.validation = this.configValidation(validation);
-        // this.validation = validation.on(this);
+
+        window.toggleRecaptchaValidate = (result) => {
+            self.toggleRecaptchaValidate(result);
+        };
 
         window.Parsley.on('field:error', (e) => {
-            console.log(e);
             e.$element.closest('.form-wrap').removeClass('success').addClass('error');
             setTimeout(() => {
                 let $errorList = e.$element.closest('.form-wrap').find('.parsley-errors-list');
@@ -187,35 +189,25 @@ export class Component extends ViewModelAbstract {
         this.toggleCorporate();
     }
 
-    // /**
-    //  * Configure validation model
-    //  * @method configValidation
-    //  * @param  {[type]}         validation [description]
-    //  * @return {[type]}                    [description]
-    //  */
-    // configValidation(validation) {
-    //     return validation.on(this)
-    //         .ensure('company', (config) => { config.computedFrom(['isCorporate', 'company']); })
-    //             .if(() => { return subject.isCorporate; })
-    //                 .isNotEmpty()
-    //             .endIf()
-    //         .ensure('vatNumber', (config) => { config.computedFrom('isCorporate'); })
-    //             .if(() => { return subject.isCorporate; })
-    //                 .isNotEmpty()
-    //                 .matches(/^(RO)?\d{6,10}$/)
-    //             .endIf()
-    //         .ensure('name')
-    //             .isNotEmpty()
-    //         .ensure('email')
-    //             .isNotEmpty()
-    //             .isEmail()
-    //         .ensure('phone', (config) => { config.computedFrom('isCorporate'); } )
-    //             .if(() => { return subject.isCorporate; })
-    //                 .isNotEmpty()
-    //                 .matches(/^(\+|00)?\d+$/)
-    //             .endIf()
-    //         ;
-    // }
+    get paymentModel() {
+        return {
+            company: this.company,
+            vat: this.vatNumber,
+            name: this.name,
+            email: this.email,
+            phone: this.phone,
+            payment: {
+                total: this.total,
+                totalEur: this.totalInEur,
+                method: this.payMethod,
+                exchange: this.exchangeRate,
+                currency: 'EUR'
+            },
+            anonymous: this.anonymous,
+            agreement: this.agreement,
+            recaptcha: grecaptcha.getResponse()
+        };
+    }
 
     /**
      * [proceedToPayment description]
@@ -223,29 +215,9 @@ export class Component extends ViewModelAbstract {
      * @return {[type]}         [description]
      */
     proceedToPayment() {
-        this.formInstance.validate();
-        // const self = this;
-         //the validate will fulfil when validation is valid, and reject if not
-        // this.validation.validate().then(() => {
-        //     alert(`Welcome, ${this.name}! `);
-        // }).catch((result) => {
-        //     self.logger.warn(result);
-        //     for (const p in result.properties) {
-        //         if (result.properties.hasOwnProperty(p)) {
-        //             if (result.properties[p].hasOwnProperty('failingRule')) {
-        //                 switch (result.properties[p].failingRule) {
-        //                     case 'isRequired':
-        //                         $('#' + p).prev().html('este camp obligatoriu');
-        //                         break;
-        //                     case 'isEmail':
-        //                         $('#' + p).prev().html('nu este vaild');
-        //                         break;
-        //                     default:
-        //                 }
-        //             }
-        //         }
-        //     }
-        // });
+        if (this.paymentModel.recaptcha.length > 0 && this.formInstance.isValid()) {
+            this.logger.debug('proceed to the fucking payment, dude!');
+        }
     }
 
     /**
@@ -288,8 +260,7 @@ export class Component extends ViewModelAbstract {
      * @method onRecaptchaVerified
      * @return {[type]}            [description]
      */
-    toggleRecaptchaValidate(e) {
-        this.logger.debug(e);
+    toggleRecaptchaValidate(result) {
         this.notRobot = true;
     }
 }

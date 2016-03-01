@@ -77,6 +77,7 @@
       "aurelia-validation": "github:aurelia/validation@0.6.2",
       "bootstrap": "github:twbs/bootstrap@^3.3.5",
       "bootstrap-slider": "github:seiyria/bootstrap-slider@^6.0.17",
+      "braintree/braintree-web": "github:braintree/braintree-web@^2.21.0",
       "fetch": "github:github/fetch@^0.10.1",
       "font-awesome": "npm:font-awesome@^4.5.0",
       "google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@^0.0.1",

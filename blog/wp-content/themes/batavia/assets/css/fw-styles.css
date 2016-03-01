@@ -1,0 +1,57 @@
+.fw-option-type-upload.images-only.full-width .thumb{
+	width: auto!important;
+	max-width: 300px!important;
+	height: auto;
+}
+.fw-option-type-upload.images-only.full-width .thumb img{
+	width: auto!important;
+	max-width: 300px!important;
+	height: auto;
+}
+.fw-option-type-image-picker ul.thumbnails.image_picker_selector li .thumbnail img{
+	border: 3px solid #d1d1d1!important;
+}
+#fw-backend-option-fw-option-404_message .fw-inner{
+	max-width: inherit!important;
+	width: 100%!important;
+}
+.adaptive-switch .switch-dot span{
+	background: #DDDDDD;
+}
+.adaptive-switch .switch-dot span{
+	background-color: #DDDDDD!important;
+}
+.adaptive-switch.switch-right .switch-dot span{
+	background: #AFD56F!important;
+}
+.fw-option-type-switch .switch-right label.switch-label span{
+	color: #AFD56F!important;
+}
+.toggle-not-compat-ext-btn-wrapper{
+	display: none;
+}
+
+.fw-backend-side-tabs .fw-settings-form-header{
+	background: #23282D!important;
+}
+
+form.fw-settings-form.fw-backend-side-tabs{
+	
+}
+
+#setting-error-tgmpa{
+	display: block!important;
+	width: auto!important;
+}
+
+.fw-option-html img{
+	width: 100%;
+	max-width: 500px;
+	overflow: hidden;
+	border: 5px solid #eee;
+	margin-bottom: 10px;
+}
+
+.fw-option-html li{
+	margin: 15px 0;
+}

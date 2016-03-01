@@ -38,10 +38,11 @@ System.config({
     "babel-runtime": "npm:babel-runtime@5.8.34",
     "bootstrap": "github:twbs/bootstrap@3.3.6",
     "bootstrap-slider": "github:seiyria/bootstrap-slider@6.0.17",
+    "braintree/braintree-web": "github:braintree/braintree-web@2.21.0",
     "core-js": "npm:core-js@1.2.6",
     "fetch": "github:github/fetch@0.10.1",
     "font-awesome": "npm:font-awesome@4.5.0",
-    "google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@0.0.1",
+    "google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@master",
     "guillaumepotier/Parsley.js": "github:guillaumepotier/Parsley.js@2.3.4",
     "parsleyjs": "github:guillaumepotier/Parsley.js@2.3.4",
     "text": "github:systemjs/plugin-text@0.0.3",
@@ -52,7 +53,7 @@ System.config({
       "aurelia-metadata": "npm:aurelia-metadata@1.0.0-beta.1.1.4",
       "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.1.1"
     },
-    "github:itmcdev/aurelia-google-recaptcha@0.0.1": {
+    "github:itmcdev/aurelia-google-recaptcha@master": {
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.1.3"
     },
     "github:jspm/nodelibs-assert@0.1.0": {
