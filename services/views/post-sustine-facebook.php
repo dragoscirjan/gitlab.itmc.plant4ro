@@ -4,7 +4,8 @@ namespace Prietenii\Padurilor;
 
 use Facebook as FacebookSdk;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+
+require_once __DIR__ . '/../src/response.php';
 
 
 /**
@@ -33,11 +34,11 @@ class Facebook extends FacebookSdk\Facebook {
                 return $this->picture($request->get('picture'), $token);
             }
             // if no picture and no cover are mentioned, throw an error
-            return $this->response400(array(
+            return response400(array(
                 'error' => 'The request is invalid. No picture and no cover are mentioned',
             ));
         }, function($message) {
-            return $this->response500($message);
+            return response500($message);
         });
     }
 
@@ -59,52 +60,19 @@ class Facebook extends FacebookSdk\Facebook {
             return $this->post('/me/photos', $image, $token);
         }, function($response) use ($token) {
             // return picture id
-            return $this->response(array(
+            return response(array(
                 'error' => 0,
                 'id' => $response->getDecodedBody()['id']
             ));
         }, function($message) {
             // send error in any other case
-            return $this->response500($message);
+            return response500($message);
         });
     }
 
     /**********************************************************************************************
      * Response
      **********************************************************************************************/
-
-    /**
-     * @param $message
-     * @param int $status
-     * @return Response
-     */
-    function response($message, $status = Response::HTTP_CREATED) {
-        return new Response(
-            json_encode($message),
-            $status
-        );
-    }
-
-    /**
-     * @param $message
-     * @return Response
-     */
-    function response400($message) {
-        return $this->response(
-            $message,
-            Response::HTTP_BAD_REQUEST
-        );
-    }
-    /**
-     * @param $message
-     * @return Response
-     */
-    function response500($message) {
-        return $this->response(
-            $message,
-            Response::HTTP_INTERNAL_SERVER_ERROR
-        );
-    }
 
     /**
      * @param $try     callback

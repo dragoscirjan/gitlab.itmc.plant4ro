@@ -32,16 +32,17 @@ return array(
     /**
      *
      */
-    '/donate-paypal' => require 'views/donate-braintree.php',
+    '/donate/{method}' => require 'views/donate.php',
+    '/donate/{method}/{action}' => require 'views/donate.php',
 
-    /**
-     *
-     */
-    '/donate-mobilpay' => require 'views/donate-mobilpay.php',
-
-    /**
-     *
-     */
-    '/donate-wire' => require 'views/donate-wire.php',
+//    /**
+//     *
+//     */
+//    '/donate-mobilpay' => require 'views/donate-mobilpay.php',
+//
+//    /**
+//     *
+//     */
+//    '/donate-wire' => require 'views/donate-wire.php',
 
 );

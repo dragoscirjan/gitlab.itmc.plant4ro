@@ -99,7 +99,7 @@ template
 							input#payMethodM.sr-only(type='radio', name="payMethod", value='mobilpay', checked.bind='payMethod')
 							label(for="payMethodM") MobilPay ${total} RON
 						.radio
-							input#payMethodPP.sr-only(type='radio', name="payMethod", value='paypal', checked.bind='payMethod')
+							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='payMethod')
 							label(for="payMethodPP") Paypal ${totalInEur} EUR (curs valutar 1 EUR = ${eurCurrency} RON)
 						div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
 							input#payMethoTB.sr-only(type='radio', name="payMethod", value='transfer', checked.bind='payMethod')
@@ -123,22 +123,23 @@ template
 						button.btn.btn--secondary(type="submit") Planteaza
 						//- button.btn.btn--secondary(type="submit", disabled.bind="!validation.result.isValid") Planteaza
 
-#braintree-modal.modal.fade(tabindex='-1', role='dialog')
-	.modal-dialog
-		.modal-content
-			.modal-header
-				button.close(type='button', data-dismiss='modal', aria-label='Close')
-					span(aria-hidden='true') &times;
-				| &#x9;        
-				h4.modal-title Modal title
-			| &#x9;      
-			.modal-body
-				p One fine body&mldr;
-			| &#x9;      
-			.modal-footer
-				button.btn.btn-default(type='button', data-dismiss='modal') Close
-				| &#x9;        
-				button.btn.btn-primary(type='button') Save changes
-		// /.modal-content
-		// /.modal-dialog
-// /.modal
+	div#braintree-modal.modal.fade(tabindex='-1', role='dialog') 
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+					| &#x9;        
+					h4.modal-title Modal title
+				| &#x9;      
+				.modal-body
+					form(method='post', action='')
+						#braintree-payment-form
+				| &#x9;      
+				.modal-footer
+					button.btn.btn-default(type='button', data-dismiss='modal') Close
+					| &#x9;        
+					button.btn.btn-primary(type='button') Save changes
+			// /.modal-content
+			// /.modal-dialog
+			// /.modal

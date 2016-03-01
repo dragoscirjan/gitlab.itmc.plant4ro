@@ -21,6 +21,7 @@ import {ViewModelAbstract} from 'lib/view/model/abstract';
 import 'bootstrap-slider';
 import 'parsleyjs';
 import 'parsleyjs/dist/i18n/ro';
+import * as braintree from 'braintree/braintree-web';
 
 // ParsleyDefaults.classHandler = function (ParsleyField) {};
 // ParsleyDefaults.errorsContainer = function (ParsleyField) {};
@@ -133,7 +134,7 @@ export class Component extends ViewModelAbstract {
     constructor(appConfig, http, validation) {
         super(appConfig);
         let self = this;
-        this.exchange = appConfig.configHttp(http);
+        this.http = appConfig.configHttp(http);
 
         window.toggleRecaptchaValidate = (result) => {
             self.toggleRecaptchaValidate(result);
@@ -166,7 +167,7 @@ export class Component extends ViewModelAbstract {
     activate(params, routeConfig) {
         super.activate(params, routeConfig);
         const self = this;
-        return this.exchange.fetch('curs-valutar')
+        return this.http.fetch('curs-valutar')
             .catch(error => { self.logger.warn('Getting exchange rates failed with error', error); })
             .then(response => response.json())
             .then((data) => {
@@ -189,6 +190,11 @@ export class Component extends ViewModelAbstract {
         this.toggleCorporate();
     }
 
+    /**
+     * [paymentModel description]
+     * @method paymentModel
+     * @return {Object}     [description]
+     */
     get paymentModel() {
         return {
             company: this.company,
@@ -210,13 +216,98 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
+     * [paymentWithBraintree description]
+     * @method paymentWithBraintree
+     * @return {Promise}             [description]
+     */
+    paymentWithBraintreeInit() {
+        let self = this;
+        this.logger.debug('request:/ donate/braintree');
+        return new Promise((resolve, reject) => {
+            this.http.fetch('donate/braintree')
+                .then(response => response.json())
+                .then((data) => {
+                    self.logger.debug('response:/ donate/braintree', data);
+                    if (!data.error) {
+                        self.paymentWithBraintreeForm(data.token)
+                            .catch((error) => { reject(error); })
+                            .then((token) => { resolve(token); });
+                    } else {
+                        self.logger.warn(error);
+                        reject(data);
+                    }
+                });
+        });
+    }
+
+    /**
+     * [paymentWithBraintreeForm description]
+     * @method paymentWithBraintreeForm
+     * @param  {string}                 token [description]
+     * @return {[type]}                       [description]
+     */
+    paymentWithBraintreeForm(token) {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            $('#braintree-modal')
+                .modal('show')
+                .on('shown.bs.modal', () => {
+                    let checkout = null;
+                    braintree.setup(token, 'dropin', {
+                        onReady: (ready) => { checkout = ready; },
+                        onPaymentMethodReceived: (payload) => {
+                            self.logger.debug('braintree:/ ', payload);
+                            // self.paymentWithBraintreeProceed(payload)
+                            //     .catch((error) => {  reject(error); })
+                            //     .then((resultToken) => { resolve(resultToken); });
+                        },
+                        onError: (error) => { self.logger.warn(error); reject(error); },
+                        container: 'braintree-payment-form'
+                    });
+
+                    $('#braintree-modal .btn-primary').off('click').on('click', (event) => {
+                        event.preventDefault();
+                        checkout.paypal.initAuthFlow();
+                    });
+                });
+        });
+    }
+
+    /**
+     * [paymentWithBraintreeProceed description]
+     * @method paymentWithBraintreeProceed
+     * @param  {[type]}                    payload [description]
+     * @return {[type]}                            [description]
+     */
+    paymentWithBraintreeProceed(payload) {
+
+    }
+
+    /**
      * [proceedToPayment description]
      * @method proceedToPayment
      * @return {[type]}         [description]
      */
     proceedToPayment() {
+        let promise = null;
         if (this.paymentModel.recaptcha.length > 0 && this.formInstance.isValid()) {
-            this.logger.debug('proceed to the fucking payment, dude!');
+            this.logger.debug('Starting payment with:', this.paymentModel);
+            switch (this.paymentModel.payment.method) {
+                case 'mobilpay':
+                    promise = this.paymentWithMobilpay();
+                    break;
+                case 'braintree':
+                    promise = this.paymentWithBraintreeInit();
+                    break;
+                case 'wire':
+                    promise = this.paymentWithWire();
+                    break;
+                default:
+                    this.logger.warn('Wrong payment method selected');
+            }
+            if (promise) {
+                // @TODO:
+            }
         }
     }
 
