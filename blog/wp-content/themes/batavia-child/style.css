@@ -1,0 +1,246 @@
+/*
+ Theme Name:   Batavia Child
+ Theme URI:    http://example.com/batavia-child/
+ Description:  Batavia Child Theme
+ Author:       Dragos Stefanache
+ Author URI:   http://itmediaconnect.ro
+ Template:     batavia
+ Version:      1.0.0
+ License:      GNU General Public License v2 or later
+ License URI:  http://www.gnu.org/licenses/gpl-2.0.html
+ Tags:         light, dark, two-columns, right-sidebar, responsive-layout, accessibility-ready
+ Text Domain:  batavia-child
+*/
+
+/* ==========================================================================
+   BASE
+   ========================================================================== */
+
+body {
+  background-color: #f2f1ee;
+}
+
+/* ==========================================================================
+   LAYOUT
+   ========================================================================== */
+
+#zl_footer {
+  position: relative;
+  padding: 25px;
+  background: none;
+}
+
+#zl_footer:before {
+  background: none
+}
+
+@media (min-width: 768px) {
+  #zl_footer {
+    padding: 70px;
+  }
+}
+
+
+/* ==========================================================================
+   MODULES
+   ========================================================================== */
+
+/*
+   Mainmenu
+   ========================================================================== */
+
+.zl_mainmenuholder {
+  /*height: */
+}
+
+.zl_mainmenu {
+  padding: 0 25px;
+}
+
+.zl_bgrmnwrp {
+  position: fixed;
+  z-index: 10;
+  top: 15px;
+  left: 50%;
+
+  width: 24px;
+  height: 19px;
+  padding: 0;
+
+  -webkit-transition: all .5s ease-in-out;
+          transition: all .5s ease-in-out;
+  -webkit-transform: translateX(-50%) rotate(0deg);
+          transform: translateX(-50%) rotate(0deg);
+
+  border: 0;
+  background-color: transparent;
+}
+
+.zl_bgrmnwrp:before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: 50%;
+
+  -webkit-transition: all .5s .25s ease-in-out;
+          transition: all .5s .25s ease-in-out;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+
+  border-width: 72px 72px 0 72px;
+  border-style: solid;
+  border-color: #fff transparent transparent;
+}
+
+.zl_bgr_menu_trigger {
+  position: static;
+  width: 100%;
+  height: 100%;
+}
+
+.zl_burgermenu {
+  position: relative;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.zl_burgermenu:before,
+.zl_burgermenu:after {
+  content: none;
+}
+
+.icon-bar {
+  position: absolute;
+  left: 0;
+
+  display: block;
+
+  width: 100%;
+  height: 2px;
+
+  -webkit-transition: all .25s ease-in-out;
+          transition: all .25s ease-in-out;
+  -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+
+  opacity: 1;
+  background-color: #857b76;
+}
+
+.icon-bar:nth-child(1) {
+  top: 0;
+}
+
+.icon-bar:nth-child(2) {
+  top: 8px;
+}
+
+.icon-bar:nth-child(3) {
+  top: 16px;
+}
+
+.zl_mainmenu:not(.is-nav-open) .zl_burgermenu:hover .icon-bar:nth-child(1) {
+  top: 8px;
+
+  -webkit-transform: scale(1) rotate(90deg);
+          transform: scale(1) rotate(90deg);
+}
+
+.zl_mainmenu:not(.is-nav-open) .zl_burgermenu:hover .icon-bar:nth-child(3) {
+  top: 8px;
+
+  -webkit-transform: scale(1) rotate(-90deg);
+          transform: scale(1) rotate(-90deg);
+}
+
+.zl_srccontainer {
+    margin-top: 65px;
+}
+
+
+@media (min-width: 768px) {
+  .zl_mainmenuholder {
+    height: 160px;
+  }
+
+  .zl_mainmenu {
+    padding: 0 70px;
+  }
+}
+
+/*
+   Footer
+   ========================================================================== */
+
+.footer {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display:         flex;
+
+    margin: 0 -15px;
+
+    -webkit-align-items: flex-end;
+    -webkit-box-align: flex-end;
+    -ms-flex-align: flex-end;
+        align-items: flex-end;
+}
+
+.footer__info {
+    display: flex;
+    flex-direction: column;
+
+    flex: 1;
+    justify-content: space-between;
+}
+
+.footer__info p {
+  margin-bottom: 0;
+  padding: 0 15px;
+
+  text-transform: uppercase;
+
+  font-size: 11px;
+}
+
+.footer__social {
+    margin: 0;
+    padding: 0 15px;
+
+    list-style: none;
+
+    flex: 0 1 auto;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    margin: 0 -25px;
+
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+        align-items: center;
+  }
+
+  .footer__info {
+    flex-direction: row;
+  }
+
+  .footer__info p {
+    padding: 0 25px;
+  }
+
+  .footer__social {
+    padding: 0 25px;
+  }
+
+  .footer__social li {
+      display: inline-block;
+
+      font-size: 22px;
+      line-height: 1;
+  }
+}
