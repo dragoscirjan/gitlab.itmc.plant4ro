@@ -267,7 +267,7 @@ export class Component extends ViewModelAbstract {
                         container: 'braintree-payment-form'
                     });
 
-                    $('#braintree-modal .btn-primary').off('click').on('click', (event) => {
+                    $('#braintree-modal .btn.btn--sm.btn--secondary').off('click').on('click', (event) => {
                         $('#braintree-modal form input').trigger('click', event);
                     });
                 });

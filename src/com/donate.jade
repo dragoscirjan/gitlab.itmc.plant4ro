@@ -123,17 +123,15 @@ template
 						button.btn.btn--secondary(type="submit") Planteaza
 						//- button.btn.btn--secondary(type="submit", disabled.bind="!validation.result.isValid") Planteaza
 
-	div#braintree-modal.modal.fade(tabindex='-1', role='dialog') 
+	div#braintree-modal.modal.modal-braintree.fade(tabindex='-1', role='dialog') 
 		.modal-dialog
 			.modal-content
 				.modal-header
-					button.close(type='button', data-dismiss='modal', aria-label='Close')
-						span(aria-hidden='true') &times;
-					h4.modal-title Modal title
+					img(src="/dist/assets/img/braintree-logo.jpg", alt="Braintree - A Paypal Company Logo")
 				.modal-body
 					form#checkout(method='post', action='/services/index.php/donate/braintree/pay')
 						#braintree-payment-form
 						input.sr-only(type='submit', value='Planteaza')
 				.modal-footer
-					input.btn.btn-default(type='button', data-dismiss='modal', value='Renunta')
-					input.btn.btn-primary(type='submit', value='Planteaza')
+					button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
+					button.btn.btn--sm.btn--secondary(type='button') Planteaza
