@@ -114,7 +114,8 @@ gulp.task('copy-plugins', function() {
     return gulp.src(paths.assets.plugins)
         // .pipe(changed(paths.output, {extension: '.css'}))
         .pipe(gulp.dest(paths.assets.output.plugins))
-        .pipe(browserSync.stream());
+        // .pipe(browserSync.stream())
+        ;
 });
 
 gulp.task('copy-fonts', function() {
