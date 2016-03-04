@@ -18,6 +18,17 @@
 
 body {
   background-color: #f2f1ee;
+  color: #857b76;
+}
+
+a {
+  font-weight: 700;
+  color: #857b76;
+}
+
+a:hover,
+a:focus {
+  color: #857b76;
 }
 
 /* ==========================================================================
@@ -175,6 +186,22 @@ body {
    Post
    ========================================================================== */
 
+.zl_post .entry-title {
+  font-family: Roboto, sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.zl_post .entry-title a:before,
+.zl_post .entry-title a:after {
+  background-color: #857b76;
+}
+
+.zl_post_cat a:hover,
+.zl_postmeta a:hover {
+  border-color: #857b76;
+}
+
 .zl_post_thumb {
   background-color: #f2f1ee;
 }
@@ -198,6 +225,7 @@ body {
 
 .zl_post_footer .zl_readmorelink {
   padding: 15px 40px;
+  font-weight: 400;
 }
 
 .zl_post_footer .zl_readmorelink:hover,
