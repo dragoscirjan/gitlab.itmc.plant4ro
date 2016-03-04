@@ -10,8 +10,8 @@ import {Validation} from 'aurelia-validation';
 // import {ensure} from 'aurelia-validation';
 
 import {inject} from 'aurelia-framework';
-import {HttpClient} from 'aurelia-fetch-client';
 import 'fetch';
+import {HttpClient} from 'aurelia-fetch-client';
 
 // import {Recaptcha} from 'google-recaptcha';
 
@@ -115,7 +115,7 @@ export class Component extends ViewModelAbstract {
      * @return {[type]}           [description]
      */
     get totalInEur() {
-        return this.exchangeRate ? Math.floor(this.treesPrice / this.exchangeRate * 100) / 100 : 0;
+        return this.exchangeRate ? Math.floor(this.total / this.exchangeRate * 100) / 100 : 0;
     }
 
     /**
@@ -174,6 +174,7 @@ export class Component extends ViewModelAbstract {
                 self.logger.debug('Exchange rates obtained:', data);
                 if (!data.error) {
                     self.exchangeRate = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
+                    self.logger.debug('Exchange rates obtained EUR:', self.exchangeRate);
                 } else {
                     self.exchangeRate = 0;
                 }
@@ -249,25 +250,25 @@ export class Component extends ViewModelAbstract {
     paymentWithBraintreeForm(token) {
         let self = this;
         return new Promise((resolve, reject) => {
+            // let checkout = null;
             $('#braintree-modal')
                 .modal('show')
                 .on('shown.bs.modal', () => {
-                    let checkout = null;
                     braintree.setup(token, 'dropin', {
-                        onReady: (ready) => { checkout = ready; },
+                        // onReady: (ready) => { checkout = ready; },
                         onPaymentMethodReceived: (payload) => {
                             self.logger.debug('braintree:/ ', payload);
-                            // self.paymentWithBraintreeProceed(payload)
-                            //     .catch((error) => {  reject(error); })
-                            //     .then((resultToken) => { resolve(resultToken); });
+                            payload.token = token;
+                            self.paymentWithBraintreeProceed(payload)
+                                .catch((error) => {  reject(error); })
+                                .then((resultToken) => { resolve(resultToken); });
                         },
                         onError: (error) => { self.logger.warn(error); reject(error); },
                         container: 'braintree-payment-form'
                     });
 
-                    $('#braintree-modal .btn-primary').off('click').on('click', (event) => {
-                        event.preventDefault();
-                        checkout.paypal.initAuthFlow();
+                    $('#braintree-modal .btn.btn--sm.btn--secondary').off('click').on('click', (event) => {
+                        $('#braintree-modal form input').trigger('click', event);
                     });
                 });
         });
@@ -280,7 +281,23 @@ export class Component extends ViewModelAbstract {
      * @return {[type]}                            [description]
      */
     paymentWithBraintreeProceed(payload) {
-
+        let pay = this.paymentModel;
+        let self = this;
+        pay.payment.payload = payload;
+        this.logger.debug(this.http);
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                error: (jqXHR, status, reason) => { reject(reason); },
+                data: { load: btoa(JSON.stringify(pay)) },
+                dataType: 'json',
+                headers: {
+                    'X-Request-Playload': payload.nonce
+                },
+                method: 'post',
+                success: (token) => { resolve(token); },
+                url: self.appConfig.getPhpUrl('donate/braintree')
+            });
+        });
     }
 
     /**

@@ -65,14 +65,7 @@ require '../vendor/autoload.php';
         onError: function(error) {
             console.log('error', error);
         },
-//        paypal: {
-//            singleUse: true,
-//            amount: 100.00,
-//            currency: 'USD',
-//            locale: 'ro_ro',
-////            enableShippingAddress: true,
-//            headless: true
-//        },
         container: "payment-form"
     });
+
 </script>

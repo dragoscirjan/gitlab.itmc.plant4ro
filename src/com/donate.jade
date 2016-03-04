@@ -129,11 +129,9 @@ template
 				.modal-header
 					img(src="/dist/assets/img/braintree-logo.jpg", alt="Braintree - A Paypal Company Logo")
 				.modal-body
-					form(method='post', action='')
+					form#checkout(method='post', action='/services/index.php/donate/braintree/pay')
 						#braintree-payment-form
+						input.sr-only(type='submit', value='Planteaza')
 				.modal-footer
-					button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Cancel
-					button.btn.btn--sm.btn--secondary(type='button') Pay
-			// /.modal-content
-			// /.modal-dialog
-			// /.modal
+					button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
+					button.btn.btn--sm.btn--secondary(type='button') Planteaza
