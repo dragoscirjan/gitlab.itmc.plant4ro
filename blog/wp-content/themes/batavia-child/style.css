@@ -172,6 +172,56 @@ body {
 }
 
 /*
+   Post
+   ========================================================================== */
+
+.zl_post_thumb {
+  background-color: #f2f1ee;
+}
+
+.zl_post_footer {
+  border: 0;
+}
+
+.zl_post_footer .zl_readmorelink,
+.zl_postnav .column a,
+.comment-form input[type="submit"] {
+  border: 2px solid #a4de02;
+  border-radius: 4em;
+  background: none;
+  box-shadow: none;
+  color: #857b76;
+
+  -webkit-transition: all .3s ease-in-out;
+          transition: all .3s ease-in-out;
+}
+
+.zl_post_footer .zl_readmorelink {
+  padding: 15px 40px;
+}
+
+.zl_post_footer .zl_readmorelink:hover,
+.zl_postnav .column a:hover,
+.zl_singlepost .comment-form input[type="submit"]:hover {
+  box-shadow: none;
+  background-color: #a4de02;
+  color: #fff;
+}
+
+.zl_postnav .column a,
+.comment-form input[type="submit"] {
+  display: inline-block;
+  width: auto;
+  height: auto;
+  padding: 25px 80px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+
+/*
    Footer
    ========================================================================== */
 
