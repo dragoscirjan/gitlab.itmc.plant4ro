@@ -13,8 +13,19 @@ npm install -g gulp jspm
 # sudo -u vagrant -- jspm install
 
 
-apt-get install -y apache2 php5 php5-cli php5-mysql php5-gd mysql-server mysql-client
+debconf-set-selections <<< 'mysql-server mysql-server/root_password password weltest'
+debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password weltest'
 
-sed -e "s/\/var\/www\/html/\/vagrant/g" -i 000-default.conf
+apt-get install -y apache2 php5 php5-cli php5-mysql php5-gd php5-curl mysql-server mysql-client
+
+service mysql restart
+
+echo "create database if not exists wordpress" | mysql -uroot -pweltest
+mysql -uroot -pweltest wordpress < /vagrant/sql/blog.sql
+
+cat /vagrant/virtualhost.local.conf > /etc/apache2/sites-enabled/000-default.conf
+
+a2enmod headers
+a2enmod rewrite
 
 service apache2 restart

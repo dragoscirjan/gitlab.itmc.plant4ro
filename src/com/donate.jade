@@ -129,17 +129,11 @@ template
 				.modal-header
 					button.close(type='button', data-dismiss='modal', aria-label='Close')
 						span(aria-hidden='true') &times;
-					| &#x9;        
 					h4.modal-title Modal title
-				| &#x9;      
 				.modal-body
-					form(method='post', action='')
+					form#checkout(method='post', action='/services/index.php/donate/braintree/pay')
 						#braintree-payment-form
-				| &#x9;      
+						input.sr-only(type='submit', value='Planteaza')
 				.modal-footer
-					button.btn.btn-default(type='button', data-dismiss='modal') Close
-					| &#x9;        
-					button.btn.btn-primary(type='button') Save changes
-			// /.modal-content
-			// /.modal-dialog
-			// /.modal
+					input.btn.btn-default(type='button', data-dismiss='modal', value='Renunta')
+					input.btn.btn-primary(type='submit', value='Planteaza')
