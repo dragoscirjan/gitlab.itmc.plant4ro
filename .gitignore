@@ -22,6 +22,7 @@ composer.phar
 services/composer.phar
 services/composer.lock
 services/vendor
+services/.log
 
 # Vagrant
 .vagrant
