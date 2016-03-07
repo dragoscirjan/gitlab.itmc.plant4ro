@@ -40,9 +40,9 @@ export class Component extends ViewModelAbstract {
      */
     scriptsStoreLocator = [
         `https://maps.googleapis.com/maps/api/js?libraries=places,geometry`,
+        `dist/assets/plugins/jquery-shop-locator/src/shop-locator.js`,
         `dist/assets/plugins/jquery-shop-locator/src/dependences/infobubble.js`,
-        `dist/assets/plugins/jquery-shop-locator/src/dependences/markerclusterer.js`,
-        `dist/assets/plugins/jquery-shop-locator/src/shop-locator.js`
+        `dist/assets/plugins/jquery-shop-locator/src/dependences/markerclusterer.js`
     ];
 
     /**
