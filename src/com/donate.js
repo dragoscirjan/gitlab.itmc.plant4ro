@@ -223,12 +223,12 @@ export class Component extends ViewModelAbstract {
      */
     paymentWithBraintreeInit() {
         let self = this;
-        this.logger.debug('request:/ donate/braintree');
+        this.logger.debug('request:/ donate/braintree-token');
         return new Promise((resolve, reject) => {
-            this.http.fetch('donate/braintree')
+            this.http.fetch('donate/braintree-token')
                 .then(response => response.json())
                 .then((data) => {
-                    self.logger.debug('response:/ donate/braintree', data);
+                    self.logger.debug('response:/ donate/braintree-token', data);
                     if (!data.error) {
                         self.paymentWithBraintreeForm(data.token)
                             .catch((error) => { reject(error); })
@@ -254,8 +254,11 @@ export class Component extends ViewModelAbstract {
             $('#braintree-modal')
                 .modal('show')
                 .on('shown.bs.modal', () => {
+                    if (window.btCheckout) {
+                        return;
+                    }
                     braintree.setup(token, 'dropin', {
-                        // onReady: (ready) => { checkout = ready; },
+                        onReady: (ready) => { window.btCheckout = ready; /*console.log(checkout);*/ },
                         onPaymentMethodReceived: (payload) => {
                             self.logger.debug('braintree:/ ', payload);
                             payload.token = token;
@@ -266,11 +269,16 @@ export class Component extends ViewModelAbstract {
                         onError: (error) => { self.logger.warn(error); reject(error); },
                         container: 'braintree-payment-form'
                     });
+                    // console.log(braintree);
 
                     $('#braintree-modal .btn.btn--sm.btn--secondary').off('click').on('click', (event) => {
                         $('#braintree-modal form input').trigger('click', event);
                     });
                 });
+                // .on('hidden.bs.modal', () => {
+                //     checkout.teardown(() => { checkout = null; });
+                //     $('#braintree-payment-form').html('');
+                // });
         });
     }
 
@@ -307,6 +315,7 @@ export class Component extends ViewModelAbstract {
      */
     proceedToPayment() {
         let promise = null;
+        let self = this;
         if (this.paymentModel.recaptcha.length > 0 && this.formInstance.isValid()) {
             this.logger.debug('Starting payment with:', this.paymentModel);
             switch (this.paymentModel.payment.method) {
@@ -314,7 +323,13 @@ export class Component extends ViewModelAbstract {
                     promise = this.paymentWithMobilpay();
                     break;
                 case 'braintree':
-                    promise = this.paymentWithBraintreeInit();
+                    promise = this.paymentWithBraintreeInit()
+                        .catch((reason) => { self.logger.warn(reason); })
+                        .then((done) => {
+                            $('#braintree-modal').modal('hide');
+                            $('iframe').remove();
+                            window.location = `/#/diploma/${done.id}/${done.t}`;
+                        });
                     break;
                 case 'wire':
                     promise = this.paymentWithWire();

@@ -75,7 +75,7 @@ export class Component extends ViewModelAbstract {
     initStoreLocator() {
         // src/assets/plugins/jquery-shop-locator/
         $('#map').ShopLocator({
-            json: 'src/assets/plugins/jquery-shop-locator/src/json/markers.json',
+            // json: 'src/assets/plugins/jquery-shop-locator/src/json/markers.json',
             pluginStyle: 'metro',
             paginationStyle: 1,
             infoBubble: {
@@ -175,6 +175,7 @@ export class Component extends ViewModelAbstract {
             sidebar: {
                 visible: true,
                 selectSection: {
+                    pathToJSONDirectory: 'src/assets/plugins/jquery-shop-locator/src/json/',
                     visible: true
                 },
                 searchBox: {
