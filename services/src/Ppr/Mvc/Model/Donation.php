@@ -59,12 +59,19 @@ class Donation
      */
     private $started;
 
-//    /**
-//     * @var integer
-//     *
-//     * @ORM\Column(name="completed", type="integer", nullable=false)
-//     */
-//    private $completed;
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="completed", type="integer", nullable=false)
+     */
+    private $completed = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=30, nullable=false)
+     */
+    private $status = '';
 
     /**
      * @var string

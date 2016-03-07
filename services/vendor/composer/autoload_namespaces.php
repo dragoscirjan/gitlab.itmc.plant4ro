@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Pimple' => array($vendorDir . '/pimple/pimple/lib'),
+    'Mobilpay_' => array($baseDir . '/lib'),
     'MarkWilson' => array($vendorDir . '/markwilson/xml-to-json/src'),
     'Doctrine\\ORM\\' => array($vendorDir . '/doctrine/orm/lib'),
     'Doctrine\\DBAL\\' => array($vendorDir . '/doctrine/dbal/lib'),

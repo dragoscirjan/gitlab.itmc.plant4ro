@@ -8,13 +8,13 @@ template
       p
         strong Planteaza pentru Romania 
         |  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere.
-      form.form--contact(action="", validate.bind="validation" submit.delegate="")
+      form.form--contact(action="", submit.delegate="sendEmail()")
         span Buna ziua, numele meu este
         .form-group--inline
-          input#name.form-control(type="text", name="name", placeholder="(Adauga nume) *")
+          input#name.form-control(type="text", name="name", placeholder="(Adauga nume) *", value.bind="model.name", required="", data-parsley-minlength="3")
         span si ma puteti contacta la adresa de email
         .form-group--inline
-          input#email.form-control(type="email", name="email", placeholder="(Adauga adresa de email) *")
+          input#email.form-control(type="email", name="email", placeholder="(Adauga adresa de email) *", value.bind="model.email", required="", data-parsley-type="email")
         br
         span Fac parte din compania
         .form-group--inline
@@ -22,15 +22,16 @@ template
         br
         span cu codul fiscal
         .form-group--inline
-          input#fiscal.form-control(type="text", name="fiscal", placeholder="(Adauga cod fiscal)")
+          input#fiscal.form-control(type="text", name="fiscal", placeholder="(Adauga cod fiscal)", required.bind="mode.company.trim()", data-parsley-pattern.bind="mode.company.trim() ? '(RO)?\\\\d{}' : '.*'")
         br
         span si va contactez in legatura cu
         .form-group
-          input#subject.form-control(type="text", name="subject", placeholder="(Adauga subiectul mesajului) *")
+          input#subject.form-control(type="text", name="subject", placeholder="(Adauga subiectul mesajului) *", required="")
         br
         .form-group.h-margin-bottom-40
           textarea.form-control#message(name="message", placeholder="Mesajul meu: *")
         .form-group.h-margin-bottom-40
-          recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='onRecaptchaVerified')
+          recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='onRecaptchaVerified', required="")
+          input#rc.sr-only(type="checkbox", name="rc", checked.bind="model.notRobot", required="")
         .form-group.text-center
           button.btn.btn--secondary(type="submit") Contacteaza-ne

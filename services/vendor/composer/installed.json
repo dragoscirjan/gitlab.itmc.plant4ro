@@ -611,12 +611,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zendframework/zend-servicemanager.git",
-            "reference": "2aad0c8aaef187ea9fbf3d3d65f1dab57bfc53e8"
+            "reference": "6461d15efa044fb66e5aa0db2e6e811e03e9df2f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zend-servicemanager/zipball/2aad0c8aaef187ea9fbf3d3d65f1dab57bfc53e8",
-            "reference": "2aad0c8aaef187ea9fbf3d3d65f1dab57bfc53e8",
+            "url": "https://api.github.com/repos/zendframework/zend-servicemanager/zipball/6461d15efa044fb66e5aa0db2e6e811e03e9df2f",
+            "reference": "6461d15efa044fb66e5aa0db2e6e811e03e9df2f",
             "shasum": ""
         },
         "require": {
@@ -633,7 +633,7 @@
             "ocramius/proxy-manager": "ProxyManager 1.* to handle lazy initialization of services",
             "zendframework/zend-stdlib": "zend-stdlib ^2.5 if you wish to use the MergeReplaceKey or MergeRemoveKey features in Config instances"
         },
-        "time": "2016-03-05 20:48:23",
+        "time": "2016-03-07 15:49:56",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -665,12 +665,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zendframework/zend-eventmanager.git",
-            "reference": "0f2c0c5d3ab1b12ab01174d54d7da1ebbf22783c"
+            "reference": "e6bf66a22fe990ff477e66055c502f3ba685020d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/0f2c0c5d3ab1b12ab01174d54d7da1ebbf22783c",
-            "reference": "0f2c0c5d3ab1b12ab01174d54d7da1ebbf22783c",
+            "url": "https://api.github.com/repos/zendframework/zend-eventmanager/zipball/e6bf66a22fe990ff477e66055c502f3ba685020d",
+            "reference": "e6bf66a22fe990ff477e66055c502f3ba685020d",
             "shasum": ""
         },
         "require": {
@@ -687,7 +687,7 @@
             "container-interop/container-interop": "^1.1.0, to use the lazy listeners feature",
             "zendframework/zend-stdlib": "^2.7.3 || ^3.0, to use the FilterChain feature"
         },
-        "time": "2016-03-05 20:47:05",
+        "time": "2016-03-07 15:48:37",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -844,12 +844,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zendframework/zend-math.git",
-            "reference": "9c1240bac07c1519fc0423eb0d50eba39e1f5dd6"
+            "reference": "6d81313cba3bdb6518e6dbd04fceb6653e437a7d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zend-math/zipball/9c1240bac07c1519fc0423eb0d50eba39e1f5dd6",
-            "reference": "9c1240bac07c1519fc0423eb0d50eba39e1f5dd6",
+            "url": "https://api.github.com/repos/zendframework/zend-math/zipball/6d81313cba3bdb6518e6dbd04fceb6653e437a7d",
+            "reference": "6d81313cba3bdb6518e6dbd04fceb6653e437a7d",
             "shasum": ""
         },
         "require": {
@@ -865,7 +865,7 @@
             "ext-gmp": "If using the gmp functionality",
             "ircmaxell/random-lib": "Fallback random byte generator for Zend\\Math\\Rand if OpenSSL/Mcrypt extensions are unavailable"
         },
-        "time": "2016-03-05 20:47:59",
+        "time": "2016-03-07 15:49:30",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -896,12 +896,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zendframework/zend-crypt.git",
-            "reference": "a1a1445a04a1e6daa8851e76720cf159a355397a"
+            "reference": "36fec44a31dcf1fd9175496a14074dd4431d2ef8"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zend-crypt/zipball/a1a1445a04a1e6daa8851e76720cf159a355397a",
-            "reference": "a1a1445a04a1e6daa8851e76720cf159a355397a",
+            "url": "https://api.github.com/repos/zendframework/zend-crypt/zipball/36fec44a31dcf1fd9175496a14074dd4431d2ef8",
+            "reference": "36fec44a31dcf1fd9175496a14074dd4431d2ef8",
             "shasum": ""
         },
         "require": {
@@ -917,7 +917,7 @@
         "suggest": {
             "ext-mcrypt": "Required for most features of Zend\\Crypt"
         },
-        "time": "2016-03-05 20:46:49",
+        "time": "2016-03-07 15:48:22",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -948,12 +948,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zendframework/zend-loader.git",
-            "reference": "ffcebe2c132b2de8a656d403fca2bce4626b04f6"
+            "reference": "dd6c9335146fb8eb1f5905d65c95235cfe7f5a9b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zend-loader/zipball/ffcebe2c132b2de8a656d403fca2bce4626b04f6",
-            "reference": "ffcebe2c132b2de8a656d403fca2bce4626b04f6",
+            "url": "https://api.github.com/repos/zendframework/zend-loader/zipball/dd6c9335146fb8eb1f5905d65c95235cfe7f5a9b",
+            "reference": "dd6c9335146fb8eb1f5905d65c95235cfe7f5a9b",
             "shasum": ""
         },
         "require": {
@@ -963,7 +963,7 @@
             "fabpot/php-cs-fixer": "1.7.*",
             "phpunit/phpunit": "~4.0"
         },
-        "time": "2016-03-05 20:47:52",
+        "time": "2016-03-07 15:49:24",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -994,12 +994,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zendframework/zend-validator.git",
-            "reference": "37a335f02154c3c5a02c884599762783cf6b95b5"
+            "reference": "07a66da9f107fa317880e866b85eda25db4bce5e"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/37a335f02154c3c5a02c884599762783cf6b95b5",
-            "reference": "37a335f02154c3c5a02c884599762783cf6b95b5",
+            "url": "https://api.github.com/repos/zendframework/zend-validator/zipball/07a66da9f107fa317880e866b85eda25db4bce5e",
+            "reference": "07a66da9f107fa317880e866b85eda25db4bce5e",
             "shasum": ""
         },
         "require": {
@@ -1031,7 +1031,7 @@
             "zendframework/zend-session": "Zend\\Session component",
             "zendframework/zend-uri": "Zend\\Uri component, required by the Uri and Sitemap\\Loc validators"
         },
-        "time": "2016-03-05 20:48:42",
+        "time": "2016-03-07 15:50:21",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1063,12 +1063,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/zendframework/zend-mime.git",
-            "reference": "f654306cd4d465441a8ccfa407a35e56db378da1"
+            "reference": "17f2cc67e03619ae72b148d22a619ce1f4733f7b"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/zendframework/zend-mime/zipball/f654306cd4d465441a8ccfa407a35e56db378da1",
-            "reference": "f654306cd4d465441a8ccfa407a35e56db378da1",
+            "url": "https://api.github.com/repos/zendframework/zend-mime/zipball/17f2cc67e03619ae72b148d22a619ce1f4733f7b",
+            "reference": "17f2cc67e03619ae72b148d22a619ce1f4733f7b",
             "shasum": ""
         },
         "require": {
@@ -1083,7 +1083,7 @@
         "suggest": {
             "zendframework/zend-mail": "Zend\\Mail component"
         },
-        "time": "2016-03-05 20:48:03",
+        "time": "2016-03-07 15:49:33",
         "type": "library",
         "extra": {
             "branch-alias": {

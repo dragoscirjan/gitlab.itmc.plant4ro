@@ -9,6 +9,9 @@
     }
   ],
   "autoload": {
+    "psr-0": {
+      "Mobilpay_": "lib/"
+    },
     "psr-4": {
       "Ppr\\": "src/Ppr"
     }
