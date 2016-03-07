@@ -328,6 +328,28 @@ Modules
         color: #fff;
     }
 
+    // Btn group
+    &__group {
+        .btn {
+            width: 100%;
+
+            & + .btn {
+                margin-top: 20px;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .btn {
+                width: auto;
+
+                & + .btn {
+                    margin-top: 0;
+                    margin-left: 20px;
+                }
+            }
+        }
+    }
+
     // Button styles
     &--primary {
         border-color: @primary-color;
@@ -1207,7 +1229,107 @@ Navbar
    Carousel
    ========================================================================== */
 .owl {
+    &-controls {
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    &-prev,
+    &-next {
+        opacity: .5;
+        display: inline-block;
+        width: 45px;
+        height: 45px;
+        margin: 0 15px;
+        border: 1px solid @border-color;
+        border-radius: 50%;
+        background-color: #fff;
+        font-size: 20px;
+        text-align: center;
+        cursor: pointer;
+
+        -webkit-transition: opacity .3s ease-in-out;
+                transition: opacity .3s ease-in-out;
+
+        &:hover {
+            opacity: 1;
+        }
+
+        i {
+            line-height: 43px; // 45px - 1px - 1px (height - border-top-width - border-bottom-width)
+        }
+    }
+
+    @media (min-width: 768px) {
+        &-prev,
+        &-next {
+            position: absolute;
+            top: 50%;
+            margin: 0;
+
+            -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+        }
+
+        &-prev {
+            left: 0;
+        }
+
+        &-next {
+            right: 0;
+        }
+    }
+
+    &-pagination {
+        display: none;
+
+        @media (min-width: 768px) {
+            display: block;
+            text-align: center;
+        }
+    }
+
+    &-page {
+        display: inline-block;
+
+        & + .owl-page {
+            padding-left: 15px;
+        }
+
+        span {
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: fade(@text-color, 50%);;
+
+            -webkit-transition: all .3s ease-in-out;
+            transition: all .3s ease-in-out;
+        }
+
+        &:hover,
+        &.active {
+            span {
+                background-color: @text-color;
+                -webkit-transform: scale(1.8);
+                        transform: scale(1.8);
+            }
+        }
+    }
+
     &-carousel {
+        @media (min-width: 768px) {
+            padding: 0 60px; // make room for the navigation arrows
+        }
+
+        &__img {
+            text-align: center;
+
+            img {
+                max-width: 100%;
+            }
+        }
+
         &--hp-img {
             position: absolute;
             top: 0;
@@ -1250,32 +1372,15 @@ Navbar
             }
 
             .owl-controls {
-                margin-bottom: 3vmin;
-
                 .owl-page {
-                    display: inline-block;
-
-                    & + .owl-page {
-                        padding-left: 15px;
-                    }
-
                     span {
-                        display: block;
-                        width: 10px;
-                        height: 10px;
-                        border-radius: 50%;
                         background-color: rgba(255, 255, 255, .75);
-
-                        -webkit-transition: all .3s ease-in-out;
-                        transition: all .3s ease-in-out;
                     }
 
                     &:hover,
                     &.active {
                         span {
                             background-color: #fff;
-                            -webkit-transform: scale(1.8);
-                                    transform: scale(1.8);
                         }
                     }
                 }
@@ -1302,55 +1407,6 @@ Navbar
                     position: initial;
                 }
             }
-        }
-    }
-
-    &-navigation {
-        margin-top: 30px;
-        text-align: center;
-    }
-
-    &-prev,
-    &-next {
-        opacity: .5;
-        display: inline-block;
-        width: 45px;
-        height: 45px;
-        border: 1px solid @border-color;
-        border-radius: 50%;
-        background-color: #fff;
-        font-size: 20px;
-        text-align: center;
-        cursor: pointer;
-
-        -webkit-transition: opacity .3s ease-in-out;
-                transition: opacity .3s ease-in-out;
-
-        &:hover {
-            opacity: 1;
-        }
-
-        i {
-            line-height: 43px; // 45px - 1px - 1px (height - border-top-width - border-bottom-width)
-        }
-    }
-
-    @media (min-width: 1200px) {
-        &-prev,
-        &-next {
-            position: absolute;
-            top: 50%;
-
-            -webkit-transform: translateY(-50%);
-                    transform: translateY(-50%);
-        }
-
-        &-prev {
-            left: 0;
-        }
-
-        &-next {
-            right: 0;
         }
     }
 }
