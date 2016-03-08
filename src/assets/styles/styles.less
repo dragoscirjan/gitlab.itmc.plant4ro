@@ -1285,7 +1285,6 @@ Navbar
 
         @media (min-width: 768px) {
             display: block;
-            text-align: center;
         }
     }
 
@@ -1337,6 +1336,7 @@ Navbar
             bottom: 0;
             left: 0;
             z-index: -1;
+            padding: 0;
 
             .owl-wrapper-outer,
             .owl-wrapper,
@@ -1372,6 +1372,9 @@ Navbar
             }
 
             .owl-controls {
+                margin: 0 0 40px;
+                text-align: left;
+
                 .owl-page {
                     span {
                         background-color: rgba(255, 255, 255, .75);
@@ -1466,6 +1469,29 @@ Navbar
         font-weight: 700;
         font-size: 72px;
         color: #fff;
+    }
+}
+
+/*
+   Article
+   ========================================================================== */
+
+.article {
+    &__title {
+        margin: 50px 0 30px;
+        font-size: 18px;
+        font-weight: 700;
+        color: @primary-color;
+        text-transform: uppercase;
+    }
+
+    &__img {
+        text-align: center;
+
+        img {
+            display: inline-block;
+            max-width: 100%;
+        }
     }
 }
 
