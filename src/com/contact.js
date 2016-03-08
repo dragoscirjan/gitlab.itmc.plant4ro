@@ -8,7 +8,7 @@
 
 import {inject} from 'aurelia-framework';
 import 'fetch';
-import {HttpClient} from 'aurelia-fetch-client';
+import {HttpClient, json} from 'aurelia-fetch-client';
 
 import {AppConfig} from 'lib/app/config';
 import {ViewModelAbstract} from 'lib/view/model/abstract';
@@ -94,7 +94,10 @@ export class Component extends ViewModelAbstract {
      */
     sendEmail() {
         if (grecaptcha.getResponse().length > 0 && this.formInstance.isValid()) {
-            alert('test');
+            this.http.fetch('contact', {
+                method: 'post',
+                body: json(this.model)
+            }).catch((error) => {  }).then(() => {  });
         }
     }
 

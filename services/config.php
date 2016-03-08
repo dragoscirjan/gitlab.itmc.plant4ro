@@ -11,9 +11,9 @@ return array(
             ],
             'mobilpay' => [
                 'paymentUrl' => 'http://sandboxsecure.mobilpay.ro',
-                'certPath' => __DIR__ . '/crt/mobilpay.cer',
-                'keyPath' => __DIR__ . '/crt/mobilpay.key',
-                'signature' => 'XXXX-XXXX-XXXX-XXXX-XXXX',
+                'certPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
+                'keyPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.key',
+                'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
                 'confirmUrl' => 'http://planteazapentruromania.local/services/index.php/donate/mobilepay-confirm',
                 'returnUrl' => 'http://planteazapentruromania.local/#/plata-esuata',
             ],
@@ -53,7 +53,8 @@ return array(
                     ],
                 ],
             ],
-            'to' => 'dragos.cirjan+debug-ppr@itmediaconnect.ro'
+            'from' => ['noreply@itmcd.ro', 'Planteaza pentru Romania Contact'],
+            'to' => ['dragos.cirjan+debug-ppr@itmediaconnect.ro', 'Dragos Cirjan']
         ],
     ],
     'testing' => [],
