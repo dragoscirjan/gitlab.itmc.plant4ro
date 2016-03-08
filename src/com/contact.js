@@ -60,6 +60,7 @@ export class Component extends ViewModelAbstract {
         };
 
         window.Parsley.on('field:error', (e) => {
+            console.log(e.$element, e.$element.closest('.form-wrap'));
             e.$element.closest('.form-wrap').removeClass('success').addClass('error');
             setTimeout(() => {
                 let $errorList = e.$element.closest('.form-wrap').find('.parsley-errors-list');
@@ -84,7 +85,7 @@ export class Component extends ViewModelAbstract {
      * @method attached
      */
     attached() {
-        this.formInstance = $('#donationsForm').parsley();
+        this.formInstance = $('#contactForm').parsley();
     }
 
     /**
@@ -107,7 +108,7 @@ export class Component extends ViewModelAbstract {
      * @return {[type]}            [description]
      */
     toggleRecaptchaValidate(result) {
-        this.notRobot = true;
+        this.model.notRobot = true;
     }
 
 }
