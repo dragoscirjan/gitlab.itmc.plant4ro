@@ -44,12 +44,14 @@ return array(
             'mail' => [
                 'transport' => '\Zend\Mail\Transport\Smtp',
                 'options' => [
-                    'name' => 'localhost.localdomain',
-                    'host' => '127.0.0.1',
+                    'name' => 'mail.itmediaconnect.ro',
+                    'host' => 'mail.itmediaconnect.ro',
+                    'port' => 587,
                     'connection_class' => 'plain',
                     'connection_config' => [
-                        'username' => 'user',
-                        'password' => 'pass',
+                        'username' => 'dr@itmcd.ro',
+                        'password' => 'strumph##',
+                        'ssl' => 'tls',
                     ],
                 ],
             ],

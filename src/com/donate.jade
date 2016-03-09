@@ -32,34 +32,34 @@ template
 							label(for="company") Companie
 								span.h-text-primary &nbsp;*
 							.form-wrap
-								input#company.form-control(type="text", name="name", value.bind="company", required.bind="isCorporate", data-parsley-minlength.bind="isCorporate ? 6 : 0")
+								input#company.form-control(type="text", value.bind="model.company", required.bind="isCorporate", data-parsley-minlength.bind="isCorporate ? 6 : 0")
 						.form-group
 							label(for="vatNumber") Numar de inregistrare
 								span.h-text-primary &nbsp;*
 							.form-wrap
-								input#vatNumber.form-control(type="text", name="name", value.bind="vatNumber", required.bind="isCorporate", data-parsley-pattern.bind="isCorporate ? '(RO)?\\\\d{}' : '.*'")
+								input#vatNumber.form-control(type="text", value.bind="model.vat", required.bind="isCorporate", data-parsley-pattern.bind="isCorporate ? '(RO)?\\\\d{}' : '.*'")
 					.form-group
 						label(for="name")
 							span(innerHtml.bind="isCorporate ? 'Persoana de contact' : 'Nume'")
 							span.h-text-primary &nbsp;*
 						.form-wrap
-							input#name.form-control(type="text", name="name", value.bind="name", required="", data-parsley-minlength="3")
+							input#name.form-control(type="text", value.bind="model.name", required="", data-parsley-minlength="3")
 					.form-group
 						label(for="email") Email
 							span.h-text-primary &nbsp;*
 						.form-wrap
-							input#email.form-control(type="email", name="email", value.bind="email", required="", data-parsley-type="email")
+							input#email.form-control(type="email", value.bind="model.email", required="", data-parsley-type="email")
 					div(class.bind="'form-group' + (isCorporate ? '' : ' sr-only')")
 						.form-group
 							label(for="phone") Telefon
 							.form-wrap
-								input#phone.form-control(type="text", name="phone", value.bind="phone", required.bind="isCorporate", data-parsley-pattern.bind="isCorporate ? '(\\\\+|00)?\\\\d{5,}' : '.*'")
+								input#phone.form-control(type="text", value.bind="model.phone", required.bind="isCorporate", data-parsley-pattern.bind="isCorporate ? '(\\\\+|00)?\\\\d{5,}' : '.*'")
 					.form-group
 						label(for="treesQty") Cati copaci vrei sa plantezi?
 							span.h-text-primary &nbsp;*
 						.slider-wrapper
-							span#treesQtyVal.slider-value ${treesQty}
-							input#treesQty(type="text", name="trees", data-slider-min="1", data-slider-max="200", data-slider-step="1" data-slider-value="${treesQty}", value.bind="treesQty", data-slider-tooltip="hide")
+							span#treesQtyVal.slider-value ${model.trees}
+							input#treesQty(type="text", data-slider-min="1", data-slider-max="200", data-slider-step="1" data-slider-value="${model.trees}", value.bind="model.trees", data-slider-tooltip="hide")
 					div(class.bind="'collapsible collapsible--form' + (isCorporate ? ' hide' : '')")
 						a(role='button', data-toggle='collapse', href='#plantFriend', aria-expanded='false', aria-controls='plantFriend') 
 							| Planteaza cu un prieten
@@ -86,7 +86,7 @@ template
 						.form-wrap
 							.input-group
 								.input-group-addon RON
-								input#total.form-control(type="text", name="total", readonly="readonly", value="${total}")
+								input#total.form-control(type="text", readonly="readonly", value="${paymentModel.donation.total}")
 							//- .input-group-addon RON
 					p
 						| Dragi prieteni ai padurilor, pentru donatii mai mari de 2000 RON va rugam sa ne 
@@ -96,34 +96,46 @@ template
 						strong Modalitatea de donatie
 					.form-group
 						.radio
-							input#payMethodM.sr-only(type='radio', name="payMethod", value='mobilpay', checked.bind='payMethod')
-							label(for="payMethodM") MobilPay ${total} RON
+							input#payMethodM.sr-only(type='radio', name="payMethod", value='mobilpay', checked.bind='model.donation.method')
+							label(for="payMethodM") MobilPay ${paymentModel.donation.total} RON
 						.radio
-							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='payMethod')
-							label(for="payMethodPP") Paypal ${totalInEur} EUR (curs valutar 1 EUR = ${eurCurrency} RON)
+							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method')
+							label(for="payMethodPP") Paypal ${paymentModel.donation.totalEur} EUR (curs valutar 1 EUR = ${model.donation.exchange} RON)
 						div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
-							input#payMethoTB.sr-only(type='radio', name="payMethod", value='transfer', checked.bind='payMethod')
-							label(for="payMethoTB") Transfer bancar ${total} RON
+							input#payMethoTB.sr-only(type='radio', name="payMethod", value='transfer', checked.bind='model.donation.method')
+							label(for="payMethoTB") Transfer bancar ${paymentModel.donation.total} RON
 					hr
 					.form-group
 						.checkbox.form-wrap
 							div
-								input#anonymous.sr-only(type="checkbox", name="anonymous", checked.bind="anonymous")
+								input#anonymous.sr-only(type="checkbox", checked.bind="anonymous")
 								label(for="anonymous") Doresc sa raman anonim (Numele tau nu va aparea in nicio zona a site-ului)
 						.checkbox.form-wrap
 							div
-								input#agreement.sr-only(type="checkbox", name="agreement", checked.bind="agreement", required="")
+								input#agreement.sr-only(type="checkbox", checked.bind="agreement", required="")
 								label(for="agreement") Sunt de acord cu #[a(href="/#/termeni-si-conditii") termenii si conditiile]
 					.form-group.h-margin-top-40.h-margin-bottom-40
 						.form-wrap
 							div
 								recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='toggleRecaptchaValidate')
-								input#rc.sr-only(type="checkbox", name="rc", checked.bind="notRobot", required="")
+								input#rc.sr-only(type="checkbox", checked.bind="notRobot", required="")
 					.form-group.text-center
 						button.btn.btn--secondary(type="submit") Planteaza
-						//- button.btn.btn--secondary(type="submit", disabled.bind="!validation.result.isValid") Planteaza
-
+	
 	div#braintree-modal.modal.modal-braintree.fade(tabindex='-1', role='dialog') 
+		.modal-dialog
+			.modal-content
+				.modal-header
+					img(src="/dist/assets/img/braintree-logo.jpg", alt="Braintree - A Paypal Company Logo")
+				.modal-body
+					form#checkout(method='post', action='/services/index.php/donate/braintree/pay')
+						#braintree-payment-form
+						input.sr-only(type='submit', value='Planteaza')
+				.modal-footer
+					button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
+					button.btn.btn--sm.btn--secondary(type='button') Planteaza
+	
+	div#mobilpay-modal.modal.modal-mobilpay.fade(tabindex='-1', role='dialog') 
 		.modal-dialog
 			.modal-content
 				.modal-header

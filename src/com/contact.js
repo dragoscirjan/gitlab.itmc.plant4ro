@@ -60,7 +60,6 @@ export class Component extends ViewModelAbstract {
         };
 
         window.Parsley.on('field:error', (e) => {
-            console.log(e.$element, e.$element.closest('.form-wrap'));
             e.$element.closest('.form-wrap').removeClass('success').addClass('error');
             setTimeout(() => {
                 let $errorList = e.$element.closest('.form-wrap').find('.parsley-errors-list');
@@ -94,11 +93,26 @@ export class Component extends ViewModelAbstract {
      * @return {[type]}  [description]
      */
     sendEmail() {
+        console.log(this.model);
         if (grecaptcha.getResponse().length > 0 && this.formInstance.isValid()) {
             this.http.fetch('contact', {
                 method: 'post',
                 body: json(this.model)
-            }).catch((error) => {  }).then(() => {  });
+            }).then(response => response.json())
+            .then((data) => {
+                console.log(data);
+
+                // TODO: Display success or error messages
+            });
+
+            // $.ajax({
+            //     error: (jqXHR, status, reason) => {  },
+            //     data: this.model,
+            //     dataType: 'json',
+            //     method: 'post',
+            //     success: (token) => {  },
+            //     url: this.appConfig.getPhpUrl('contact')
+            // });
         }
     }
 

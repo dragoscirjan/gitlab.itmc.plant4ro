@@ -11,6 +11,7 @@ namespace Ppr;
 use Doctrine\DBAL;
 use Doctrine\ORM;
 
+use Ppr\Http\CorsListener;
 use Zend\Cache\StorageFactory;
 
 /**
@@ -43,6 +44,8 @@ class Application extends \Silex\Application {
     {
 
         parent::__construct($values);
+
+//        $this['dispatcher']->addSubscriber(new CorsListener());
 
         if ($this->getEnv() == self::ENV_DEVELOP || $this->getEnv() == self::ENV_TESTING) {
             $this['debug'] = true;

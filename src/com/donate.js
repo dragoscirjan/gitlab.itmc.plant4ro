@@ -40,89 +40,37 @@ export class Component extends ViewModelAbstract {
     heading = 'Planteaza!';
 
     /**
-     * Payment Form => Name
-     * @type {String}
+     * To save to database model
+     * @type {Object}
      */
-    // @ensure(function(it) { it.isNotEmpty(); })
-    name = '';
+    model = {
+        name: '', // Donator name
+        email: '', // Donator email
+        company: '', // Donator Company
+        vat: '', // Donator Company VAT,
+        friends: [], // Donator's Friends @TODO: NOT Implemented yet
+        anonymous: false, // Donator wants to remain anonymous
+        trees: 10, // Donation => Tree Number
+
+        donation: {
+            method: 'mobilpay',
+            exchange: 0
+            // currency: 'RON' // can be RON | EUR ; not needed because we can diferentiate currency by method
+
+        }
+    }
 
     /**
-     * [company description]
-     * @type {String}
+     * Mark if donation is corporate or not
+     * @type {Boolean}
      */
-    company = '';
-
-    /**
-     * [vatNumber description]
-     * @type {String}
-     */
-    vatNumber = '';
-
-    /**
-     * Payment Form => Email
-     * @type {String}
-     */
-    // @ensure(function(it) { it.isNotEmpty().isEmail(); })
-    email = '';
-
-    /**
-     * Payment Form => Trees Quantity
-     * @type {Number}
-     */
-    treesQty = 10;
-
-    /**
-     * Payment Form => Friends to plant with
-     * @type {Array}
-     */
-    friends = [];
-
-    /**
-     * Payment Form => Pay as anonymous
-     * @type {Number}
-     */
-    anonymous = 0;
-
-    /**
-     * Payment Form => Agree with terms and conditions
-     * @type {Number}
-     */
-    agreement = 0;
-
-    /**
-     * [payMethod description]
-     * @type {String}
-     */
-    payMethod = 'mobilpay';
+    isCorporate = true;
 
     /**
      * [notRobot description]
      * @type {Boolean}
      */
     notRobot = false;
-
-    /**
-     * [total description]
-     * @type {Number}
-     */
-    get total() {
-        return this.treesQty * 10;
-    }
-
-    /**
-     * [treesPriceCurrency description]
-     * @method treesPriceCurrency
-     * @return {[type]}           [description]
-     */
-    get totalInEur() {
-        return this.exchangeRate ? Math.floor(this.total / this.exchangeRate * 100) / 100 : 0;
-    }
-
-    /**
-     * [exchangeRate description]
-     * @type {Number}
-     */
-    exchangeRate = 0;
 
     /**
      * constructor
@@ -166,17 +114,16 @@ export class Component extends ViewModelAbstract {
      */
     activate(params, routeConfig) {
         super.activate(params, routeConfig);
-        const self = this;
+        let self = this;
+        // get exchange value
         return this.http.fetch('curs-valutar')
             .catch(error => { self.logger.warn('Getting exchange rates failed with error', error); })
             .then(response => response.json())
             .then((data) => {
                 self.logger.debug('Exchange rates obtained:', data);
                 if (!data.error) {
-                    self.exchangeRate = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
-                    self.logger.debug('Exchange rates obtained EUR:', self.exchangeRate);
-                } else {
-                    self.exchangeRate = 0;
+                    self.model.donation.exchange = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
+                    self.logger.debug('Exchange rates obtained EUR:', self.model.donation.exchange);
                 }
             });
     }
@@ -197,116 +144,148 @@ export class Component extends ViewModelAbstract {
      * @return {Object}     [description]
      */
     get paymentModel() {
-        return {
-            company: this.company,
-            vat: this.vatNumber,
-            name: this.name,
-            email: this.email,
-            phone: this.phone,
-            payment: {
-                total: this.total,
-                totalEur: this.totalInEur,
-                method: this.payMethod,
-                exchange: this.exchangeRate,
-                currency: 'EUR'
-            },
-            anonymous: this.anonymous,
-            agreement: this.agreement,
-            recaptcha: grecaptcha.getResponse()
-        };
+        let recaptcahaResponse = '';
+        try {
+            recaptcahaResponse = grecaptcha.getResponse();
+        } catch (err) {
+            // this.logger.warn(err);
+        }
+        let model = $.extend(true, this.model, {
+            recaptcha: recaptcahaResponse
+        });
+        model.donation.total = model.trees * 10;
+        model.donation.totalEur = Math.floor(model.donation.total / this.model.donation.exchange * 100) / 100;
+        return model;
     }
 
     /**
-     * [paymentWithBraintree description]
-     * @method paymentWithBraintree
-     * @return {Promise}             [description]
+     * [paymentModel description]
+     * @method paymentModel
+     * @return {[type]}     [description]
      */
-    paymentWithBraintreeInit() {
-        let self = this;
-        this.logger.debug('request:/ donate/braintree-token');
-        return new Promise((resolve, reject) => {
-            this.http.fetch('donate/braintree-token')
-                .then(response => response.json())
-                .then((data) => {
-                    self.logger.debug('response:/ donate/braintree-token', data);
-                    if (!data.error) {
-                        self.paymentWithBraintreeForm(data.token)
-                            .catch((error) => { reject(error); })
-                            .then((token) => { resolve(token); });
-                    } else {
-                        self.logger.warn(error);
-                        reject(data);
-                    }
-                });
-        });
+    set paymentModel(val) {
+
     }
 
-    /**
-     * [paymentWithBraintreeForm description]
-     * @method paymentWithBraintreeForm
-     * @param  {string}                 token [description]
-     * @return {[type]}                       [description]
-     */
-    paymentWithBraintreeForm(token) {
-        let self = this;
-        return new Promise((resolve, reject) => {
-            // let checkout = null;
-            $('#braintree-modal')
-                .modal('show')
-                .on('shown.bs.modal', () => {
-                    if (window.btCheckout) {
-                        return;
-                    }
-                    braintree.setup(token, 'dropin', {
-                        onReady: (ready) => { window.btCheckout = ready; /*console.log(checkout);*/ },
-                        onPaymentMethodReceived: (payload) => {
-                            self.logger.debug('braintree:/ ', payload);
-                            payload.token = token;
-                            self.paymentWithBraintreeProceed(payload)
-                                .catch((error) => {  reject(error); })
-                                .then((resultToken) => { resolve(resultToken); });
-                        },
-                        onError: (error) => { self.logger.warn(error); reject(error); },
-                        container: 'braintree-payment-form'
-                    });
-                    // console.log(braintree);
-
-                    $('#braintree-modal .btn.btn--sm.btn--secondary').off('click').on('click', (event) => {
-                        $('#braintree-modal form input').trigger('click', event);
-                    });
-                });
-                // .on('hidden.bs.modal', () => {
-                //     checkout.teardown(() => { checkout = null; });
-                //     $('#braintree-payment-form').html('');
-                // });
-        });
-    }
-
-    /**
-     * [paymentWithBraintreeProceed description]
-     * @method paymentWithBraintreeProceed
-     * @param  {[type]}                    payload [description]
-     * @return {[type]}                            [description]
-     */
-    paymentWithBraintreeProceed(payload) {
-        let pay = this.paymentModel;
-        let self = this;
-        pay.payment.payload = payload;
-        this.logger.debug(this.http);
-        return new Promise((resolve, reject) => {
-            $.ajax({
-                error: (jqXHR, status, reason) => { reject(reason); },
-                data: { load: btoa(JSON.stringify(pay)) },
-                dataType: 'json',
-                headers: {
-                    'X-Request-Playload': payload.nonce
-                },
-                method: 'post',
-                success: (token) => { resolve(token); },
-                url: self.appConfig.getPhpUrl('donate/braintree')
-            });
-        });
-    }
+    // /**
+    //  * [paymentWithBraintree description]
+    //  * @method paymentWithBraintree
+    //  * @return {Promise}             [description]
+    //  */
+    // paymentWithBraintreeInit() {
+    //     let self = this;
+    //     this.logger.debug('request:/ donate/braintree-token');
+    //     return new Promise((resolve, reject) => {
+    //         this.http.fetch('donate/braintree-token')
+    //             .then(response => response.json())
+    //             .then((data) => {
+    //                 self.logger.debug('response:/ donate/braintree-token', data);
+    //                 if (!data.error) {
+    //                     self.paymentWithBraintreeForm(data.token)
+    //                         .catch((error) => { reject(error); })
+    //                         .then((token) => { resolve(token); });
+    //                 } else {
+    //                     self.logger.warn(error);
+    //                     reject(data);
+    //                 }
+    //             });
+    //     });
+    // }
+    //
+    // /**
+    //  * [paymentWithBraintreeForm description]
+    //  * @method paymentWithBraintreeForm
+    //  * @param  {string}                 token [description]
+    //  * @return {[type]}                       [description]
+    //  */
+    // paymentWithBraintreeForm(token) {
+    //     let self = this;
+    //     return new Promise((resolve, reject) => {
+    //         // let checkout = null;
+    //         $('#braintree-modal')
+    //             .modal('show')
+    //             .on('shown.bs.modal', () => {
+    //                 if (window.btCheckout) {
+    //                     return;
+    //                 }
+    //                 braintree.setup(token, 'dropin', {
+    //                     onReady: (ready) => { window.btCheckout = ready; /*console.log(checkout);*/ },
+    //                     onPaymentMethodReceived: (payload) => {
+    //                         self.logger.debug('braintree:/ ', payload);
+    //                         payload.token = token;
+    //                         self.paymentWithBraintreeProceed(payload)
+    //                             .catch((error) => {  reject(error); })
+    //                             .then((resultToken) => { resolve(resultToken); });
+    //                     },
+    //                     onError: (error) => { self.logger.warn(error); reject(error); },
+    //                     container: 'braintree-payment-form'
+    //                 });
+    //                 // console.log(braintree);
+    //
+    //                 $('#braintree-modal .btn.btn--sm.btn--secondary').off('click').on('click', (event) => {
+    //                     $('#braintree-modal form input').trigger('click', event);
+    //                 });
+    //             });
+    //             // .on('hidden.bs.modal', () => {
+    //             //     checkout.teardown(() => { checkout = null; });
+    //             //     $('#braintree-payment-form').html('');
+    //             // });
+    //     });
+    // }
+    //
+    // /**
+    //  * [paymentWithBraintreeProceed description]
+    //  * @method paymentWithBraintreeProceed
+    //  * @param  {[type]}                    payload [description]
+    //  * @return {[type]}                            [description]
+    //  */
+    // paymentWithBraintreeProceed(payload) {
+    //     let pay = this.paymentModel;
+    //     let self = this;
+    //     pay.payment.payload = payload;
+    //     this.logger.debug(this.http);
+    //     return new Promise((resolve, reject) => {
+    //         $.ajax({
+    //             error: (jqXHR, status, reason) => { reject(reason); },
+    //             data: { load: btoa(JSON.stringify(pay)) },
+    //             dataType: 'json',
+    //             headers: {
+    //                 'X-Request-Playload': payload.nonce
+    //             },
+    //             method: 'post',
+    //             success: (token) => { resolve(token); },
+    //             url: self.appConfig.getPhpUrl('donate/braintree')
+    //         });
+    //     });
+    // }
+    //
+    // /**
+    //  * [paymentWithMobilpayInit description]
+    //  * @method paymentWithMobilpayInit
+    //  * @return {Promise}                [description]
+    //  */
+    // paymentWithMobilpayInit() {
+    //     let self = this;
+    //     this.logger.debug('request:/ donate/mobilpay-token');
+    //     return new Promise((resolve, reject) => {
+    //         this.http.fetch('donate/mobilpay-token', {
+    //             method: 'post',
+    //             body: json({ load: btoa(self.paymentModel) })
+    //         })
+    //             .then(response => response.json())
+    //             .then((data) => {
+    //                 self.logger.debug('response:/ donate/mobilpay-token', data);
+    //                 if (!data.error) {
+    //                     self.paymentWithBraintreeForm(data.token)
+    //                         .catch((error) => { reject(error); })
+    //                         .then((token) => { resolve(token); });
+    //                 } else {
+    //                     self.logger.warn(error);
+    //                     reject(data);
+    //                 }
+    //             });
+    //     });
+    // }
 
     /**
      * [proceedToPayment description]
@@ -318,9 +297,13 @@ export class Component extends ViewModelAbstract {
         let self = this;
         if (this.paymentModel.recaptcha.length > 0 && this.formInstance.isValid()) {
             this.logger.debug('Starting payment with:', this.paymentModel);
-            switch (this.paymentModel.payment.method) {
+            switch (this.paymentModel.donation.method) {
                 case 'mobilpay':
-                    promise = this.paymentWithMobilpay();
+                    promise = this.paymentWithMobilpayInit()
+                        .catch((reason) => { self.logger.warn(reason); })
+                        .then((done) => {
+                            console.log(done);
+                        });
                     break;
                 case 'braintree':
                     promise = this.paymentWithBraintreeInit()
@@ -344,12 +327,6 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * Mark if donation is corporate or not
-     * @type {Boolean}
-     */
-    isCorporate = true;
-
-    /**
      * Toggle if donation is corporate or not
      * @method toggleCorporate
      */
@@ -357,12 +334,6 @@ export class Component extends ViewModelAbstract {
         this.isCorporate = !this.isCorporate;
         this.formInstance = $('#donationsForm').parsley();
     }
-
-    /**
-     * Mark if ranger slider was started
-     * @type {Boolean}
-     */
-    isRangerSliderActive = false;
 
     /**
      * Initialize range slider
@@ -373,7 +344,7 @@ export class Component extends ViewModelAbstract {
             $('#treesQty')
                 .slider()
                 .on('slide slideStop', function(slideEvt) {
-                    self.treesQty = slideEvt.value;
+                    self.model.trees = slideEvt.value;
                 });
         }
     }
