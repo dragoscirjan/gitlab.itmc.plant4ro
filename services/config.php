@@ -10,7 +10,7 @@ return array(
                 'privateKey' => '7c97f0a849a5cba4bbbc8ad9b2fe578f',
             ],
             'mobilpay' => [
-                'paymentUrl' => 'http://sandboxsecure.mobilpay.ro',
+                'paymentUrl' => 'http://sandboxsecure.mobilpay.ro/card3',
                 'certPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
                 'keyPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
@@ -61,5 +61,11 @@ return array(
     ],
     'testing' => [],
     'staging' => [],
-    'production' => [],
+    'production' => [
+        'payment' => [
+            'mobilpay' => [
+                'paymentUrl' => 'http://secure.mobilpay.ro/card3',
+            ]
+        ],
+    ],
 );

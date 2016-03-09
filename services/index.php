@@ -8,7 +8,6 @@ $app = new \Ppr\Application(array(
 
 
 $app->post('/contact', '\Ppr\Mvc\Controller\Contact::sendEmail');
-//$app->get('/contact', '\Ppr\Mvc\Controller\Contact::sendEmail');
 
 $app->get('/tree-count', '\Ppr\Mvc\Controller\Index::treeCount');
 $app->get('/donator-list', '\Ppr\Mvc\Controller\Index::donatorList');

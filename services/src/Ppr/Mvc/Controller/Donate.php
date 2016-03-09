@@ -82,7 +82,7 @@ class Donate {
             $objPmReqCard->returnUrl = $app->getConfig('payment.mobilpay.returnUrl');
             $objPmReqCard->invoice = new \Mobilpay_Payment_Invoice();
             $objPmReqCard->invoice->currency = 'RON';
-            $objPmReqCard->invoice->amount = $load->payment->total;
+            $objPmReqCard->invoice->amount = $load->donation->total;
             //$objPmReqCard->invoice->installments= '2,3';
             //$objPmReqCard->invoice->selectedInstallments= '3';
             $objPmReqCard->invoice->details = 'Donatie cu card-ul prin mobilPay';
@@ -135,13 +135,14 @@ class Donate {
         try {
             // decode load to obtain information
             $load = json_decode(base64_decode($request->get('load')));
+
             // init braintree setup
             $this->braintreeInit($app);
 
             $sale = [
-                'amount' => $load->payment->totalEur,
+                'amount' => $load->donation->totalEur,
                 'orderId' => time(),
-                'paymentMethodNonce' => $load->payment->payload->nonce,
+                'paymentMethodNonce' => $load->donation->braintree->nonce,
                 'options' => [
                     'submitForSettlement' => True
                 ]
@@ -154,10 +155,11 @@ class Donate {
             // perform payment
             $result = Braintree\Transaction::sale($sale);
             if ($result instanceof \Braintree\Result\Error) {
+                die(var_dump($result));
                 $app->getLogger()->err(sprintf(
                     'Braintree payment failed with token `%s`, nonce `%s`, result: `%s`.',
-                    $load->payment->payload->token,
-                    $load->payment->payload->nonce,
+                    $load->donation->braintree->token,
+                    $load->donation->braintree->nonce,
                     serialize($result)
                 ));
                 throw new \Exception('Could not complete Braintree transaction.');
@@ -170,8 +172,8 @@ class Donate {
                 'status' => $result->transaction->status,
                 'createdAt' => strtotime($result->transaction->createdAt),
                 'cardEnding' => $result->transaction->creditCardDetails->last4,
-                'token' => $load->payment->payload->token,
-                'nonce' => $load->payment->payload->nonce,
+                'token' => $load->donation->braintree->token,
+                'nonce' => $load->donation->braintree->nonce,
             ];
             $app->getLogger()->info(sprintf(
                 'Braintree sale `%s` succeded with transaction `%s`',
@@ -324,9 +326,9 @@ class Donate {
         $app->getEm()->flush();
 
         $donation = new Model\Donation([
-            'donation' => ($load->payment->currency === 'EUR') ? $load->payment->totalEur : $load->payment->total,
-            'currency' => ($load->payment->currency === 'EUR') ? 'EUR' : 'RON',
-            'exchange' => ($load->payment->currency === 'EUR') ? $load->payment->exchange : '',
+            'donation' => ($load->donation->method=== 'braintree') ? $load->donation->totalEur : $load->donation->total,
+            'currency' => ($load->donation->method=== 'braintree') ? 'EUR' : 'RON',
+            'exchange' => ($load->donation->method=== 'braintree') ? $load->donation->exchange : '',
             'trees' => 10, //$load->payment->trees,
             'started' => time(),
             'transactions' => json_encode($transaction),

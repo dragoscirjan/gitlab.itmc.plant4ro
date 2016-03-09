@@ -121,7 +121,7 @@ template
 								input#rc.sr-only(type="checkbox", checked.bind="notRobot", required="")
 					.form-group.text-center
 						button.btn.btn--secondary(type="submit") Planteaza
-	
+
 	div#braintree-modal.modal.modal-braintree.fade(tabindex='-1', role='dialog') 
 		.modal-dialog
 			.modal-content
@@ -134,16 +134,23 @@ template
 				.modal-footer
 					button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
 					button.btn.btn--sm.btn--secondary(type='button') Planteaza
-	
+
 	div#mobilpay-modal.modal.modal-mobilpay.fade(tabindex='-1', role='dialog') 
 		.modal-dialog
 			.modal-content
 				.modal-header
-					img(src="/dist/assets/img/braintree-logo.jpg", alt="Braintree - A Paypal Company Logo")
+					img(src="/dist/assets/img/mobilpay-logo.png", alt="Braintree - A Paypal Company Logo", width="100%")
 				.modal-body
-					form#checkout(method='post', action='/services/index.php/donate/braintree/pay')
-						#braintree-payment-form
-						input.sr-only(type='submit', value='Planteaza')
+					form(method='post', action.bind='mobilpay.url')
+						input(type='hidden', name='env_key', value.bind='mobilpay.env_key')
+						input(type='hidden', name='data', value.bind='mobilpay.data')
+						.splash
+							.splash__circle
+							.splash__mask
+								.splash__line
+							img.splash__logo(src='/dist/assets/img/loader-logo.png', alt='')
 				.modal-footer
-					button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
-					button.btn.btn--sm.btn--secondary(type='button') Planteaza
+					p Vei redirectat catre pagina de plati securizata a 
+						a(href="http://mobilpay.ro", target="_blank") mobilpay.ro
+					//- button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
+					//- button.btn.btn--sm.btn--secondary(type='button') Planteaza
