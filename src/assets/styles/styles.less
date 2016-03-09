@@ -441,17 +441,9 @@ hr,
  * @info: http://codepen.io/kenchen/pen/tgBiE
  */
 .splash {
-    position: fixed;
-    z-index: 999;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-
-    width: 100vw;
-    height: 100vh;
-
-    text-align: center;
+    position: relative;
+    width: 150px;
+    height: 150px;
 
     // Static circle
     &__circle {
@@ -459,8 +451,8 @@ hr,
         top: 50%;
         left: 50%;
 
-        width: 150px;
-        height: 150px;
+        width: 100%;
+        height: 100%;
 
         -webkit-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
@@ -477,21 +469,21 @@ hr,
 
         overflow: hidden;
 
-        width: 75px;
-        height: 150px;
-        margin-top: -75px;
-        margin-left: -75px;
+        width: 50%;
+        height: 100%;
+        margin-top: -50%;
+        margin-left: -50%;
 
-        -webkit-transform-origin: 75px 75px 0;
-                transform-origin: 75px 75px 0;
+        -webkit-transform-origin: 100% 50% 0;
+                transform-origin: 100% 50% 0;
         -webkit-animation: 1.2s infinite rotate linear;
                 animation: 1.2s infinite rotate linear;
     }
 
     // Coloured animating half-circle
     &__line {
-        width: 150px;
-        height: 150px;
+        width: 200%; // double de witdh of its parent - it will be the same size as the circle (100% width of grandparent)
+        height: 100%;
 
         border-radius: 50%;
         box-shadow: inset 0 0 0 1px @primary-color;
@@ -501,10 +493,50 @@ hr,
         position: absolute;
         top: 50%;
         left: 50%;
-        width: 80px;
+        width: 50%;
 
         -webkit-transform: translate(-50%, -50%);
                 transform: translate(-50%, -50%);
+    }
+
+    &--sm {
+        width: 80px;
+        height: 80px;
+    }
+
+    // Fullscreen splash
+    &--fs {
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        width: 100vw;
+        height: 100vh;
+
+        text-align: center;
+
+        .splash__circle,
+        .splash__line {
+            width: 150px;
+            height: 150px;
+        }
+
+        .splash__mask {
+            width: 75px;
+            height: 150px;
+            margin-top: -75px;
+            margin-left: -75px;
+
+            -webkit-transform-origin: 75px 75px 0;
+                    transform-origin: 75px 75px 0;
+        }
+
+        .splash__logo {
+            width: 75px;
+        }
     }
 
 }
@@ -1925,6 +1957,37 @@ Navbar
         border-bottom: 1px solid @border-color;
     }
 }
+
+
+/*
+   jQuery Shop Locator
+   ========================================================================== */
+
+.metro {
+    font-family: inherit;
+}
+
+.ct-googleMap {
+    &--selectContainer {
+        &:before,
+        &:after {
+            content: none;
+        }
+    }
+
+    &--select,
+    &--search {
+        background-color: transparent;
+    }
+
+    &--select {
+        .metro & {
+            padding: 10px 30px;
+            background: none;
+        }
+    }
+}
+
 
 
 
