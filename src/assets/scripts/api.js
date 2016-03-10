@@ -176,25 +176,33 @@
             var sidebarBody;
             $(element).addClass(settings.pluginStyle);
             if(settings.sidebar.visible == true){
-                element.innerHTML = "<div class='ct-googleMap--sidebar'></div>"+
+                element.innerHTML = "<div class='ct-googleMap--sidebar row'></div>"+
                                     "<div class='ct-googleMap ct-js-googleMap' id='map_canvas'></div>";
                 sidebarBody = $(element).find('.ct-googleMap--sidebar');
                 if(settings.sidebar.selectSection.visible == true){
                     sidebarBody.append(
-                        "<div class='ct-googleMap--selectContainer'>"+
-                            '<div class="dropdown ct-googleMap--select">'+
-                                '<button id="selectRegion" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-                                    'Dropdown trigger'+
-                                    '<span class="caret"></span>'+
-                                '</button>'+
-                                '<ul class="dropdown-menu" aria-labelledby="selectRegion"></ul>'+
-                            '</div>'+
+                        '<div class="col-sm-6">'+
+                            "<div class='ct-googleMap--selectContainer'>"+
+                                '<div class="dropdown ct-googleMap--select">'+
+                                    '<button id="selectRegion" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
+                                        'Dropdown trigger'+
+                                        '<span class="caret"></span>'+
+                                    '</button>'+
+                                    '<ul class="dropdown-menu" aria-labelledby="selectRegion"></ul>'+
+                                '</div>'+
+                            "</div>"+
                         "</div>"
                     );
                     this.createSelectSection(element, settings);
                 }
                 if(settings.sidebar.searchBox.visible == true || settings.sidebar.searchBox.search == true){
-                    sidebarBody.append("<div class='ct-googleMap--searchContainer'>"+"<input type='text' class='ct-googleMap--search' id='searchGmaps' placeholder='Code or city'>"+"</div>");
+                    sidebarBody.append(
+                        '<div class="col-sm-6">'+
+                            "<div class='ct-googleMap--searchContainer'>"+
+                                "<input type='text' class='ct-googleMap--search' id='searchGmaps' placeholder='Code or city'>"+
+                            "</div>"+
+                        "</div>"
+                    );
                     // if(settings.sidebar.searchBox.search == true){
                     //     sidebarBody.append("<div class='ct-googleMap--resultsCounter'></div>"+"<div class='ct-googleMap--results'></div>");
                     // }else if(settings.sidebar.results.visibleInFirstPage == true){

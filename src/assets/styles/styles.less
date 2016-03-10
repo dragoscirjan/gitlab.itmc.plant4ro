@@ -1964,10 +1964,15 @@ Navbar
    ========================================================================== */
 
 .metro {
+    padding: 0;
     font-family: inherit;
 }
 
 .ct-googleMap {
+    &--sidebar {
+        width: auto;
+    }
+
     &--selectContainer {
         &:before,
         &:after {
@@ -1981,9 +1986,46 @@ Navbar
     }
 
     &--select {
+        position: relative;
+
         .metro & {
-            padding: 10px 30px;
+            padding: 0;
             background: none;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px 30px;
+            border: 1px solid @border-color;
+            font-weight: 700;
+            color: @text-color;
+            text-align: left;
+        }
+
+        .caret {
+            position: absolute;
+            top: 50%;
+            right: 30px;
+
+            -webkit-transform: translateY(-50%);
+                    transform: translateY(-50%);
+        }
+
+        .dropdown-menu {
+            width: 100%;
+            margin-top: 0;
+            padding: 7px 30px;
+            border-color: @border-color;
+            border-radius: 0;
+            background-color: @bg-color;
+            box-shadow: none;
+            font-weight: 400;
+            color: @text-color;
+
+            li {
+                padding: 5px 0;
+            }
         }
     }
 }
