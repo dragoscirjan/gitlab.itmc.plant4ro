@@ -59,12 +59,30 @@ return array(
             'to' => ['dragos.cirjan+debug-ppr@itmediaconnect.ro', 'Dragos Cirjan']
         ],
     ],
-    'testing' => [],
-    'staging' => [],
+    'testing' => [
+        'payment' => [
+            'mobilpay' => [
+                'paymentUrl' => 'http://secure.mobilpay.ro/card3',
+                'confirmUrl' => 'https://20150315.planteazapentruromania.ro/services/index.php/donate/mobilepay-confirm',
+                'returnUrl' => 'http:s//20150315.planteazapentruromania.ro/#/plata-esuata',
+            ]
+        ],
+    ],
+    'staging' => [
+        'payment' => [
+            'mobilpay' => [
+                'paymentUrl' => 'http://secure.mobilpay.ro/card3',
+                'confirmUrl' => 'https://stage.planteazapentruromania.local/services/index.php/donate/mobilepay-confirm',
+                'returnUrl' => 'https://stage.planteazapentruromania.local/#/plata-esuata',
+            ]
+        ],
+    ],
     'production' => [
         'payment' => [
             'mobilpay' => [
                 'paymentUrl' => 'http://secure.mobilpay.ro/card3',
+                'confirmUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilepay-confirm',
+                'returnUrl' => 'https://planteazapentruromania.ro/#/plata-esuata',
             ]
         ],
     ],
