@@ -1964,8 +1964,13 @@ Navbar
    ========================================================================== */
 
 .metro {
+    margin-top: 70px;
     padding: 0;
     font-family: inherit;
+
+    *::-moz-placeholder {
+        color: inherit;
+    }
 }
 
 .ct-googleMap {
@@ -1973,7 +1978,10 @@ Navbar
         width: auto;
     }
 
+    &--searchContainer,
     &--selectContainer {
+        margin-bottom: 30px;
+
         &:before,
         &:after {
             content: none;
@@ -2015,7 +2023,7 @@ Navbar
         .dropdown-menu {
             width: 100%;
             margin-top: 0;
-            padding: 7px 30px;
+            padding: 0;
             border-color: @border-color;
             border-radius: 0;
             background-color: @bg-color;
@@ -2024,7 +2032,49 @@ Navbar
             color: @text-color;
 
             li {
-                padding: 5px 0;
+                padding: 10px 30px;
+                cursor: pointer;
+
+                &:hover {
+                    background-color: @border-color;
+                }
+            }
+        }
+    }
+
+    &--search {
+        .metro .ct-googleMap--sidebar & {
+            padding: 10px 30px;
+            border: 1px solid @border-color;
+            background-color: transparent;
+            font-weight: 700;
+            color: @text-color;
+        }
+    }
+}
+
+/* Google Autocomplete Dropdown */
+
+.pac {
+    &-container {
+        margin-top: 0;
+        border: 1px solid @border-color;
+        background-color: @bg-color;
+        box-shadow: none;
+
+    }
+
+    &-item {
+        border: 0;
+        padding: 5px 30px;
+        cursor: pointer;
+
+        &:hover,
+        &-selected {
+            background-color: @border-color;
+
+            .pac-icon-marker {
+                background-position: -18px -161px;
             }
         }
     }

@@ -180,12 +180,13 @@
                                     "<div class='ct-googleMap ct-js-googleMap' id='map_canvas'></div>";
                 sidebarBody = $(element).find('.ct-googleMap--sidebar');
                 if(settings.sidebar.selectSection.visible == true){
+                    var difFiles = settings.sidebar.selectSection.difFiles;
                     sidebarBody.append(
                         '<div class="col-sm-6">'+
                             "<div class='ct-googleMap--selectContainer'>"+
                                 '<div class="dropdown ct-googleMap--select">'+
                                     '<button id="selectRegion" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">'+
-                                        'Dropdown trigger'+
+                                        '<span class="dropdown-value">' + difFiles[0][0] + '</span>'+
                                         '<span class="caret"></span>'+
                                     '</button>'+
                                     '<ul class="dropdown-menu" aria-labelledby="selectRegion"></ul>'+
@@ -354,18 +355,20 @@
                 }
                 // Create the search box and link it to the UI element.
                 var input = $(element).find('.ct-googleMap--search');
+                console.log(input)
                 //var myPosition = [];
 
                 searchBox = new google.maps.places.Autocomplete(
                     /** @type {HTMLInputElement} */(input[0]), optionsSearchBox);
             }
             if(settings.sidebar.selectSection.visible == true && settings.sidebar.visible == true){
-                $( selectDOM )
-                    .change(function() {
-                        $(this).find('option:selected').each(function () {
+                $( selectDOM ).find('li')
+                    .click(function() {
+                        // $(this).find('option:selected').each(function () {
                             sidebarItem = $(element).find('.ct-googleMap--sidebarItem');
                             sidebarItem.remove();
-                            selectValue = selectDOM.val();
+                            selectValue = $(this).data('value');
+                            $('#selectRegion .dropdown-value').text($(this).text());
                             $(element).find('.ct-googleMap--resultsCounter').html('');
                             if(settings.preloader == true){
                                 $preloader.removeClass('make-hidden');
@@ -388,9 +391,9 @@
                                     console.log('ERROR', textStatus, errorThrown);
                                 }
                             });
-                        })
-                    })
-                    .trigger( "change" );
+                        // })
+                    });
+                    $(selectDOM).find('li:first-child').trigger("click");
             }else{
                 if(settings.json == null){
                     var singleMarker = [
