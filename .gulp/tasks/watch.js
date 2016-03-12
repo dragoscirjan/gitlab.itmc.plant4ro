@@ -15,24 +15,24 @@ gulp.task('watch', ['serve'], function() {
 
     gulp.watch(paths.jadeIndex,  ['build-index-jade', browserSync.reload]).on('change', reportChange);
 
-    // gulp.watch(paths.com.coffee, ['build-com-coffee', browserSync.reload]).on('change', reportChange);
-    // gulp.watch(paths.com.dart,   ['build-com-dart',   browserSync.reload]).on('change', reportChange);
-    gulp.watch(paths.com.js,     ['build-com-js',     browserSync.reload]).on('change', reportChange);
-    // gulp.watch(paths.com.ts      ['build-com-ts',     browserSync.reload]).on('change', reportChange);
+    // gulp.watch(paths.coffee, ['build-coffee', browserSync.reload]).on('change', reportChange);
+    // gulp.watch(paths.dart,   ['build-dart',   browserSync.reload]).on('change', reportChange);
+    gulp.watch(paths.js,     ['build-js',     browserSync.reload]).on('change', reportChange);
+    // gulp.watch(paths.ts      ['build-ts',     browserSync.reload]).on('change', reportChange);
 
-    gulp.watch(paths.com.html,   ['build-com-html',   browserSync.reload]).on('change', reportChange);
-    gulp.watch(paths.com.jade,   ['build-com-jade',   browserSync.reload]).on('change', reportChange);
+    gulp.watch(paths.html,   ['build-html',   browserSync.reload]).on('change', reportChange);
+    gulp.watch(paths.jade,   ['build-jade',   browserSync.reload]).on('change', reportChange);
 
 
-    gulp.watch(paths.assets.css,    ['build-css',    browserSync.reload]).on('change', reportChange);
-    gulp.watch(paths.assets.less,   ['build-less',   browserSync.reload]).on('change', reportChange);
-    // gulp.watch(paths.assets.sass,   ['build-sass',   browserSync.reload]).on('change', reportChange);
-    // gulp.watch(paths.assets.scss,   ['build-scss',   browserSync.reload]).on('change', reportChange);
-    // gulp.watch(paths.assets.stylus, ['build-stylus', browserSync.reload]).on('change', reportChange);
+    gulp.watch(paths.assets.css,    ['build-assets-css',    browserSync.reload]).on('change', reportChange);
+    gulp.watch(paths.assets.less,   ['build-assets-less',   browserSync.reload]).on('change', reportChange);
+    // gulp.watch(paths.assets.sass,   ['build-assets-sass',   browserSync.reload]).on('change', reportChange);
+    // gulp.watch(paths.assets.scss,   ['build-assets-scss',   browserSync.reload]).on('change', reportChange);
+    // gulp.watch(paths.assets.stylus, ['build-assets-stylus', browserSync.reload]).on('change', reportChange);
 
-    // gulp.watch(paths.assets.coffee, ['build-coffee', browserSync.reload]).on('change', reportChange);
-    // gulp.watch(paths.assets.dart,   ['build-dart',   browserSync.reload]).on('change', reportChange);
-    gulp.watch(paths.assets.js,     ['build-js',     browserSync.reload]).on('change', reportChange);
-    // gulp.watch(paths.assets.ts,     ['build-ts',     browserSync.reload]).on('change', reportChange);
+    // gulp.watch(paths.assets.coffee, ['build-assets-coffee', browserSync.reload]).on('change', reportChange);
+    // gulp.watch(paths.assets.dart,   ['build-assets-dart',   browserSync.reload]).on('change', reportChange);
+    gulp.watch(paths.assets.js,     ['build-assets-js',     browserSync.reload]).on('change', reportChange);
+    // gulp.watch(paths.assets.ts,     ['build-assets-ts',     browserSync.reload]).on('change', reportChange);
 
 });

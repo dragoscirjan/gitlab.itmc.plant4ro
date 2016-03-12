@@ -40,10 +40,10 @@ export class Component extends ViewModelAbstract {
      */
     scriptsStoreLocator = [
         `https://maps.googleapis.com/maps/api/js?libraries=places,geometry`,
-        // `dist/assets/plugins/jquery-shop-locator/src/shop-locator.js`,
+        // `3rdpt/jquery-shop-locator/src/shop-locator.js`,
         `dist/assets/scripts/api.js`,
-        `dist/assets/plugins/jquery-shop-locator/src/dependences/infobubble.js`,
-        `dist/assets/plugins/jquery-shop-locator/src/dependences/markerclusterer.js`
+        `3rdpt/jquery-shop-locator/src/dependences/infobubble.js`,
+        `3rdpt/jquery-shop-locator/src/dependences/markerclusterer.js`
     ];
 
     /**
@@ -74,9 +74,9 @@ export class Component extends ViewModelAbstract {
      * @return {[type]}         [description]
      */
     initStoreLocator() {
-        // src/assets/plugins/jquery-shop-locator/
+        // 3rdpt/jquery-shop-locator/
         $('#map').ShopLocator({
-            json: 'src/assets/plugins/jquery-shop-locator/src/json/markers.json',
+            json: '3rdpt/jquery-shop-locator/src/json/markers.json',
             pluginStyle: 'metro',
             paginationStyle: 1,
             infoBubble: {
@@ -89,7 +89,7 @@ export class Component extends ViewModelAbstract {
                 minWidth: 170,
                 maxWidth: 250,
                 hideCloseButton: false,
-                closeSrc: 'src/assets/plugins/jquery-shop-locator/src/style/closeButton.svg'
+                closeSrc: '3rdpt/jquery-shop-locator/src/style/closeButton.svg'
             },
             map: {
                 mapStyle: [{
@@ -168,15 +168,15 @@ export class Component extends ViewModelAbstract {
                     widthMD: 64,
                     heightBIG: 74,
                     widthBIG: 74,
-                    iconSmall: 'src/assets/plugins/jquery-shop-locator/src/style/metro/images/clusterSmall.png',
-                    iconMedium: 'src/assets/plugins/jquery-shop-locator/src/style/metro/images/clusterMedium.png',
-                    iconBig: 'src/assets/plugins/jquery-shop-locator/src/style/metro/images/clusterBig.png'
+                    iconSmall: '3rdpt/jquery-shop-locator/src/style/metro/images/clusterSmall.png',
+                    iconMedium: '3rdpt/jquery-shop-locator/src/style/metro/images/clusterMedium.png',
+                    iconBig: '3rdpt/jquery-shop-locator/src/style/metro/images/clusterBig.png'
                 }
             },
             sidebar: {
                 visible: true,
                 selectSection: {
-                    pathToJSONDirectory: 'src/assets/plugins/jquery-shop-locator/src/json/',
+                    pathToJSONDirectory: '3rdpt/jquery-shop-locator/src/json/',
                     visible: true
                 },
                 searchBox: {

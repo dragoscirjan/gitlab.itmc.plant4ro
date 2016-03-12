@@ -35,8 +35,8 @@ gulp.task('build-index-jade', function() {
  * by errors from other gulp plugins
  * https://www.npmjs.com/package/gulp-plumber
  */
-gulp.task('build-com-js', function() {
-    return gulp.src(paths.com.js)
+gulp.task('build-js', function() {
+    return gulp.src(paths.js)
         .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
         .pipe(changed(paths.output, {extension: '.js'}))
         .pipe(sourcemaps.init({loadMaps: true}))
@@ -46,8 +46,8 @@ gulp.task('build-com-js', function() {
 });
 
 
-gulp.task('build-com-jade', function() {
-    return gulp.src(paths.com.jade)
+gulp.task('build-jade', function() {
+    return gulp.src(paths.jade)
         .pipe(data(function(file) {
             try {
                 return require(file.path + '.json');
@@ -61,8 +61,8 @@ gulp.task('build-com-jade', function() {
 });
 
 // copies changed html files to the output directory
-gulp.task('build-com-html', function() {
-    return gulp.src(paths.com.html)
+gulp.task('build-html', function() {
+    return gulp.src(paths.html)
         .pipe(changed(paths.output, {extension: '.html'}))
         .pipe(gulp.dest(paths.output));
 });
@@ -70,14 +70,14 @@ gulp.task('build-com-html', function() {
 
 
 // copies changed css files to the output directory
-gulp.task('build-css', function() {
+gulp.task('build-assets-css', function() {
     return gulp.src(paths.assets.css)
         .pipe(changed(paths.output, {extension: '.css'}))
         .pipe(gulp.dest(paths.assets.output.styles))
         .pipe(browserSync.stream());
 });
 
-gulp.task('build-less', function() {
+gulp.task('build-assets-less', function() {
     return gulp.src(paths.assets.less)
         .pipe(less(lessOptions))
         .pipe(changed(paths.output, {extension: '.css'}))
@@ -86,7 +86,7 @@ gulp.task('build-less', function() {
 });
 
 
-gulp.task('build-js', function() {
+gulp.task('build-assets-js', function() {
     return gulp.src(paths.assets.js)
         .pipe(plumber({errorHandler: notify.onError('Error: <%= error.message %>')}))
         .pipe(changed(paths.assets.output.scripts, {extension: '.js'}))
@@ -96,29 +96,29 @@ gulp.task('build-js', function() {
         .pipe(gulp.dest(paths.assets.output.scripts));
 });
 
-gulp.task('copy-images-styles', function() {
+gulp.task('copy-assets-images-styles', function() {
     return gulp.src(paths.assets.stylesImages)
         // .pipe(changed(paths.output, {extension: '.css'}))
         .pipe(gulp.dest(paths.assets.output.stylesImages))
         .pipe(browserSync.stream());
 });
 
-gulp.task('copy-images-content', function() {
+gulp.task('copy-assets-images-content', function() {
     return gulp.src(paths.assets.contentImages)
         // .pipe(changed(paths.output, {extension: '.css'}))
         .pipe(gulp.dest(paths.assets.output.contentImages))
         .pipe(browserSync.stream());
 });
 
-gulp.task('copy-plugins', function() {
-    return gulp.src(paths.assets.plugins)
-        // .pipe(changed(paths.output, {extension: '.css'}))
-        .pipe(gulp.dest(paths.assets.output.plugins))
-        // .pipe(browserSync.stream())
-        ;
-});
+// gulp.task('copy-plugins', function() {
+//     return gulp.src(paths.assets.plugins)
+//         // .pipe(changed(paths.output, {extension: '.css'}))
+//         .pipe(gulp.dest(paths.assets.output.plugins))
+//         // .pipe(browserSync.stream())
+//         ;
+// });
 
-gulp.task('copy-fonts', function() {
+gulp.task('copy-assets-fonts', function() {
     return gulp.src(paths.assets.fonts)
         // .pipe(changed(paths.output, {extension: '.css'}))
         .pipe(gulp.dest(paths.assets.output.fonts))
@@ -141,9 +141,9 @@ gulp.task('build', function(callback) {
     'clean',
     [
         'build-index-jade',
-        'build-com-js', 'build-com-html', 'build-com-jade',
-        'build-css', 'build-less', 'build-js',
-        'copy-images-styles', 'copy-images-content', 'copy-plugins', 'copy-fonts'//, 'copy-plugins-js'
+        'build-js', 'build-html', 'build-jade',
+        'build-assets-css', 'build-assets-less', 'build-assets-js',
+        'copy-assets-images-styles', 'copy-assets-images-content'/*, 'copy-plugins'*/, 'copy-assets-fonts'//, 'copy-plugins-js'
     ],
     callback
   );

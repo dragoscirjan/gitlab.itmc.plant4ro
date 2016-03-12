@@ -37,7 +37,7 @@ module.exports = {
         }
     },
 
-    com: {
+    //com: {
         html: appRoot + '**/*.html',
         jade: appRoot + "**/*.jade",
 
@@ -45,7 +45,7 @@ module.exports = {
         coffee: appRoot + "**/*.coffee",
         js:     appRoot + "**/*.js",
         ts:     appRoot + "**/*.ts",
-    },
+    //},
 
     output: appOutput,
 
