@@ -86,7 +86,8 @@
       "guillaumepotier/Parsley.js": "github:guillaumepotier/Parsley.js@2.3.4",
       "jspm/nodelibs-crypto": "github:jspm/nodelibs-crypto@^0.1.0",
       "parsleyjs": "github:guillaumepotier/Parsley.js@2.3.4",
-      "text": "github:systemjs/plugin-text@^0.0.3"
+      "text": "github:systemjs/plugin-text@^0.0.3",
+      "tsironis/lockr": "github:tsironis/lockr@0.8.4"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.6.4",

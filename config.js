@@ -12,6 +12,7 @@ System.config({
     "github:*": "jspm_packages/github/*",
     "npm:*": "jspm_packages/npm/*"
   },
+
   meta: {
     "../assets/plugins/revoslider/js/jquery.themepunch.tools.min.js": {
       "deps": [
@@ -19,6 +20,7 @@ System.config({
       ]
     }
   },
+
   map: {
     "aurelia-animator-css": "npm:aurelia-animator-css@1.0.0-beta.1.0.3",
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.0.2",
@@ -45,6 +47,7 @@ System.config({
     "jspm/nodelibs-crypto": "github:jspm/nodelibs-crypto@0.1.0",
     "parsleyjs": "github:guillaumepotier/Parsley.js@2.3.4",
     "text": "github:systemjs/plugin-text@0.0.3",
+    "tsironis/lockr": "github:tsironis/lockr@0.8.4",
     "github:aurelia/validation@0.6.2": {
       "aurelia-binding": "npm:aurelia-binding@1.0.0-beta.1.1.3",
       "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.0.0-beta.1.1.3",
@@ -464,4 +467,4 @@ System.config({
       "indexof": "npm:indexof@0.0.1"
     }
   }
-})
+});

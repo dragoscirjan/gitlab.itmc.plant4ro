@@ -11,7 +11,8 @@ import {Validation} from 'aurelia-validation';
 
 import {inject} from 'aurelia-framework';
 import 'fetch';
-import {HttpClient, json} from 'aurelia-fetch-client';
+// import {HttpClient, json} from 'aurelia-fetch-client';
+import {HttpClient} from 'aurelia-fetch-client';
 
 // import {Recaptcha} from 'google-recaptcha';
 
@@ -22,6 +23,7 @@ import 'bootstrap-slider';
 import 'parsleyjs';
 import 'parsleyjs/dist/i18n/ro';
 import * as braintree from 'braintree/braintree-web';
+import * as Lockr from 'tsironis/lockr';
 
 // ParsleyDefaults.classHandler = function (ParsleyField) {};
 // ParsleyDefaults.errorsContainer = function (ParsleyField) {};
@@ -293,15 +295,41 @@ export class Component extends ViewModelAbstract {
         let self = this;
         this.logger.debug('request:/ donate/mobilpay-token');
         return new Promise((resolve, reject) => {
-            this.http.fetch('donate/mobilpay-token', {
+            let load = btoa(JSON.stringify(self.paymentModel));
+            // debug info
+            self.logger.debug('POST /donate/mobilpay-token', { load: load });
+            // store load in case of fail
+            Lockr.set('mobilpay-load', load);
+
+            // this.http.fetch('donate/mobilpay-token', {
+            //     method: 'post',
+            //     body: json({ load: load })
+            // })
+            //     .then(response => response.json())
+            //     .then((data) => {
+            //         self.logger.debug('response:/ donate/mobilpay-token', data);
+            //         if (!data.error) {
+            //             self.mobilpay = data;
+            //             self.paymentWithMobilpayForm()
+            //                 .catch((error) => { reject(error); })
+            //                 .then((token) => { resolve(token); });
+            //         } else {
+            //             self.logger.warn(error);
+            //             reject(data);
+            //         }
+            //     });
+
+            // obtain mobilpay tokens
+            $.ajax({
+                error: (jqXHR, status, reason) => { reject(reason); },
+                data: { load: load },
+                dataType: 'json',
                 method: 'post',
-                body: json({ load: btoa(self.paymentModel) })
-            })
-                .then(response => response.json())
-                .then((data) => {
+                success: (data) => {
                     self.logger.debug('response:/ donate/mobilpay-token', data);
                     if (!data.error) {
-                        this.mobilpay = data;
+                        self.mobilpay = data;
+                        // trigger payment form
                         self.paymentWithMobilpayForm()
                             .catch((error) => { reject(error); })
                             .then((token) => { resolve(token); });
@@ -309,7 +337,9 @@ export class Component extends ViewModelAbstract {
                         self.logger.warn(error);
                         reject(data);
                     }
-                });
+                },
+                url: self.appConfig.getPhpUrl('donate/mobilpay-token')
+            });
         });
     }
 
@@ -325,7 +355,7 @@ export class Component extends ViewModelAbstract {
             $('#mobilpay-modal')
                 .modal('show')
                 .on('shown.bs.modal', () => {
-                    // $('#mobilpay-modal form').submit();
+                    $('#mobilpay-modal form').submit();
                 });
         });
     }

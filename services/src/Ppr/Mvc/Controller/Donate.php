@@ -17,11 +17,14 @@ class Donate {
      ********************************************************/
 
     /**
+     * Obtain exchange rate information from bnr.ro
+     *
      * @param Application $app
      * @return Response
      */
     public function exchangeRate(Application $app) {
         try {
+            // return information pulled from bnr.ro
             return Response::response(array(
                 'error' => 0,
                 'exchange' => (new XmlToJsonConverter())->asArray(
@@ -29,7 +32,13 @@ class Donate {
                 ),
             ));
         } catch(\Exception $e) {
-            $app->getLogger()->err("{$e->getMessage()}\n{$e->getTraceAsString()}");
+            // log excepction
+            $app->getLogger()->err(sprintf(
+                "Failed pulling exchange rate with message: '%s', trace: \n %s",
+                $e->getMessage(),
+                $e->getTraceAsString()
+            ));
+            // respond with error
             return Response::response500(array(
                 'error' => 'Failed grabbing exchange rate',
                 'message' => $e->getMessage(),
@@ -44,20 +53,29 @@ class Donate {
      */
     public function braintreeClientToken(Application $app) {
         try {
+            // init braintree API
             $this->braintreeInit($app);
+            // generate token
             $token = Braintree\ClientToken::generate();
+            // log token
             $app->getLogger()->notice(sprintf(
                 'Braintree token `%s` generated from `%s`',
                 $token,
                 $_SERVER['REMOTE_ADDR']
             ));
-
+            // return token
             return Response::response(array(
                 'error' => 0,
                 'token' => $token,
             ));
         } catch (\Exception $e) {
-            $app->getLogger()->err("{$e->getMessage()}\n{$e->getTraceAsString()}");
+            // log exception
+            $app->getLogger()->err(sprintf(
+                "Braintree token generation failed with message: '%s', trace: \n%s",
+                $e->getMessage(),
+                $e->getTraceAsString()
+            ));
+            // return exception
             return Response::response500(array(
                 'error' => 'Could not initiate Braintree Token',
                 'message' => $e->getMessage(),
@@ -74,50 +92,42 @@ class Donate {
             // decode load to obtain information
             $load = json_decode(base64_decode($request->get('load')));
 
+            // create mobilpay session
             srand((double) microtime() * 1000000);
+            $mobilpay = new Model\Mobilpay([
+                'uuid' => uniqid('PPR' . rand(), true),
+                'hash' => $request->get('load'),
+                'started' => time()
+            ]);
+            $app->getEm()->persist($mobilpay);
+            $app->getEm()->flush();
+
+            // create mobilpay api session
             $objPmReqCard = new \Mobilpay_Payment_Request_Card();
             $objPmReqCard->signature = $app->getConfig('payment.mobilpay.signature');
-            $objPmReqCard->orderId = md5(uniqid(rand()));
-            $objPmReqCard->confirmUrl = $app->getConfig('payment.mobilpay.confirmUrl');
-            $objPmReqCard->returnUrl = $app->getConfig('payment.mobilpay.returnUrl');
+            $objPmReqCard->orderId = $mobilpay->getUuid();
+            $objPmReqCard->confirmUrl = sprintf($app->getConfig('payment.mobilpay.confirmUrl'), $mobilpay->getUuid());
+            $objPmReqCard->returnUrl = sprintf($app->getConfig('payment.mobilpay.returnUrl'), $mobilpay->getUuid());
             $objPmReqCard->invoice = new \Mobilpay_Payment_Invoice();
             $objPmReqCard->invoice->currency = 'RON';
             $objPmReqCard->invoice->amount = $load->donation->total;
-            //$objPmReqCard->invoice->installments= '2,3';
-            //$objPmReqCard->invoice->selectedInstallments= '3';
             $objPmReqCard->invoice->details = 'Donatie cu card-ul prin mobilPay';
-
-            $billingAddress = new \Mobilpay_Payment_Address();
-            $billingAddress->type = 'person';
-            $billingAddress->firstName = array_shift(explode(' ', $load->name));
-            $billingAddress->lastName = array_pop(explode(' ', $load->name));
-            $billingAddress->address = 'Romania';
-            $billingAddress->email = $load->email;
-            if (!empty($load->phone)) {
-                $billingAddress->mobilePhone = $load->phone;
-            }
-            $objPmReqCard->invoice->setBillingAddress($billingAddress);
-
-//            $shippingAddress 				= new Mobilpay_Payment_Address();
-//            $shippingAddress->type			= $_POST['shipping_type'];
-//            $shippingAddress->firstName		= $_POST['shipping_first_name'];
-//            $shippingAddress->lastName		= $_POST['shipping_last_name'];
-//            $shippingAddress->address		= $_POST['shipping_address'];
-//            $shippingAddress->email		= $_POST['shipping_email'];
-//            $shippingAddress->mobilePhone		= $_POST['shipping_mobile_phone'];
-//            $objPmReqCard->invoice->setShippingAddress($shippingAddress);
-
-            #uncomment the line below in order to see the content of the request
-            //echo "<pre>";print_r($objPmReqCard);echo "</pre>";
             $objPmReqCard->encrypt($app->getConfig('payment.mobilpay.certPath'));
 
+            // return token
             return Response::response(array(
                 'url' => $app->getConfig('payment.mobilpay.paymentUrl'),
                 'env_key' => $objPmReqCard->getEnvKey(),
                 'data' => $objPmReqCard->getEncData(),
             ));
-
         } catch(Exception $e) {
+            // log exception
+            $app->getLogger()->err(sprintf(
+                "Mobilpay token generation failed with message: '%s', trace: \n%s",
+                $e->getMessage(),
+                $e->getTraceAsString()
+            ));
+            // return exception
             return Response::response500(array(
                 'error' => 'Could not initiate Mobilpay Token',
                 'message' => $e->getMessage(),
@@ -139,6 +149,7 @@ class Donate {
             // init braintree setup
             $this->braintreeInit($app);
 
+            // create sale data
             $sale = [
                 'amount' => $load->donation->totalEur,
                 'orderId' => time(),
@@ -147,6 +158,8 @@ class Donate {
                     'submitForSettlement' => True
                 ]
             ];
+
+            // log sale attempt
             $app->getLogger()->info(sprintf(
                 'Braintree attempting sale info `%s`',
                 json_encode($sale)
@@ -154,17 +167,22 @@ class Donate {
 
             // perform payment
             $result = Braintree\Transaction::sale($sale);
+
+            // if error
             if ($result instanceof \Braintree\Result\Error) {
-                die(var_dump($result));
-                $app->getLogger()->err(sprintf(
-                    'Braintree payment failed with token `%s`, nonce `%s`, result: `%s`.',
+                // log error
+                $app->getLogger()->alert(sprintf(
+                    "Braintree payment failed with \ntoken: `%s`, \nnonce: `%s`, \nresult: `%s`, \nrequest: `%s`.",
                     $load->donation->braintree->token,
                     $load->donation->braintree->nonce,
-                    serialize($result)
+                    serialize($result),
+                    $request->get('load')
                 ));
+                // throw exception
                 throw new \Exception('Could not complete Braintree transaction.');
             }
 
+            // else create transaction info
             $transaction = [
                 'id' => $result->transaction->id,
                 'type' => $result->transaction->type,
@@ -175,24 +193,22 @@ class Donate {
                 'token' => $load->donation->braintree->token,
                 'nonce' => $load->donation->braintree->nonce,
             ];
+
+            // log transaction
             $app->getLogger()->info(sprintf(
                 'Braintree sale `%s` succeded with transaction `%s`',
                 json_encode($sale),
                 json_encode($transaction)
             ));
 
-            try {
-                // save donation
-                $id = $this->saveDonation($app, $load, $transaction);
-                $app->getLogger()->info(sprintf(
-                    'Braintree sale saved donation `%s`',
-                    $id
-                ));
-            } catch (\Exception $e) {
-                $app->getLogger()->err("{$e->getMessage()}\n{$e->getTraceAsString()}");
-                throw $e;
-            }
+            // save donation
+            $id = $this->saveDonation($app, $load, $transaction);
+            $app->getLogger()->info(sprintf(
+                'Braintree sale saved donation `%s`',
+                $id
+            ));
 
+            // return sale response
             return Response::response(array(
                 'error' => 0,
                 'result' => $result->success,
@@ -200,7 +216,13 @@ class Donate {
                 't' => $result->transaction->id,
             ));
         } catch (\Exception $e) {
-            $app->getLogger()->err("{$e->getMessage()}\n{$e->getTraceAsString()}");
+            // log exception
+            $app->getLogger()->err(sprintf(
+                "Braintree sale attempt failed: '%s', trace: \n%s",
+                $e->getMessage(),
+                $e->getTraceAsString()
+            ));
+            // return exception
             return Response::response500(array(
                 'error' => 'Could not complete payment.',
                 'message' => $e->getMessage(),
@@ -213,9 +235,34 @@ class Donate {
      * @param Application $app
      * @param Request $request
      */
-    public function mobilpayConfirm(Application $app, Request $request) {
-        if($request->get('env_key') && $request->get('data'))
-        {
+    public function mobilpay(Application $app, Request $request) {
+
+        // treat mobilpay payment fail redirect
+        if ($request->get('status') === 'fail') {
+            try {
+                // obtain mobilpay session info
+                $mobilpay = $app->getEm()->createQuery(sprintf(
+                    "SELECT m FROM \Ppr\Mvc\Model\Mobilpay m WHERE m.uuid = '%s'",
+                    $request->get('orderId')
+                ))->execute()[0];
+                // log error
+                $app->getLogger()->alert(sprintf(
+                    'Mobilpay returned payment fail for the following email %s and hash %s',
+                    json_decode(base64_decode($mobilpay->getHash()))->email,
+                    $mobilpay->getHash()
+                ));
+                // remove session
+                $app->getEm()->remove($mobilpay);
+                $app->getEm()->flush();
+                // redirect
+                return $app->redirect('/#/planteaza/plata-esuata');
+            } catch (\Exception $e) {
+                // TODO: $app->redirect('/services/index.php/500', Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+        }
+
+        // TODO: Could not create a successful payment for Mobilpay yet.
+        if($request->get('env_key') && $request->get('data')) {
             try {
                 $objPmReq = \Mobilpay_Payment_Request_Abstract::factoryFromEncrypted(
                     $request->get('env_key'),
@@ -312,33 +359,42 @@ class Donate {
 
     public function saveDonation(Application $app, $load, $transaction) {
 
-        $donator = new Model\Donator([
-            'name' => $load->name,
-            'email' => $load->email,
-            'company' => $load->company,
-            'phone' => $load->phone,
-            'location' => 'Romania',
-            'locationgps' => '0;0',
-            'companyvat' => $load->vat,
-        ]);
+        try {
+            $donator = new Model\Donator([
+                'name' => $load->name,
+                'email' => $load->email,
+                'company' => $load->company,
+                'phone' => $load->phone,
+                'location' => 'Romania',
+                'locationgps' => '0;0',
+                'companyvat' => $load->vat,
+            ]);
 
-        $app->getEm()->persist($donator);
-        $app->getEm()->flush();
+            $app->getEm()->persist($donator);
+            $app->getEm()->flush();
 
-        $donation = new Model\Donation([
-            'donation' => ($load->donation->method=== 'braintree') ? $load->donation->totalEur : $load->donation->total,
-            'currency' => ($load->donation->method=== 'braintree') ? 'EUR' : 'RON',
-            'exchange' => ($load->donation->method=== 'braintree') ? $load->donation->exchange : '',
-            'trees' => 10, //$load->payment->trees,
-            'started' => time(),
-            'transactions' => json_encode($transaction),
-            'donatorid' => $donator,
-        ]);
+            $donation = new Model\Donation([
+                'donation' => ($load->donation->method=== 'braintree') ? $load->donation->totalEur : $load->donation->total,
+                'currency' => ($load->donation->method=== 'braintree') ? 'EUR' : 'RON',
+                'exchange' => ($load->donation->method=== 'braintree') ? $load->donation->exchange : '',
+                'trees' => 10, //$load->payment->trees,
+                'started' => time(),
+                'transactions' => json_encode($transaction),
+                'donatorid' => $donator,
+            ]);
 
-        $app->getEm()->persist($donation);
-        $app->getEm()->flush();
+            $app->getEm()->persist($donation);
+            $app->getEm()->flush();
 
-        return $donation->getId();
+            return $donation->getId();
+        } catch (\Exception $e) {
+            $app->getLogger()->err(sprintf(
+                "Donation save failed: '%s', trace: \n%s",
+                $e->getMessage(),
+                $e->getTraceAsString()
+            ));
+        }
+        return 0;
     }
 
 }

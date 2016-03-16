@@ -18,6 +18,6 @@ $app->get('/donate/braintree-token', '\Ppr\Mvc\Controller\Donate::braintreeClien
 $app->post('/donate/braintree', '\Ppr\Mvc\Controller\Donate::braintree');
 
 $app->post('/donate/mobilpay-token', '\Ppr\Mvc\Controller\Donate::mobilpayClientToken');
-$app->post('/donate/mobilpay-confirm', '\Ppr\Mvc\Controller\Donate::braintreeConfirm');
+$app->get('/donate/mobilpay/{orderId}/{status}', '\Ppr\Mvc\Controller\Donate::mobilpay');
 
 $app->run();

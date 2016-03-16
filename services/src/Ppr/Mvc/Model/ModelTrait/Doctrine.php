@@ -5,7 +5,7 @@ namespace Ppr\Mvc\Model\ModelTrait;
 trait Doctrine
 {
 
-    public function __construct(array $array) {
+    public function __construct($array = []) {
         foreach ($array as $key => $value) {
             $this->$key = $value;
         }

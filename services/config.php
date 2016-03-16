@@ -10,12 +10,13 @@ return array(
                 'privateKey' => '7c97f0a849a5cba4bbbc8ad9b2fe578f',
             ],
             'mobilpay' => [
-                'paymentUrl' => 'http://sandboxsecure.mobilpay.ro/card3',
+                'paymentUrl' => 'http://sandboxsecure.mobilpay.ro',
+//                'paymentUrl' => 'http://sandboxsecure.mobilpay.ro/card3',
                 'certPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
                 'keyPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
-                'confirmUrl' => 'http://planteazapentruromania.local/services/index.php/donate/mobilepay-confirm',
-                'returnUrl' => 'http://planteazapentruromania.local/#/plata-esuata',
+                'confirmUrl' => 'http://planteazapentruromania.local/services/index.php/donate/mobilpay/%s/confirm',
+                'returnUrl' => 'http://planteazapentruromania.local/services/index.php/donate/mobilpay/%s/fail',
             ],
             'debug' => [
                 'dragos.cirjan+ppr@itmediaconnect.ro'
@@ -63,8 +64,8 @@ return array(
         'payment' => [
             'mobilpay' => [
                 'paymentUrl' => 'http://secure.mobilpay.ro/card3',
-                'confirmUrl' => 'https://20150315.planteazapentruromania.ro/services/index.php/donate/mobilepay-confirm',
-                'returnUrl' => 'http:s//20150315.planteazapentruromania.ro/#/plata-esuata',
+                'confirmUrl' => 'https://20150315.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
+                'returnUrl' => 'https://20150315.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
             ]
         ],
     ],
@@ -72,8 +73,8 @@ return array(
         'payment' => [
             'mobilpay' => [
                 'paymentUrl' => 'http://secure.mobilpay.ro/card3',
-                'confirmUrl' => 'https://stage.planteazapentruromania.local/services/index.php/donate/mobilepay-confirm',
-                'returnUrl' => 'https://stage.planteazapentruromania.local/#/plata-esuata',
+                'confirmUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
+                'returnUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
             ]
         ],
     ],
@@ -81,8 +82,8 @@ return array(
         'payment' => [
             'mobilpay' => [
                 'paymentUrl' => 'http://secure.mobilpay.ro/card3',
-                'confirmUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilepay-confirm',
-                'returnUrl' => 'https://planteazapentruromania.ro/#/plata-esuata',
+                'confirmUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
+                'returnUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
             ]
         ],
     ],

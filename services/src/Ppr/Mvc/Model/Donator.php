@@ -10,8 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="donator")
  * @ORM\Entity
  */
-class Donator
-{
+class Donator {
 
     use \Ppr\Mvc\Model\ModelTrait\Doctrine;
 
