@@ -63,7 +63,6 @@ return array(
     'testing' => [
         'payment' => [
             'mobilpay' => [
-                'paymentUrl' => 'http://secure.mobilpay.ro/card3',
                 'confirmUrl' => 'https://20150315.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
                 'returnUrl' => 'https://20150315.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
             ]
@@ -79,7 +78,7 @@ return array(
     'staging' => [
         'payment' => [
             'mobilpay' => [
-                'paymentUrl' => 'http://secure.mobilpay.ro/card3',
+                'paymentUrl' => 'http://secure.mobilpay.ro',
                 'confirmUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
                 'returnUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
             ]
@@ -95,7 +94,6 @@ return array(
     'production' => [
         'payment' => [
             'mobilpay' => [
-                'paymentUrl' => 'http://secure.mobilpay.ro/card3',
                 'confirmUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
                 'returnUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
             ]
