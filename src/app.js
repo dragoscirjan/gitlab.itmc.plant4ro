@@ -32,7 +32,7 @@ export class App {
             { route: 'parteneri',            name: 'partners',  moduleId: 'partners',        nav: true,   title: 'Parteneri' },
             { route: 'implica-te',           name: 'support',   moduleId: 'support-router',  nav: true,   title: 'Implica-te' },
             { route: 'planteaza',            name: 'plant',     moduleId: 'donate',          nav: true,   title: 'Planteaza' },
-            { route: 'planteaza/:status',    name: 'plant',     moduleId: 'donate',          nav: true,   title: 'Planteaza' },
+            // { route: 'planteaza/:s',    name: 'plant',     moduleId: 'donate',          nav: true,   title: 'Planteaza' },
             { route: 'diploma/:id/:t',       name: 'diploma',   moduleId: 'diploma',         nav: false,  title: 'Ai Plantat' },
             { route: 'contact',              name: 'contact',   moduleId: 'contact',         nav: true,   title: 'Contact' },
             { route: 'intrebari',            name: 'faq',       moduleId: 'faq',             nav: false,  title: 'Intrebari Frecvente' },
