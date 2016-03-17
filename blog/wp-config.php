@@ -18,6 +18,9 @@
  * @package WordPress
  */
 
+ define('WP_HOME', $_SERVER['SERVER_NAME']);
+ define('WP_SITEURL', $_SERVER['SERVER_NAME']);
+
 if ($_SERVER['SERVER_NAME'] === 'planteazapentruromania.local') {
 
 	// ** MySQL settings - You can get this info from your web host ** //
