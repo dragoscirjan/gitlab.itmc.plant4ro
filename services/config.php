@@ -69,10 +69,10 @@ return array(
             ]
         ],
         'db' => array(
-            'dbname' => 'donations',
+            'dbname' => 'plant4ro_test_do',
             'user' => 'plant4ro',
             'password' => 'plant4roma',
-            'host' => 'plant4ro_test_do',
+            'host' => 'localhost',
             'driver' => 'pdo_mysql',
         ),
     ],
@@ -85,10 +85,10 @@ return array(
             ]
         ],
         'db' => array(
-            'dbname' => 'donations',
+            'dbname' => 'plant4ro_stage_do',
             'user' => 'plant4ro',
             'password' => 'plant4roma',
-            'host' => 'plant4ro_stage_do',
+            'host' => 'localhost',
             'driver' => 'pdo_mysql',
         ),
     ],
