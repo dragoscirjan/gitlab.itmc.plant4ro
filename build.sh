@@ -5,6 +5,8 @@
 
 cd services
 wget -q https://getcomposer.org/installer -O - | php
+rm -rf vendor
+./composer.phar install
 cd ..
 
 ENV='development'
