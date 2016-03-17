@@ -25,9 +25,6 @@ import 'parsleyjs/dist/i18n/ro';
 import * as braintree from 'braintree/braintree-web';
 import * as Lockr from 'tsironis/lockr';
 
-// ParsleyDefaults.classHandler = function (ParsleyField) {};
-// ParsleyDefaults.errorsContainer = function (ParsleyField) {};
-
 /**
  * Component for donations
  *
@@ -63,10 +60,10 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * [mobikpay description]
+     * [mobilpay description]
      * @type {Object}
      */
-    mobikpay = {
+    mobilpay = {
         url: '',
         env_key: '',
         data: ''
@@ -79,7 +76,7 @@ export class Component extends ViewModelAbstract {
     isCorporate = true;
 
     /**
-     * [notRobot description]
+     * Determine whether the user is a robot or not
      * @type {Boolean}
      */
     notRobot = false;
@@ -96,10 +93,12 @@ export class Component extends ViewModelAbstract {
         let self = this;
         this.http = appConfig.configHttp(http);
 
+        // recaptcha validate function
         window.toggleRecaptchaValidate = (result) => {
             self.toggleRecaptchaValidate(result);
         };
 
+        // parsley settings
         window.Parsley.on('field:error', (e) => {
             e.$element.closest('.form-wrap').removeClass('success').addClass('error');
             setTimeout(() => {
@@ -129,7 +128,10 @@ export class Component extends ViewModelAbstract {
         let self = this;
         // get exchange value
         return this.http.fetch('curs-valutar')
-            .catch(error => { self.logger.warn('Getting exchange rates failed with error', error); })
+            .catch(error => {
+                // TODO: Hide braintree payment
+                self.logger.warn('Getting exchange rates failed with error', error);
+            })
             .then(response => response.json())
             .then((data) => {
                 self.logger.debug('Exchange rates obtained:', data);
@@ -151,9 +153,9 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * [paymentModel description]
+     * Getter :: paymentModel
      * @method paymentModel
-     * @return {Object}     [description]
+     * @return {Object}
      */
     get paymentModel() {
         let recaptcahaResponse = '';
@@ -171,25 +173,28 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * [paymentModel description]
+     * Setter :: paymentModel :: NOT USED
      * @method paymentModel
-     * @return {[type]}     [description]
+     * @deprecated
      */
     set paymentModel(val) {
 
     }
 
     /**
-     * [paymentWithBraintree description]
+     * Initialize Braintree payment (obtain token)
      * @method paymentWithBraintree
-     * @return {Promise}             [description]
+     * @return {Promise}
      */
     paymentWithBraintreeInit() {
         let self = this;
         this.logger.debug('request:/ donate/braintree-token');
         return new Promise((resolve, reject) => {
             this.http.fetch('donate/braintree-token')
-                .catch((error) => { reject(error); })
+                .catch((error) => {
+                    self.logger.warn('response:/ donate/braintree-token', error);
+                    reject(error);
+                })
                 .then(response => response.json())
                 .then((data) => {
                     self.logger.debug('response:/ donate/braintree-token', data);
@@ -199,28 +204,33 @@ export class Component extends ViewModelAbstract {
                             .then((token) => { resolve(token); });
                     } else {
                         self.logger.warn(error);
-                        reject(data);
+                        reject(data.error);
                     }
                 });
         });
     }
 
     /**
-     * [paymentWithBraintreeForm description]
+     * Initialize Braintree payment form
      * @method paymentWithBraintreeForm
-     * @param  {string}                 token [description]
-     * @return {[type]}                       [description]
+     * @param  {String}   token
+     * @return {Promise}
      */
     paymentWithBraintreeForm(token) {
         let self = this;
         return new Promise((resolve, reject) => {
-            // let checkout = null;
             $('#braintree-modal')
                 .modal('show')
                 .on('shown.bs.modal', () => {
-                    if (window.btCheckout) { return; }
+                    if (window.btCheckout) {
+                        return;
+                    }
+                    // setup braintree form
                     braintree.setup(token, 'dropin', {
-                        onReady: (ready) => { window.btCheckout = ready; /*console.log(ready);*/ },
+                        onReady: (ready) => {
+                            self.logger.debug('braintree checkout', ready);
+                            window.btCheckout = ready;
+                        },
                         onPaymentMethodReceived: (payload) => {
                             self.logger.debug('braintree:/', payload);
                             payload.token = token;
@@ -228,10 +238,14 @@ export class Component extends ViewModelAbstract {
                                 .catch((error) => {  reject(error); })
                                 .then((resultToken) => { resolve(resultToken); });
                         },
-                        onError: (error) => { self.logger.warn(error); reject(error); },
+                        onError: (error) => {
+                            self.logger.warn(error);
+                            reject(error);
+                        },
                         container: 'braintree-payment-form'
                     });
 
+                    // associate modal form button to braintree form
                     $('#braintree-modal .btn.btn--sm.btn--secondary').off('click').on('click', (event) => {
                         $('#braintree-modal form input').trigger('click', event);
                     });
@@ -242,12 +256,17 @@ export class Component extends ViewModelAbstract {
     /**
      * [paymentWithBraintreeProceed description]
      * @method paymentWithBraintreeProceed
-     * @param  {[type]}                    payload [description]
-     * @return {[type]}                            [description]
+     * @param  {String}  payload
+     * @return {Promise}
      */
     paymentWithBraintreeProceed(payload) {
         let self = this;
-        this.logger.debug(this.http);
+        let load = btoa(JSON.stringify($.extend(
+            true,
+            self.paymentModel,
+            { donation: { braintree: payload } }
+        )));
+        this.logger.debug('braintree:post:/ donate/braintree', load);
         return new Promise((resolve, reject) => {
             // this.http.fetch('donate/braintree', {
             //     method: 'post',
@@ -267,40 +286,40 @@ export class Component extends ViewModelAbstract {
             //     .then((data) => {
             //         resolve(data);
             //     });
-
             $.ajax({
-                error: (jqXHR, status, reason) => { reject(reason); },
-                data: { load: btoa(JSON.stringify($.extend(
-                    true,
-                    self.paymentModel,
-                    { donation: { braintree: payload } }
-                ))) },
+                error: (jqXHR, status, reason) => {
+                    self.logger.warn('braintree:post:/ donate/braintree failed', jqXHR, status, reason);
+                    reject(reason);
+                },
+                data: { load: load },
                 dataType: 'json',
                 headers: {
                     'X-Request-Playload': payload.nonce
                 },
                 method: 'post',
-                success: (token) => { resolve(token); },
+                success: (token) => {
+                    self.logger.debug('braintree:post:/ donate/braintree', token);
+                    resolve(token);
+                },
                 url: self.appConfig.getPhpUrl('donate/braintree')
             });
         });
     }
 
     /**
-     * [paymentWithMobilpayInit description]
+     * Initialize Mobilpay payment (obtain token)
      * @method paymentWithMobilpayInit
-     * @return {Promise}                [description]
+     * @return {Promise}
      */
     paymentWithMobilpayInit() {
         let self = this;
-        this.logger.debug('request:/ donate/mobilpay-token');
+        let load = btoa(JSON.stringify(self.paymentModel));
+        // debug info
+        this.logger.debug('request:/ donate/mobilpay-token', { load: load });
+        // store load in case of fail
+        Lockr.set('mobilpay-load', load);
+        // obtain mobilpay tokens by Promise
         return new Promise((resolve, reject) => {
-            let load = btoa(JSON.stringify(self.paymentModel));
-            // debug info
-            self.logger.debug('POST /donate/mobilpay-token', { load: load });
-            // store load in case of fail
-            Lockr.set('mobilpay-load', load);
-
             // this.http.fetch('donate/mobilpay-token', {
             //     method: 'post',
             //     body: json({ load: load })
@@ -318,10 +337,11 @@ export class Component extends ViewModelAbstract {
             //             reject(data);
             //         }
             //     });
-
-            // obtain mobilpay tokens
             $.ajax({
-                error: (jqXHR, status, reason) => { reject(reason); },
+                error: (jqXHR, status, reason) => {
+                    self.logger.warn('response:/ donate/mobilpay-token', jqXHR, status, reason);
+                    reject(reason);
+                },
                 data: { load: load },
                 dataType: 'json',
                 method: 'post',
@@ -344,14 +364,13 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * [paymentWithBraintreeForm description]
+     * Perform Mobilpay payment (redirect to mobilpay payment gateway)
      * @method paymentWithBraintreeForm
-     * @param  {string}                 token [description]
-     * @return {[type]}                       [description]
+     * @param  {String}   token
+     * @return {Promise}         NOTE: This is a face Promise, since we're redirecting to mobilpay.ro
      */
     paymentWithMobilpayForm(token) {
         return new Promise((resolve, reject) => {
-            // let checkout = null;
             $('#mobilpay-modal')
                 .modal('show')
                 .on('shown.bs.modal', () => {
@@ -361,9 +380,18 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * [proceedToPayment description]
+     * Initialize Wire payment
+     * @method paymentWithWire
+     * @return {[type]}        [description]
+     */
+    paymentWithWireInit() {
+        // TODO: Implement payment with wire
+    }
+
+    /**
+     * Initiate payment process depending on payment type
      * @method proceedToPayment
-     * @return {[type]}         [description]
+     * @return {Promise}         [description]
      */
     proceedToPayment() {
         let promise = null;
@@ -372,23 +400,31 @@ export class Component extends ViewModelAbstract {
             this.logger.debug('Starting payment with:', this.paymentModel);
             switch (this.paymentModel.donation.method) {
                 case 'mobilpay':
+                    // initialize mobil pay payment
                     promise = this.paymentWithMobilpayInit()
-                        .catch((reason) => { self.logger.warn(reason); })
+                        .catch((reason) => {
+                            // TODO: Show error to user
+                            self.logger.warn(reason);
+                        })
                         .then((done) => {
-                            self.logger.debug(done);
+                            // there is not 'then' function here since we should be redirected to mobilpay.ro for this option
                         });
                     break;
                 case 'braintree':
                     promise = this.paymentWithBraintreeInit()
-                        .catch((reason) => { self.logger.warn(reason); })
+                        .catch((reason) => {
+                            // TODO: Show error to user
+                            self.logger.warn(reason);
+                        })
                         .then((done) => {
+                            // hide payment form and redirect to diploma download (thank you) page
                             $('#braintree-modal').modal('hide');
                             $('iframe').remove();
                             window.location = `/#/diploma/${done.id}/${done.t}`;
                         });
                     break;
                 case 'wire':
-                    promise = this.paymentWithWire();
+                    promise = this.paymentWithWireInit();
                     break;
                 default:
                     this.logger.warn('Wrong payment method selected');

@@ -8,6 +8,7 @@ use Ppr\Mvc\Model;
 
 use Braintree;
 use MarkWilson\XmlToJson\XmlToJsonConverter;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class Donate {
@@ -203,10 +204,6 @@ class Donate {
 
             // save donation
             $id = $this->saveDonation($app, $load, $transaction);
-            $app->getLogger()->info(sprintf(
-                'Braintree sale saved donation `%s`',
-                $id
-            ));
 
             // return sale response
             return Response::response(array(
@@ -357,44 +354,46 @@ class Donate {
         Braintree\Configuration::privateKey($app->getConfig('payment.braintree.privateKey'));
     }
 
-    public function saveDonation(Application $app, $load, $transaction) {
+    /**
+     * @param Application $app
+     * @param $load
+     * @param $transaction
+     * @return mixed
+     * @throws \Exception
+     */
+    private function saveDonation(Application $app, $load, $transaction) {
+        $donator = new Model\Donator([
+            'name' => $load->name,
+            'email' => $load->email,
+            'company' => $load->company,
+            'phone' => $load->phone,
+            'location' => 'Romania',
+            'locationgps' => '0;0',
+            'companyvat' => $load->vat,
+        ]);
 
-        try {
-            $donator = new Model\Donator([
-                'name' => $load->name,
-                'email' => $load->email,
-                'company' => $load->company,
-                'phone' => $load->phone,
-                'location' => 'Romania',
-                'locationgps' => '0;0',
-                'companyvat' => $load->vat,
-            ]);
+        $app->getEm()->persist($donator);
+        $app->getEm()->flush();
 
-            $app->getEm()->persist($donator);
-            $app->getEm()->flush();
+        $donation = new Model\Donation([
+            'donation' => ($load->donation->method=== 'braintree') ? $load->donation->totalEur : $load->donation->total,
+            'currency' => ($load->donation->method=== 'braintree') ? 'EUR' : 'RON',
+            'exchange' => ($load->donation->method=== 'braintree') ? $load->donation->exchange : '',
+            'trees' => 10, //$load->payment->trees,
+            'started' => time(),
+            'transactions' => json_encode($transaction),
+            'donatorid' => $donator,
+        ]);
 
-            $donation = new Model\Donation([
-                'donation' => ($load->donation->method=== 'braintree') ? $load->donation->totalEur : $load->donation->total,
-                'currency' => ($load->donation->method=== 'braintree') ? 'EUR' : 'RON',
-                'exchange' => ($load->donation->method=== 'braintree') ? $load->donation->exchange : '',
-                'trees' => 10, //$load->payment->trees,
-                'started' => time(),
-                'transactions' => json_encode($transaction),
-                'donatorid' => $donator,
-            ]);
+        $app->getEm()->persist($donation);
+        $app->getEm()->flush();
 
-            $app->getEm()->persist($donation);
-            $app->getEm()->flush();
+        $app->getLogger()->info(sprintf(
+            'Braintree sale saved donation `%s`',
+            $donation->getId()
+        ));
 
-            return $donation->getId();
-        } catch (\Exception $e) {
-            $app->getLogger()->err(sprintf(
-                "Donation save failed: '%s', trace: \n%s",
-                $e->getMessage(),
-                $e->getTraceAsString()
-            ));
-        }
-        return 0;
+        return $donation->getId();
     }
 
 }
