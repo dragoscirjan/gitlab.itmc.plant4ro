@@ -17,7 +17,7 @@ export class AppConfig {
     ENV_STAGING = 'stg';
     ENV_PRODUCT = 'prd';
 
-    env = this.ENV_DEVELOP;
+    env = this.ENV_TESTING;
 
     constructor(http) {
         this.initDev();
