@@ -3,6 +3,10 @@
 # npm install
 # jspm install
 
+cd services
+wget -q https://getcomposer.org/installer -O - | php
+cd ..
+
 ENV='development'
 [ -f services/.env ] && ENV=`cat services/.env`
 
