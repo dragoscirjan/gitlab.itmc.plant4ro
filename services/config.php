@@ -63,8 +63,8 @@ return array(
     'testing' => [
         'payment' => [
             'mobilpay' => [
-                'confirmUrl' => 'https://20150315.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-                'returnUrl' => 'https://20150315.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
+                'confirmUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
+                'returnUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
             ]
         ],
         'db' => array(
