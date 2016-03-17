@@ -40,10 +40,18 @@ export class AppConfig {
 
     /**
      * [initStg description]
+     * @method initTst
+     */
+    initTst() {
+        this.phpAppBase = '//test.planteazapentruromania.ro/services/index.php/';
+    }
+
+    /**
+     * [initStg description]
      * @method initStg
      */
     initStg() {
-        this.phpAppBase = '//20160315.planteazapentruromania.ro/services/index.php/';
+        this.phpAppBase = '//stage.planteazapentruromania.ro/services/index.php/';
     }
 
     /**
