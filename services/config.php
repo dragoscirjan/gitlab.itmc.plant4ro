@@ -68,6 +68,13 @@ return array(
                 'returnUrl' => 'https://20150315.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
             ]
         ],
+        'db' => array(
+            'dbname' => 'donations',
+            'user' => 'plant4ro',
+            'password' => 'plant4roma',
+            'host' => 'plant4ro_test_do',
+            'driver' => 'pdo_mysql',
+        ),
     ],
     'staging' => [
         'payment' => [
@@ -77,6 +84,13 @@ return array(
                 'returnUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
             ]
         ],
+        'db' => array(
+            'dbname' => 'donations',
+            'user' => 'plant4ro',
+            'password' => 'plant4roma',
+            'host' => 'plant4ro_stage_do',
+            'driver' => 'pdo_mysql',
+        ),
     ],
     'production' => [
         'payment' => [

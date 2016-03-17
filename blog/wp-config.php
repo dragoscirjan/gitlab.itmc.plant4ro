@@ -18,18 +18,37 @@
  * @package WordPress
  */
 
-// ** MySQL settings - You can get this info from your web host ** //
-/** The name of the database for WordPress */
-define('DB_NAME', 'wordpress');
+if ($_SERVER['SERVER_NAME'] === 'planteazapentruromania.local') {
 
-/** MySQL database username */
-define('DB_USER', 'root');
+	// ** MySQL settings - You can get this info from your web host ** //
+	/** The name of the database for WordPress */
+	define('DB_NAME', 'wordpress');
 
-/** MySQL database password */
-define('DB_PASSWORD', 'weltest');
+	/** MySQL database username */
+	define('DB_USER', 'root');
 
-/** MySQL hostname */
-define('DB_HOST', 'localhost');
+	/** MySQL database password */
+	define('DB_PASSWORD', 'weltest');
+
+	/** MySQL hostname */
+	define('DB_HOST', 'localhost');
+
+} else {
+
+	// ** MySQL settings - You can get this info from your web host ** //
+	/** The name of the database for WordPress */
+	define('DB_NAME', 'plant4ro_' . str_replace('planteazapentruromania.ro', '', $_SERVER['SERVER_NAME']) . '_wp' );
+
+	/** MySQL database username */
+	define('DB_USER', 'plant4ro');
+
+	/** MySQL database password */
+	define('DB_PASSWORD', 'plant4roma');
+
+	/** MySQL hostname */
+	define('DB_HOST', 'localhost');
+
+}
 
 /** Database Charset to use in creating database tables. */
 define('DB_CHARSET', 'utf8mb4');
