@@ -18,8 +18,8 @@
  * @package WordPress
  */
 
- define('WP_HOME', $_SERVER['SERVER_NAME']);
- define('WP_SITEURL', $_SERVER['SERVER_NAME']);
+ define('WP_HOME', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME']);
+ define('WP_SITEURL', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME']);
 
 if ($_SERVER['SERVER_NAME'] === 'planteazapentruromania.local') {
 
