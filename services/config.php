@@ -52,7 +52,7 @@ return array(
             'mobilpay' => [
                 'paymentUrl' => 'http://sandboxsecure.mobilpay.ro',
 //                'paymentUrl' => 'http://sandboxsecure.mobilpay.ro/card3',
-                'certPath' => __DIR__ . '/cert/sandbox.UQUX-6E8G-G8TG-B88U-N9UGprivate.cer',
+                'certPath' => __DIR__ . '/cert/sandbox.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
                 'keyPath' => __DIR__ . '/cert/sandbox.UQUX-6E8G-G8TG-B88U-N9UGprivate.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
                 'confirmUrl' => 'http://planteazapentruromania.local/services/index.php/donate/mobilpay/%s/confirm',
