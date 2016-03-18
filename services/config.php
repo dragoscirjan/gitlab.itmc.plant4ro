@@ -2,6 +2,46 @@
 
 return array(
     'development' => [
+        'db' => array(
+            'dbname' => 'donations',
+            'user' => 'root',
+            'password' => 'weltest',
+            'host' => 'localhost',
+            'driver' => 'pdo_mysql',
+        ),
+        'contact' => [
+            'mail' => [
+                'transport' => '\Zend\Mail\Transport\Smtp',
+                'options' => [
+                    'name' => 'mail.itmediaconnect.ro',
+                    'host' => 'mail.itmediaconnect.ro',
+                    'port' => 587,
+                    'connection_class' => 'plain',
+                    'connection_config' => [
+                        'username' => 'dr@itmcd.ro',
+                        'password' => 'strumph##',
+                        'ssl' => 'tls',
+                    ],
+                ],
+            ],
+            'from' => ['noreply@itmcd.ro', 'Planteaza pentru Romania Contact'],
+            'to' => ['dragos.cirjan+debug-ppr@itmediaconnect.ro', 'Dragos Cirjan']
+        ],
+        'js' => [
+            'servicesBase' => '//planteazapentruromania.local/services/index.php/'
+        ],
+        'logger' => [
+            ['stream', null, ['stream' => __DIR__ . '/.log']],
+//            ['mail', null, ['dragos.cirjan+debug-ppr@itmediaconnect.ro', [
+//                'name'              => 'localhost.localdomain',
+//                'host'              => '127.0.0.1',
+//                'connection_class'  => 'login',
+//                'connection_config' => array(
+//                    'username' => 'user',
+//                    'password' => 'pass',
+//                ),
+//            ]]]
+        ],
         'payment' => [
             'braintree' => [
                 'environment' =>'sandbox',
@@ -22,51 +62,8 @@ return array(
                 'dragos.cirjan+ppr@itmediaconnect.ro'
             ]
         ],
-        'db' => array(
-            'dbname' => 'donations',
-            'user' => 'root',
-            'password' => 'weltest',
-            'host' => 'localhost',
-            'driver' => 'pdo_mysql',
-        ),
-        'logger' => [
-            ['stream', null, ['stream' => __DIR__ . '/.log']],
-//            ['mail', null, ['dragos.cirjan+debug-ppr@itmediaconnect.ro', [
-//                'name'              => 'localhost.localdomain',
-//                'host'              => '127.0.0.1',
-//                'connection_class'  => 'login',
-//                'connection_config' => array(
-//                    'username' => 'user',
-//                    'password' => 'pass',
-//                ),
-//            ]]]
-        ],
-        'contact' => [
-            'mail' => [
-                'transport' => '\Zend\Mail\Transport\Smtp',
-                'options' => [
-                    'name' => 'mail.itmediaconnect.ro',
-                    'host' => 'mail.itmediaconnect.ro',
-                    'port' => 587,
-                    'connection_class' => 'plain',
-                    'connection_config' => [
-                        'username' => 'dr@itmcd.ro',
-                        'password' => 'strumph##',
-                        'ssl' => 'tls',
-                    ],
-                ],
-            ],
-            'from' => ['noreply@itmcd.ro', 'Planteaza pentru Romania Contact'],
-            'to' => ['dragos.cirjan+debug-ppr@itmediaconnect.ro', 'Dragos Cirjan']
-        ],
     ],
     'testing' => [
-        'payment' => [
-            'mobilpay' => [
-                'confirmUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-                'returnUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
-            ]
-        ],
         'db' => array(
             'dbname' => 'plant4ro_test_do',
             'user' => 'plant4ro',
@@ -74,15 +71,17 @@ return array(
             'host' => 'localhost',
             'driver' => 'pdo_mysql',
         ),
-    ],
-    'staging' => [
+        'js' => [
+            'servicesBase' => '//test.planteazapentruromania.ro/services/index.php/'
+        ],
         'payment' => [
             'mobilpay' => [
-                'paymentUrl' => 'http://secure.mobilpay.ro',
-                'confirmUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-                'returnUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
+                'confirmUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
+                'returnUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
             ]
         ],
+    ],
+    'staging' => [
         'db' => array(
             'dbname' => 'plant4ro_stage_do',
             'user' => 'plant4ro',
@@ -90,8 +89,21 @@ return array(
             'host' => 'localhost',
             'driver' => 'pdo_mysql',
         ),
+        'js' => [
+            'servicesBase' => '//stage.planteazapentruromania.ro/services/index.php/'
+        ],
+        'payment' => [
+            'mobilpay' => [
+                'paymentUrl' => 'http://secure.mobilpay.ro',
+                'confirmUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
+                'returnUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
+            ]
+        ],
     ],
     'production' => [
+        'js' => [
+            'servicesBase' => '//planteazapentruromania.ro/services/index.php/'
+        ],
         'payment' => [
             'mobilpay' => [
                 'confirmUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
