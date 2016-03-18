@@ -258,6 +258,8 @@ class Donate {
             }
         }
 
+        die('HERE');
+
         // TODO: Could not create a successful payment for Mobilpay yet.
         if($request->get('env_key') && $request->get('data')) {
             try {

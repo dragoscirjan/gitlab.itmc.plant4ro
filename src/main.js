@@ -5,9 +5,9 @@ export function configure(aurelia) {
         .standardConfiguration()
         .developmentLogging()
 
-        .plugin('aurelia-validation'/*, (config) => {
-            config.useLocale('ro-RO');//.useViewStrategy(ValidateCustomAttributeViewStrategy.TWBootstrapAppendToInput);
-        }*/)
+        // .plugin('aurelia-validation'/*, (config) => {
+        //     config.useLocale('ro-RO');//.useViewStrategy(ValidateCustomAttributeViewStrategy.TWBootstrapAppendToInput);
+        // }*/)
         .plugin('google-recaptcha')
 
         ;

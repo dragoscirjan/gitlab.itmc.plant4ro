@@ -3,6 +3,13 @@
 # npm install
 # jspm install
 
+# cd services
+# [ -f composer.phar ] && ./composer.phar selfupdate
+# [ -f composer.phar ] || wget -q https://getcomposer.org/installer -O - | php
+# [ -d vendor ] && rm -rf vendor
+# ./composer.phar install
+# cd ..
+
 ENV='development'
 [ -f services/.env ] && ENV=`cat services/.env`
 

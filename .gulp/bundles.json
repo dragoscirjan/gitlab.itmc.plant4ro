@@ -27,7 +27,10 @@
         "aurelia-history-browser",
         "aurelia-logging-console",
         "bootstrap",
-        "bootstrap/css/bootstrap.css!text"
+        "bootstrap/css/bootstrap.css!text",
+
+        "google-recaptcha",
+        "parsleyjs"
       ],
       "options": {
         "inject": true,
