@@ -15,12 +15,13 @@ ENV='development'
 
 case $ENV in
     'development') URL='http://planteazapentruromania.local/services/index.php/config-js';;
-    'testing') URL='http://test.planteazapentruromania.ro/services/index.php/config-js';;
-    'staging') URL='http://stage.planteazapentruromania.ro/services/index.php/config-js';;
-    'production') URL='http://planteazapentruromania.ro/services/index.php/config-js';;
+    'testing') URL='https://test.planteazapentruromania.ro/services/index.php/config-js';;
+    'staging') URL='https://stage.planteazapentruromania.ro/services/index.php/config-js';;
+    'production') URL='https://planteazapentruromania.ro/services/index.php/config-js';;
 esac
 
-wget -q $URL -O src/lib/app/config.js
+echo wget -q $URL -O src/lib/app/config.js
+wget --no-check-certificate -q $URL -O src/lib/app/config.js
 
 case $ENV in
     'development') gulp build;;

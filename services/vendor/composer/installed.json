@@ -845,43 +845,6 @@
         ]
     },
     {
-        "name": "markwilson/xml-to-json",
-        "version": "0.1.4",
-        "version_normalized": "0.1.4.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/markwilson/xml-to-json.git",
-            "reference": "5c3b18b5142cfc5332b521ce7f16bafad8545437"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/markwilson/xml-to-json/zipball/5c3b18b5142cfc5332b521ce7f16bafad8545437",
-            "reference": "5c3b18b5142cfc5332b521ce7f16bafad8545437",
-            "shasum": ""
-        },
-        "require-dev": {
-            "phpunit/phpunit": "~4.0"
-        },
-        "time": "2015-04-08 07:52:43",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "MarkWilson": "./src"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Mark Wilson",
-                "email": "mark@89allport.co.uk"
-            }
-        ]
-    },
-    {
         "name": "psr/log",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
@@ -2218,6 +2181,43 @@
         "keywords": [
             "mail",
             "zf2"
+        ]
+    },
+    {
+        "name": "markwilson/xml-to-json",
+        "version": "0.1.4",
+        "version_normalized": "0.1.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/markwilson/xml-to-json.git",
+            "reference": "5c3b18b5142cfc5332b521ce7f16bafad8545437"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/markwilson/xml-to-json/zipball/5c3b18b5142cfc5332b521ce7f16bafad8545437",
+            "reference": "5c3b18b5142cfc5332b521ce7f16bafad8545437",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.0"
+        },
+        "time": "2015-04-08 07:52:43",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "MarkWilson": "./src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mark Wilson",
+                "email": "mark@89allport.co.uk"
+            }
         ]
     }
 ]
