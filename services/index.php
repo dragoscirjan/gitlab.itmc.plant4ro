@@ -19,6 +19,7 @@ $app->post('/donate/braintree', '\Ppr\Mvc\Controller\Donate::braintree');
 
 $app->post('/donate/mobilpay-token', '\Ppr\Mvc\Controller\Donate::mobilpayClientToken');
 $app->get('/donate/mobilpay/{orderId}/{status}', '\Ppr\Mvc\Controller\Donate::mobilpay');
+$app->post('/donate/mobilpay/{orderId}/{status}', '\Ppr\Mvc\Controller\Donate::mobilpay');
 
 $app->get('/config-js', '\Ppr\Mvc\Controller\Config::configJs');
 
