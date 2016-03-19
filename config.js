@@ -43,7 +43,7 @@ System.config({
     "fetch": "github:github/fetch@0.10.1",
     "font-awesome": "npm:font-awesome@4.5.0",
     "google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@master",
-    "guillaumepotier/Parsley.js": "github:guillaumepotier/Parsley.js@2.3.4",
+    "jquery": "github:components/jquery@2.2.0",
     "jspm/nodelibs-crypto": "github:jspm/nodelibs-crypto@0.1.0",
     "parsleyjs": "github:guillaumepotier/Parsley.js@2.3.4",
     "text": "github:systemjs/plugin-text@0.0.3",
@@ -54,6 +54,9 @@ System.config({
       "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.1.1",
       "aurelia-metadata": "npm:aurelia-metadata@1.0.0-beta.1.1.4",
       "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.1.1"
+    },
+    "github:guillaumepotier/Parsley.js@2.3.4": {
+      "jquery": "github:components/jquery@2.2.0"
     },
     "github:itmcdev/aurelia-google-recaptcha@master": {
       "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.1.3"

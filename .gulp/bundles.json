@@ -30,7 +30,8 @@
         "bootstrap/css/bootstrap.css!text",
 
         "google-recaptcha",
-        "parsleyjs"
+        "github:components/jquery@2.2.0",
+        "github:guillaumepotier/Parsley.js@2.3.4"
       ],
       "options": {
         "inject": true,
