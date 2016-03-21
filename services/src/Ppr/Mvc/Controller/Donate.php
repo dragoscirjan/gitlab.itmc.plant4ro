@@ -271,8 +271,6 @@ class Donate {
                     return $app->redirect('/#/planteaza/plata-esuata');
                 }
 
-                var_dump($hash->orderId); die();
-
                 switch($hash->objPmNotify->action) {
                     // if payment is successful
                     case 'confirmed':
@@ -292,7 +290,7 @@ class Donate {
                         return $app->redirect(sprintf(
                             '/#/diploma/%s/%s',
                             $id,
-                            $hash->invoice->orderId
+                            $hash->orderId
                         ));
                     default:
                         // log error
