@@ -240,7 +240,7 @@ class Donate {
             try {
                 // obtain mobilpay session info
                 $mobilpay = $app->getEm()->createQuery(sprintf(
-                    "SELECT m FROM \Ppr\Mvc\Model\Mobilpay m WHERE m.uuid = '%s' ORDER BY md.id DESC",
+                    "SELECT m FROM \Ppr\Mvc\Model\Mobilpay m WHERE m.uuid = '%s' ORDER BY m.id DESC",
                     $request->get('orderId')
                 ))->execute();
 
