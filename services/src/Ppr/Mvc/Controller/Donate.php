@@ -274,6 +274,7 @@ class Donate {
                     case 'canceled':
                     case 'credit':
 //                        var_dump($hash);
+                        var_dump($mobilpay[count($mobilpay) - 1]->getHash());
                         die(var_dump($app->decode($mobilpay[count($mobilpay) - 1]->getHash())));
 
                         // redirect
