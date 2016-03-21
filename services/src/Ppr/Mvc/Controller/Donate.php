@@ -8,7 +8,7 @@ use Ppr\Mvc\Model;
 
 use Braintree;
 use MarkWilson\XmlToJson\XmlToJsonConverter;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Mobilpay_Payment_Request_Abstract as MPRA;
 use Symfony\Component\HttpFoundation\Request;
 
 class Donate {
@@ -260,7 +260,7 @@ class Donate {
 
         // Default error values
         $errorCode 		= 0;
-        $errorType		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_NONE;
+        $errorType		= MPRA::CONFIRM_ERROR_TYPE_NONE;
         $errorMessage	= '';
 
         // check whether the HTTP method is POST
@@ -269,7 +269,7 @@ class Donate {
             if($request->get('env_key') && $request->get('data')) {
                 try {
                     // try to build the resoponse object
-                    $objPmReq = \Mobilpay_Payment_Request_Abstract::factoryFromEncrypted(
+                    $objPmReq = MPRA::factoryFromEncrypted(
                         $request->get('env_key'),
                         $request->get('data'),
                         $app->getConfig('payment.mobilpay.keyPath')
@@ -303,8 +303,8 @@ class Donate {
                                 break;
                             default:
                                 // in case payment parameters are invalid
-                                $errorType		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
-                                $errorCode 		= Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_ACTION;
+                                $errorType		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
+                                $errorCode 		= MPRA::ERROR_CONFIRM_INVALID_ACTION;
                                 $errorMessage 	= 'mobilpay_refference_action paramaters is invalid';
                         }
                     } else {
@@ -313,20 +313,20 @@ class Donate {
                     }
                 } catch(Exception $e) {
                     // in case response object fails ...
-                    $errorType 		= \Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_TEMPORARY;
+                    $errorType 		= MPRA::CONFIRM_ERROR_TYPE_TEMPORARY;
                     $errorCode		= $e->getCode();
                     $errorMessage 	= $e->getMessage();
                 }
             } else {
                 // in case `env_key` or `data` are not set
-                $errorType = \Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
-                $errorCode = \Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_POST_PARAMETERS;
+                $errorType = MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
+                $errorCode = MPRA::ERROR_CONFIRM_INVALID_POST_PARAMETERS;
                 $errorMessage = 'mobilpay.ro posted invalid parameters';
             }
         } else {
             // in case POST method not used
-            $errorType = \Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
-            $errorCode = \Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_POST_METHOD;
+            $errorType = MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
+            $errorCode = MPRA::ERROR_CONFIRM_INVALID_POST_METHOD;
             $errorMessage = 'invalid request metod for payment confirmation';
         }
 
@@ -409,9 +409,9 @@ class Donate {
     }
 
     private function test() {
-        $errorCode 		= 0;
-        $errorType		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_NONE;
-        $errorMessage	= '';
+        $errorCode = 0;
+        $errorType = MPRA::CONFIRM_ERROR_TYPE_NONE;
+        $errorMessage = '';
 
         if (strcasecmp($_SERVER['REQUEST_METHOD'], 'post') == 0)
         {
@@ -423,7 +423,7 @@ class Donate {
 
                 try
                 {
-                    $objPmReq = Mobilpay_Payment_Request_Abstract::factoryFromEncrypted($_POST['env_key'], $_POST['data'], $privateKeyFilePath);
+                    $objPmReq = MPRA::factoryFromEncrypted($_POST['env_key'], $_POST['data'], $privateKeyFilePath);
                     #uncomment the line below in order to see the content of the request
                     //print_r($objPmReq);
                     $errorCode = $objPmReq->objPmNotify->errorCode;
@@ -464,8 +464,8 @@ class Donate {
                                 $errorMessage = $objPmReq->objPmNotify->errorMessage;
                                 break;
                             default:
-                                $errorType		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
-                                $errorCode 		= Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_ACTION;
+                                $errorType		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
+                                $errorCode 		= MPRA::ERROR_CONFIRM_INVALID_ACTION;
                                 $errorMessage 	= 'mobilpay_refference_action paramaters is invalid';
                                 break;
                         }
@@ -477,22 +477,22 @@ class Donate {
                 }
                 catch(Exception $e)
                 {
-                    $errorType 		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_TEMPORARY;
+                    $errorType 		= MPRA::CONFIRM_ERROR_TYPE_TEMPORARY;
                     $errorCode		= $e->getCode();
                     $errorMessage 	= $e->getMessage();
                 }
             }
             else
             {
-                $errorType 		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
-                $errorCode		= Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_POST_PARAMETERS;
+                $errorType 		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
+                $errorCode		= MPRA::ERROR_CONFIRM_INVALID_POST_PARAMETERS;
                 $errorMessage 	= 'mobilpay.ro posted invalid parameters';
             }
         }
         else
         {
-            $errorType 		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
-            $errorCode		= Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_POST_METHOD;
+            $errorType 		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
+            $errorCode		= MPRA::ERROR_CONFIRM_INVALID_POST_METHOD;
             $errorMessage 	= 'invalid request metod for payment confirmation';
         }
 
