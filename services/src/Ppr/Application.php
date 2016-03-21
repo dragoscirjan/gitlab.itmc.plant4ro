@@ -159,4 +159,27 @@ class Application extends \Silex\Application {
         return $this['logger'];
     }
 
+    /**
+     * @param $object mixed
+     * @return string
+     * @throws \Exception
+     */
+    public function encode($object) {
+        if ($this->getEnv() == self::ENV_DEVELOP || $this->getEnv() == self::ENV_TESTING) {
+            return json_encode($object);
+        }
+        return base64_encode(json_encode($object));
+    }
+    /**
+     * @param $strign string
+     * @return mixed|string|void
+     * @throws \Exception
+     */
+    public function decode($string) {
+        if ($this->getEnv() == self::ENV_DEVELOP || $this->getEnv() == self::ENV_TESTING) {
+            return json_decode($string);
+        }
+        return json_decode(base64_decode($string));
+    }
+
 }

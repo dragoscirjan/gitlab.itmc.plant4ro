@@ -258,88 +258,97 @@ class Donate {
             }
         }
 
-        // TODO: Could not create a successful payment for Mobilpay yet.
-        if($request->get('env_key') && $request->get('data')) {
-            try {
-                $objPmReq = \Mobilpay_Payment_Request_Abstract::factoryFromEncrypted(
-                    $request->get('env_key'),
-                    $request->get('data'),
-                    $app->getConfig('payment.mobilpay.keyPath')
-                );
-                $errorCode = $objPmReq->objPmNotify->errorCode;
+        // Default error values
+        $errorCode 		= 0;
+        $errorType		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_NONE;
+        $errorMessage	= '';
 
-                echo json_encode($objPmReq->objPmNotify); 
-                die(var_dump($objPmReq->objPmNotify));
+        // check whether the HTTP method is POST
+        if (strtolower($request->getMethod()) == 'post') {
+            // check if `env_key` and `data` are set
+            if($request->get('env_key') && $request->get('data')) {
+                try {
+                    // try to build the resoponse object
+                    $objPmReq = \Mobilpay_Payment_Request_Abstract::factoryFromEncrypted(
+                        $request->get('env_key'),
+                        $request->get('data'),
+                        $app->getConfig('payment.mobilpay.keyPath')
+                    );
 
-                if ($errorCode == "0") {
-                    switch($objPmReq->objPmNotify->action) {
-                        case 'confirmed':
-                            #cand action este confirmed avem certitudinea ca banii au plecat din contul posesorului de card si facem update al starii comenzii si livrarea produsului
-                            //update DB, SET status = "confirmed/captured"
-                            $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                            break;
-                        case 'confirmed_pending':
-                            #cand action este confirmed_pending inseamna ca tranzactia este in curs de verificare antifrauda. Nu facem livrare/expediere. In urma trecerii de aceasta verificare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
-                            //update DB, SET status = "pending"
-                            $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                            break;
-                        case 'paid_pending':
-                            #cand action este paid_pending inseamna ca tranzactia este in curs de verificare. Nu facem livrare/expediere. In urma trecerii de aceasta verificare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
-                            //update DB, SET status = "pending"
-                            $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                            break;
-                        case 'paid':
-                            #cand action este paid inseamna ca tranzactia este in curs de procesare. Nu facem livrare/expediere. In urma trecerii de aceasta procesare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
-                            //update DB, SET status = "open/preauthorized"
-                            $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                            break;
-                        case 'canceled':
-                            #cand action este canceled inseamna ca tranzactia este anulata. Nu facem livrare/expediere.
-                            //update DB, SET status = "canceled"
-                            $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                            break;
-                        case 'credit':
-                            #cand action este credit inseamna ca banii sunt returnati posesorului de card. Daca s-a facut deja livrare, aceasta trebuie oprita sau facut un reverse.
-                            //update DB, SET status = "refunded"
-                            $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                            break;
-                        default:
-                            $message = sprintf(
-                                "Could not complete payment with mobilpay (err # %s / %s) :: mobilpay_refference_action paramaters is invalid",
-                                \Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT,
-                                \Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_ACTION
-                            );
-                            $app->getLogger()->err($message);
-                            return Response::response500(array( 'error' => $message ));
-                            break;
+                    $log = new Model\MobilpayLog([
+                        'uuid' => $request->get('orderId'),
+                        'hash' => $app->encode($objPmReq),
+                        'logged' => time(),
+                    ]);
+
+                    $app->getEm()->persist($log);
+                    $app->getEm()->flush();
+
+                    if ($objPmReq->objPmNotify->errorCode == 0) {
+                        switch($objPmReq->objPmNotify->action) {
+                            case 'confirmed':
+                            case 'confirmed_pending':
+                            case 'paid_pending':
+                            case 'paid':
+                            case 'canceled':
+                            case 'credit':
+                                return Response::response(
+                                    sprintf(
+                                        '<?xml version="1.0" encoding="utf-8"?><crc>%s</crc>',
+                                        $objPmReq->objPmNotify->errorMessage
+                                    ),
+                                    Response::HTTP_OK,
+                                    ['Content-type' => 'application/xml']
+                                );
+                                break;
+                            default:
+                                // in case payment parameters are invalid
+                                $errorType		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
+                                $errorCode 		= Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_ACTION;
+                                $errorMessage 	= 'mobilpay_refference_action paramaters is invalid';
+                        }
+                    } else {
+                        // in case payment was rejected
+                        $errorMessage = $objPmReq->objPmNotify->errorMessage;
                     }
-                } else {
-                    //update DB, SET status = "rejected"
-                    $errorMessage = $objPmReq->objPmNotify->errorMessage;
+                } catch(Exception $e) {
+                    // in case response object fails ...
+                    $errorType 		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_TEMPORARY;
+                    $errorCode		= $e->getCode();
+                    $errorMessage 	= $e->getMessage();
                 }
-            } catch(Exception $e) {
-                $message = sprintf(
-                    "Could not complete payment with mobilpay (err # %s).\n%s\n%s",
-                    \Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_TEMPORARY,
-                    $e->getMessage(),
-                    $e->getTraceAsString()
-                );
-                $app->getLogger()->err($message);
-                return Response::response500(array(
-                    'error' => $message,
-                    'message' => $e->getMessage(),
-                    'trace' => $e->getTraceAsString(),
-                ));
+            } else {
+                // in case `env_key` or `data` are not set
+                $errorType = \Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
+                $errorCode = \Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_POST_PARAMETERS;
+                $errorMessage = 'mobilpay.ro posted invalid parameters';
             }
         } else {
-            $message = sprintf(
-                "Invalid confirm parameters (err #%s / #) :: mobilpay.ro posted invalid parameters",
-                \Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT,
-                \Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_POST_PARAMETERS
-            );
-            $app->getLogger()->err($message);
-            return Response::response500(array( 'error' => $message ));
+            // in case POST method not used
+            $errorType = \Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
+            $errorCode = \Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_POST_METHOD;
+            $errorMessage = 'invalid request metod for payment confirmation';
         }
+
+        $message = sprintf(
+            "Error on mobiplay confirm: %s, type: %s, code: %s, \nlog: %s",,
+            $errorMessage,
+            $errorType,
+            $errorCode,
+            json_encode(isset($objPmReq->objPmNotify) ? $objPmReq->objPmNotify : '')
+        );
+        $app->getLogger()->err($message);
+
+        return Response::response(
+            sprintf(
+                '<?xml version="1.0" encoding="utf-8"?><crc error_type="%s" error_code="%s">%s</crc>',
+                $errorType,
+                $errorCode,
+                $errorMessage
+            ),
+            Response::HTTP_OK,
+            ['Content-type' => 'application/xml']
+        );
     }
 
     /********************************************************
@@ -397,6 +406,106 @@ class Donate {
         ));
 
         return $donation->getId();
+    }
+
+    private function test() {
+        $errorCode 		= 0;
+        $errorType		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_NONE;
+        $errorMessage	= '';
+
+        if (strcasecmp($_SERVER['REQUEST_METHOD'], 'post') == 0)
+        {
+            if(isset($_POST['env_key']) && isset($_POST['data']))
+            {
+                #calea catre cheia privata
+                #cheia privata este generata de mobilpay, accesibil in Admin -> Conturi de comerciant -> Detalii -> Setari securitate
+                $privateKeyFilePath = 'i.e: /home/certificates/private.key';
+
+                try
+                {
+                    $objPmReq = Mobilpay_Payment_Request_Abstract::factoryFromEncrypted($_POST['env_key'], $_POST['data'], $privateKeyFilePath);
+                    #uncomment the line below in order to see the content of the request
+                    //print_r($objPmReq);
+                    $errorCode = $objPmReq->objPmNotify->errorCode;
+                    // action = status only if the associated error code is zero
+                    if ($errorCode == "0") {
+                        switch($objPmReq->objPmNotify->action)
+                        {
+                            #orice action este insotit de un cod de eroare si de un mesaj de eroare. Acestea pot fi citite folosind $cod_eroare = $objPmReq->objPmNotify->errorCode; respectiv $mesaj_eroare = $objPmReq->objPmNotify->errorMessage;
+                            #pentru a identifica ID-ul comenzii pentru care primim rezultatul platii folosim $id_comanda = $objPmReq->orderId;
+                            case 'confirmed':
+                                #cand action este confirmed avem certitudinea ca banii au plecat din contul posesorului de card si facem update al starii comenzii si livrarea produsului
+                                //update DB, SET status = "confirmed/captured"
+                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+                                break;
+                            case 'confirmed_pending':
+                                #cand action este confirmed_pending inseamna ca tranzactia este in curs de verificare antifrauda. Nu facem livrare/expediere. In urma trecerii de aceasta verificare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
+                                //update DB, SET status = "pending"
+                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+                                break;
+                            case 'paid_pending':
+                                #cand action este paid_pending inseamna ca tranzactia este in curs de verificare. Nu facem livrare/expediere. In urma trecerii de aceasta verificare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
+                                //update DB, SET status = "pending"
+                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+                                break;
+                            case 'paid':
+                                #cand action este paid inseamna ca tranzactia este in curs de procesare. Nu facem livrare/expediere. In urma trecerii de aceasta procesare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
+                                //update DB, SET status = "open/preauthorized"
+                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+                                break;
+                            case 'canceled':
+                                #cand action este canceled inseamna ca tranzactia este anulata. Nu facem livrare/expediere.
+                                //update DB, SET status = "canceled"
+                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+                                break;
+                            case 'credit':
+                                #cand action este credit inseamna ca banii sunt returnati posesorului de card. Daca s-a facut deja livrare, aceasta trebuie oprita sau facut un reverse.
+                                //update DB, SET status = "refunded"
+                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+                                break;
+                            default:
+                                $errorType		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
+                                $errorCode 		= Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_ACTION;
+                                $errorMessage 	= 'mobilpay_refference_action paramaters is invalid';
+                                break;
+                        }
+                    }
+                    else {
+                        //update DB, SET status = "rejected"
+                        $errorMessage = $objPmReq->objPmNotify->errorMessage;
+                    }
+                }
+                catch(Exception $e)
+                {
+                    $errorType 		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_TEMPORARY;
+                    $errorCode		= $e->getCode();
+                    $errorMessage 	= $e->getMessage();
+                }
+            }
+            else
+            {
+                $errorType 		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
+                $errorCode		= Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_POST_PARAMETERS;
+                $errorMessage 	= 'mobilpay.ro posted invalid parameters';
+            }
+        }
+        else
+        {
+            $errorType 		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_PERMANENT;
+            $errorCode		= Mobilpay_Payment_Request_Abstract::ERROR_CONFIRM_INVALID_POST_METHOD;
+            $errorMessage 	= 'invalid request metod for payment confirmation';
+        }
+
+        header('Content-type: application/xml');
+        echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
+        if($errorCode == 0)
+        {
+            echo "<crc>{$errorMessage}</crc>";
+        }
+        else
+        {
+            echo "<crc error_type=\"{$errorType}\" error_code=\"{$errorCode}\">{$errorMessage}</crc>";
+        }
     }
 
 }
