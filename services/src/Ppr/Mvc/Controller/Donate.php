@@ -283,6 +283,7 @@ class Donate {
 //                        return $app->redirect('/#/planteaza/plata-esuata');
 //                }
             } catch (\Exception $e) {
+                die(var_dump($e));
                 // TODO: $app->redirect('/services/index.php/500', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
