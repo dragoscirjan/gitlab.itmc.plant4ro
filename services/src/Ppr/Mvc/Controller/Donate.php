@@ -97,7 +97,7 @@ class Donate {
             srand((double) microtime() * 1000000);
             $mobilpay = new Model\Mobilpay([
                 'uuid' => uniqid('PPR' . rand(), true),
-                'hash' => $request->get('load'),
+                'hash' => $app->encode($load),
                 'hashMethod' => $app->encodeMethod(),
                 'stamp' => time(),
             ]);
