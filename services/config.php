@@ -56,7 +56,7 @@ return array(
                 'keyPath' => __DIR__ . '/cert/sandbox.UQUX-6E8G-G8TG-B88U-N9UGprivate.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
                 'confirmUrl' => 'http://planteazapentruromania.local/services/index.php/donate/mobilpay/%s/confirm',
-                'returnUrl' => 'http://planteazapentruromania.local/services/index.php/donate/mobilpay/%s/fail',
+                'returnUrl' => 'http://planteazapentruromania.local/services/index.php/donate/mobilpay/%s/return',
             ],
             'debug' => [
                 'dragos.cirjan+ppr@itmediaconnect.ro'
@@ -77,7 +77,7 @@ return array(
         'payment' => [
             'mobilpay' => [
                 'confirmUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-                'returnUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
+                'returnUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
             ]
         ],
     ],
@@ -99,7 +99,7 @@ return array(
                 'keyPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
                 'confirmUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-                'returnUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
+                'returnUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
             ]
         ],
     ],
@@ -110,7 +110,7 @@ return array(
         'payment' => [
             'mobilpay' => [
                 'confirmUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-                'returnUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/fail',
+                'returnUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
             ]
         ],
     ],
