@@ -98,7 +98,8 @@ class Donate {
             $mobilpay = new Model\Mobilpay([
                 'uuid' => uniqid('PPR' . rand(), true),
                 'hash' => $request->get('load'),
-                'started' => time()
+                'hashMethod' => $app->encodeMethod(),
+                'stamp' => time(),
             ]);
             $app->getEm()->persist($mobilpay);
             $app->getEm()->flush();
