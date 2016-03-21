@@ -331,7 +331,7 @@ class Donate {
         }
 
         $message = sprintf(
-            "Error on mobiplay confirm: %s, type: %s, code: %s, \nlog: %s",,
+            "Error on mobiplay confirm: %s, type: %s, code: %s, \nlog: %s",
             $errorMessage,
             $errorType,
             $errorCode,
