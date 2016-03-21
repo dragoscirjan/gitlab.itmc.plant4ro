@@ -292,7 +292,7 @@ class Donate {
                             case 'paid':
                             case 'canceled':
                             case 'credit':
-                                return Response::response(
+                                return new Response(
                                     sprintf(
                                         '<?xml version="1.0" encoding="utf-8"?><crc>%s</crc>',
                                         $objPmReq->objPmNotify->errorMessage
@@ -339,7 +339,7 @@ class Donate {
         );
         $app->getLogger()->err($message);
 
-        return Response::response(
+        return new Response(
             sprintf(
                 '<?xml version="1.0" encoding="utf-8"?><crc error_type="%s" error_code="%s">%s</crc>',
                 $errorType,
