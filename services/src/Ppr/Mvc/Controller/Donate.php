@@ -277,7 +277,7 @@ class Donate {
 
                     $log = new Model\MobilpayLog([
                         'uuid' => $request->get('orderId'),
-                        'hash' => base64_encode(json_encode($objPmReq)),
+                        'hash' => $app->encode($objPmReq),
                         'logged' => time(),
                     ]);
 
