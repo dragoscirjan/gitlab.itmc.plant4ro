@@ -235,6 +235,10 @@ class Donate {
      */
     public function mobilpay(Application $app, Request $request) {
 
+        /**
+         * Validation Section
+         */
+
         // treat mobilpay payment fail redirect
         if ($request->get('status') !== 'confirm') {
             try {
@@ -244,50 +248,75 @@ class Donate {
                     $request->get('orderId')
                 ))->execute();
 
+                // if not session info throw error
                 if (count($mobilpay) == 0) {
                     // log error
                     $app->getLogger()->alert(sprintf(
-                        'Incercare de validare invalida pentru ordingul: %s',
+                        'Failed addepmt to validate orderId: %s',
                         $request->get('orderId')
                     ));
                     // redirect
                     return $app->redirect('/#/planteaza/plata-esuata');
                 }
 
+                // if last session is not a payment session or has error code, throw error
                 $hash = $app->decode($mobilpay[0]->getHash());
-
                 if (!isset($hash->objPmNotify) || $hash->objPmNotify->errorCode != 0) {
                     // log error
                     $app->getLogger()->alert(sprintf(
-                        'Mobilpay returned payment fail for the following hash: %s',
+                        'Mobilpay returned payment fail with the following hash: %s',
                         json_encode($hash)
                     ));
                     // redirect
                     return $app->redirect('/#/planteaza/plata-esuata');
                 }
 
+
                 switch($hash->objPmNotify->action) {
+                    // if payment is successful
                     case 'confirmed':
                     case 'confirmed_pending':
                     case 'paid_pending':
                     case 'paid':
                     case 'canceled':
                     case 'credit':
-//                        var_dump($hash);
-                        var_dump(base64_encode($mobilpay[count($mobilpay) - 1]->getHash()));
-                        die(var_dump($app->decode($mobilpay[count($mobilpay) - 1]->getHash())));
-
+                        // save donation
+                        $load = $app->decode($mobilpay[count($mobilpay) - 1]->getHash());
+                        $id = $this->saveDonation(
+                            $app,
+                            $load,
+                            $hash
+                        );
                         // redirect
-                        return $app->redirect('/#/planteaza/plata-esuata');
+                        return $app->redirect(sprintf(
+                            '/#/diploma/%s/%s',
+                            $id,
+                            $hash->invoice->orderId
+                        ));
                     default:
+                        // log error
+                        $app->getLogger()->alert(sprintf(
+                            'Mobilpay returned payment fail with the following hash: %s',
+                            json_encode($hash)
+                        ));
                         // redirect
                         return $app->redirect('/#/planteaza/plata-esuata');
                 }
             } catch (\Exception $e) {
-                die(var_dump($e));
-                // TODO: $app->redirect('/services/index.php/500', Response::HTTP_INTERNAL_SERVER_ERROR);
+                // log error
+                $app->getLogger()->alert(sprintf(
+                    "Mobilpay payment validation failed with message: `%s`, trace: \n`%s`.",
+                    $e->getMessage(),
+                    $e->getTraceAsString()
+                ));
+                // redirect
+                return $app->redirect('/#/planteaza/plata-esuata');
             }
         }
+
+        /**
+         * Confirmation Section
+         */
 
         // Default error values
         $errorCode 		= 0;
