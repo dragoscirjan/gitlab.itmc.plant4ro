@@ -271,7 +271,7 @@ class Donate {
                     return $app->redirect('/#/planteaza/plata-esuata');
                 }
 
-                var_dump($hash); die();
+                var_dump($hash->orderId); die();
 
                 switch($hash->objPmNotify->action) {
                     // if payment is successful
