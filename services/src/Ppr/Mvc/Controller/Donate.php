@@ -266,22 +266,22 @@ class Donate {
                     return $app->redirect('/#/planteaza/plata-esuata');
                 }
 
-                var_dump($hash);
-                die(var_dump($app->decode($mobilpay[count($mobilpay) - 1]->getHash())));
+                switch($hash->objPmNotify->action) {
+                    case 'confirmed':
+                    case 'confirmed_pending':
+                    case 'paid_pending':
+                    case 'paid':
+                    case 'canceled':
+                    case 'credit':
+//                        var_dump($hash);
+                        die(var_dump($app->decode($mobilpay[count($mobilpay) - 1]->getHash())));
 
-//                switch($hash->objPmNotify->action) {
-//                    case 'confirmed':
-//                    case 'confirmed_pending':
-//                    case 'paid_pending':
-//                    case 'paid':
-//                    case 'canceled':
-//                    case 'credit':
-//                        // redirect
-//                        return $app->redirect('/#/planteaza/plata-esuata');
-//                    default:
-//                        // redirect
-//                        return $app->redirect('/#/planteaza/plata-esuata');
-//                }
+                        // redirect
+                        return $app->redirect('/#/planteaza/plata-esuata');
+                    default:
+                        // redirect
+                        return $app->redirect('/#/planteaza/plata-esuata');
+                }
             } catch (\Exception $e) {
                 die(var_dump($e));
                 // TODO: $app->redirect('/services/index.php/500', Response::HTTP_INTERNAL_SERVER_ERROR);
