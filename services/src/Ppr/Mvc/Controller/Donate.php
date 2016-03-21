@@ -268,7 +268,7 @@ class Donate {
                 );
                 $errorCode = $objPmReq->objPmNotify->errorCode;
 
-                echo json_encode($objPmReq->objPmNotify);
+                echo json_encode($objPmReq->objPmNotify); 
                 die(var_dump($objPmReq->objPmNotify));
 
                 if ($errorCode == "0") {
