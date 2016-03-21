@@ -182,4 +182,15 @@ class Application extends \Silex\Application {
         return json_decode(base64_decode($string));
     }
 
+    /**
+     * @return string
+     * @throws \Exception
+     */
+    public function encodeMethod() {
+        if ($this->getEnv() == self::ENV_DEVELOP || $this->getEnv() == self::ENV_TESTING) {
+            return '';
+        }
+        return 'base64';
+    }
+
 }

@@ -38,10 +38,17 @@ class Mobilpay {
     private $hash;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="hash_method", type="string", length=8, nullable=true)
+     */
+    private $hashMethod;
+
+    /**
      * @var integer
      *
-     * @ORM\Column(name="started", type="integer", nullable=false)
+     * @ORM\Column(name="stamp", type="integer", nullable=false)
      */
-    private $started;
+    private $stamp;
 
 }
