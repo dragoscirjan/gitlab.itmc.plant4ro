@@ -235,7 +235,7 @@ class Donate {
     public function mobilpay(Application $app, Request $request) {
 
         // treat mobilpay payment fail redirect
-        if ($request->get('status') === 'fail') {
+        if ($request->get('status') !== 'confirm') {
             try {
                 // obtain mobilpay session info
                 $mobilpay = $app->getEm()->createQuery(sprintf(
@@ -249,8 +249,8 @@ class Donate {
                     $mobilpay->getHash()
                 ));
                 // remove session
-                $app->getEm()->remove($mobilpay);
-                $app->getEm()->flush();
+//                $app->getEm()->remove($mobilpay);
+//                $app->getEm()->flush();
                 // redirect
                 return $app->redirect('/#/planteaza/plata-esuata');
             } catch (\Exception $e) {
@@ -258,17 +258,17 @@ class Donate {
             }
         }
 
-        die('HERE');
-
         // TODO: Could not create a successful payment for Mobilpay yet.
         if($request->get('env_key') && $request->get('data')) {
             try {
                 $objPmReq = \Mobilpay_Payment_Request_Abstract::factoryFromEncrypted(
                     $request->get('env_key'),
-                    $request->get('env_key'),
+                    $request->get('data'),
                     $app->getConfig('payment.mobilpay.keyPath')
                 );
                 $errorCode = $objPmReq->objPmNotify->errorCode;
+
+                die(var_dump($objPmReq->objPmNotify));
 
                 if ($errorCode == "0") {
                     switch($objPmReq->objPmNotify->action) {
