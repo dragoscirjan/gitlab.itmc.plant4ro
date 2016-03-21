@@ -313,7 +313,7 @@ class Donate {
                     }
                 } catch(Exception $e) {
                     // in case response object fails ...
-                    $errorType 		= Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_TEMPORARY;
+                    $errorType 		= \Mobilpay_Payment_Request_Abstract::CONFIRM_ERROR_TYPE_TEMPORARY;
                     $errorCode		= $e->getCode();
                     $errorMessage 	= $e->getMessage();
                 }
