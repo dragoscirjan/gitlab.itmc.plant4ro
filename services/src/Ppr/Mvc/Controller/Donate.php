@@ -269,32 +269,21 @@ class Donate {
                 var_dump($hash);
                 die(var_dump($app->decode($mobilpay[count($mobilpay) - 1]->getHash())));
 
-                switch($hash->objPmNotify->action) {
-                    case 'confirmed':
-                    case 'confirmed_pending':
-                    case 'paid_pending':
-                    case 'paid':
-                    case 'canceled':
-                    case 'credit':
-                        return new Response(
-                            sprintf(
-                                '<?xml version="1.0" encoding="utf-8"?><crc>%s</crc>',
-                                $objPmReq->objPmNotify->errorMessage
-                            ),
-                            Response::HTTP_OK,
-                            ['Content-type' => 'application/xml']
-                        );
-                        break;
-                    default:
-                        // in case payment parameters are invalid
-                        $errorType		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
-                        $errorCode 		= MPRA::ERROR_CONFIRM_INVALID_ACTION;
-                        $errorMessage 	= 'mobilpay_refference_action paramaters is invalid';
-                }
-
-                // redirect
-                return $app->redirect('/#/planteaza/plata-esuata');
+//                switch($hash->objPmNotify->action) {
+//                    case 'confirmed':
+//                    case 'confirmed_pending':
+//                    case 'paid_pending':
+//                    case 'paid':
+//                    case 'canceled':
+//                    case 'credit':
+//                        // redirect
+//                        return $app->redirect('/#/planteaza/plata-esuata');
+//                    default:
+//                        // redirect
+//                        return $app->redirect('/#/planteaza/plata-esuata');
+//                }
             } catch (\Exception $e) {
+                die(var_dump($e));
                 // TODO: $app->redirect('/services/index.php/500', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
         }
