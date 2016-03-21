@@ -239,18 +239,58 @@ class Donate {
             try {
                 // obtain mobilpay session info
                 $mobilpay = $app->getEm()->createQuery(sprintf(
-                    "SELECT m FROM \Ppr\Mvc\Model\Mobilpay m WHERE m.uuid = '%s'",
+                    "SELECT m FROM \Ppr\Mvc\Model\Mobilpay m WHERE m.uuid = '%s' ORDER BY md.id DESC",
                     $request->get('orderId')
-                ))->execute()[0];
-                // log error
-                $app->getLogger()->alert(sprintf(
-                    'Mobilpay returned payment fail for the following email %s and hash %s',
-                    json_decode(base64_decode($mobilpay->getHash()))->email,
-                    $mobilpay->getHash()
-                ));
-                // remove session
-//                $app->getEm()->remove($mobilpay);
-//                $app->getEm()->flush();
+                ))->execute();
+
+                if (count($mobilpay) == 0) {
+                    // log error
+                    $app->getLogger()->alert(sprintf(
+                        'Incercare de validare invalida pentru ordingul: %s',
+                        $request->get('orderId')
+                    ));
+                    // redirect
+                    return $app->redirect('/#/planteaza/plata-esuata');
+                }
+
+                $hash = $app->decode($mobilpay[0]->getHash());
+
+                if (!isset($hash->objPmNotify) || $hash->objPmNotify->errorCode != 0) {
+                    // log error
+                    $app->getLogger()->alert(sprintf(
+                        'Mobilpay returned payment fail for the following hash: %s',
+                        json_encode($hash)
+                    ));
+                    // redirect
+                    return $app->redirect('/#/planteaza/plata-esuata');
+                }
+
+                var_dump($hash);
+                die(var_dump($app->decode($mobilpay[count($mobilpay) - 1]->getHash())));
+
+                switch($hash->objPmNotify->action) {
+                    case 'confirmed':
+                    case 'confirmed_pending':
+                    case 'paid_pending':
+                    case 'paid':
+                    case 'canceled':
+                    case 'credit':
+                        return new Response(
+                            sprintf(
+                                '<?xml version="1.0" encoding="utf-8"?><crc>%s</crc>',
+                                $objPmReq->objPmNotify->errorMessage
+                            ),
+                            Response::HTTP_OK,
+                            ['Content-type' => 'application/xml']
+                        );
+                        break;
+                    default:
+                        // in case payment parameters are invalid
+                        $errorType		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
+                        $errorCode 		= MPRA::ERROR_CONFIRM_INVALID_ACTION;
+                        $errorMessage 	= 'mobilpay_refference_action paramaters is invalid';
+                }
+
                 // redirect
                 return $app->redirect('/#/planteaza/plata-esuata');
             } catch (\Exception $e) {
@@ -275,10 +315,11 @@ class Donate {
                         $app->getConfig('payment.mobilpay.keyPath')
                     );
 
-                    $log = new Model\MobilpayLog([
+                    $log = new Model\Mobilpay([
                         'uuid' => $request->get('orderId'),
                         'hash' => $app->encode($objPmReq),
-                        'logged' => time(),
+                        'stamp' => time(),
+                        'hashMethod' => $app->encodeMethod(),
                     ]);
 
                     $app->getEm()->persist($log);

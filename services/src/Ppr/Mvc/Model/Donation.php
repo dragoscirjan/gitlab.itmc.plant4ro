@@ -75,9 +75,16 @@ class Donation {
     /**
      * @var string
      *
-     * @ORM\Column(name="transactions", type="blob", length=65535, nullable=true)
+     * @ORM\Column(name="hash", type="blob", length=65535, nullable=true)
      */
-    private $transactions;
+    private $hash;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="hash_method", type="string", length=8, nullable=true)
+     */
+    private $hashMethod;
 
     /**
      * @var \Donator
