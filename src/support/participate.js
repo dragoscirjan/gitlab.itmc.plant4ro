@@ -160,7 +160,7 @@ export class Component extends ViewModelAbstract {
                 enable: true,
                 gridSize: 60,
                 style: {
-                    textColor: '#79aacf',
+                    textColor: '#f2f1ee',
                     textSize: 18,
                     heightSM: 54,
                     widthSM: 54,
@@ -168,9 +168,9 @@ export class Component extends ViewModelAbstract {
                     widthMD: 64,
                     heightBIG: 74,
                     widthBIG: 74,
-                    iconSmall: '3rdpt/jquery-shop-locator/src/style/metro/images/clusterSmall.png',
-                    iconMedium: '3rdpt/jquery-shop-locator/src/style/metro/images/clusterMedium.png',
-                    iconBig: '3rdpt/jquery-shop-locator/src/style/metro/images/clusterBig.png'
+                    iconSmall: 'dist/assets/img/icons/clusterSmall.png',
+                    iconMedium: 'dist/assets/img/icons/clusterMedium.png',
+                    iconBig: 'dist/assets/img/icons/clusterBig.png'
                 }
             },
             sidebar: {
