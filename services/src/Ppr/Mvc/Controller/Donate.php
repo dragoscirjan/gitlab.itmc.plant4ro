@@ -91,12 +91,11 @@ class Donate {
     public function mobilpayClientToken(Application $app, Request $request) {
         try {
             // decode load to obtain information
-            $load = json_decode(base64_decode($request->get('load')));
+            $load = $app->decode($request->get('load'));
 
             // create mobilpay session
-            srand((double) microtime() * 1000000);
             $mobilpay = new Model\Mobilpay([
-                'uuid' => uniqid('PPR' . rand(), true),
+                'uuid' => $this->uuid(),
                 'hash' => $app->encode($load),
                 'hashMethod' => $app->encodeMethod(),
                 'stamp' => time(),
@@ -146,7 +145,7 @@ class Donate {
     public function braintree(Application $app, Request $request) {
         try {
             // decode load to obtain information
-            $load = json_decode(base64_decode($request->get('load')));
+            $load = $app->decode($request->get('load'));
 
             // init braintree setup
             $this->braintreeInit($app);
@@ -154,7 +153,7 @@ class Donate {
             // create sale data
             $sale = [
                 'amount' => $load->donation->totalEur,
-                'orderId' => time(),
+                'orderId' => $this->uuid(),
                 'paymentMethodNonce' => $load->donation->braintree->nonce,
                 'options' => [
                     'submitForSettlement' => True
@@ -192,8 +191,7 @@ class Donate {
                 'status' => $result->transaction->status,
                 'createdAt' => strtotime($result->transaction->createdAt),
                 'cardEnding' => $result->transaction->creditCardDetails->last4,
-                'token' => $load->donation->braintree->token,
-                'nonce' => $load->donation->braintree->nonce,
+                'orderId' => $result->transaction->orderId,
             ];
 
             // log transaction
@@ -211,7 +209,7 @@ class Donate {
                 'error' => 0,
                 'result' => $result->success,
                 'id' => $id,
-                't' => $result->transaction->id,
+                't' => $sale['orderId'],
             ));
         } catch (\Exception $e) {
             // log exception
@@ -416,6 +414,14 @@ class Donate {
      ********************************************************/
 
     /**
+     * @return string
+     */
+    private function uuid() {
+        srand((double) microtime() * 1000000);
+        return uniqid('PPR' . rand(), true);
+    }
+
+    /**
      * @method braintreeInit
      * @param  Application   $app
      */
@@ -451,9 +457,10 @@ class Donate {
             'donation' => ($load->donation->method=== 'braintree') ? $load->donation->totalEur : $load->donation->total,
             'currency' => ($load->donation->method=== 'braintree') ? 'EUR' : 'RON',
             'exchange' => ($load->donation->method=== 'braintree') ? $load->donation->exchange : '',
-            'trees' => 10, //$load->payment->trees,
+            'trees' => $load->trees,
             'started' => time(),
-            'transactions' => json_encode($transaction),
+            'hash' => $app->encode([$load, $transaction]),
+            'hashMethod' => $app->encodeMethod(),
             'donatorid' => $donator,
         ]);
 
@@ -468,104 +475,103 @@ class Donate {
         return $donation->getId();
     }
 
-    private function test() {
-        $errorCode = 0;
-        $errorType = MPRA::CONFIRM_ERROR_TYPE_NONE;
-        $errorMessage = '';
-
-        if (strcasecmp($_SERVER['REQUEST_METHOD'], 'post') == 0)
-        {
-            if(isset($_POST['env_key']) && isset($_POST['data']))
-            {
-                #calea catre cheia privata
-                #cheia privata este generata de mobilpay, accesibil in Admin -> Conturi de comerciant -> Detalii -> Setari securitate
-                $privateKeyFilePath = 'i.e: /home/certificates/private.key';
-
-                try
-                {
-                    $objPmReq = MPRA::factoryFromEncrypted($_POST['env_key'], $_POST['data'], $privateKeyFilePath);
-                    #uncomment the line below in order to see the content of the request
-                    //print_r($objPmReq);
-                    $errorCode = $objPmReq->objPmNotify->errorCode;
-                    // action = status only if the associated error code is zero
-                    if ($errorCode == "0") {
-                        switch($objPmReq->objPmNotify->action)
-                        {
-                            #orice action este insotit de un cod de eroare si de un mesaj de eroare. Acestea pot fi citite folosind $cod_eroare = $objPmReq->objPmNotify->errorCode; respectiv $mesaj_eroare = $objPmReq->objPmNotify->errorMessage;
-                            #pentru a identifica ID-ul comenzii pentru care primim rezultatul platii folosim $id_comanda = $objPmReq->orderId;
-                            case 'confirmed':
-                                #cand action este confirmed avem certitudinea ca banii au plecat din contul posesorului de card si facem update al starii comenzii si livrarea produsului
-                                //update DB, SET status = "confirmed/captured"
-                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                                break;
-                            case 'confirmed_pending':
-                                #cand action este confirmed_pending inseamna ca tranzactia este in curs de verificare antifrauda. Nu facem livrare/expediere. In urma trecerii de aceasta verificare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
-                                //update DB, SET status = "pending"
-                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                                break;
-                            case 'paid_pending':
-                                #cand action este paid_pending inseamna ca tranzactia este in curs de verificare. Nu facem livrare/expediere. In urma trecerii de aceasta verificare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
-                                //update DB, SET status = "pending"
-                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                                break;
-                            case 'paid':
-                                #cand action este paid inseamna ca tranzactia este in curs de procesare. Nu facem livrare/expediere. In urma trecerii de aceasta procesare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
-                                //update DB, SET status = "open/preauthorized"
-                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                                break;
-                            case 'canceled':
-                                #cand action este canceled inseamna ca tranzactia este anulata. Nu facem livrare/expediere.
-                                //update DB, SET status = "canceled"
-                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                                break;
-                            case 'credit':
-                                #cand action este credit inseamna ca banii sunt returnati posesorului de card. Daca s-a facut deja livrare, aceasta trebuie oprita sau facut un reverse.
-                                //update DB, SET status = "refunded"
-                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                                break;
-                            default:
-                                $errorType		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
-                                $errorCode 		= MPRA::ERROR_CONFIRM_INVALID_ACTION;
-                                $errorMessage 	= 'mobilpay_refference_action paramaters is invalid';
-                                break;
-                        }
-                    }
-                    else {
-                        //update DB, SET status = "rejected"
-                        $errorMessage = $objPmReq->objPmNotify->errorMessage;
-                    }
-                }
-                catch(Exception $e)
-                {
-                    $errorType 		= MPRA::CONFIRM_ERROR_TYPE_TEMPORARY;
-                    $errorCode		= $e->getCode();
-                    $errorMessage 	= $e->getMessage();
-                }
-            }
-            else
-            {
-                $errorType 		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
-                $errorCode		= MPRA::ERROR_CONFIRM_INVALID_POST_PARAMETERS;
-                $errorMessage 	= 'mobilpay.ro posted invalid parameters';
-            }
-        }
-        else
-        {
-            $errorType 		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
-            $errorCode		= MPRA::ERROR_CONFIRM_INVALID_POST_METHOD;
-            $errorMessage 	= 'invalid request metod for payment confirmation';
-        }
-
-        header('Content-type: application/xml');
-        echo "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n";
-        if($errorCode == 0)
-        {
-            echo "<crc>{$errorMessage}</crc>";
-        }
-        else
-        {
-            echo "<crc error_type=\"{$errorType}\" error_code=\"{$errorCode}\">{$errorMessage}</crc>";
-        }
-    }
+//    private function test() {
+//        $errorCode = 0;
+//        $errorType = MPRA::CONFIRM_ERROR_TYPE_NONE;
+//        $errorMessage = '';
+//
+//        if (strcasecmp($_SERVER['REQUEST_METHOD'], 'post') == 0)
+//        {
+//            if(isset($_POST['env_key']) && isset($_POST['data']))
+//            {
+//                #calea catre cheia privata
+//                #cheia privata este generata de mobilpay, accesibil in Admin -> Conturi de comerciant -> Detalii -> Setari securitate
+//                $privateKeyFilePath = 'i.e: /home/certificates/private.key';
+//
+//                try
+//                {
+//                    $objPmReq = MPRA::factoryFromEncrypted($_POST['env_key'], $_POST['data'], $privateKeyFilePath);
+//                    #uncomment the line below in order to see the content of the request
+//                    //print_r($objPmReq);
+//                    $errorCode = $objPmReq->objPmNotify->errorCode;
+//                    // action = status only if the associated error code is zero
+//                    if ($errorCode == "0") {
+//                        switch($objPmReq->objPmNotify->action)
+//                        {
+//                            #orice action este insotit de un cod de eroare si de un mesaj de eroare. Acestea pot fi citite folosind $cod_eroare = $objPmReq->objPmNotify->errorCode; respectiv $mesaj_eroare = $objPmReq->objPmNotify->errorMessage;
+//                            #pentru a identifica ID-ul comenzii pentru care primim rezultatul platii folosim $id_comanda = $objPmReq->orderId;
+//                            case 'confirmed':
+//                                #cand action este confirmed avem certitudinea ca banii au plecat din contul posesorului de card si facem update al starii comenzii si livrarea produsului
+//                                //update DB, SET status = "confirmed/captured"
+//                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+//                                break;
+//                            case 'confirmed_pending':
+//                                #cand action este confirmed_pending inseamna ca tranzactia este in curs de verificare antifrauda. Nu facem livrare/expediere. In urma trecerii de aceasta verificare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
+//                                //update DB, SET status = "pending"
+//                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+//                                break;
+//                            case 'paid_pending':
+//                                #cand action este paid_pending inseamna ca tranzactia este in curs de verificare. Nu facem livrare/expediere. In urma trecerii de aceasta verificare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
+//                                //update DB, SET status = "pending"
+//                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+//                                break;
+//                            case 'paid':
+//                                #cand action este paid inseamna ca tranzactia este in curs de procesare. Nu facem livrare/expediere. In urma trecerii de aceasta procesare se va primi o noua notificare pentru o actiune de confirmare sau anulare.
+//                                //update DB, SET status = "open/preauthorized"
+//                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+//                                break;
+//                            case 'canceled':
+//                                #cand action este canceled inseamna ca tranzactia este anulata. Nu facem livrare/expediere.
+//                                //update DB, SET status = "canceled"
+//                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+//                                break;
+//                            case 'credit':
+//                                #cand action este credit inseamna ca banii sunt returnati posesorului de card. Daca s-a facut deja livrare, aceasta trebuie oprita sau facut un reverse.
+//                                //update DB, SET status = "refunded"
+//                                $errorMessage = $objPmReq->objPmNotify->errorMessage;
+//                                break;
+//                            default:
+//                                $errorType		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
+//                                $errorCode 		= MPRA::ERROR_CONFIRM_INVALID_ACTION;
+//                                $errorMessage 	= 'mobilpay_refference_action paramaters is invalid';
+//                                break;
+//                        }
+//                    }
+//                    else {
+//                        //update DB, SET status = "rejected"
+//                        $errorMessage = $objPmReq->objPmNotify->errorMessage;
+//                    }
+//                }
+//                catch(Exception $e)
+//                {
+//                    $errorType 		= MPRA::CONFIRM_ERROR_TYPE_TEMPORARY;
+//                    $errorCode		= $e->getCode();
+//                    $errorMessage 	= $e->getMessage();
+//                }
+//            }
+//            else
+//            {
+//                $errorType 		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
+//                $errorCode		= MPRA::ERROR_CONFIRM_INVALID_POST_PARAMETERS;
+//                $errorMessage 	= 'mobilpay.ro posted invalid parameters';
+//            }
+//        }
+//        else
+//        {
+//            $errorType 		= MPRA::CONFIRM_ERROR_TYPE_PERMANENT;
+//            $errorCode		= MPRA::ERROR_CONFIRM_INVALID_POST_METHOD;
+//            $errorMessage 	= 'invalid request metod for payment confirmation';
+//        }
+//
+//        header('Content-type: application/xml');
+//        if($errorCode == 0)
+//        {
+//            echo "<crc>{$errorMessage}</crc>";
+//        }
+//        else
+//        {
+//            echo "<crc error_type=\"{$errorType}\" error_code=\"{$errorCode}\">{$errorMessage}</crc>";
+//        }
+//    }
 
 }

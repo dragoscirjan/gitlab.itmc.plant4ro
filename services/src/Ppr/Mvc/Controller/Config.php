@@ -79,6 +79,38 @@ export class AppConfig {
     getPhpUrl(route) {
         return this.phpAppBase + route;
     }
+
+    /**
+     * Encoding message to the server side domain
+     * @method encode
+     * @param  {Object} obj
+     * @return {String}
+     */
+    encode(obj) {
+<?php if ($app->getEnv() == Application::ENV_DEVELOP
+            || $app->getEnv() == Application::ENV_TESTING
+) : ?>
+        return JSON.stringify(obj);
+<?php else: ?>
+        return btoa(JSON.stringify(obj));
+<?php endif; ?>
+    }
+
+    /**
+     * Decoding message from the server side domain
+     * @method decode
+     * @param  {String} str
+     * @return {Object}
+     */
+    decode(str) {
+<?php if ($app->getEnv() == Application::ENV_DEVELOP
+        || $app->getEnv() == Application::ENV_TESTING
+) : ?>
+        return JSON.parse(str);
+<?php else: ?>
+        return JSON.parse(atob(str));
+<?php endif; ?>
+    }
 }
 <?php
         return new Response(

@@ -261,21 +261,17 @@ export class Component extends ViewModelAbstract {
      */
     paymentWithBraintreeProceed(payload) {
         let self = this;
-        let load = btoa(JSON.stringify($.extend(
+        let load = this.appConfig.encode($.extend(
             true,
             self.paymentModel,
             { donation: { braintree: payload } }
-        )));
+        ));
         this.logger.debug('braintree:post:/ donate/braintree', load);
         return new Promise((resolve, reject) => {
             // this.http.fetch('donate/braintree', {
             //     method: 'post',
             //     body: json({
-            //         load: btoa(JSON.stringify($.extend(
-            //             true,
-            //             self.paymentModel,
-            //             { donation: { braintree: payload } }
-            //         )))
+            //         load: load
             //     }),
             //     headers: {
             //         'X-Request-Playload': payload.nonce
@@ -313,7 +309,7 @@ export class Component extends ViewModelAbstract {
      */
     paymentWithMobilpayInit() {
         let self = this;
-        let load = btoa(JSON.stringify(self.paymentModel));
+        let load = this.appConfig.encode(self.paymentModel);
         // debug info
         this.logger.debug('request:/ donate/mobilpay-token', { load: load });
         // store load in case of fail
