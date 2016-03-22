@@ -60,27 +60,27 @@ template
 						.slider-wrapper
 							span#treesQtyVal.slider-value ${model.trees}
 							input#treesQty(type="text", data-slider-min="1", data-slider-max="200", data-slider-step="1" data-slider-value="${model.trees}", value.bind="model.trees", data-slider-tooltip="hide")
-					div(class.bind="'collapsible collapsible--form' + (isCorporate ? ' hide' : '')")
-						a(role='button', data-toggle='collapse', href='#plantFriend', aria-expanded='false', aria-controls='plantFriend') 
-							| Planteaza cu un prieten
-							i.caret
-						#plantFriend.collapse.collapsible__content
-							.form-group
-								label(for="donateName1") Numele si prenumele
-									span.h-text-primary &nbsp;*
-								.form-wrap
-									input#donateName1.form-control(type="text", name="donateName1")
-							.form-group
-								label(for="donateEmail1") Email
-									span.h-text-primary &nbsp;*
-								.form-wrap
-									input#donateEmail1.form-control(type="email", name="donateEmail1")
-							.form-group
-								label(for="donateAmount1") Cati copaci vrei sa plantezi pentru prietenul tau?
-								.form-wrap
-									input#donateAmount1.form-control(type="text", name="donateAmount1")
-							.form-group
-								button#addDonationGift.btn.btn--link(type="button") Adauga alt prieten
+					//- div(class.bind="'collapsible collapsible--form' + (isCorporate ? ' hide' : '')")
+					//- 	a(role='button', data-toggle='collapse', href='#plantFriend', aria-expanded='false', aria-controls='plantFriend') 
+					//- 		| Planteaza cu un prieten
+					//- 		i.caret
+					//- 	#plantFriend.collapse.collapsible__content
+					//- 		.form-group
+					//- 			label(for="donateName1") Numele si prenumele
+					//- 				span.h-text-primary &nbsp;*
+					//- 			.form-wrap
+					//- 				input#donateName1.form-control(type="text", name="donateName1")
+					//- 		.form-group
+					//- 			label(for="donateEmail1") Email
+					//- 				span.h-text-primary &nbsp;*
+					//- 			.form-wrap
+					//- 				input#donateEmail1.form-control(type="email", name="donateEmail1")
+					//- 		.form-group
+					//- 			label(for="donateAmount1") Cati copaci vrei sa plantezi pentru prietenul tau?
+					//- 			.form-wrap
+					//- 				input#donateAmount1.form-control(type="text", name="donateAmount1")
+					//- 		.form-group
+					//- 			button#addDonationGift.btn.btn--link(type="button") Adauga alt prieten
 					.form-group.h-margin-top-40.h-margin-bottom-40
 						label(for="total") Total de plata
 						.form-wrap
@@ -122,7 +122,7 @@ template
 					.form-group.text-center
 						button.btn.btn--secondary(type="submit") Planteaza
 
-	div#braintree-modal.modal.modal-braintree.fade(tabindex='-1', role='dialog') 
+	#braintree-modal.modal.modal-braintree.fade(tabindex='-1', role='dialog') 
 		.modal-dialog
 			.modal-content
 				.modal-header
@@ -135,7 +135,7 @@ template
 					button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
 					button.btn.btn--sm.btn--secondary(type='button') Planteaza
 
-	div#mobilpay-modal.modal.modal-mobilpay.fade(tabindex='-1', role='dialog') 
+	#mobilpay-modal.modal.modal-mobilpay.fade(tabindex='-1', role='dialog') 
 		.modal-dialog
 			.modal-content
 				.modal-header
@@ -154,3 +154,14 @@ template
 						a(href="http://mobilpay.ro", target="_blank") mobilpay.ro
 					//- button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
 					//- button.btn.btn--sm.btn--secondary(type='button') Planteaza
+
+	#error-modal.modal.modal-msg.fade(tabindex='-1', role='dialog') 
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(data-dismiss="modal" aria-label="Close")
+						span(aria-hidden="true") &times;
+				.modal-body
+					h4.text-danger Ne pare rau, plata nu a fost efectuata.
+					p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae, nemo?
+					a.btn.btn--sm.btn--neutral.h-margin-top-30(href="") Mai incearca o data

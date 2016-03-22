@@ -150,6 +150,8 @@ export class Component extends ViewModelAbstract {
     attached() {
         this.toggleRangeSlider();
         this.toggleCorporate();
+
+        $('#error-modal').modal('show');
     }
 
     /**
