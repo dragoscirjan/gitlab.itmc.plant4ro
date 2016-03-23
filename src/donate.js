@@ -131,22 +131,30 @@ export class Component extends ViewModelAbstract {
      * @see ViewModelAbstract#activate
      * @method activate
      */
-    activate(params, routeConfig) {
+    activate(params, routeConfig, navigationInstruction) {
         super.activate(params, routeConfig);
         let self = this;
+        let ni = navigationInstruction;
+        console.log(ni.params.t);
         // get exchange value
-        return this.http.fetch('curs-valutar')
-            .catch(error => {
-                self.logger.warn('Getting exchange rates failed with error', error);
-            })
-            .then(response => response.json())
-            .then((data) => {
-                self.logger.debug('Exchange rates obtained:', data);
-                if (!data.error) {
-                    self.model.donation.exchange = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
-                    self.logger.debug('Exchange rates obtained EUR:', self.model.donation.exchange);
-                }
-            });
+        return new Promise((resolve, reject) => {
+            this.http.fetch('curs-valutar')
+                .catch(error => {
+                    self.logger.warn('Getting exchange rates failed with error', error);
+                })
+                .then(response => response.json())
+                .then((data) => {
+                    self.logger.debug('Exchange rates obtained:', data);
+                    if (!data.error) {
+                        self.model.donation.exchange = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
+                        self.logger.debug('Exchange rates obtained EUR:', self.model.donation.exchange);
+                    }
+
+                    if (ni.params && ni.params.t) {
+                        return self.fetchMobilpayInfo(ni.params.t);
+                    }
+                });
+        });
     }
 
     /**
@@ -171,6 +179,26 @@ export class Component extends ViewModelAbstract {
                 // braintree.setup can safely be run again!
             });
         }
+    }
+
+    /**
+     * [fetchMobilpayInfo description]
+     * @method fetchMobilpayInfo
+     * @param  {String}  t
+     * @return {Promise}
+     */
+    fetchMobilpayInfo(t) {
+        var self = this;
+        return self.http
+            .fetch(`donate/mobilpay/${t}/info`)
+            .catch(error => {
+                self.logger.warn('Getting exchange rates failed with error', error);
+            })
+            .then(response => response.json())
+            .then((errData) => {
+                console.log('errData', errData);
+                // self.showDonationError()
+            });
     }
 
     /**
