@@ -195,8 +195,8 @@ export class Component extends ViewModelAbstract {
                 self.logger.warn('Getting exchange rates failed with error', error);
             })
             .then(response => response.json())
-            .then((errData) => {
-                console.log('errData', errData);
+            .then((data) => {
+                console.log('errData', data);
                 // self.showDonationError()
             });
     }
