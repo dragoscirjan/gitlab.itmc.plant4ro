@@ -173,6 +173,7 @@ export class Component extends ViewModelAbstract {
      * @return {Promise}
      */
     fetchExchange() {
+        let self = this;
         return this.http
             .fetch('curs-valutar')
             .catch(error => {
@@ -195,7 +196,7 @@ export class Component extends ViewModelAbstract {
      * @return {Promise}
      */
     fetchMobilpayInfo(t) {
-        var self = this;
+        let self = this;
         return self.http
             .fetch(`donate/mobilpay/${t}/info`)
             .catch(error => {
