@@ -154,6 +154,7 @@ export class Component extends ViewModelAbstract {
 
         if (this.orderId) {
             return self.fetchMobilpayInfo(this.orderId);
+            this.showDonationError('Lorem ipsum sit dolor....');
         }
     }
 
