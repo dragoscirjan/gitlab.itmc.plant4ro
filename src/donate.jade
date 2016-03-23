@@ -97,10 +97,15 @@ template
 					.form-group
 						.radio
 							input#payMethodM.sr-only(type='radio', name="payMethod", value='mobilpay', checked.bind='model.donation.method')
-							label(for="payMethodM") MobilPay ${paymentModel.donation.total} RON
-						.radio
+							label(for="payMethodM") 
+								strong MobilPay
+								| : ${paymentModel.donation.total} RON
+						.radio(class.bind="(!model.donation.exchange) ? 'hide' : ''")
 							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method')
-							label(for="payMethodPP") Paypal ${paymentModel.donation.totalEur} EUR (curs valutar 1 EUR = ${model.donation.exchange} RON)
+							label(for="payMethodPP")
+								strong Braintree (Paypal)
+								| : ${paymentModel.donation.totalEur} EUR 
+								i (curs valutar 1 EUR = ${model.donation.exchange} RON)
 						div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
 							input#payMethoTB.sr-only(type='radio', name="payMethod", value='transfer', checked.bind='model.donation.method')
 							label(for="payMethoTB") Transfer bancar ${paymentModel.donation.total} RON
@@ -155,13 +160,19 @@ template
 					//- button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
 					//- button.btn.btn--sm.btn--secondary(type='button') Planteaza
 
-	#error-modal.modal.modal-msg.fade(tabindex='-1', role='dialog') 
+	#donation-error-modal.modal.modal-msg.fade(tabindex='-1', role='dialog') 
 		.modal-dialog
 			.modal-content
 				.modal-header
 					button.close(data-dismiss="modal" aria-label="Close")
 						span(aria-hidden="true") &times;
 				.modal-body
-					h4.text-danger Ne pare rau, plata nu a fost efectuata.
-					p Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae, nemo?
+					i.fa.fa-exclamation-triangle
+					h4.text-danger Tranzactia dumneavoastra a esuat cu urmatorul mesaj:
+					p 
+						i ${donationErrorModal.message}
+					p 
+						| Pentru mai multe detalii, va rugam sa ne contactati la adresa de mail 
+						a(href="mailto:office@prieteniipadurilor.ro") office@prieteniipadurilor.ro
+						| .
 					a.btn.btn--sm.btn--neutral.h-margin-top-30(href="") Mai incearca o data

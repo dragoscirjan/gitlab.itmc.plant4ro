@@ -254,7 +254,7 @@ class Donate {
                         $request->get('orderId')
                     ));
                     // redirect
-                    return $app->redirect('/#/planteaza/plata-esuata');
+                    return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
                 }
 
                 // if last session is not a payment session or has error code, throw error
@@ -266,7 +266,7 @@ class Donate {
                         json_encode($hash)
                     ));
                     // redirect
-                    return $app->redirect('/#/planteaza/plata-esuata');
+                    return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
                 }
 
                 switch($hash->objPmNotify->action) {
@@ -297,7 +297,7 @@ class Donate {
                             json_encode($hash)
                         ));
                         // redirect
-                        return $app->redirect('/#/planteaza/plata-esuata');
+                        return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
                 }
             } catch (\Exception $e) {
                 // log error
@@ -307,7 +307,7 @@ class Donate {
                     $e->getTraceAsString()
                 ));
                 // redirect
-                return $app->redirect('/#/planteaza/plata-esuata');
+                return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
             }
         }
 
