@@ -202,7 +202,7 @@ export class Component extends ViewModelAbstract {
             .catch(error => {
                 self.logger.warn('Getting exchange rates failed with error', error);
             })
-            // .then(response => response.json())
+            .then(response => response.text())
             .then((data) => {
                 console.log('errData', data, self);
                 // let message = '';
