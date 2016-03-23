@@ -204,18 +204,18 @@ export class Component extends ViewModelAbstract {
             })
             .then(response => response.text())
             .then((data) => {
-                console.log('errData', data, self);
-                // let message = '';
-                // for (log of data) {
-                //     if (log.hash && log.hash.objPmNotify && log.hash.objPmNotify.errorCode) {
-                //         message = `[${log.hash.objPmNotify.errorCode}] log.hash.objPmNotify.errorMessage`;
-                //         break;
-                //     }
-                // }
-                // if (!message.length) {
-                //     message = 'Nu am putut determina eroarea. Va rugam contactati departamentul tehnic.';
-                // }
-                // self.showDonationError(message);
+                data = self.appConfig.decode(data);
+                let message = '';
+                for (log of data) {
+                    if (log.hash && log.hash.objPmNotify && log.hash.objPmNotify.errorCode) {
+                        message = `[${log.hash.objPmNotify.errorCode}] log.hash.objPmNotify.errorMessage`;
+                        break;
+                    }
+                }
+                if (!message.length) {
+                    message = 'Nu am putut determina eroarea. Va rugam contactati departamentul tehnic.';
+                }
+                self.showDonationError(message);
             });
     }
 
