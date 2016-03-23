@@ -2093,6 +2093,134 @@ Navbar
 
 
 
+/*
+   Certificate / Diploma
+   ========================================================================== */
+
+.certificate {
+    position: relative;
+    padding: 45px 80px;
+    border: 1px solid @border-color;
+    background-color: #fff;
+
+    &__logo {
+        width: 130px;
+        margin: 0 auto;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+        }
+    }
+
+    &__title {
+        margin: 20px 0;
+        font-size: 40px;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+    }
+
+    &__content {
+        text-align: center;
+    }
+
+    &__input {
+        height: 40px;
+        padding: 10px 15px;
+        border-width: 0 0 1px;
+    }
+
+    &__footer {
+        margin-top: 20px;
+    }
+
+    &__signature {
+        text-align: right;
+
+        .form-group--inline {
+            margin: 0;
+        }
+    }
+}
+
+
+
+/*
+   Stamp / Badge
+   ========================================================================== */
+
+.stamp {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+            flex-direction: column;
+
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+            justify-content: center;
+
+    width: 95px;
+    height: 95px;
+    text-align: center;
+
+    &__text {
+        text-transform: uppercase;
+    }
+
+    &__number {
+        display: block;
+        font-size: 3em;
+        font-weight: 700;
+        line-height: 1;
+        color: @primary-color;
+    }
+}
+
+
+
+/*
+   Flag
+   ========================================================================== */
+
+.flag {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    font-size: 0;
+    line-height: 0;
+
+    transform: translateX(-50%);
+
+    &__colour {
+        display: inline-block;
+        width: 20px;
+        height: 10px;
+
+        &:nth-child(1) {
+            background-color: #136be7;
+        }
+
+        &:nth-child(2) {
+            background-color: #f4c811;
+        }
+
+        &:nth-child(3) {
+            background-color: #f41818;
+        }
+    }
+}
+
+
+
+
 
 /*
    Footer
@@ -2123,9 +2251,12 @@ Navbar
     &__info {
         display: flex;
         flex-direction: column;
-
+        align-items: center;
         flex: 1;
         justify-content: space-between;
+
+        font-size: 11px;
+        text-transform: uppercase;
 
         @media (min-width: 768px) {
             flex-direction: row;
@@ -2133,11 +2264,33 @@ Navbar
 
         p {
             margin-bottom: 0;
+        }
+    }
+
+    &__col {
+        padding: 0 15px;
+
+        @media (min-width: 768px) {
+            padding: 0 25px;
+        }
+    }
+
+    &__menu {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        margin: 0 -15px;
+        padding: 0;
+        list-style: none;
+
+        @media (min-width: 768px) {
+            margin: 0 -25px;
+        }
+
+        li {
+            width: 50%;
             padding: 0 15px;
-
-            text-transform: uppercase;
-
-            font-size: 11px;
 
             @media (min-width: 768px) {
                 padding: 0 25px;

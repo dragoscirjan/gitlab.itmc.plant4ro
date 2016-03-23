@@ -3,23 +3,46 @@
 //- TODO: Implement Froentend content
 //- TODO: Implement functionality
 template
-	require(from='../assets/plugins/owl.carousel/owl-carousel/owl.carousel.min.js')
+	//- require(from='../assets/plugins/owl.carousel/owl-carousel/owl.carousel.min.js')
 
 	section(class.bind="'au-animate ' + routeConfig.name")
 		.container
 			h1.page-title ${heading}
-			p „Plantează pentru România” se adrează tuturor celor care își doresc îmbunățirea situației pădurilor prin realizarea celei mai mari acțiuni de plantat desfășurată până în acest moment în România.  Aceasta oferă posibilitatea tuturor de a contribui la îmbunătățirea situației pădurilor românești prin implicarea directă. Orice individ, ONG sau instituție poate să participe la eveniment și să transforme România în Campiona Mondială la Plantat. 
-
-			#owlCarouselDiploma.owl-carousel--diploma.h-margin-top-50.h-margin-bottom-50
-				.owl-carousel__slide
-					.owl-carousel__img
-						img(src="http://placehold.it/770x545", alt="")
-				.owl-carousel__slide
-					.owl-carousel__img
-						img(src="http://placehold.it/770x545", alt="")
-				.owl-carousel__slide
-					.owl-carousel__img
-						img(src="http://placehold.it/770x545", alt="")
+			p „Plantează pentru România” se adrează tuturor celor care își doresc îmbunățirea situației pădurilor prin realizarea celei mai mari acțiuni de plantat desfășurată până în acest moment în România.  Aceasta oferă posibilitatea tuturor de a contribui la îmbunătățirea situației pădurilor românești prin implicarea directă. Orice individ, ONG sau instituție poate să participe la eveniment și să transforme România în Campiona Mondială la Plantat.
+			
+			.certificate
+				.certificate__logo
+					img(src="/dist/assets/img/logo.png", alt="")
+				h3.certificate__title Diploma
+				.certificate__content
+					span Se acorda titlul de #[strong "Prieten(a) al Padurilor din Romania"] companiei
+					.form-group
+						input.certificate__input.form-control.form-control--full(type="text", name="", value="")
+					span Pentru ca a sustinut proiectul #[strong "Planteaza pentru Romania"] editia nr. 1 din 2016 adoptand
+					.form-group.form-group--inline
+						input.certificate__input.form-control(type="text", name="", value="")
+					span puieti.
+					p *Suma primita de la oricine o impartim la 5 RON care este unitatea standard de masura a implicarii financiare in cadrul acestui proiect (cu fiecare 5 RON sponsorii sau donatorii adopta un arbore).
+				.certificate__footer
+					.l-flex.l-flex--vcenter
+						.l-flex__item
+							.stamp
+								span.stamp__text Editia
+								span.stamp__number 1
+						.l-flex__item
+							.certificate__signature
+								span #[strong Prietenii Padurilor din Romania]
+								br
+								span Presedinte
+									br
+									| ing. silvic Florin Nan
+								br
+								.form-group.form-group--inline
+									input.certificate__input.form-control(type="text", name="", value="")
+				.flag.flag--ro.flag--diploma
+					.flag__colour
+					.flag__colour
+					.flag__colour
 
 			.text-center.btn__group
 				a.btn.btn--sm.btn--secondary(href="") Trimite pe mail

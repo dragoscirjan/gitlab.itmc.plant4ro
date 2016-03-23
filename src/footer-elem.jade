@@ -5,26 +5,28 @@ template(bindable='router')
   footer#footer
     .footer
       .footer__info
-        p 
-          | Copyright &copy; 2016 
-          a(href="http://prieteniipadurilor.ro", target="_blank") Prietenii Padurilor
-          br
-          | Developed by 
-          a(href="http://itmediaconnect.ro", target="_blank", title="Developer, Maintainer, Hoster") IT Media Connect
-        p 
-          strong 
-            a(href="http://prieteniipadurilor.ro", target="_blank") Prietenii Padurilor din Romania
-          br
-          a(href="/#/termeni-si-conditii") Termeni si Conditii
-          br
-          a(href="/#/termeni-si-conditii/protectia-datelor") Protectia Datelor
-          br
-          a(href="/#/termeni-si-conditii/politica-cookieurilor") Politica Cookie-urilor
-        p 
-          strong 
+        .footer__col
+          p 
+            | Copyright &copy; 2016 
+            a(href="http://prieteniipadurilor.ro", target="_blank") Prietenii Padurilor
+          p
+            | Developed by 
+            a(href="http://itmediaconnect.ro", target="_blank", title="Developer, Maintainer, Hoster") IT Media Connect
+        .footer__col
+          ul.footer__menu
+            li
+              a(href="http://prieteniipadurilor.ro", target="_blank") Prietenii Padurilor din Romania
+            li
+              a(href="/#/termeni-si-conditii") Termeni si Conditii
+            li
+              a(href="/#/termeni-si-conditii/protectia-datelor") Protectia Datelor
+            li
+              a(href="/#/termeni-si-conditii/politica-cookieurilor") Politica Cookie-urilor
+        .footer__col
+          p
             a(href='mailto:office@prieteniipadurilor.ro') office@prieteniipadurilor.ro
-          br
-          a(href="http://www.anpc.gov.ro/", target="_blank") ANPC
+          p
+            a(href="http://www.anpc.gov.ro/", target="_blank") ANPC
       ul.footer__social
         li
           a(href="https://www.facebook.com/Prietenii.Padurilor")
