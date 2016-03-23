@@ -452,7 +452,7 @@ class Donate {
             $l['hash'] = $app->decode($l['hash']);
             $logArray[] = $l;
         }
-        return Response::response($logArray);
+        return new Response($app->encode($logArray));
     }
 
     /**
