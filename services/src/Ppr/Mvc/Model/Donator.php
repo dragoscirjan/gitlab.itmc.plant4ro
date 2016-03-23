@@ -56,7 +56,7 @@ class Donator {
      *
      * @ORM\Column(name="location", type="string", length=256, nullable=true)
      */
-    private $location;
+    private $location = 'Romania';
 
     /**
      * @var string

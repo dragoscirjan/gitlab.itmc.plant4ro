@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Donation {
 
+    const STATUS_FAILED = 0;
+    const STATUS_PENDING = 10;
+    const STATUS_COMPLETED = 512;
+
     use \Ppr\Mvc\Model\ModelTrait\Doctrine;
 
     /**
@@ -35,14 +39,14 @@ class Donation {
      *
      * @ORM\Column(name="currency", type="string", length=3, nullable=false)
      */
-    private $currency;
+    private $currency = 'RON';
 
     /**
      * @var string
      *
      * @ORM\Column(name="exchange", type="decimal", precision=6, scale=4, nullable=false)
      */
-    private $exchange;
+    private $exchange = 0;
 
     /**
      * @var integer
@@ -63,7 +67,7 @@ class Donation {
      *
      * @ORM\Column(name="completed", type="integer", nullable=false)
      */
-    private $completed = 0;
+    private $completed = self::STATUS_COMPLETED;
 
     /**
      * @var string
@@ -77,14 +81,14 @@ class Donation {
      *
      * @ORM\Column(name="hash", type="blob", length=65535, nullable=true)
      */
-    private $hash;
+    private $hash = '';
 
     /**
      * @var string
      *
      * @ORM\Column(name="hash_method", type="string", length=8, nullable=true)
      */
-    private $hashMethod;
+    private $hashMethod = '';
 
     /**
      * @var \Donator
@@ -96,6 +100,19 @@ class Donation {
      */
     private $donatorid;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="passive", type="boolean")
+     */
+    private $passive = 0;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="anonymous", type="boolean")
+     */
+    private $anonymous = 0;
 
 }
 
