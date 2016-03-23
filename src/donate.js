@@ -60,6 +60,14 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
+     * [donationErrorModal description]
+     * @type {Object}
+     */
+    donationErrorModal = {
+        message: ''
+    }
+
+    /**
      * [mobilpay description]
      * @type {Object}
      */
@@ -129,7 +137,6 @@ export class Component extends ViewModelAbstract {
         // get exchange value
         return this.http.fetch('curs-valutar')
             .catch(error => {
-                // TODO: Hide braintree payment
                 self.logger.warn('Getting exchange rates failed with error', error);
             })
             .then(response => response.json())
@@ -150,6 +157,20 @@ export class Component extends ViewModelAbstract {
     attached() {
         this.toggleRangeSlider();
         this.toggleCorporate();
+
+        // this.showDonationError('Lorem ipsum sit dolor....');
+    }
+
+    destroyBraintreeForm() {
+        $('#braintree-modal').modal('hide');
+        // $('iframe').remove();
+        if (window.btCheckout) {
+            // When you are ready to tear down your integration
+            window.btCheckout.teardown(() => {
+                window.btCheckout = null;
+                // braintree.setup can safely be run again!
+            });
+        }
     }
 
     /**
@@ -221,6 +242,7 @@ export class Component extends ViewModelAbstract {
         return new Promise((resolve, reject) => {
             $('#braintree-modal')
                 .modal('show')
+                .off('shown.bs.modal hidden.bs.modal')
                 .on('shown.bs.modal', () => {
                     if (window.btCheckout) {
                         return;
@@ -249,6 +271,9 @@ export class Component extends ViewModelAbstract {
                     $('#braintree-modal .btn.btn--sm.btn--secondary').off('click').on('click', (event) => {
                         $('#braintree-modal form input').trigger('click', event);
                     });
+                })
+                .on('hidden.bs.modal', () => {
+                    self.destroyBraintreeForm();
                 });
         });
     }
@@ -261,21 +286,17 @@ export class Component extends ViewModelAbstract {
      */
     paymentWithBraintreeProceed(payload) {
         let self = this;
-        let load = btoa(JSON.stringify($.extend(
+        let load = this.appConfig.encode($.extend(
             true,
             self.paymentModel,
             { donation: { braintree: payload } }
-        )));
+        ));
         this.logger.debug('braintree:post:/ donate/braintree', load);
         return new Promise((resolve, reject) => {
             // this.http.fetch('donate/braintree', {
             //     method: 'post',
             //     body: json({
-            //         load: btoa(JSON.stringify($.extend(
-            //             true,
-            //             self.paymentModel,
-            //             { donation: { braintree: payload } }
-            //         )))
+            //         load: load
             //     }),
             //     headers: {
             //         'X-Request-Playload': payload.nonce
@@ -313,7 +334,7 @@ export class Component extends ViewModelAbstract {
      */
     paymentWithMobilpayInit() {
         let self = this;
-        let load = btoa(JSON.stringify(self.paymentModel));
+        let load = this.appConfig.encode(self.paymentModel);
         // debug info
         this.logger.debug('request:/ donate/mobilpay-token', { load: load });
         // store load in case of fail
@@ -403,7 +424,8 @@ export class Component extends ViewModelAbstract {
                     // initialize mobil pay payment
                     promise = this.paymentWithMobilpayInit()
                         .catch((reason) => {
-                            // TODO: Show error to user
+                            $('#mobilpay-modal').modal('hide');
+                            setTimeout(() => { self.showDonationError(reason); }, 200);
                             self.logger.warn(reason);
                         })
                         .then((done) => {
@@ -413,13 +435,13 @@ export class Component extends ViewModelAbstract {
                 case 'braintree':
                     promise = this.paymentWithBraintreeInit()
                         .catch((reason) => {
-                            // TODO: Show error to user
+                            $('#braintree-modal').modal('hide');
+                            setTimeout(() => { self.showDonationError(reason); }, 200);
                             self.logger.warn(reason);
                         })
                         .then((done) => {
                             // hide payment form and redirect to diploma download (thank you) page
-                            $('#braintree-modal').modal('hide');
-                            $('iframe').remove();
+                            self.destroyBraintreeForm();
                             window.location = `/#/diploma/${done.id}/${done.t}`;
                         });
                     break;
@@ -433,6 +455,17 @@ export class Component extends ViewModelAbstract {
                 // @TODO:
             }
         }
+    }
+
+    /**
+     * [showError description]
+     * @method showError
+     * @param  {String}  message
+     * @param  {String}  details
+     */
+    showDonationError(message) {
+        this.donationErrorModal.message = message;
+        $('#donation-error-modal').modal('show');
     }
 
     /**

@@ -57,4 +57,24 @@ export class AppConfig {
     getPhpUrl(route) {
         return this.phpAppBase + route;
     }
+
+    /**
+     * Encoding message to the server side domain
+     * @method encode
+     * @param  {Object} obj
+     * @return {String}
+     */
+    encode(obj) {
+        return JSON.stringify(obj);
+    }
+
+    /**
+     * Decoding message from the server side domain
+     * @method decode
+     * @param  {String} str
+     * @return {Object}
+     */
+    decode(str) {
+        return JSON.parse(str);
+    }
 }
