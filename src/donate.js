@@ -207,9 +207,9 @@ export class Component extends ViewModelAbstract {
                 data = self.appConfig.decode(data);
                 let message = '';
                 for (log of data) {
-                    console.log(log);
                     if (log.hash && log.hash.objPmNotify && log.hash.objPmNotify.errorCode) {
                         message = `[${log.hash.objPmNotify.errorCode}] log.hash.objPmNotify.errorMessage`;
+                        console.log(message);
                         break;
                     }
                 }
