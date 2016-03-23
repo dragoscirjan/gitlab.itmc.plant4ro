@@ -2,6 +2,8 @@
 
 namespace Ppr\Mvc\Model\ModelTrait;
 
+use ReflectionClass, ReflectionProperty;
+
 trait Doctrine
 {
 
@@ -21,6 +23,34 @@ trait Doctrine
             return;
         }
         throw new \Exception("Method `$method` does not exists");
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray() {
+        $iterable = [];
+        $refl = new ReflectionClass(get_class($this));
+        $reflProps = $refl->getProperties(ReflectionProperty::IS_PRIVATE);
+        foreach ($reflProps as $reflProp) {
+            var_dump($reflProp->getDocComment());
+        }
+        die();
+        return $iterable;
+    }
+
+    /**
+     * @return mixed|string|void
+     */
+    public function toString() {
+        return json_encode($this->toArray());
+    }
+
+    /**
+     * @return mixed|string|void
+     */
+    public function __toString() {
+        return $this->toString();
     }
 
 }
