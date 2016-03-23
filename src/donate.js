@@ -139,7 +139,6 @@ export class Component extends ViewModelAbstract {
         // get exchange value
         return this.fetchExchange().then(() => {
             if (ni.params && ni.params.t) {
-                console.log(ni.params.t);
                 return self.fetchMobilpayInfo(ni.params.t);
             }
         });
@@ -203,10 +202,20 @@ export class Component extends ViewModelAbstract {
             .catch(error => {
                 self.logger.warn('Getting exchange rates failed with error', error);
             })
-            .then(response => response.json())
+            // .then(response => response.json())
             .then((data) => {
                 console.log('errData', data, self);
-                // self.showDonationError()
+                // let message = '';
+                // for (log of data) {
+                //     if (log.hash && log.hash.objPmNotify && log.hash.objPmNotify.errorCode) {
+                //         message = `[${log.hash.objPmNotify.errorCode}] log.hash.objPmNotify.errorMessage`;
+                //         break;
+                //     }
+                // }
+                // if (!message.length) {
+                //     message = 'Nu am putut determina eroarea. Va rugam contactati departamentul tehnic.';
+                // }
+                // self.showDonationError(message);
             });
     }
 
