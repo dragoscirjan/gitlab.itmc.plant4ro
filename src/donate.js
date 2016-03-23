@@ -139,6 +139,7 @@ export class Component extends ViewModelAbstract {
         // get exchange value
         return this.fetchExchange().then(() => {
             if (ni.params && ni.params.t) {
+                console.log(ni.params.t);
                 return self.fetchMobilpayInfo(ni.params.t);
             }
         });
