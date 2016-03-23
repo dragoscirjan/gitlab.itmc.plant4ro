@@ -234,17 +234,21 @@ class Donate {
     public function mobilpay(Application $app, Request $request) {
 
         /**
+         * Info Section
+         */
+        if ($request->get('status') === 'info') {
+            return $this->getMobilpayInfo($app, $request->get('orderId'));
+        }
+
+        /**
          * Validation Section
          */
 
         // treat mobilpay payment fail redirect
-        if ($request->get('status') !== 'confirm') {
+        if ($request->get('status') === 'fail') {
             try {
                 // obtain mobilpay session info
-                $mobilpay = $app->getEm()->createQuery(sprintf(
-                    "SELECT m FROM \Ppr\Mvc\Model\Mobilpay m WHERE m.uuid = '%s' ORDER BY m.id DESC",
-                    $request->get('orderId')
-                ))->execute();
+                $mobilpay = $this->getMobilpayLog($app, $request->get('orderId'));
 
                 // if not session info throw error
                 if (count($mobilpay) == 0) {
@@ -412,15 +416,6 @@ class Donate {
     /********************************************************
      * Private Declarations
      ********************************************************/
-
-    /**
-     * @return string
-     */
-    private function uuid() {
-        srand((double) microtime() * 1000000);
-        return uniqid('PPR' . rand(), true);
-    }
-
     /**
      * @method braintreeInit
      * @param  Application   $app
@@ -430,6 +425,34 @@ class Donate {
         Braintree\Configuration::merchantId($app->getConfig('payment.braintree.merchantId'));
         Braintree\Configuration::publicKey($app->getConfig('payment.braintree.publicKey'));
         Braintree\Configuration::privateKey($app->getConfig('payment.braintree.privateKey'));
+    }
+
+    /**
+     * @param Application $app
+     * @param string $uuid
+     * @return array
+     */
+    private function getMobilpayLog(Application $app, $uuid) {
+        return $app->getEm()->createQuery(sprintf(
+            "SELECT m FROM \Ppr\Mvc\Model\Mobilpay m WHERE m.uuid = '%s' ORDER BY m.id DESC",
+            $uuid
+        ))->execute();
+    }
+
+    /**
+     * @param Application $app
+     * @param string $uuid
+     * @return Response
+     */
+    private function getMobilpayInfo(Application $app, $uuid) {
+        $logCollection = $this->getMobilpayLog($app, $uuid);
+        $logArray = [];
+        foreach ($logCollection as $log) {
+            $l = $log->toArray();
+            $l['hash'] = $app->decode($l['hash']);
+            $logArray[] = $l;
+        }
+        return json_encode($logArray);
     }
 
     /**
@@ -473,6 +496,14 @@ class Donate {
         ));
 
         return $donation->getId();
+    }
+
+    /**
+     * @return string
+     */
+    private function uuid() {
+        srand((double) microtime() * 1000000);
+        return uniqid('PPR' . rand(), true);
     }
 
 //    private function test() {

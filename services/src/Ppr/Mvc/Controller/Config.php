@@ -104,7 +104,7 @@ export class AppConfig {
      */
     decode(str) {
 <?php if ($app->getEnv() == Application::ENV_DEVELOP
-        || $app->getEnv() == Application::ENV_TESTING
+            || $app->getEnv() == Application::ENV_TESTING
 ) : ?>
         return JSON.parse(str);
 <?php else: ?>
