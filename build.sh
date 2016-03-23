@@ -1,5 +1,7 @@
 #! /bin/bash
 
+git pull
+
 # npm install
 # jspm install
 
