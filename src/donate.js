@@ -135,11 +135,10 @@ export class Component extends ViewModelAbstract {
         super.activate(params, routeConfig);
         let self = this;
         let ni = navigationInstruction;
-        console.log(ni.params.t);
         // get exchange value
         return this.fetchExchange().then(() => {
             if (ni.params && ni.params.t) {
-                return self.fetchMobilpayInfo(ni.params.t);
+                self.orderId = ni.params.t;
             }
         });
     }
@@ -153,7 +152,9 @@ export class Component extends ViewModelAbstract {
         this.toggleRangeSlider();
         this.toggleCorporate();
 
-        // this.showDonationError('Lorem ipsum sit dolor....');
+        if (this.orderId) {
+            return self.fetchMobilpayInfo(this.orderId);
+        }
     }
 
     destroyBraintreeForm() {
