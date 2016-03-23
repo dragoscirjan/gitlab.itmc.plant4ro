@@ -137,23 +137,10 @@ export class Component extends ViewModelAbstract {
         let ni = navigationInstruction;
         console.log(ni.params.t);
         // get exchange value
-        return new Promise((resolve, reject) => {
-            this.http.fetch('curs-valutar')
-                .catch(error => {
-                    self.logger.warn('Getting exchange rates failed with error', error);
-                })
-                .then(response => response.json())
-                .then((data) => {
-                    self.logger.debug('Exchange rates obtained:', data);
-                    if (!data.error) {
-                        self.model.donation.exchange = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
-                        self.logger.debug('Exchange rates obtained EUR:', self.model.donation.exchange);
-                    }
-
-                    if (ni.params && ni.params.t) {
-                        return self.fetchMobilpayInfo(ni.params.t);
-                    }
-                });
+        return this.fetchExchange().then(() => {
+            if (ni.params && ni.params.t) {
+                return self.fetchMobilpayInfo(ni.params.t);
+            }
         });
     }
 
@@ -182,6 +169,26 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
+     * @method fetchExchange
+     * @return {Promise}
+     */
+    fetchExchange() {
+        return this.http
+            .fetch('curs-valutar')
+            .catch(error => {
+                self.logger.warn('Getting exchange rates failed with error', error);
+            })
+            .then(response => response.json())
+            .then((data) => {
+                self.logger.debug('Exchange rates obtained:', data);
+                if (!data.error) {
+                    self.model.donation.exchange = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
+                    self.logger.debug('Exchange rates obtained EUR:', self.model.donation.exchange);
+                }
+            });
+    }
+
+    /**
      * [fetchMobilpayInfo description]
      * @method fetchMobilpayInfo
      * @param  {String}  t
@@ -196,7 +203,7 @@ export class Component extends ViewModelAbstract {
             })
             .then(response => response.json())
             .then((data) => {
-                console.log('errData', data);
+                console.log('errData', data, self);
                 // self.showDonationError()
             });
     }
