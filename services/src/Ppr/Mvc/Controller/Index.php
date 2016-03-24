@@ -3,6 +3,7 @@
 namespace Ppr\Mvc\Controller;
 
 use Ppr\Application;
+use Ppr\Mvc\Model;
 use Ppr\Http\Response;
 
 /**
@@ -17,9 +18,13 @@ class Index {
     public function treeCount(Application $app) {
         // TODO: Implement tree count from database
         try {
+            $treeCount = $app->getEm()
+                ->createQuery('SELECT SUM(fu.trees) AS treeCount FROM \Ppr\Mvc\Model\ForestryUnit fu')
+                ->getSingleScalarResult();
+
             return Response::response(array(
                     'error' => 0,
-                    'treeCount' => substr(time(), -6),
+                    'treeCount' => $treeCount,
             ));
         } catch(\Exception $e) {
             $app->getLogger()->err("{$e->getMessage()}\n{$e->getTraceAsString()}");
@@ -40,20 +45,18 @@ class Index {
         // TODO: Implement donator list from database
         try {
             $list = [];
-            for ($i = 0; $i < 10; $i++) {
+            $donations = $app->getEm()
+                ->createQuery('SELECT d FROM \Ppr\Mvc\Model\Donation d WHERE d.status = ?1 OR d.status = ?2 ORDER BY d.id DESC')
+                ->setParameter(1, Model\Donation::STATUS_COMPLETED)
+                ->setParameter(2, Model\Donation::STATUS_EMAILED)
+                ->setMaxResults(20)
+                ->getResult();
+            foreach ($donations as $donation) {
                 $list[] = array(
-                    'hash' => md5(time() . $i),
-                    'name' => 'Dragos Cirjan',
-                    'location' => 'Bucuresti, Romania',
-                    'trees' => '20'
-                );
-            }
-            for ($i = 10; $i < 20; $i++) {
-                $list[] = array(
-                    'hash' => md5(time() . $i),
-                    'name' => 'Samsung',
-                    'location' => 'Romania',
-                    'trees' => '20'
+                    'hash' => $donation->getUuid(),
+                    'name' => $donation->getDonator()->getCompany() ? $donation->getDonator()->getCompany() : $donation->getDonator()->getName(),
+                    'location' => $donation->getDonator()->getLocation(),
+                    'trees' => $donation->getTrees()
                 );
             }
             return Response::response(array(
@@ -68,6 +71,58 @@ class Index {
                     'trace' => $e->getTraceAsString(),
             ));
         }
+    }
+
+    /**
+     * @param Application $app
+     * @return Response
+     */
+    public function updateForestryUnits(Application $app) {
+        $units = require $app->getCOnfig('path') . '/../sql/insert-forestry-unit.php';
+        $restoreUnits = [];
+        foreach ($units as $unit) {
+            $unit = new Model\ForestryUnit($unit);
+            if ($app->getEm()->find('\Ppr\Mvc\Model\ForestryUnit', $unit->getId()) === null) {
+                $app->getEm()->persist($unit);
+            } else {
+                $app->getEm()->merge($unit);
+            }
+            $app->getEm()->flush();
+            $restoreUnits[] = $unit->toArray();
+        }
+        return Response::response($restoreUnits);
+    }
+
+    /**
+     * @param Application $app
+     * @return Response
+     */
+    public function updateDonations(Application $app) {
+        $donations = require $app->getCOnfig('path') . '/../sql/insert-donations.php';
+        $restoreUnits = [];
+        foreach ($donations as $donation) {
+            $donator = new Model\Donator($donation['donator']);
+            if ($app->getEm()->find('\Ppr\Mvc\Model\Donator', $donator->getId()) === null) {
+                $app->getEm()->persist($donator);
+            } else {
+                $app->getEm()->merge($donator);
+            }
+//            $app->getEm()->flush();
+
+            $donation = new Model\Donation($donation);
+            $donation->setDonator($donator);
+            if ($app->getEm()->find('\Ppr\Mvc\Model\Donation', $donation->getId()) === null) {
+                $app->getEm()->persist($donation);
+            } else {
+                $app->getEm()->merge($donation);
+            }
+            $app->getEm()->flush();
+
+            $donation = $donation->toArray();
+            $donation['donator'] = $donator->toArray();
+            $restoreUnits[] = $donation;
+        }
+        return Response::response($restoreUnits);
     }
 
 }

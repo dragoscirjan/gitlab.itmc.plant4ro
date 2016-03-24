@@ -19,7 +19,7 @@ trait Doctrine
             return $this->{lcfirst(substr($method, 3))};
         }
         if (substr($method, 0, 3) == 'set') {
-            $this->{ucfirst(lcfirst($method, 3))} = $arguments[0];
+            $this->{lcfirst(substr($method, 3))} = $arguments[0];
             return;
         }
         throw new \Exception("Method `$method` does not exists");

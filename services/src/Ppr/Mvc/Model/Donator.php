@@ -5,9 +5,9 @@ namespace Ppr\Mvc\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Donator
+ * Donators
  *
- * @ORM\Table(name="donator")
+ * @ORM\Table(name="donators")
  * @ORM\Entity
  */
 class Donator {

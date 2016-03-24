@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="diplomas", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_EEED2AD51E057D48", columns={"donationId"})})
  * @ORM\Entity
  */
-class Diplomas {
+class Diploma {
 
     use \Ppr\Mvc\Model\ModelTrait\Doctrine;
 

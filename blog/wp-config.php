@@ -21,6 +21,8 @@
  define('WP_HOME', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . '/blog');
  define('WP_SITEURL', $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['SERVER_NAME'] . '/blog');
 
+define('FS_METHOD', 'direct');
+
 if ($_SERVER['SERVER_NAME'] === 'planteazapentruromania.local') {
 
 	// ** MySQL settings - You can get this info from your web host ** //

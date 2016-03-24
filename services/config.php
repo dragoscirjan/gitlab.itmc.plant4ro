@@ -1,14 +1,14 @@
 <?php
 
-return array(
+return [
     'development' => [
-        'db' => array(
+        'db' => [
             'dbname' => 'donations',
             'user' => 'root',
             'password' => 'weltest',
             'host' => 'localhost',
             'driver' => 'pdo_mysql',
-        ),
+        ],
         'contact' => [
             'mail' => [
                 'transport' => '\Zend\Mail\Transport\Smtp',
@@ -62,15 +62,16 @@ return array(
                 'dragos.cirjan+ppr@itmediaconnect.ro'
             ]
         ],
+        'path' => __DIR__,
     ],
     'testing' => [
-        'db' => array(
+        'db' => [
             'dbname' => 'plant4ro_test_do',
             'user' => 'plant4ro',
             'password' => 'plant4roma',
             'host' => 'localhost',
             'driver' => 'pdo_mysql',
-        ),
+        ],
         'js' => [
             'servicesBase' => '//test.planteazapentruromania.ro/services/index.php/'
         ],
@@ -82,13 +83,13 @@ return array(
         ],
     ],
     'staging' => [
-        'db' => array(
+        'db' => [
             'dbname' => 'plant4ro_stage_do',
             'user' => 'plant4ro',
             'password' => 'plant4roma',
             'host' => 'localhost',
             'driver' => 'pdo_mysql',
-        ),
+        ],
         'js' => [
             'servicesBase' => '//stage.planteazapentruromania.ro/services/index.php/'
         ],
@@ -114,4 +115,4 @@ return array(
             ]
         ],
     ],
-);
+];
