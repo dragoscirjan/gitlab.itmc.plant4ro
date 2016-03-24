@@ -31,3 +31,8 @@ case $ENV in
     'staging') gulp bundle;;
     'production') gulp bundle;;
 esac
+
+chmod -R 777 services/cache services/src/Ppr/Mvc/Model/Proxy
+
+touch services/.log
+chmod -R 777 services/.log

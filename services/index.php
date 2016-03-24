@@ -23,4 +23,7 @@ $app->post('/donate/mobilpay/{orderId}/{status}', '\Ppr\Mvc\Controller\Donate::m
 
 $app->get('/config-js', '\Ppr\Mvc\Controller\Config::configJs');
 
+$app->get('/update-forestry-units', '\Ppr\Mvc\Controller\Index::updateForestryUnits');
+$app->get('/update-donations', '\Ppr\Mvc\Controller\Index::updateDonations');
+
 $app->run();
