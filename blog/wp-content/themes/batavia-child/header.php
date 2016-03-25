@@ -34,7 +34,7 @@
 	HEADER
 	xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
 	<header id="zl_siteheader">
-		<div class="zl_mainmenuholder"></div>
+		<!-- <div class="zl_mainmenuholder"></div> -->
 		<div class="zl_mainmenu">
 			<!-- <div class="small-5 column zl_socrent">
 				<div class="zl_social_links">
