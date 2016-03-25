@@ -19,14 +19,13 @@ template
         span Fac parte din compania
         .form-group--inline.form-wrap
           input#company.form-control(type="text", placeholder="(Adauga numele companiei)", value.bind="model.company")
-        br
         span cu codul fiscal
         .form-group--inline.form-wrap
           input#fiscal.form-control(type="text", placeholder="(Adauga cod fiscal)", value.bind="model.vat" required.bind="mode.company.trim()", data-parsley-pattern.bind="mode.company.trim() ? '(RO)?\\\\d{}' : '.*'")
         br
         span si va contactez in legatura cu
         .form-group.form-wrap
-          input#subject.form-control(type="text", placeholder="(Adauga subiectul mesajului) *", value.bind="model.subject", required="")
+          input#subject.form-control.text-center(type="text", placeholder="(Adauga subiectul mesajului) *", value.bind="model.subject", required="")
         br
         .form-group.h-margin-bottom-40.form-wrap
           textarea.form-control#message(placeholder="Mesajul meu: *", value.bind="model.message", required="")

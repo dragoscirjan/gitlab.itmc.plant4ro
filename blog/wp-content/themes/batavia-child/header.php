@@ -30,22 +30,6 @@
 	<div id="zl_menucontainer"></div>
 	<!-- ====================== EFFECT ELEMENTS -->
 
-	<!-- Batavia Menu ====================== -->
-	<div class="zl_batavia_menu">
-		<ul class="zl_bt_menu">
-			<?php
-				$menu = get_transient('primary_menu');
-				if (false === $menu ){
-				    ob_start();
-				    wp_nav_menu( array( 'container'=> false, 'items_wrap' => '%3$s', 'theme_location' => 'primary', 'fallback_cb'=> 'zl_fallbackmenu') );
-				    $menu = ob_get_clean();
-				    set_transient( 'primary_menu', $menu, DAY_IN_SECONDS );
-				}
-				echo zl_pass_html( $menu ) ;
-			?>
-		</ul>
-	</div>
-
 	<!-- xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 	HEADER
 	xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx -->
@@ -68,6 +52,22 @@
 						<span class="icon-bar"></span>
 					</div>
 				</div>
+			</div>
+
+			<!-- Batavia Menu ====================== -->
+			<div class="zl_batavia_menu">
+				<ul class="zl_bt_menu">
+					<?php
+						$menu = get_transient('primary_menu');
+						if (false === $menu ){
+						    ob_start();
+						    wp_nav_menu( array( 'container'=> false, 'items_wrap' => '%3$s', 'theme_location' => 'primary', 'fallback_cb'=> 'zl_fallbackmenu') );
+						    $menu = ob_get_clean();
+						    set_transient( 'primary_menu', $menu, DAY_IN_SECONDS );
+						}
+						echo zl_pass_html( $menu ) ;
+					?>
+				</ul>
 			</div>
 
 			<!-- Branding -->
