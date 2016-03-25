@@ -202,6 +202,17 @@ a:focus {
   border-color: #857b76;
 }
 
+.zl_postmeta .zl_by em,
+.zl_post_cat .zl_by em,
+.zl_post_excerpt p {
+  color: #857b76;
+}
+
+.zl_post .entry-title a:before,
+.zl_post .entry-title a:after {
+  content: none;
+}
+
 .zl_post_thumb {
   background-color: #f2f1ee;
 }

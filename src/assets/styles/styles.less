@@ -7,6 +7,7 @@ Imports
 ========================================================================== */
 @import 'variables.less';
 @import 'mixins.less';
+// @import 'fonts/fonts.less';
 
 // @font-face {
 //     font-family: 'AvenirBlack';
@@ -49,6 +50,18 @@ Imports
 //     /* src: url('@{fonts-path}AvenirLTStd-Light_gdi.eot');*/
 //     /* unicode-range: U+0020-25CA;*/
 // }
+//
+@font-face {
+    font-family: 'Stentiga';
+    src: url('@{fonts-path}stentiga-webfont.eot');
+    src: url('@{fonts-path}stentiga-webfont.eot?#iefix') format('embedded-opentype'),
+         url('@{fonts-path}stentiga-webfont.woff2') format('woff2'),
+         url('@{fonts-path}stentiga-webfont.woff') format('woff'),
+         url('@{fonts-path}stentiga-webfont.ttf') format('truetype'),
+         url('@{fonts-path}stentiga-webfont.svg#stentigaregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /* ==========================================================================
 Base
@@ -61,7 +74,10 @@ body {
     font-family: Roboto, sans-serif;
     font-size: 16px;
     font-weight: 400;
-    line-height: 1.45;
+    line-height: 2;
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -171,7 +187,7 @@ Layout
     padding: 25px;
 
     @media (min-width: 768px) {
-        padding: 70px;
+        padding: 40px 70px;
     }
 }
 
@@ -270,6 +286,7 @@ Modules
     margin: 40px 0 50px;
     font-size: 40px;
     font-weight: 700;
+    line-height: .9;
     color: @primary-color;
     text-transform: uppercase;
 
@@ -305,8 +322,9 @@ Modules
 
     text-transform: uppercase;
     text-decoration: none;
+    font-weight: 700;
     border-style: solid;
-    border-width: 2px;
+    border-width: 3px;
     border-radius: 4em;
 
     @media (min-width: 768px) {
@@ -564,6 +582,7 @@ hr,
     border-radius: 0;
     background-color: transparent;
     box-shadow: none;
+    color: @text-color;
 
     &:focus {
         border-color: @border-color;
@@ -618,22 +637,23 @@ hr,
 }
 
 .form--contact {
-    max-width: 800px;
+    max-width: 680px;
     margin: 70px auto 0;
+    font-size: 16px;
     text-align: center;
 
     span {
-        display: inline-block;
-        font-size: 20px;
+        font-family: 'Stentiga', Roboto, sans-serif;
         line-height: 3.5;
         vertical-align: middle;
         text-transform: uppercase;
     }
 
     .form-control {
+        font-family: 'Stentiga', Roboto, sans-serif;
         padding: 10px 0;
         border-color: transparent transparent @border-color transparent;
-        font-size: 20px;
+        font-size: 16px;
         text-transform: uppercase;
     }
 
@@ -965,6 +985,7 @@ Navbar
 
 .navbar {
     min-height: unset;
+    margin-bottom: 0;
     padding: 0 25px;
 
     @media (min-width: 768px) {
@@ -979,12 +1000,14 @@ Navbar
         position: relative;
         z-index: 1;
         display: inline-block;
+        width: 135px;
         float: none;
         height: auto;
         margin-top: 90px;
         padding: 0;
 
         @media (min-width: 768px) {
+            width: 170px;
             margin-top: 70px;
         }
 
@@ -1154,9 +1177,7 @@ Navbar
         display:         flex;
 
         -webkit-transition: -webkit-transform .5s ease-in-out;
-                transition: -webkit-transform .5s ease-in-out;
                 transition:         transform .5s ease-in-out;
-                transition:         transform .5s ease-in-out, -webkit-transform .5s ease-in-out;
         -webkit-transform: translateX(-100%);
                 transform: translateX(-100%);
 
@@ -1173,8 +1194,6 @@ Navbar
 
         @media (min-width: 768px) {
             width: 50%;
-
-            box-shadow: 2px 0 4px rgba(0, 0, 0, .25);
         }
 
         .is-nav-open & {
@@ -1194,7 +1213,7 @@ Navbar
                 width: 100%;
                 padding: 10px 0;
 
-                font-weight: 700;
+                font-weight: 400;
                 text-decoration: none;
                 text-transform: uppercase;
 
@@ -1403,6 +1422,7 @@ Navbar
 
             .owl-carousel__caption {
                 font-size: 20px;
+                line-height: 1.25;
                 text-transform: uppercase;
 
                 @media (min-width: 992px) {
@@ -1630,12 +1650,10 @@ Navbar
         left: 0;
         z-index: 15;
 
-        padding: 100px 25px;
+        padding: 100px 80px;
 
-        -webkit-transition: -webkit-transform .3s ease-in-out;
-                transition: -webkit-transform .3s ease-in-out;
-                transition:         transform .3s ease-in-out;
-                transition:         transform .3s ease-in-out, -webkit-transform .3s ease-in-out;
+        -webkit-transition: transform .3s ease-in-out;
+                transition: transform .3s ease-in-out;
         -webkit-transform: translateX(100%);
                 transform: translateX(100%);
 
@@ -1645,8 +1663,9 @@ Navbar
         @media (min-width: 768px) {
             left: auto;
 
-            padding-left: 70px;
-            padding-right: 70px;
+            width: 560px;
+            padding-left: 145px;
+            padding-right: 145px;
         }
 
         .is-donation-open & {
@@ -1670,6 +1689,7 @@ Navbar
                 justify-content: center;
 
         height: 100%;
+        overflow: hidden;
     }
 
     &__close {
@@ -1691,26 +1711,29 @@ Navbar
     }
 
     &__side-title {
-        // position: absolute;
-        // top: 50%;
-        // left: 50%;
+        position: absolute;
+        top: 50%;
+        left: 0;
+
+        transform: translateY(-50%);
 
         display: inline-block;
         overflow: hidden;
 
-        width: 1.5em;
-        margin-right: 10%;
+        // width: 1.5em;
+        // margin-right: 10%;
 
         text-transform: uppercase;
 
         color: #fff;
 
         font-weight: 700;
-        font-size: 68px;
+        font-size: 60px;
         line-height: 1.5;
 
         @media (min-width: 768px) {
-            font-size: 80px;
+            left: 30px;
+            font-size: 86px;
         }
     }
 
@@ -1730,13 +1753,13 @@ Navbar
     &__list {
         margin: 0;
         padding: 0;
-        border-top: 1px solid @text-color;
-        border-bottom: 1px solid @text-color;
+        border-top: 1px solid @border-color;
+        border-bottom: 1px solid @border-color;
         list-style: none;
     }
 
     &__item {
-        padding: 25px 0;
+        padding: 25px;
 
         & + .donation__item {
             border-top: 1px solid @text-color;
@@ -1749,6 +1772,12 @@ Navbar
    ========================================================================== */
 
 .donator {
+    font-size: 12px;
+
+    @media (min-width: 768px) {
+        font-size: 14px;
+    }
+
     &__details {
         position: relative;
 
@@ -1779,7 +1808,7 @@ Navbar
 
         text-align: center;
 
-        color: @secondary-color;
+        color: @primary-color;
 
         font-weight: 700;
     }
@@ -1794,7 +1823,11 @@ Navbar
 
     &__donation {
         font-weight: 700;
-        font-size: 30px;
+        font-size: 24px;
+
+        @media (min-width: 768px) {
+            font-size: 30px;
+        }
     }
 }
 
@@ -2167,8 +2200,9 @@ Navbar
     -ms-flex-pack: center;
             justify-content: center;
 
-    width: 95px;
-    height: 95px;
+    width: 118px;
+    height: 118px;
+    background: transparent url('img/badge.png') no-repeat center;
     text-align: center;
 
     &__text {
@@ -2256,10 +2290,15 @@ Navbar
         justify-content: space-between;
 
         font-size: 11px;
+        line-height: 1.45;
         text-transform: uppercase;
 
         @media (min-width: 768px) {
             flex-direction: row;
+        }
+
+        a {
+            text-decoration: none;
         }
 
         p {
