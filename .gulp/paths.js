@@ -25,7 +25,7 @@ module.exports = {
         pluginsJs: appRoot + 'assets/plugins/**/*.js',
         contentImages:  appRoot + 'assets/img/**/*.{gif,jpg,jpeg,png,svg}',
         stylesImages:    appRoot + 'assets/styles/img/**/*.{gif,jpg,jpeg,png,svg}',
-        fonts: appRoot + 'assets/styles/**/*.{eot,woff,svg,ttf}',
+        fonts: appRoot + 'assets/styles/**/*.{eot,woff,woff2,svg,ttf}',
 
         output: {
             styles:  appOutput + 'assets/styles/',
