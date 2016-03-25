@@ -2,6 +2,7 @@
 
 namespace Ppr\Mvc\Controller;
 
+use MyProject\Proxies\__CG__\stdClass;
 use Ppr\Application;
 use Ppr\Http\Response;
 use Ppr\Mvc\Model;
@@ -60,7 +61,7 @@ class Donate {
             $token = Braintree\ClientToken::generate();
             // log token
             $app->getLogger()->notice(sprintf(
-                'Braintree token `%s` generated from `%s`',
+                '(Donation/Braintree) :: Token `%s` generated from `%s`',
                 $token,
                 $_SERVER['REMOTE_ADDR']
             ));
@@ -70,18 +71,11 @@ class Donate {
                 'token' => $token,
             ));
         } catch (\Exception $e) {
-            // log exception
-            $app->getLogger()->err(sprintf(
-                "Braintree token generation failed with message: '%s', trace: \n%s",
-                $e->getMessage(),
-                $e->getTraceAsString()
-            ));
             // return exception
-            return Response::response500(array(
-                'error' => 'Could not initiate Braintree Token',
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ));
+            return Response::response500([
+                'error' => '(Donation/Braintree) :: FAIL Could not initiate Braintree Token',
+                'e' => $e,
+            ]);
         }
     }
 
@@ -89,26 +83,28 @@ class Donate {
      * @param Application $app
      */
     public function mobilpayClientToken(Application $app, Request $request) {
+        // decode load to obtain information
+        $load = $app->decode($request->get('load'));
+        $orderId = $this->uuid();
         try {
-            // decode load to obtain information
-            $load = $app->decode($request->get('load'));
-
-            // create mobilpay session
-            $mobilpay = new Model\Mobilpay([
-                'uuid' => $this->uuid(),
-                'hash' => $app->encode($load),
-                'hashMethod' => $app->encodeMethod(),
-                'stamp' => time(),
-            ]);
-            $app->getEm()->persist($mobilpay);
-            $app->getEm()->flush();
-
+            // save donator
+            $donator = $this->getDonatorByEmail($app, $load->email, $load);
+            // save donation (this will enter with 'STATUS_PENDING')
+            $donation = $this->getDonationByUuid($app, $orderId, $donator, $load);
+        } catch (\Exception $e) {
+            // return exception
+            return Response::response500([
+                'error' => '(Donation/Mobilpay) :: FAIL Could not save initial payment data',
+                'e' => $e,
+            ], $app);
+        }
+        try {
             // create mobilpay api session
             $objPmReqCard = new \Mobilpay_Payment_Request_Card();
             $objPmReqCard->signature = $app->getConfig('payment.mobilpay.signature');
-            $objPmReqCard->orderId = $mobilpay->getUuid();
-            $objPmReqCard->confirmUrl = sprintf($app->getConfig('payment.mobilpay.confirmUrl'), $mobilpay->getUuid());
-            $objPmReqCard->returnUrl = sprintf($app->getConfig('payment.mobilpay.returnUrl'), $mobilpay->getUuid());
+            $objPmReqCard->orderId = $orderId;
+            $objPmReqCard->confirmUrl = sprintf($app->getConfig('payment.mobilpay.confirmUrl'), $orderId);
+            $objPmReqCard->returnUrl = sprintf($app->getConfig('payment.mobilpay.returnUrl'), $orderId);
             $objPmReqCard->invoice = new \Mobilpay_Payment_Invoice();
             $objPmReqCard->invoice->currency = 'RON';
             $objPmReqCard->invoice->amount = $load->donation->total;
@@ -117,22 +113,16 @@ class Donate {
 
             // return token
             return Response::response(array(
+                'error' => 0,
                 'url' => $app->getConfig('payment.mobilpay.paymentUrl'),
                 'env_key' => $objPmReqCard->getEnvKey(),
                 'data' => $objPmReqCard->getEncData(),
             ));
-        } catch(Exception $e) {
-            // log exception
-            $app->getLogger()->err(sprintf(
-                "Mobilpay token generation failed with message: '%s', trace: \n%s",
-                $e->getMessage(),
-                $e->getTraceAsString()
-            ));
+        } catch(\Exception $e) {
             // return exception
             return Response::response500(array(
-                'error' => 'Could not initiate Mobilpay Token',
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
+                'error' => '(Donation/Mobilpay) :: Mobilpay token generation failed',
+                'e' => $e,
             ));
         }
     }
@@ -143,44 +133,55 @@ class Donate {
      * @return Response
      */
     public function braintree(Application $app, Request $request) {
+        // decode load to obtain information
+        $load = $app->decode($request->get('load'));
+        // create sale data
+        $sale = [
+            'amount' => $load->donation->totalEur,
+            'orderId' => $this->uuid(),
+            'paymentMethodNonce' => $load->donation->braintree->nonce,
+            'options' => [
+                'submitForSettlement' => True
+            ]
+        ];
         try {
-            // decode load to obtain information
-            $load = $app->decode($request->get('load'));
-
+            // save donator
+            $donator = $this->getDonatorByEmail($app, $load->email, $load);
+            // save donation (this will enter with 'STATUS_PENDING')
+            $donation = $this->getDonationByUuid($app, $sale['orderId'], $donator, $load);
+        } catch (\Exception $e) {
+            // return exception
+            return Response::response500([
+                'error' => '(Donation/Braintree) :: FAIL Could not save initial payment data',
+                'e' => $e,
+            ], $app);
+        }
+        // init transaction info
+        $transaction = [];
+        // try to perform donation payment
+        try {
             // init braintree setup
             $this->braintreeInit($app);
-
-            // create sale data
-            $sale = [
-                'amount' => $load->donation->totalEur,
-                'orderId' => $this->uuid(),
-                'paymentMethodNonce' => $load->donation->braintree->nonce,
-                'options' => [
-                    'submitForSettlement' => True
-                ]
-            ];
-
             // log sale attempt
-            $app->getLogger()->info(sprintf(
-                'Braintree attempting sale info `%s`',
-                json_encode($sale)
-            ));
-
+            $app->getLogger()->info(sprintf('(Donation/Braintree) :: Braintree attempting sale info: %s', json_encode($sale)));
             // perform payment
             $result = Braintree\Transaction::sale($sale);
-
             // if error
-            if ($result instanceof \Braintree\Result\Error) {
+            if ($result instanceof Braintree\Result\Error) {
                 // log error
                 $app->getLogger()->alert(sprintf(
-                    "Braintree payment failed with \ntoken: `%s`, \nnonce: `%s`, \nresult: `%s`, \nrequest: `%s`.",
+                    "(Donation/Braintree) :: FAIL : Payment failed for \ntoken: `%s`, \nnonce: `%s`, \nresult: `%s`, \nrequest: `%s`.",
                     $load->donation->braintree->token,
                     $load->donation->braintree->nonce,
                     serialize($result),
                     $request->get('load')
                 ));
+                // change donation status to STATUS_FAILED
+                $donation->setStatus(Model\Donation::STATUS_FAILED);
+                $app->getEm()->merge($donation);
+                $app->getEm()->flush();
                 // throw exception
-                throw new \Exception('Could not complete Braintree transaction.');
+                throw new Braintree\Exception('(Donation/Braintree) :: FAIL : Could not complete Braintree transaction.');
             }
 
             // else create transaction info
@@ -194,37 +195,45 @@ class Donate {
                 'orderId' => $result->transaction->orderId,
             ];
 
+            // append hash info
+            $hash = $app->decode($donation->getHash());
+            $hash[] = $transaction;
+            $donation->setHash($app->encode($hash));
+
+            // change status to STATUS_COMPLETED*
+            if ($load->annonymous) {
+                $donation->setStatus(Model\Donation::STATUS_COMPLETED);
+            } else {
+                $donation->setStatus(Model\Donation::STATUS_COMPLETED_ANNO);
+            }
+
             // log transaction
             $app->getLogger()->info(sprintf(
-                'Braintree sale `%s` succeded with transaction `%s`',
+                '(Donation/Braintree) :: SUCCESS : Sale `%s` succeded with transaction `%s`',
                 json_encode($sale),
                 json_encode($transaction)
             ));
-
-            // save donation
-            $id = $this->saveDonation($app, $load, $transaction);
-
-            // return sale response
-            return Response::response(array(
-                'error' => 0,
-                'result' => $result->success,
-                'id' => $id,
-                't' => $sale['orderId'],
-            ));
-        } catch (\Exception $e) {
-            // log exception
-            $app->getLogger()->err(sprintf(
-                "Braintree sale attempt failed: '%s', trace: \n%s",
-                $e->getMessage(),
-                $e->getTraceAsString()
-            ));
+        } catch (Braintree\Exception $e) {
             // return exception
             return Response::response500(array(
                 'error' => 'Could not complete payment.',
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ));
+                'e' => $e,
+            ), $app);
+        } catch (\Exception $e) {
+            // return exception
+            return Response::response500(array(
+                'error' => 'Error occured on payment.',
+                'e' => $e,
+            ), $app);
         }
+
+        // return sale response
+        return Response::response(array(
+            'error' => 0,
+            'result' => $result->success,
+            'id' => $donation->getId(),
+            't' => $sale['orderId'],
+        ));
     }
 
     /**
@@ -440,6 +449,98 @@ class Donate {
     }
 
     /**
+     *
+     * @param Application $app
+     * @param string $email
+     * @param \stdClass|null $load
+     * @return \Ppr\Mvc\Model\Donator|null
+     */
+    private function getDonatorByEmail(Application $app, $email, $load = null) {
+        // obtain entity manager
+        $em = $app->getEm();
+        // check if donator already exists (by email)
+        $donator = $em->createQuery(sprintf(
+            "SELECT d FROM \Ppr\Mvc\Model\Donator d WHERE d.email = '%s'",
+            $email
+        ))->getResult();
+        // if donator doesn't exists
+        if (empty($donator)) {
+            // and if load is empty
+            if (empty($load)) {
+                // just ... leave
+                return null;
+            }
+            // create donator (for the 1st time)
+            $donator = new Model\Donator([
+                'name' => $load->name,
+                'email' => $load->email,
+                'company' => $load->company,
+                'phone' => $load->phone,
+                'location' => 'Romania',
+                'locationgps' => '0;0',
+                'companyvat' => $load->vat,
+            ]);
+            $em->persist($donator);
+            $em->flush();
+            $app->getLogger()->info(sprintf("Donator created: %s", json_decode($donator->getArray())));
+        } else {
+            $donator = array_pop($donator);
+            $app->getLogger()->info(sprintf(
+                "Donator discovered by email: %s, \n%s",
+                $email,
+                json_decode($donator->getArray())
+            ));
+        }
+        return $donator;
+    }
+
+    /**
+     * @param Application $app
+     * @param string $uuid
+     * @param \stdClass|null $load
+     * @return \Ppr\Mvc\Model\Donation|null
+     */
+    private function getDonationByUuid(Application $app, $uuid, $donator, $load = null) {
+        // obtain entity manager
+        $em = $app->getEm();
+        // check if donation already exists (by uuid)
+        $donation = $em->createQuery(sprintf(
+            "SELECT d FROM \Ppr\Mvc\Model\Donation d WHERE d.uuid = '%s'",
+            $uuid
+        ))->getResult();
+        // if donator doesn't exists
+        if (empty($donation)) {
+            // and if load is empty
+            if (empty($load)) {
+                // just ... leave
+                return null;
+            }
+            // create donator (for the 1st time)
+            $donation = new Model\Donation([
+                'donation' => ($load->donation->method=== 'braintree') ? $load->donation->totalEur : $load->donation->total,
+                'currency' => ($load->donation->method=== 'braintree') ? 'EUR' : 'RON',
+                'exchange' => ($load->donation->method=== 'braintree') ? $load->donation->exchange : '',
+                'trees' => $load->trees,
+                'started' => time(),
+                'hash' => $app->encode([$load]),
+                'hashMethod' => $app->encodeMethod(),
+                'donatorid' => $donator,
+            ]);
+            $em->persist($donation);
+            $em->flush();
+            $app->getLogger()->info(sprintf("Donation created: %s", json_decode($donation->getArray())));
+        } else {
+            $donation = array_pop($donation);
+            $app->getLogger()->info(sprintf(
+                "Donation discovered by email: %s, \n%s",
+                $uuid,
+                json_decode($donation->getArray())
+            ));
+        }
+        return $donation;
+    }
+
+    /**
      * @param Application $app
      * @param string $uuid
      * @return Response
@@ -457,46 +558,37 @@ class Donate {
 
     /**
      * @param Application $app
-     * @param $load
-     * @param $transaction
-     * @return mixed
+     * @param Model\Donation $donation
+     * @param int $status
+     * @return Model\Donation
      * @throws \Exception
      */
-    private function saveDonation(Application $app, $load, $transaction) {
-        $donator = new Model\Donator([
-            'name' => $load->name,
-            'email' => $load->email,
-            'company' => $load->company,
-            'phone' => $load->phone,
-            'location' => 'Romania',
-            'locationgps' => '0;0',
-            'companyvat' => $load->vat,
-        ]);
-
-        $app->getEm()->persist($donator);
+    private function setDonationStatus(Application $app, Model\Donation $donation, $status = Model\Donation::STATUS_PENDING) {
+        $donation->setStatus($status);
+        $app->getEm()->merge($donation);
         $app->getEm()->flush();
-
-        $donation = new Model\Donation([
-            'donation' => ($load->donation->method=== 'braintree') ? $load->donation->totalEur : $load->donation->total,
-            'currency' => ($load->donation->method=== 'braintree') ? 'EUR' : 'RON',
-            'exchange' => ($load->donation->method=== 'braintree') ? $load->donation->exchange : '',
-            'trees' => $load->trees,
-            'started' => time(),
-            'hash' => $app->encode([$load, $transaction]),
-            'hashMethod' => $app->encodeMethod(),
-            'donatorid' => $donator,
-        ]);
-
-        $app->getEm()->persist($donation);
-        $app->getEm()->flush();
-
-        $app->getLogger()->info(sprintf(
-            'Braintree sale saved donation `%s`',
-            $donation->getId()
-        ));
-
-        return $donation->getId();
+        return $donation;
     }
+
+//    /**
+//     * @param Application $app
+//     * @param $load
+//     * @param $transaction
+//     * @return mixed
+//     * @throws \Exception
+//     */
+//    private function saveDonation(Application $app, $load, $transaction) {
+//
+//        // create or obtain donator
+//        $donator = $this->getDonatorByEmail($app, $load->email, $load);
+//
+//        $app->getLogger()->info(sprintf(
+//            'Braintree sale saved donation `%s`',
+//            $donation->getId()
+//        ));
+//
+//        return $donation->getId();
+//    }
 
     /**
      * @return string
