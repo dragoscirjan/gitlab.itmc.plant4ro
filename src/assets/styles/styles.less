@@ -107,6 +107,10 @@ ul {
     padding-left: 15px;
 }
 
+:focus {
+    outline: none;
+}
+
 /* ==========================================================================
 Layout
 ========================================================================== */
@@ -227,11 +231,13 @@ Layout
     }
 
     &--vcenter {
-        -webkit-align-items: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -ms-grid-row-align: center;
-            align-items: center;
+        @media (min-width: 768px) {
+            -webkit-align-items: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -ms-grid-row-align: center;
+                align-items: center;
+        }
     }
 
     &--hcenter {
@@ -1416,6 +1422,8 @@ Navbar
         }
 
         &--hp-txt {
+            padding: 0;
+
             @media (max-width: 767px) {
                 margin-bottom: 5vmin;
             }
@@ -1564,6 +1572,7 @@ Navbar
    ========================================================================== */
 
 .donation {
+    position: relative;
     margin-bottom: 5vmin;
     text-align: center;
 
@@ -1581,7 +1590,7 @@ Navbar
 
     &__shadow {
         position: absolute;
-        top: 50%;
+        top: 0;
         left: 50%;
 
         width: 919px;
@@ -1589,7 +1598,7 @@ Navbar
 
         background: transparent url('img/triangles.png') no-repeat center;
 
-        transform: translate(-50%, -50%);
+        transform: translate(-50%, -27%);
     }
 
     &__btn {
@@ -2261,40 +2270,22 @@ Navbar
    ========================================================================== */
 
 .footer {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display:         flex;
-
-    margin: 0 -15px;
-
-    -webkit-align-items: flex-end;
-    -webkit-box-align: flex-end;
-    -ms-flex-align: flex-end;
-        align-items: flex-end;
-
-    @media (min-width: 768px) {
-        margin: 0 -25px;
-
-        -webkit-align-items: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-    }
-
     &__info {
         display: flex;
         flex-direction: column;
-        align-items: center;
         flex: 1;
         justify-content: space-between;
 
+        margin: 0 -15px;
         font-size: 11px;
         line-height: 1.45;
         text-transform: uppercase;
 
-        @media (min-width: 768px) {
+        @media (min-width: 1200px) {
             flex-direction: row;
+            align-items: center;
+            justify-content: normal;
+            margin: 0 -25px;
         }
 
         a {
@@ -2307,46 +2298,75 @@ Navbar
     }
 
     &__col {
-        padding: 0 15px;
+        flex: 1;
+        padding: 10px 15px;
 
-        @media (min-width: 768px) {
+        @media (min-width: 1200px) {
             padding: 0 25px;
-        }
-    }
 
-    &__menu {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
+            &:nth-child(1) {
+                order: 2;
+            }
 
-        margin: 0 -15px;
-        padding: 0;
-        list-style: none;
-
-        @media (min-width: 768px) {
-            margin: 0 -25px;
-        }
-
-        li {
-            width: 50%;
-            padding: 0 15px;
-
-            @media (min-width: 768px) {
-                padding: 0 25px;
+            &:nth-child(3) {
+                order: -1;
             }
         }
     }
 
+    &__menu {
+        margin: 0 -10px;
+        padding: 0;
+        list-style: none;
+
+        @media (min-width: 1200px) {
+            text-align: center;
+        }
+
+        li {
+            position: relative;
+            display: inline-block;
+            padding: 0 10px;
+
+            &:after {
+                content: '/';
+                position: absolute;
+                right: -4px;
+            }
+
+            &:last-child:after {
+                content: '';
+            }
+        }
+    }
+
+    &__details {
+        display: flex;
+        flex-direction: column;
+
+        @media (min-width: 1200px) {
+            flex-direction: row;
+            justify-content: flex-end;
+            align-items: center;
+            text-align: right;
+        }
+    }
+
+    &__contact {
+        flex: 0 1 auto;
+    }
+
     &__social {
         margin: 0;
-        padding: 0 15px;
+        padding: 20px 0 0;
 
         list-style: none;
 
-        flex: 0 1 auto;
+        flex: 1 0 auto;
 
-        @media (min-width: 768px) {
-            padding: 0 25px;
+        @media (min-width: 1200px) {
+            flex-grow: 0;
+            padding: 0 0 0 25px;
         }
 
         li {
@@ -2354,7 +2374,6 @@ Navbar
 
             font-size: 22px;
             line-height: 1;
-            // color: #fff;
         }
     }
 }
