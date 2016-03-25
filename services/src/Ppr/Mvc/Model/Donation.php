@@ -5,9 +5,9 @@ namespace Ppr\Mvc\Model;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Donation
+ * Donations
  *
- * @ORM\Table(name="donation", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_31E581A0A56AD13F", columns={"donatorId"})})
+ * @ORM\Table(name="donations", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_31E581A0A56AD13F", columns={"donatorId"})})
  * @ORM\Entity
  */
 class Donation {
@@ -15,6 +15,9 @@ class Donation {
     const STATUS_FAILED = 0;
     const STATUS_PENDING = 10;
     const STATUS_COMPLETED = 512;
+    const STATUS_COMPLETED_ANNO = 513;
+    const STATUS_EMAILED = 1024;
+    const STATUS_EMAILED_ANNO = 1025;
 
     use \Ppr\Mvc\Model\ModelTrait\Doctrine;
 
@@ -56,25 +59,18 @@ class Donation {
     private $trees;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="started", type="integer", nullable=false)
+     * @ORM\Column(name="uuid", type="string", length=48, nullable=true)
      */
-    private $started;
-
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="completed", type="integer", nullable=false)
-     */
-    private $completed = self::STATUS_COMPLETED;
+    private $uuid;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="status", type="string", length=30, nullable=false)
+     * @ORM\Column(name="status", type="integer", length=30, nullable=false)
      */
-    private $status = '';
+    private $status = self::STATUS_COMPLETED;
 
     /**
      * @var string
@@ -93,26 +89,12 @@ class Donation {
     /**
      * @var \Donator
      *
-     * @ORM\ManyToOne(targetEntity="Donator")
+     * @ORM\ManyToOne(targetEntity="Donator",cascade={"persist"})
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="donatorId", referencedColumnName="id")
      * })
      */
-    private $donatorid;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="passive", type="boolean")
-     */
-    private $passive = 0;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="anonymous", type="boolean")
-     */
-    private $anonymous = 0;
+    private $donator;
 
 }
 

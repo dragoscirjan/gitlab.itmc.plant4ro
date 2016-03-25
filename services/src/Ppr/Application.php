@@ -125,6 +125,7 @@ class Application extends \Silex\Application {
 
             if ($this['debug']) {
                 $cache = new \Doctrine\Common\Cache\ArrayCache;
+//                $cache = new \Doctrine\Common\Cache\FilesystemCache($this->getConfig('path') . '/cache');
             } else {
                 $cache = new \Doctrine\Common\Cache\ApcuCache;
             }
