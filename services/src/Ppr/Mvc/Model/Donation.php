@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Donations
  *
- * @ORM\Table(name="donations", uniqueConstraints={@ORM\UniqueConstraint(name="UNIQ_31E581A0A56AD13F", columns={"donatorId"})})
+ * @ORM\Table(name="donations")
  * @ORM\Entity
  */
 class Donation {
@@ -70,7 +70,7 @@ class Donation {
      *
      * @ORM\Column(name="status", type="integer", length=30, nullable=false)
      */
-    private $status = self::STATUS_COMPLETED;
+    private $status = self::STATUS_PENDING;
 
     /**
      * @var string
@@ -89,10 +89,8 @@ class Donation {
     /**
      * @var \Donator
      *
-     * @ORM\ManyToOne(targetEntity="Donator",cascade={"persist"})
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="donatorId", referencedColumnName="id")
-     * })
+     * @ORM\ManyToOne(targetEntity="Donator", inversedBy="donations")
+     * @ORM\JoinColumn(name="donatorId", referencedColumnName="id")
      */
     private $donator;
 

@@ -110,7 +110,13 @@ class Donate {
             $objPmReqCard->invoice->amount = $load->donation->total;
             $objPmReqCard->invoice->details = 'Donatie cu card-ul prin mobilPay';
             $objPmReqCard->encrypt($app->getConfig('payment.mobilpay.certPath'));
-
+            // log token
+            $app->getLogger()->notice(sprintf(
+                '(Donation/Braintree) :: Env_key `%s`, data `%s`, generated from `%s`',
+                $objPmReqCard->getEnvKey(),
+                $objPmReqCard->getEncData(),
+                $_SERVER['REMOTE_ADDR']
+            ));
             // return token
             return Response::response(array(
                 'error' => 0,
@@ -190,7 +196,7 @@ class Donate {
                 'type' => $result->transaction->type,
                 'amount' => $result->transaction->amount,
                 'status' => $result->transaction->status,
-                'createdAt' => strtotime($result->transaction->createdAt),
+                'createdAt' => time(),
                 'cardEnding' => $result->transaction->creditCardDetails->last4,
                 'orderId' => $result->transaction->orderId,
             ];
@@ -199,13 +205,14 @@ class Donate {
             $hash = $app->decode($donation->getHash());
             $hash[] = $transaction;
             $donation->setHash($app->encode($hash));
-
             // change status to STATUS_COMPLETED*
             if ($load->annonymous) {
                 $donation->setStatus(Model\Donation::STATUS_COMPLETED);
             } else {
                 $donation->setStatus(Model\Donation::STATUS_COMPLETED_ANNO);
             }
+            $app->getEm()->merge($donation);
+            $app->getEm()->flush();
 
             // log transaction
             $app->getLogger()->info(sprintf(
@@ -482,7 +489,7 @@ class Donate {
             ]);
             $em->persist($donator);
             $em->flush();
-            $app->getLogger()->info(sprintf("Donator created: %s", json_decode($donator->getArray())));
+            $app->getLogger()->info(sprintf("Donator created: %s", $donator));
         } else {
             $donator = array_pop($donator);
             $app->getLogger()->info(sprintf(
@@ -521,21 +528,18 @@ class Donate {
                 'currency' => ($load->donation->method=== 'braintree') ? 'EUR' : 'RON',
                 'exchange' => ($load->donation->method=== 'braintree') ? $load->donation->exchange : '',
                 'trees' => $load->trees,
-                'started' => time(),
+                'uuid' => $uuid,
+                'status' => Model\Donation::STATUS_PENDING,
                 'hash' => $app->encode([$load]),
                 'hashMethod' => $app->encodeMethod(),
-                'donatorid' => $donator,
+                'donator' => $donator,
             ]);
             $em->persist($donation);
             $em->flush();
-            $app->getLogger()->info(sprintf("Donation created: %s", json_decode($donation->getArray())));
+            $app->getLogger()->info(sprintf('Donation created: %s', $donation));
         } else {
             $donation = array_pop($donation);
-            $app->getLogger()->info(sprintf(
-                "Donation discovered by email: %s, \n%s",
-                $uuid,
-                json_decode($donation->getArray())
-            ));
+            $app->getLogger()->info(sprintf("Donation discovered by email: %s, \n%s", $uuid, $donation));
         }
         return $donation;
     }
