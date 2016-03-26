@@ -72,6 +72,13 @@ class Donator {
      */
     private $companyvat;
 
+    /**
+     * @var array
+     *
+     * @ORM\OneToMany(targetEntity="Donation", mappedBy="donations")
+     */
+    private $donations;
+
 
 }
 
