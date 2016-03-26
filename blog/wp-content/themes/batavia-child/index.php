@@ -3,6 +3,12 @@
 	<!-- SECTION: Site content -->
 	<div id="zl_container">
 		<div class="row">
+			<div class="row">
+				<div class="large-12 column title">
+					<h1 class="page-title">Stiri</h1>
+				</div>
+			</div>
+			
 			<div class="large-12 column" itemscope itemtype="https://schema.org/Blog">
 
 				<?php
