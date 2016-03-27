@@ -59,7 +59,7 @@ template
 							span.h-text-primary &nbsp;*
 						.slider-wrapper
 							span#treesQtyVal.slider-value ${model.trees}
-							input#treesQty(type="text", data-slider-min="1", data-slider-max="200", data-slider-step="1" data-slider-value="${model.trees}", value.bind="model.trees", data-slider-tooltip="hide")
+							input#treesQty(type="text", data-slider-min="1", data-slider-max="${maxDonation / treePrice}", data-slider-step="1" data-slider-value="${model.trees}", value.bind="model.trees", data-slider-tooltip="hide")
 					//- div(class.bind="'collapsible collapsible--form' + (isCorporate ? ' hide' : '')")
 					//- 	a(role='button', data-toggle='collapse', href='#plantFriend', aria-expanded='false', aria-controls='plantFriend') 
 					//- 		| Planteaza cu un prieten
@@ -89,7 +89,7 @@ template
 								input#total.form-control(type="text", readonly="readonly", value="${paymentModel.donation.total}")
 							//- .input-group-addon RON
 					p
-						| Dragi prieteni ai padurilor, pentru donatii mai mari de 2000 RON va rugam sa ne 
+						| Dragi prieteni ai padurilor, pentru donatii mai mari de ${maxDonation} RON va rugam sa ne 
 						a(href="/#/contact") contactati
 					hr
 					p.h-margin-bottom-20.h-text-primary
