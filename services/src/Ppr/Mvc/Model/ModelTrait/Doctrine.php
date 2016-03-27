@@ -44,12 +44,12 @@ trait Doctrine
                 if (is_array($this->{$name})) {
                     $array = [];
                     foreach ($this->{$name} as $item) {
-                        $array[] = $item->getId();
+                        $array[] = [ 'id' => $item->getId() ];
                     }
                     $iterable[$name] = $array;
                 }
                 if (is_object($this->{$name})) {
-                    $iterable[$name] = $this->{$name}->getId();
+                    $iterable[$name] = [ 'id' => $this->{$name}->getId() ];
                 }
             }
         }
@@ -60,8 +60,6 @@ trait Doctrine
      * @return mixed|string|void
      */
     public function toString() {
-        var_dump($this->toArray());
-        var_dump(json_encode($this->toArray()));
         return json_encode($this->toArray());
     }
 
