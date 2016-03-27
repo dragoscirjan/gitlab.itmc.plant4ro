@@ -35,13 +35,17 @@ trait Doctrine
         foreach ($reflProps as $reflProp) {
             if (strpos($reflProp->getDocComment(), '@ORM\Column') !== false) {
                 if (!preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
-                    $iterable[$reflProp->getName()] = $this->{$reflProp->getName()};
+                    $name = $reflProp->getName();
+                    $iterable[$name] = $this->{$name};
+                    if (is_resource($iterable[$name])) {
+                        $iterable[$name]  = stream_get_contents($iterable[$name]);
+                    }
                 } else {
                     return [];
                 }
             }
         }
-        var_dump($this);
+//        var_dump($this);
         var_dump($iterable);
         die(var_dump(json_encode($iterable)));
         return $iterable;
