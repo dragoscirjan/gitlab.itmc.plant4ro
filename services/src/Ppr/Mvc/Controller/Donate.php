@@ -542,8 +542,10 @@ class Donate {
             $app->getLogger()->info(sprintf('Donation created: %s', $donation));
         } else {
             $donation = array_pop($donation);
-            die(var_dump($donation));
+            $donator = $donation->getDonator();
+            $donation->setDonator(NULL);
             $app->getLogger()->info(sprintf("Donation discovered by email: %s, \n%s", $uuid, $donation));
+            $donation->setDonator($donator);
         }
         return $donation;
     }
