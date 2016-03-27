@@ -75,7 +75,7 @@ class Donator {
     /**
      * @var array
      *
-     * @ORM\OneToMany(targetEntity="Donation", mappedBy="donations")
+     * @ORM\OneToMany(targetEntity="Donation", mappedBy="donations", to_array_empty=true)
      */
     private $donations;
 
