@@ -40,7 +40,7 @@ trait Doctrine
                     return [];
                 }
             }
-        }
+        }die(var_dump($iterable));
         return $iterable;
     }
 
