@@ -2,6 +2,7 @@
 
 namespace Ppr\Mvc\Model\ModelTrait;
 
+use Doctrine\ORM\PersistentCollection;
 use ReflectionClass, ReflectionProperty;
 
 trait Doctrine
@@ -42,14 +43,11 @@ trait Doctrine
             }
             if (preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
                 $value = call_user_func([$this, 'get' . ucfirst($name)]);
-                if (is_array($value)) {
+                if ($value instanceof PersistentCollection) {
                     $array = [];
-                    foreach ($value as $item) {
-                        $array[] = [ 'id' => $item->getId() ];
-                    }
+                    $value->forAll(function($item) use ($array) { $array[] = [ 'id' => $item->getId() ]; });
                     $iterable[$name] = $array;
-                }
-                if (is_object($value)) {
+                } else {
                     $iterable[$name] = [ 'id' => $value->getId() ];
                 }
             }
