@@ -53,7 +53,6 @@ trait Doctrine
                 }
             }
         }
-        var_dump($iterable);
         return $iterable;
     }
 
@@ -61,6 +60,7 @@ trait Doctrine
      * @return mixed|string|void
      */
     public function toString() {
+        var_dump($this->toArray());
         return json_encode($this->toArray());
     }
 
