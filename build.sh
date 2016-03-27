@@ -16,6 +16,12 @@ echo "$*" | grep +composer && {
     cd ..
 }
 
+echo "$*" | grep +doctrine && {
+    cd services
+    ./vendor/bin/doctrine orm:schema-tool:update -f
+    cd ..
+}
+
 ENV='development'
 [ -f services/.env ] && ENV=`cat services/.env`
 
