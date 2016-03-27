@@ -156,10 +156,10 @@ Layout
 }
 
 #main {
-    -webkit-box-flex: 1;
-        -webkit-flex: 1;
-            -ms-flex: 1;
-                flex: 1; // [4]
+    -webkit-box-flex: 1 1 auto;
+        -webkit-flex: 1 1 auto;
+            -ms-flex: 1 1 auto;
+                flex: 1 1 auto; // [4]
 }
 
 #content {
@@ -758,10 +758,10 @@ hr,
     }
 
     &__body {
-        -webkit-box-flex: 1;
-        -webkit-flex: 1;
-            -ms-flex: 1;
-                flex: 1;
+        -webkit-box-flex: 1 1 auto;
+        -webkit-flex: 1 1 auto;
+            -ms-flex: 1 1 auto;
+                flex: 1 1 auto;
     }
 
     @media (min-width: 768px) {
@@ -2273,7 +2273,7 @@ Navbar
     &__info {
         display: flex;
         flex-direction: column;
-        flex: 1;
+        flex: 1 1 auto;
         justify-content: space-between;
 
         margin: 0 -15px;
@@ -2298,7 +2298,7 @@ Navbar
     }
 
     &__col {
-        flex: 1;
+        flex: 1 1 auto;
         padding: 10px 15px;
 
         @media (min-width: 1200px) {
