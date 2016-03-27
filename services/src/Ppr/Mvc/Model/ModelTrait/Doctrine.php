@@ -41,8 +41,6 @@ trait Doctrine
                 }
             }
             if (preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
-//                $iterable[$name] = $this->{$name};
-                var_dump($name, get_class($this->{$name}));
 //                if (is_array($iterable[$name])) {
 //                    $array = [];
 //                    foreach ($iterable[$name] as $item) {
@@ -50,9 +48,9 @@ trait Doctrine
 //                    }
 //                    $iterable[$name] = $array;
 //                }
-//                if (is_object($iterable[$name])) {
-//                    $iterable[$name] = $iterable[$name]->getId();
-//                }
+                if (is_object($this->{$name})) {
+                    $iterable[$name] = $this->{$name}->getId();
+                }
             }
         }
         var_dump($iterable);
