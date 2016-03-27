@@ -183,9 +183,7 @@ class Donate {
                     $request->get('load')
                 ));
                 // change donation status to STATUS_FAILED
-                $donation->setStatus(Model\Donation::STATUS_FAILED);
-                $app->getEm()->merge($donation);
-                $app->getEm()->flush();
+                $this->setDonationStatus($app, $donation, Model\Donation::STATUS_FAILED);
                 // throw exception
                 throw new Braintree\Exception('(Donation/Braintree) :: FAIL : Could not complete Braintree transaction.');
             }
@@ -207,12 +205,10 @@ class Donate {
             $donation->setHash($app->encode($hash));
             // change status to STATUS_COMPLETED*
             if ($load->annonymous) {
-                $donation->setStatus(Model\Donation::STATUS_COMPLETED);
+                $this->setDonationStatus($app, $donation, Model\Donation::STATUS_COMPLETED_ANNO);
             } else {
-                $donation->setStatus(Model\Donation::STATUS_COMPLETED_ANNO);
+                $this->setDonationStatus($app, $donation, Model\Donation::STATUS_COMPLETED);
             }
-            $app->getEm()->merge($donation);
-            $app->getEm()->flush();
 
             // log transaction
             $app->getLogger()->info(sprintf(
@@ -274,67 +270,69 @@ class Donate {
         // treat mobilpay payment fail redirect
         if ($request->get('status') === 'return') {
             try {
-                die(var_dump($app->decode($donation->getHash())));
-//                // if not session info throw error
-//                if (count($mobilpay) == 0) {
-//                    // log error
-//                    $app->getLogger()->alert(sprintf(
-//                        'Failed addepmt to validate orderId: %s',
-//                        $request->get('orderId')
-//                    ));
-//                    // redirect
-//                    return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
-//                }
-//
-//                // if last session is not a payment session or has error code, throw error
-//                $hash = $app->decode($mobilpay[0]->getHash());
-//                if (!isset($hash->objPmNotify) || $hash->objPmNotify->errorCode != 0) {
-//                    // log error
-//                    $app->getLogger()->alert(sprintf(
-//                        'Mobilpay returned payment fail with the following hash: %s',
-//                        json_encode($hash)
-//                    ));
-//                    // redirect
-//                    return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
-//                }
-//
-//                switch($hash->objPmNotify->action) {
-//                    // if payment is successful
-//                    case 'confirmed':
-//                    case 'confirmed_pending':
-//                    case 'paid_pending':
-//                    case 'paid':
-//                    case 'canceled':
-//                    case 'credit':
-//                        // save donation
-//                        $load = $app->decode($mobilpay[count($mobilpay) - 1]->getHash());
-//                        $id = $this->saveDonation(
-//                            $app,
-//                            $load,
-//                            $hash
-//                        );
-//                        // redirect
-//                        return $app->redirect(sprintf(
-//                            '/#/diploma/%s/%s',
-//                            $id,
-//                            $hash->orderId
-//                        ));
-//                    default:
-//                        // log error
-//                        $app->getLogger()->alert(sprintf(
-//                            'Mobilpay returned payment fail with the following hash: %s',
-//                            json_encode($hash)
-//                        ));
-//                        // redirect
-//                        return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
-//                }
+                $load = array_shift($app->decode($donation->getHash()));
+                $transaction = array_pop($app->decode($donation->getHash()));
+                // if not session info throw error
+                if (!isset($transaction->objPmNotify)) {
+                    // log error
+                    $app->getLogger()->alert(sprintf(
+                        '(Donation/Mobilpay) :: FAIL : Failed attepmt to validate orderId: %s',
+                        $request->get('orderId')
+                    ));
+                    // set donation status to FAILED
+                    $this->setDonationStatus($app, $donation, Model\Donation::STATUS_FAILED);
+                    // redirect
+                    return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
+                }
+
+                // if last session is not a payment session or has error code, throw error
+                if ($transaction->objPmNotify->errorCode != 0) {
+                    // log error
+                    $app->getLogger()->alert(sprintf(
+                        '(Donation/Mobilpay) :: FAIL : Mobilpay returned payment fail with the following hash: %s',
+                        json_encode($transaction)
+                    ));
+                    // set donation status to FAILED
+                    $this->setDonationStatus($app, $donation, Model\Donation::STATUS_FAILED);
+                    // redirect
+                    return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
+                }
+                switch($transaction->objPmNotify->action) {
+                    // if payment is successful
+                    case 'confirmed':
+                    case 'confirmed_pending':
+                    case 'paid_pending':
+                    case 'paid':
+                    case 'canceled':
+                    case 'credit':
+                        // set donation status to COMPLETED*
+                        if ($load->annonymous) {
+                            $this->setDonationStatus($app, $donation, Model\Donation::STATUS_COMPLETED_ANNO);
+                        } else {
+                            $this->setDonationStatus($app, $donation, Model\Donation::STATUS_COMPLETED);
+                        }
+                        // redirect
+                        return $app->redirect(sprintf('/#/diploma/%s/%s', $donation->getId(), $donation->getUuid()));
+                    default:
+                        // log error
+                        $app->getLogger()->alert(sprintf(
+                            '(Donation/Mobilpay) :: FAIL : Mobilpay returned payment fail with the following hash: %s',
+                            json_encode($transaction)
+                        ));
+                        // set donation status to FAILED
+                        $this->setDonationStatus($app, $donation, Model\Donation::STATUS_FAILED);
+                        // redirect
+                        return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
+                }
             } catch (\Exception $e) {
                 // log error
                 $app->getLogger()->alert(sprintf(
-                    "Mobilpay payment validation failed with message: `%s`, trace: \n`%s`.",
+                    "(Donation/Mobilpay) :: FAIL : Mobilpay payment validation failed with message: `%s`, trace: \n`%s`.",
                     $e->getMessage(),
                     $e->getTraceAsString()
                 ));
+                // set donation status to FAILED
+                $this->setDonationStatus($app, $donation, Model\Donation::STATUS_FAILED);
                 // redirect
                 return $app->redirect(sprintf('/#/planteaza/%s/esuat', $request->get('orderId')));
             }
