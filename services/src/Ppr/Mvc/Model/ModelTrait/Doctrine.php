@@ -33,25 +33,23 @@ trait Doctrine
         $refl = new ReflectionClass(get_class($this));
         $reflProps = $refl->getProperties(ReflectionProperty::IS_PRIVATE);
         foreach ($reflProps as $reflProp) {
+            $name = $reflProp->getName();
             if (strpos($reflProp->getDocComment(), '@ORM\Column') !== false) {
-                $name = $reflProp->getName();
-                var_dump($name);
-                if (!preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
-                    $iterable[$name] = $this->{$name};
-                    if (is_resource($iterable[$name])) {
-                        $iterable[$name]  = stream_get_contents($iterable[$name]);
+                $iterable[$name] = $this->{$name};
+                if (is_resource($iterable[$name])) {
+                    $iterable[$name]  = stream_get_contents($iterable[$name]);
+                }
+            }
+            if (preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
+                if (is_array($iterable[$name])) {
+                    $array = [];
+                    foreach ($iterable[$name] as $item) {
+                        $array[] = $item->getId();
                     }
-                } else {
-                    if (is_array($iterable[$name])) {
-                        $array = [];
-                        foreach ($iterable[$name] as $item) {
-                            $array[] = $item->getId();
-                        }
-                        $iterable[$name] = $array;
-                    }
-                    if (is_object($iterable[$name])) {
-                        $iterable[$name] = $iterable[$name]->getId();
-                    }
+                    $iterable[$name] = $array;
+                }
+                if (is_object($iterable[$name])) {
+                    $iterable[$name] = $iterable[$name]->getId();
                 }
             }
         }
