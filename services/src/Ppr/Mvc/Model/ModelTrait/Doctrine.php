@@ -34,18 +34,27 @@ trait Doctrine
         $reflProps = $refl->getProperties(ReflectionProperty::IS_PRIVATE);
         foreach ($reflProps as $reflProp) {
             if (strpos($reflProp->getDocComment(), '@ORM\Column') !== false) {
+                $name = $reflProp->getName();
                 if (!preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
-                    $name = $reflProp->getName();
                     $iterable[$name] = $this->{$name};
                     if (is_resource($iterable[$name])) {
                         $iterable[$name]  = stream_get_contents($iterable[$name]);
                     }
                 } else {
-                    return [];
+                    if (is_array($iterable[$name])) {
+                        $array = [];
+                        foreach ($iterable[$name] as $item) {
+                            $array[] = $item->getId();
+                        }
+                        $iterable[$name] = $array;
+                    }
+                    if (is_object($iterable[$name])) {
+                        $iterable[$name] = $iterable[$name]->getId();
+                    }
                 }
             }
         }
-//        var_dump($this);
+        var_dump($this);
         var_dump($iterable);
         die(var_dump(json_encode($iterable)));
         return $iterable;
