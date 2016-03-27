@@ -61,6 +61,7 @@ trait Doctrine
      */
     public function toString() {
         var_dump($this->toArray());
+        var_dump(json_encode($this->toArray()));
         return json_encode($this->toArray());
     }
 
