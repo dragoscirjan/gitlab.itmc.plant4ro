@@ -34,7 +34,11 @@ trait Doctrine
         $reflProps = $refl->getProperties(ReflectionProperty::IS_PRIVATE);
         foreach ($reflProps as $reflProp) {
             if (strpos($reflProp->getDocComment(), '@ORM\Column') !== false) {
-                $iterable[$reflProp->getName()] = $this->{$reflProp->getName()};
+                if (strpos($reflProp->getDocComment(), 'to_array_empty') === false) {
+                    $iterable[$reflProp->getName()] = $this->{$reflProp->getName()};
+                } else {
+                    return [];
+                }
             }
         }
         return $iterable;
