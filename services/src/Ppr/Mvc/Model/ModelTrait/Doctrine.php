@@ -15,9 +15,9 @@ trait Doctrine
 
     public function __call($method, $arguments) {
         if (substr($method, 0, 3) == 'get') {
-            var_dump($method);
             $name = lcfirst(substr($method, 3));
             if (is_resource($this->{$name})) {
+                var_dump($method);
                 return stream_get_contents($this->{$name});
             }
             return $this->{$name};
