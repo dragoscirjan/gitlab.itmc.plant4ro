@@ -262,7 +262,7 @@ class Donate {
          * Info Section
          */
         if ($request->get('status') === 'info') {
-            var_dump($donation);
+            var_dump($donation->toArray());
             return new Response($app->encode($donation->toArray()));
         }
 
