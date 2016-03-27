@@ -41,7 +41,7 @@ trait Doctrine
                 }
             }
         }
-        var_dump(json_encode($iterable));
+        var_dump($iterable);
         die(var_dump(json_encode($iterable)));
         return $iterable;
     }
