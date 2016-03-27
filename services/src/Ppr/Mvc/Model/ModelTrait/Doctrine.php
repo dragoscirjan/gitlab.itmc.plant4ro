@@ -36,9 +36,10 @@ trait Doctrine
             $name = $reflProp->getName();
             if (strpos($reflProp->getDocComment(), '@ORM\Column') !== false) {
                 $iterable[$name] = $this->{$name};
-//                if (is_resource($iterable[$name])) {
-//                    $iterable[$name]  = stream_get_contents($iterable[$name]);
-//                }
+                var_dump($iterable[$name]);
+                if (is_resource($iterable[$name])) {
+                    $iterable[$name]  = stream_get_contents($iterable[$name]);
+                }
             }
             if (preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
                 if (is_array($this->{$name})) {
