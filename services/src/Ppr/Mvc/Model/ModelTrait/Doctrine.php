@@ -53,6 +53,7 @@ trait Doctrine
                 }
             }
         }
+        var_dump($iterable);
         return $iterable;
     }
 
