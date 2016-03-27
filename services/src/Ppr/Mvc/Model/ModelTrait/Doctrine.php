@@ -39,10 +39,10 @@ trait Doctrine
         foreach ($reflProps as $reflProp) {
             $name = $reflProp->getName();
             if (strpos($reflProp->getDocComment(), '@ORM\Column') !== false) {
-                $iterable[$name] = call_user_func($this, 'get' . ucfirst($name));
+                $iterable[$name] = call_user_func([$this, 'get' . ucfirst($name)]);
             }
             if (preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
-                $value = call_user_func($this, 'get' . ucfirst($name));
+                $value = call_user_func([$this, 'get' . ucfirst($name)]);
                 if (is_array($value)) {
                     $array = [];
                     foreach ($value as $item) {
