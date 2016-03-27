@@ -75,7 +75,7 @@ class Donation {
     /**
      * @var string
      *
-     * @ORM\Column(name="hash", type="blob", length=65535, nullable=true)
+     * @ORM\Column(name="hash", type="text", length=65535, nullable=true)
      */
     private $hash = '';
 
