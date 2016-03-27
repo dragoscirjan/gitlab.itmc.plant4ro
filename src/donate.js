@@ -90,6 +90,18 @@ export class Component extends ViewModelAbstract {
     notRobot = false;
 
     /**
+     * [treePrice description]
+     * @type {Number}
+     */
+    treePrice = 5;
+
+    /**
+     * [maxNumberOfTrees description]
+     * @type {RegExp}
+     */
+    maxDonation = 2000;
+
+    /**
      * constructor
      * @see ViewModelAbstract#constructor
      * @method constructor
@@ -237,7 +249,7 @@ export class Component extends ViewModelAbstract {
         let model = $.extend(true, this.model, {
             recaptcha: recaptcahaResponse
         });
-        model.donation.total = model.trees * 10;
+        model.donation.total = model.trees * this.treePrice;
         model.donation.totalEur = Math.floor(model.donation.total / this.model.donation.exchange * 100) / 100;
         return model;
     }
