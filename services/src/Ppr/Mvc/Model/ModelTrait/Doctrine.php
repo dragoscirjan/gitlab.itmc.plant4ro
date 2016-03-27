@@ -41,6 +41,7 @@ trait Doctrine
                 }
             }
         }
+        $iterable['hash'] = '';
         var_dump($iterable);
         die(var_dump(json_encode($iterable)));
         return $iterable;
