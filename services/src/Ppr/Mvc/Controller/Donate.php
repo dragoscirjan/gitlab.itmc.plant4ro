@@ -495,11 +495,7 @@ class Donate {
             $app->getLogger()->info(sprintf("Donator created: %s", $donator));
         } else {
             $donator = array_pop($donator);
-            $app->getLogger()->info(sprintf(
-                "Donator discovered by email: %s, \n%s",
-                $email,
-                $donator
-            ));
+            $app->getLogger()->info(sprintf("Donator discovered by email: %s, \n%s", $email, $donator));
         }
         return $donator;
     }
