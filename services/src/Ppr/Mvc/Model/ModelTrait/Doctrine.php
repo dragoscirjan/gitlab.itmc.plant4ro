@@ -43,7 +43,7 @@ trait Doctrine
             }
             if (preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
                 $value = call_user_func([$this, 'get' . ucfirst($name)]);
-                var_dump($value);
+                var_dump($value);die();
                 if ($value instanceof PersistentCollection) {
 //                    $array = [];
 //                    $value->forAll(function($item) use ($array) { $array[] = [ 'id' => $item->getId() ]; });
