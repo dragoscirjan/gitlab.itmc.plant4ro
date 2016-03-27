@@ -270,7 +270,7 @@ class Donate {
          */
 
         // treat mobilpay payment fail redirect
-        if ($request->get('status') === 'fail') {
+        if ($request->get('status') === 'return') {
             try {
                 die(var_dump($app->decode($donation->getHash())));
 //                // if not session info throw error
