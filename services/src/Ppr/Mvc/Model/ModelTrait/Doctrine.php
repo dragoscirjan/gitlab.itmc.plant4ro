@@ -34,7 +34,7 @@ trait Doctrine
         $reflProps = $refl->getProperties(ReflectionProperty::IS_PRIVATE);
         foreach ($reflProps as $reflProp) {
             if (strpos($reflProp->getDocComment(), '@ORM\Column') !== false) {
-                if (!preg_match('/@ORM\(OneToMany|ManyToMany|ManyToOne)/i', $reflProp->getDocComment())) {
+                if (!preg_match('/(OneToMany|ManyToMany|ManyToOne)/i', $reflProp->getDocComment())) {
                     $iterable[$reflProp->getName()] = $this->{$reflProp->getName()};
                 } else {
                     return [];
