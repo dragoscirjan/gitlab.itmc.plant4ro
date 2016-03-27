@@ -35,6 +35,7 @@ trait Doctrine
         foreach ($reflProps as $reflProp) {
             if (strpos($reflProp->getDocComment(), '@ORM\Column') !== false) {
                 $name = $reflProp->getName();
+                var_dump($name);
                 if (!preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
                     $iterable[$name] = $this->{$name};
                     if (is_resource($iterable[$name])) {
