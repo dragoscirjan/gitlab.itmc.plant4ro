@@ -89,7 +89,7 @@ class Donation {
     /**
      * @var \Donator
      *
-     * @ORM\ManyToOne(targetEntity="Donator", inversedBy="donations", to_array_empty=true)
+     * @ORM\ManyToOne(targetEntity="Donator", inversedBy="donations")
      * @ORM\JoinColumn(name="donatorId", referencedColumnName="id")
      */
     private $donator;
