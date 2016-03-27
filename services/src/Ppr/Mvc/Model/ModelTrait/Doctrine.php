@@ -17,7 +17,6 @@ trait Doctrine
         if (substr($method, 0, 3) == 'get') {
             $name = lcfirst(substr($method, 3));
             if (is_resource($this->{$name})) {
-                var_dump($method, $this->{$name});
                 return stream_get_contents($this->{$name});
             }
             return $this->{$name};
