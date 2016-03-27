@@ -41,8 +41,8 @@ trait Doctrine
                 }
             }
             if (preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
-                $iterable[$name] = $this->{$name};
-                var_dump($name, get_class($iterable[$name]));
+//                $iterable[$name] = $this->{$name};
+                var_dump($name, get_class($this->{$name}));
 //                if (is_array($iterable[$name])) {
 //                    $array = [];
 //                    foreach ($iterable[$name] as $item) {
