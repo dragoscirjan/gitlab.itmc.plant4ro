@@ -262,7 +262,7 @@ class Donate {
          * Info Section
          */
         if ($request->get('status') === 'info') {
-            return new Response($app->encode($donation->getHash()));
+            return new Response($app->encode($donation));
         }
 
         /**
