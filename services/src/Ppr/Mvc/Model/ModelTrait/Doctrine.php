@@ -15,8 +15,12 @@ trait Doctrine
 
     public function __call($method, $arguments) {
         if (substr($method, 0, 3) == 'get') {
-//            die(var_dump(lcfirst(substr($method, 3)), $this->{lcfirst(substr($method, 3))}));
-            return $this->{lcfirst(substr($method, 3))};
+            $name = lcfirst(substr($method, 3));
+            return $this->{$name};
+            if (is_resource($this->{$name})) {
+                return stream_get_contents($this->{$name});
+            }
+            return $this->{$name};
         }
         if (substr($method, 0, 3) == 'set') {
             $this->{lcfirst(substr($method, 3))} = $arguments[0];
@@ -35,15 +39,12 @@ trait Doctrine
         foreach ($reflProps as $reflProp) {
             $name = $reflProp->getName();
             if (strpos($reflProp->getDocComment(), '@ORM\Column') !== false) {
-                $iterable[$name] = $this->{$name};
-                if (is_resource($iterable[$name])) {
-                    $iterable[$name]  = stream_get_contents($iterable[$name]);
-                }
+                $iterable[$name] = $this->{'get' . ucfirst($name)};
             }
             if (preg_match('/@ORM.(One|Many)To(One|Many)/i', $reflProp->getDocComment())) {
                 if (is_array($this->{$name})) {
                     $array = [];
-                    foreach ($this->{$name} as $item) {
+                    foreach ($this->{'get' . ucfirst($name)} as $item) {
                         $array[] = [ 'id' => $item->getId() ];
                     }
                     $iterable[$name] = $array;
