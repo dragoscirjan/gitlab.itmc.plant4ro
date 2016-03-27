@@ -45,9 +45,6 @@ trait Doctrine
                 $value = call_user_func([$this, 'get' . ucfirst($name)]);
                 if ($value instanceof PersistentCollection) {
                     $array = [];
-                    foreach ($value->toArray() as $key => $val) {
-                        die(var_dump($val));
-                    }
                     $iterable[$name] = $array;
                 } else {
                     $iterable[$name] = [ 'id' => $value->getId() ];
