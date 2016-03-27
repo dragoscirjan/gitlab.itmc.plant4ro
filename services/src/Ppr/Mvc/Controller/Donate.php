@@ -270,7 +270,7 @@ class Donate {
          */
 
         // treat mobilpay payment fail redirect
-        if ($request->get('status') === 'fail') {
+        if ($request->get('status') === 'return') {
             try {
                 die(var_dump($app->decode($donation->getHash())));
 //                // if not session info throw error
@@ -495,11 +495,7 @@ class Donate {
             $app->getLogger()->info(sprintf("Donator created: %s", $donator));
         } else {
             $donator = array_pop($donator);
-            $app->getLogger()->info(sprintf(
-                "Donator discovered by email: %s, \n%s",
-                $email,
-                $donator
-            ));
+            $app->getLogger()->info(sprintf("Donator discovered by email: %s, \n%s", $email, $donator));
         }
         return $donator;
     }
