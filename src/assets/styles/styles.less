@@ -2136,19 +2136,51 @@ Navbar
 
 
 /*
+   Print certificate
+   ========================================================================== */
+
+.print #header,
+.print #footer,
+.print .diploma .container > *:not(.certificate) {
+    display: none;
+}
+
+
+
+/*
    Certificate / Diploma
    ========================================================================== */
 
 .certificate {
     position: relative;
+    margin: 50px 0;
     padding: 45px 80px;
     border: 1px solid @border-color;
     background-color: #fff;
+
+    .print & {
+        display: flex;
+        align-items: center;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 8vw;
+    }
 
     &__logo {
         width: 130px;
         margin: 0 auto;
         text-align: center;
+
+        .print & {
+            width: 15vw;
+            max-width: 200px;
+        }
 
         img {
             max-width: 100%;
@@ -2157,28 +2189,50 @@ Navbar
 
     &__title {
         margin: 20px 0;
+        font-family: Stentiga, sans-serif;
         font-size: 40px;
         font-weight: 700;
         text-transform: uppercase;
         text-align: center;
+
+        .print & {
+            margin: 3vw 0;
+            font-size: 4vw;
+        }
     }
 
     &__content {
         text-align: center;
+
+        .print & {
+            font-size: 1.5vw;
+        }
     }
 
     &__input {
         height: 40px;
         padding: 10px 15px;
         border-width: 0 0 1px;
+
+        .print & {
+            font-size: 1.5vw;
+        }
     }
 
     &__footer {
         margin-top: 20px;
+
+        .print & {
+            margin-top: 3vw;
+        }
     }
 
     &__signature {
         text-align: right;
+
+        .print & {
+            font-size: 1.5vw;
+        }
 
         .form-group--inline {
             margin: 0;
@@ -2214,8 +2268,18 @@ Navbar
     background: transparent url('img/badge.png') no-repeat center;
     text-align: center;
 
+    .print & {
+        width: 15vw;
+        height: 15vw;
+        background-size: cover;
+    }
+
     &__text {
         text-transform: uppercase;
+
+        .print & {
+            font-size: 1.5vw;
+        }
     }
 
     &__number {
@@ -2224,6 +2288,10 @@ Navbar
         font-weight: 700;
         line-height: 1;
         color: @primary-color;
+
+        .print & {
+            font-size: 6vw;
+        }
     }
 }
 

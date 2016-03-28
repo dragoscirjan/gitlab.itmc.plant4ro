@@ -10,11 +10,24 @@ export class Proiect extends ViewModelAbstract {
     heading = 'Multumim pentru Donatie';
 
     /**
+     * Activate event
+     * @see ViewModelAbstract#activate
+     * @method activate
+     */
+    activate(params, routeConfig) {
+        super.activate(params, routeConfig);
+        this.params = params;
+    }
+
+    /**
      * [attached description]
      * @method attached
      */
     attached() {
         this.initSliders();
+        if (this.params.mode && this.params.mode === 'print') {
+            $('body').addClass('print');
+        }
     }
 
     /**
