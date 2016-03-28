@@ -51,4 +51,17 @@ class ForestryUnit {
      */
     private $gpsDetails;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="city", type="string", length=1024, nullable=true)
+     */
+    private $city= '';
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="county", type="string", length=1024, nullable=true)
+     */
+    private $county = '';
+
 }

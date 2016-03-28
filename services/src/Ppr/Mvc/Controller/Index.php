@@ -133,15 +133,27 @@ class Index {
         }
     }
 
-
+    /**
+     * @param Application $app
+     * @param Request $request
+     * @return Response
+     */
     public function eventLocations(Application $app, Request $request) {
         $locations = [];
         try {
-            $items = $app->getEm()->createQuery('SELECT m FROM \Ppr\Mvc\Model\ForestryUnit m WHERE m.gps != \'\'')->getResult();
+            $county = trim($request->get('county'));
+            $query = $app->getEm()
+                ->createQuery('SELECT m FROM \Ppr\Mvc\Model\ForestryUnit m WHERE m.gps != \'\' AND m.county LIKE ?1')
+                ->setParameter(1, '%' . $county . '%');
+            if ($county == 'all') {
+                $query = $app->getEm()
+                    ->createQuery('SELECT m FROM \Ppr\Mvc\Model\ForestryUnit m WHERE m.gps != \'\'');
+            }
+            $items = $query->getResult();
             foreach ($items as $item) {
                 $locations[] = [
-                    "lat" => array_shift(explode(';', $item->getGps())),
-                    "lng" => array_pop(explode(';', $item->getGps())),
+                    "lat" => array_shift(explode(',', $item->getGps())),
+                    "lng" => array_pop(explode(',', $item->getGps())),
                     "title" => $item->getUnitName(),
                     "street" => $item->getTrees() . ' pomi',
                     "city" => $item->getGpsDetails(),

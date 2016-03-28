@@ -41,7 +41,7 @@ export class Component extends ViewModelAbstract {
     scriptsStoreLocator = [
         `https://maps.googleapis.com/maps/api/js?libraries=places,geometry`,
         // `3rdpt/jquery-shop-locator/src/shop-locator.js`,
-        `dist/assets/scripts/api.js`,
+        `dist/assets/scripts/shopLocator.js`,
         `3rdpt/jquery-shop-locator/src/dependences/infobubble.js`,
         `3rdpt/jquery-shop-locator/src/dependences/markerclusterer.js`
     ];
@@ -177,7 +177,10 @@ export class Component extends ViewModelAbstract {
             sidebar: {
                 visible: true,
                 selectSection: {
-                    pathToJSONDirectory: '3rdpt/jquery-shop-locator/src/json/',
+                    // pathToJSONDirectory: '3rdpt/jquery-shop-locator/src/json/',
+                    pathToJSONDirectory: this.appConfig.getPhpUrl('event-locations') + '/',
+                    difFiles: [['Toate', 'all'], ['Jud. Fagaras', 'fagaras'], ['Jud. Prahova', 'prahova']],
+                    fileTypes: '',
                     visible: true
                 },
                 searchBox: {
