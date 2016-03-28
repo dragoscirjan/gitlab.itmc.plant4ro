@@ -76,7 +76,8 @@ export class Component extends ViewModelAbstract {
     initStoreLocator() {
         // 3rdpt/jquery-shop-locator/
         $('#map').ShopLocator({
-            json: '3rdpt/jquery-shop-locator/src/json/markers.json',
+            // json: '3rdpt/jquery-shop-locator/src/json/markers.json',
+            json: '/services/index.php/event-locations',
             pluginStyle: 'metro',
             paginationStyle: 1,
             infoBubble: {

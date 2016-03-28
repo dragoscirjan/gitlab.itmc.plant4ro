@@ -32,10 +32,16 @@ export class Component extends ViewModelAbstract {
     treeCount = '203.491'
 
     /**
-     * [donatorList description]
+     * Current List of Donators
      * @type {Array}
      */
-    donatorList = [];
+    donatorsQueue = [];
+
+    /**
+     * List of already drawn donators
+     * @type {Array}
+     */
+    donatorsDrawn = [];
 
     /**
      * constructor
@@ -58,13 +64,107 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
+     * Append donators from database to drawing queue
+     * @method appendDonatorsQueue
+     */
+    appendDonatorsQueue(list) {
+        const self = this;
+        list.forEach((donator, i) => {
+            // first search if donator was already shown (could happen)
+            let isUsedDonator = self.donatorsDrawn.filter(v => { return v === donator.hash; }).length;
+            if (isUsedDonator) {
+                return;
+            }
+            // second search if donator is already in queue (can happen)
+            let isInCurrentList = self.donatorsQueue.filter(v => { return v.hash === donator.hash; }).length;
+            if (isInCurrentList) {
+                return;
+            }
+            // add donator to queue
+            self.donatorsQueue.push(donator);
+            // if donator list is higher than 50, shift the first one
+            if (self.donatorsQueue.length > 50) {
+                self.donatorsQueue.shift();
+                // self.donatorsDrawn.shift();
+            }
+        });
+        // call log
+        this.logger.debug('Donator list updated: ', this.donatorsQueue);
+    }
+
+    /**
      * [attached description]
      * @method attached
      */
     attached() {
         this.initSliders();
-        this.updateDonatorList();
+        this.updateDonatorsQueue();
     }
+
+    /**
+     * Generate donator HTML
+     * @method drawDonator
+     * @param  {Object}    donator
+     * @return {String}
+     */
+    drawDonator(donator) {
+        this.logger.debug('Drawing donator', donator);
+        this.donatorsDrawn.push(donator.hash);
+        // return template
+        return `<li class="donation__item" data-hash="${donator.hash}">
+            <div class="donator">
+                <div class="donator__details">
+                    <span class="donator__name">${donator.name}</span>
+                    <span class="donator__location">${donator.location}</span>
+                </div>
+                <span class="donator__donation">${donator.trees}</span>
+            </div>
+        </li>`;
+    }
+
+    /**
+     * Draw donations (recursive at 2 seconds)
+     * @method drawDonatorsQueue
+     */
+    drawDonatorsQueue() {
+        let self = this;
+        let $ul = $('#donationList');
+        // log call
+        this.logger.debug('Drawing donator list', this.donatorsQueue);
+        // recursive call
+        setTimeout(() => { self.drawDonatorsQueue(); }, 2000);
+        // if donator list is empty, exit
+        if (!this.donatorsQueue.length) {
+            return;
+        }
+        // if drawing list is empty, draw four elements
+        if (this.donatorsDrawn.length === 0) {
+            let limit = this.donatorsQueue.length < 4 ? this.donatorsQueue.length : 4;
+            for (let i = 0; i < limit; i++) {
+                $ul.append(this.drawDonator(this.donatorsQueue.shift()));
+            }
+        }
+        // if 1st 4 are drawn and list is not visible, just exit
+        if (this.donatorsDrawn.length && !this.toggleDonatorsActive) {
+            return;
+        }
+        // if donators queue is empty, just exit
+        if (!this.donatorsQueue.length) {
+            return;
+        }
+        // hide first item in list & remove it when hidden
+        $ul.find('> li:first').slideUp('slow', () => { $li.remove(); });
+        // add a new item in list
+        $ul.append(this.drawDonator(this.donatorsQueue.shift()));
+        // and show it
+        $ul.find('> li:last').hide().slideDown('slow');
+    }
+
+    /**
+     * [drawDonatorsQueueCalled description]
+     * @type {Boolean}
+     */
+    drawDonatorsQueueCalled = false;
 
     /**
      * Initialize sliders on this page
@@ -154,111 +254,45 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * [setTimeoutDonatorList description]
+     * [setTimeoutdonatorsQueue description]
      * @type {Number}
      */
-    setTimeoutDonatorList = 10000;
+    setTimeoutdonatorsQueue = 10000;
 
     /**
-     * [updateDonatorList description]
-     * @method updateDonatorList
-     * @return {Promise|null}          [description]
+     * Calls service and manages array and html (recursive each `setTimeoutdonatorsQueue` seconds)
+     * @method updateDonatorsQueue
      */
-    updateDonatorList() {
+    updateDonatorsQueue() {
         const self = this;
-        setTimeout(() => { self.updateDonatorList(); }, this.setTimeoutDonatorList);
-        if (this.donatorList.length > 0 && !this.toggleDonatorsActive) {
+        setTimeout(() => { self.updateDonatorsQueue(); }, this.setTimeoutdonatorsQueue);
+        // if I still have donators in list and html is not visible, exit
+        if (this.donatorsQueue.length > 0 && !this.toggleDonatorsActive) {
             return;
         }
+        // log call
         this.logger.debug('Calling /services/donator-list');
-        return this.http.fetch('donator-list')
+        // http service call
+        this.http
+            .fetch('donator-list')
             .then(response => response.json())
             .then((data) => {
+                // log obtained list
                 self.logger.debug('Donator list obtained:', data);
                 if (!data.error) {
-                    self.appendDonatorList(data.list);
-                    if (!self.drawDonatorListCalled) {
-                        self.drawDonatorList();
-                        self.drawDonatorListCalled = true;
+                    // add donators to list
+                    self.appendDonatorsQueue(data.list);
+                    // prevent drawing from being called twice in the same time
+                    if (!self.drawDonatorsQueueCalled) {
+                        // call drawer
+                        self.drawDonatorsQueue();
+                        // mark drawer as called
+                        self.drawDonatorsQueueCalled = true;
                     }
                 } else {
-                    self.donatorList = [];
+                    self.donatorsQueue = self.donatorsQueue ? self.donatorsQueue : [];
                 }
             });
-    }
-
-    /**
-     * [drawDonatorList description]
-     * @method drawDonatorList
-     * @return {[type]}        [description]
-     */
-    drawDonatorList() {
-        const self = this;
-        const $ul = $('#donationList');
-
-        this.logger.debug('Drawing donator list', this.donatorList);
-
-        setTimeout(() => { self.drawDonatorList(); }, 2000);
-
-        if (!this.donatorList.length) {
-            return;
-        }
-
-        if ($ul.find('li').length > 0) {
-            const $li = $ul.find('li:first');
-
-            if (!this.toggleDonatorsActive) {
-                return;
-            }
-
-            $li.slideUp('slow', () => { $li.remove(); });
-            $ul.append(this.drawDonator(this.donatorList.shift()));
-            $ul.find('li:last').hide().slideDown('slow');
-        } else {
-            $ul.append(this.drawDonator(this.donatorList.shift()));
-            $ul.append(this.drawDonator(this.donatorList.shift()));
-            $ul.append(this.drawDonator(this.donatorList.shift()));
-            $ul.append(this.drawDonator(this.donatorList.shift()));
-        }
-    }
-
-    /**
-     * [drawDonatorListCalled description]
-     * @type {Boolean}
-     */
-    drawDonatorListCalled = false;
-
-    /**
-     * [drawDonator description]
-     * @method drawDonator
-     * @param  {[type]}    donator [description]
-     * @return {[type]}            [description]
-     */
-    drawDonator(donator) {
-        // this.logger.debug('Drawing donator', donator);
-        return `<li class="donation__item" data-hash="${donator.hash}">
-            <div class="donator">
-                <div class="donator__details">
-                    <span class="donator__name">${donator.name}</span>
-                    <span class="donator__location">${donator.location}</span>
-                </div>
-                <span class="donator__donation">${donator.trees}</span>
-            </div>
-        </li>`;
-    }
-
-    /**
-     * [appendDonatorList description]
-     * @method appendDonatorList
-     * @param  {Array}          list [description]
-     */
-    appendDonatorList(list) {
-        const self = this;
-        list.forEach((donator, i) => {
-            if (!self.donatorList.filter(v => { return v.hash === donator.hash; }).length) {
-                self.donatorList.push(donator);
-            }
-        });
     }
 
 }

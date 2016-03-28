@@ -46,7 +46,7 @@ trait Doctrine
                 if ($value instanceof PersistentCollection) {
                     $array = [];
                     $iterable[$name] = $array;
-                } else {
+                } elseif (is_object($value)) {
                     $iterable[$name] = [ 'id' => $value->getId() ];
                 }
             }

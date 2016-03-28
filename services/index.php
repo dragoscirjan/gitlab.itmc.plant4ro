@@ -25,5 +25,6 @@ $app->get('/config-js', '\Ppr\Mvc\Controller\Config::configJs');
 
 $app->get('/update-forestry-units', '\Ppr\Mvc\Controller\Index::updateForestryUnits');
 $app->get('/update-donations', '\Ppr\Mvc\Controller\Index::updateDonations');
+$app->get('/event-locations', '\Ppr\Mvc\Controller\Index::eventLocations');
 
 $app->run();
