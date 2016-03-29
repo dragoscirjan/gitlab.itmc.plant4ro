@@ -487,7 +487,7 @@ class Donate {
                 'company' => $load->company,
                 'phone' => $load->phone,
                 'location' => 'Romania',
-                'locationgps' => '0;0',
+                'locationgps' => $load->locationGps,
                 'companyvat' => $load->vat,
             ]);
             $em->persist($donator);
