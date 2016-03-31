@@ -105,4 +105,8 @@ export class Component extends ViewModelAbstract {
         });
     }
 
+    print() {
+        window.print();
+    }
+
 }
