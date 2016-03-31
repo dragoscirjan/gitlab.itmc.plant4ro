@@ -1,7 +1,33 @@
-.vagrant
-dist
+# IDEs
+.idea
+.project
+*.sublime-project
+*.sublime-workspace
+
+# nodejs
+
 node_modules
 jspm_packages
-nohup.out
-npm-debug.log*
-.idea
+bower_components
+.DS_STORE
+npm-debug.log
+
+dist
+build/reports
+coverage
+test/e2e/dist
+
+# php
+composer.phar
+services/cache
+services/composer.phar
+services/composer.lock
+services/src/Ppr/Mvc/Model/Proxy
+services/vendor
+services/.log
+
+# Vagrant
+.vagrant
+
+# PSD
+.psd

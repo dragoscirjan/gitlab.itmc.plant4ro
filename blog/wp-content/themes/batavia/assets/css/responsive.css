@@ -1,0 +1,329 @@
+/* Mobie */
+
+@media screen and (min-width: 0em) and (max-width: 736px){
+	body{
+		position: inherit;
+	}
+	#zl_container > .row > .large-12, .zl_postnav{
+		overflow: hidden;
+	}
+
+	#zl_container > .row > .large-12:before{
+		content:none;
+	}
+} 
+
+/* For iPhone 4 untill iphone 6 portrait */
+@media screen and (min-width: 0em) and (max-width: 568px){
+	/* HEADER */
+	.zl_mainmenu{
+		padding: 15px 10px;
+	}
+	
+	/* Hide Social --------------------------------------------------- */
+
+	.zl_mainmenu .zl_socrent{
+		display: none;
+	}
+	
+	/* left align Menu burger --------------------------------------------------- */
+
+	.zl_bgrmnwrp.text-center{
+		text-align: left;
+	}
+	
+	/* Search Block --------------------------------------------------- */
+
+	.zl_srccontainer{
+		width: 75%;
+		float: left!important;
+		text-align: left!important;
+	}
+	
+	.zl_srcform{
+		width: 200px;
+		margin: 0;
+		padding-left: 10px
+	}
+	
+	/* Sidebar --------------------------------------------------- */
+
+	.zl_sidebar_opener{
+		position: absolute;
+		top: 15px;
+		right: 10px;
+	}
+
+	.zl_srcform button{
+		position: absolute;
+		right: 5px;
+		top: 0;
+		bottom: 0;
+		margin: auto 0;
+	}
+
+	#zl_sidebarcloser{
+		top: 15px;
+		right: 10px;
+	}
+
+	#zl_sidebar{
+		padding-top: 90px;
+		top: 0;
+	}
+
+	/* Menu --------------------------------------------------- */
+	.zl_mainmenuholder{
+		height: 65px;
+	}
+
+	ul.zl_bt_menu > li > a{
+		padding: 0 10px;
+	}
+
+	ul.zl_bt_menu ul{
+		padding-left: 15px;
+	}
+
+	ul.zl_bt_menu ul li{
+		font-size: 16px;
+	}
+
+	ul.zl_bt_menu ul li > a{
+		padding: 7px 0;
+	}
+
+}
+
+/* For iPhone 6 portrait to iphone 6 plus */
+@media screen and (min-width: 667px) and (max-width: 736px){
+	.zl_mainmenu{
+		padding: 15px;
+	}
+	
+	#zl_menucontainer{
+		max-width: 100%;
+	}
+
+	.zl_srcform{
+		width: 160px;
+	}
+
+	.zl_srcform button{
+		position: absolute;
+		right: 5px;
+		top: 0;
+		bottom: 0;
+		margin: auto 0;
+	}
+
+	/* Sidebar ----------------------------------------------------- */
+	#zl_sidebar{
+		padding-top: 90px;
+		top: 0;
+	} 
+	#zl_sidebarcloser{
+		top: 15px;
+		right: 15px;
+	}
+}
+
+@media screen and (min-width: 0em) and (max-width: 736px){
+	.zl_burgermenu, .zl_burgermenu:before, .zl_burgermenu:after{
+		-webkit-transition: all 0s!important; 
+		-moz-transition: all 0s!important; 
+		-o-transition: all 0s!important; 
+		transition: all 0s!important; /* easeInOutExpo */
+	}
+}
+
+/* For Article only */
+@media screen and (min-width: 0em) and (max-width: 900px){
+	body{
+		position: inherit;
+	}
+
+	#zl_container > .row > .large-12, .zl_postnav{
+		overflow: hidden;
+	}
+
+	#zl_container > .row > .large-12:before{
+		content:none;
+	}
+
+	/* Reset the post block position */
+	.zl_post{
+		background: #fff;
+		padding: 15px;
+		margin: 30px auto;
+	}
+
+	.zl_giveborder{
+		margin-top: 30px;
+	}
+
+	.page-title{
+		padding-top: 20px
+	}
+	
+	/* Disable post inview animation, to reduce memory usage by mobile device */
+	.zl_post *,
+	.zl_post .zl_post_thumb,
+	.zl_post .zl_post_cat, 
+	.zl_post .entry-title, 
+	.zl_post .zl_postmeta,
+	.zl_post .zl_post_excerpt,
+	.zl_post .zl_post_excerpt p,
+	.zl_post .zl_readmore_box,
+	.zl_post.appear .zl_postinfos a{
+		-webkit-transform: translate3d(0,0,0)!important;
+		-ms-transform: translate3d(0,0,0)!important;
+		-o-transform: translate3d(0,0,0)!important;
+		transform: translate3d(0,0,0)!important;
+		-webkit-transition: all 0.001s!important;
+		-o-transition: all 0.001s!important;
+		transition: all 0.001s!important;
+		-webkit-transition-delay: none!important;
+		-o-transition-delay: none!important;
+		transition-delay: none!important;
+		opacity: 1!important;
+		visibility: visible!important;
+	}
+	
+	.zl_loop_posthead *{
+		text-align: center!important;
+	}
+
+	.zl_post_thumb{
+		width: 100%;
+		display: block;
+		padding: 0;
+		margin-bottom: 30px;
+	}
+
+	.zl_postmeta, .zl_post_cat{
+		font-size: 14px;
+	}
+
+	.zl_postmeta{
+		padding-bottom: 30px;
+		border-bottom: 1px solid #e5e5e5;
+		border-bottom: 1px solid rgba(0,0,0,.05)
+	}
+
+	.zl_singleposthead .zl_postmeta{
+		border-bottom: none;
+		padding-bottom: 0;
+	}
+
+	.has-post-thumbnail .zl_post_detail{
+		width: 100%;
+		display: block;
+		padding: 0;
+		padding-top: 0;
+	}
+
+	.has-post-thumbnail .zl_post_excerpt{
+		padding: 0;
+		margin-top: 30px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.zl_post_excerpt{
+		overflow: inherit;
+		background: none;
+		-webkit-box-shadow: none!important;
+		box-shadow: none!important;
+	}
+
+	.zl_post_excerpt, .zl_post_excerpt p, .zl_single_excerpt, .zl_single_excerpt p{
+		font-size: 16px;
+		line-height: 28px;
+	}
+
+	.zl_post_excerpt p, .zl_single_excerpt p{
+		margin: 28px 0;
+	}
+
+	.zl_post_detail .entry-title,
+	.zl_singleposthead .entry-title{
+		font-size: 40px;
+		line-height: 1.2;
+	}
+
+	.zl_post .entry-title a:before,
+	.zl_post .entry-title a:after{
+		content:none;
+	}
+
+	/* Post footer */
+	.zl_post_footer{
+		margin-top: 30px;
+	}
+
+	/* Post infos */
+	.zl_postinfos{
+		text-align: center;
+	}
+	
+	.zl_readmore_box{
+		position: relative;
+		text-align: center;
+	}
+	
+	.zl_readmore_box a{
+		top: 0;
+		width: 100%;
+		line-height: 35px;
+		font-size: 18px;
+	}
+
+	.zl_postnav{
+		margin: 30px auto;
+	}
+
+	.zl_postnav .column a{
+		height: 80px;
+		line-height: 73px;
+	}
+
+
+	/* SINGLE */
+	.zl_singleposthead{
+		padding: 30px 15px;
+	}
+
+	.zl_postutility {
+		padding: 15px;
+		text-align: center;
+	}
+
+	.zl_postutility .large-4{
+		border-top: 1px solid #e5e5e5;
+		border-top: 1px solid rgba(0,0,0,.05);
+		padding-top: 15px;
+		margin-top: 15px;
+		text-align: center;
+	}
+
+	.zl_shortlink{
+		margin: 0 auto;
+		float: none;
+	}
+
+	.related_post {
+		margin-bottom: 30px;
+	}
+
+	.zl_authorinfo_container,
+	.zl_post_extra,
+	.zl_comment_container{
+		padding: 15px;
+	}
+	.zl_authorinfo_container > div,
+	.zl_post_extra > div,
+	.zl_comment_container > div{
+		margin: 30px auto!important;
+	}
+}

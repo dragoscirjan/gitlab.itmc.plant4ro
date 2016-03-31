@@ -1,0 +1,178 @@
+//- TODO: #122 Slider doesn't work on click
+//- TODO: #116 Finish Design for corporate
+//- TODO: #118 Finish Payment options
+//- TODO: #117 Implement payment functionality with both Paypal and mobilpay
+//- TODO: #119 Frinish Recaptcha plugin
+//- TODO: #120 Finish functionality on 'planteaza cu un prieten'
+//- TODO: #121 Form validation
+template
+	//- require(from='./lib/renderer/recaptcha')
+	//- require(from='google-recaptcha')
+	section.au-animate
+		.container
+			h1.page-title ${heading}
+			.tabs
+				ul.nav.nav-tabs(role="tablist")
+					li(role="presentation", class.bind="isCorporate ? '' : 'active'")
+						a(href="#individualDonations", role="tab", aria-controls="individualDonations", data-toggle="tab", click.trigger="toggleCorporate()") Donatii individuale
+					li(role="presentation", class.bind="isCorporate ? 'active' : ''")
+						a(href="#corporateDonations", role="tab", aria-controls="corporateDonations", data-toggle="tab", click.trigger="toggleCorporate()") Donatii corporate
+				.tab-content
+					#individualDonations(role="tabpanel", class.bind="'tab-pane ' + (isCorporate ? '' : 'active')")
+						p
+							strong Planteaza pentru Romania 
+							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
+					#corporateDonations(role="tabpanel", class.bind="'tab-pane ' + (isCorporate ? 'active' : '')")
+						p
+							strong Planteaza pentru Romania (corporate)
+							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
+				form#donationsForm.form--plant(action="", validate.bind="validation", submit.delegate="proceedToPayment()", data-parsley-excluded="input[type=button], input[type=submit], input[type=reset], input[type=hidden], [disabled], :hidden, #anonymous, #total")
+					div(class.bind="'form-group' + (isCorporate ? '' : ' sr-only')")
+						.form-group
+							label(for="company") Companie
+								span.h-text-primary &nbsp;*
+							.form-wrap
+								input#company.form-control(type="text", value.bind="model.company", required.bind="isCorporate", data-parsley-minlength.bind="isCorporate ? 6 : 0")
+						.form-group
+							label(for="vatNumber") Numar de inregistrare
+								span.h-text-primary &nbsp;*
+							.form-wrap
+								input#vatNumber.form-control(type="text", value.bind="model.vat", required.bind="isCorporate", data-parsley-pattern.bind="isCorporate ? '(RO)?\\\\d{}' : '.*'")
+					.form-group
+						label(for="name")
+							span(innerHtml.bind="isCorporate ? 'Persoana de contact' : 'Nume'")
+							span.h-text-primary &nbsp;*
+						.form-wrap
+							input#name.form-control(type="text", value.bind="model.name", required="", data-parsley-minlength="3")
+					.form-group
+						label(for="email") Email
+							span.h-text-primary &nbsp;*
+						.form-wrap
+							input#email.form-control(type="email", value.bind="model.email", required="", data-parsley-type="email")
+					div(class.bind="'form-group' + (isCorporate ? '' : ' sr-only')")
+						.form-group
+							label(for="phone") Telefon
+							.form-wrap
+								input#phone.form-control(type="text", value.bind="model.phone", required.bind="isCorporate", data-parsley-pattern.bind="isCorporate ? '(\\\\+|00)?\\\\d{5,}' : '.*'")
+					.form-group
+						label(for="treesQty") Cati copaci vrei sa plantezi?
+							span.h-text-primary &nbsp;*
+						.slider-wrapper
+							span#treesQtyVal.slider-value ${model.trees}
+							input#treesQty(type="text", data-slider-min="1", data-slider-max="${maxDonation / treePrice}", data-slider-step="1" data-slider-value="${model.trees}", value.bind="model.trees", data-slider-tooltip="hide")
+					//- div(class.bind="'collapsible collapsible--form' + (isCorporate ? ' hide' : '')")
+					//- 	a(role='button', data-toggle='collapse', href='#plantFriend', aria-expanded='false', aria-controls='plantFriend') 
+					//- 		| Planteaza cu un prieten
+					//- 		i.caret
+					//- 	#plantFriend.collapse.collapsible__content
+					//- 		.form-group
+					//- 			label(for="donateName1") Numele si prenumele
+					//- 				span.h-text-primary &nbsp;*
+					//- 			.form-wrap
+					//- 				input#donateName1.form-control(type="text", name="donateName1")
+					//- 		.form-group
+					//- 			label(for="donateEmail1") Email
+					//- 				span.h-text-primary &nbsp;*
+					//- 			.form-wrap
+					//- 				input#donateEmail1.form-control(type="email", name="donateEmail1")
+					//- 		.form-group
+					//- 			label(for="donateAmount1") Cati copaci vrei sa plantezi pentru prietenul tau?
+					//- 			.form-wrap
+					//- 				input#donateAmount1.form-control(type="text", name="donateAmount1")
+					//- 		.form-group
+					//- 			button#addDonationGift.btn.btn--link(type="button") Adauga alt prieten
+					.form-group.h-margin-top-40.h-margin-bottom-40
+						label(for="total") Total de plata
+						.form-wrap
+							.input-group
+								.input-group-addon RON
+								input#total.form-control(type="text", readonly="readonly", value="${paymentModel.donation.total}")
+							//- .input-group-addon RON
+					p
+						| Dragi prieteni ai padurilor, pentru donatii mai mari de ${maxDonation} RON va rugam sa ne 
+						a(href="/#/contact") contactati
+					hr
+					p.h-margin-bottom-20.h-text-primary
+						strong Modalitatea de donatie
+					.form-group
+						.radio
+							input#payMethodM.sr-only(type='radio', name="payMethod", value='mobilpay', checked.bind='model.donation.method')
+							label(for="payMethodM") 
+								strong MobilPay
+								| : ${paymentModel.donation.total} RON
+						.radio(class.bind="(!model.donation.exchange) ? 'hide' : ''")
+							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method')
+							label(for="payMethodPP")
+								strong Braintree (Paypal)
+								| : ${paymentModel.donation.totalEur} EUR 
+								i (curs valutar 1 EUR = ${model.donation.exchange} RON)
+						div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
+							input#payMethoTB.sr-only(type='radio', name="payMethod", value='transfer', checked.bind='model.donation.method')
+							label(for="payMethoTB") Transfer bancar ${paymentModel.donation.total} RON
+					hr
+					.form-group
+						.checkbox.form-wrap
+							div
+								input#anonymous.sr-only(type="checkbox", checked.bind="anonymous")
+								label(for="anonymous") Doresc sa raman anonim (Numele tau nu va aparea in nicio zona a site-ului)
+						.checkbox.form-wrap
+							div
+								input#agreement.sr-only(type="checkbox", checked.bind="agreement", required="")
+								label(for="agreement") Sunt de acord cu #[a(href="/#/termeni-si-conditii") termenii si conditiile]
+					.form-group.h-margin-top-40.h-margin-bottom-40
+						.form-wrap
+							div
+								recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='toggleRecaptchaValidate')
+								input#rc.sr-only(type="checkbox", checked.bind="notRobot", required="")
+					.form-group.text-center
+						button.btn.btn--secondary(type="submit") Planteaza
+
+	#braintree-modal.modal.modal-braintree.fade(tabindex='-1', role='dialog') 
+		.modal-dialog
+			.modal-content
+				.modal-header
+					img(src="/dist/assets/img/braintree-logo.jpg", alt="Braintree - A Paypal Company Logo")
+				.modal-body
+					form#checkout(method='post', action='/services/index.php/donate/braintree/pay')
+						#braintree-payment-form
+						input.sr-only(type='submit', value='Planteaza')
+				.modal-footer
+					button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
+					button.btn.btn--sm.btn--secondary(type='button') Planteaza
+
+	#mobilpay-modal.modal.modal-mobilpay.fade(tabindex='-1', role='dialog') 
+		.modal-dialog
+			.modal-content
+				.modal-header
+					img(src="/dist/assets/img/mobilpay-logo.png", alt="Braintree - A Paypal Company Logo", width="100%")
+				.modal-body
+					.splash.splash--sm.center-block
+						.splash__circle
+						.splash__mask
+							.splash__line
+						img.splash__logo(src='/dist/assets/img/loader-logo.png', alt='')
+					form(method='post', action.bind='mobilpay.url')
+						input(type='hidden', name='env_key', value.bind='mobilpay.env_key')
+						input(type='hidden', name='data', value.bind='mobilpay.data')
+				.modal-footer
+					p Vei redirectat catre pagina de plati securizata a 
+						a(href="http://mobilpay.ro", target="_blank") mobilpay.ro
+					//- button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
+					//- button.btn.btn--sm.btn--secondary(type='button') Planteaza
+
+	#donation-error-modal.modal.modal-msg.fade(tabindex='-1', role='dialog') 
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(data-dismiss="modal" aria-label="Close")
+						span(aria-hidden="true") &times;
+				.modal-body
+					i.fa.fa-exclamation-triangle
+					h4.text-danger Tranzactia dumneavoastra a esuat cu urmatorul mesaj:
+					p 
+						i ${donationErrorModal.message}
+					p 
+						| Pentru mai multe detalii, va rugam sa ne contactati la adresa de mail 
+						a(href="mailto:office@prieteniipadurilor.ro") office@prieteniipadurilor.ro
+						| .
+					a.btn.btn--sm.btn--neutral.h-margin-top-30(href="") Mai incearca o data
