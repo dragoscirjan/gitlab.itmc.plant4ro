@@ -472,8 +472,4 @@ System.config({
       "indexof": "npm:indexof@0.0.1"
     }
   }
-<<<<<<< HEAD
-})
-=======
 });
->>>>>>> bd21f82507f95f3701d04ef69075228aa9feda2d
