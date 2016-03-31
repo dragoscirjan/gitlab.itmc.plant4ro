@@ -97,7 +97,7 @@ return [
             'mobilpay' => [
                 'paymentUrl' => 'http://secure.mobilpay.ro',
                 'certPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
-                'keyPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.key',
+                'keyPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UGprivate.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
                 'confirmUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
                 'returnUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
