@@ -299,7 +299,6 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * [fetchMobilpayInfo description]
      * @method fetchMobilpayInfo
      * @param  {String}  t
      * @return {Promise}
