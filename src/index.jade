@@ -1,13 +1,4 @@
 template
-	// Revolution Slider Styles
-	// RS5.0 Main Stylesheet
-	//- require(from='../assets/plugins/revolution/css/settings.css')
-	// RS5.0 Layers and Navigation Styles
-	//- require(from='../assets/plugins/revolution/css/layers.css')
-	//- require(from='../assets/plugins/revolution/css/navigation.css')
-	//- require(from='../assets/plugins/owl.carousel/owl-carousel/owl.carousel.css')
-	//- //- require(from='../assets/plugins/owl.carousel/owl-carousel/owl.theme.css')
-	//- require(from='../assets/plugins/owl.carousel/owl-carousel/owl.transitions.css')
 	require(from='../3rdpt/owl.carousel/owl-carousel/owl.carousel.min.js')
 
 	#content
@@ -28,7 +19,6 @@ template
 				.donation__btn-wrap
 					button#donationToggler.donation__btn(type="button", click.trigger="toggleDonators()")
 						i.fa.fa-search
-					//- TODO: Should pulse once every 10 seconds
 				span.donation__title Copaci donati
 				span#donationAmount.donation__amount(innerHtml.bind="treeCount")
 				.donation__toggle
@@ -37,78 +27,20 @@ template
 						.donation__side-title 
 							.donation__rotate Donatori
 						ul#donationList.donation__list
-							//- li.donation__item
-							//- 	.donator
-							//- 		.donator__details
-							//- 			span.donator__name Samsung
-							//- 			span.donator__location Bucuresti, Romania
-							//- 		span.donator__donation 200
-							//- li.donation__item
-							//- 	.donator
-							//- 		.donator__details
-							//- 			span.donator__name Marius Popa
-							//- 			span.donator__location Baia Mare, Romania
-							//- 		span.donator__donation 40
-							//- li.donation__item
-							//- 	.donator
-							//- 		.donator__details
-							//- 			span.donator__name Cristina Stoica
-							//- 			span.donator__location Cluj-Napoca, Romania
-							//- 		span.donator__donation 40
-							//- li.donation__item
-							//- 	.donator
-							//- 		.donator__details
-							//- 			span.donator__name John Timmons
-							//- 			span.donator__location London, UK
-							//- 		span.donator__donation 100
 			.container.container--hp
 				.l-flex.l-flex--lrg.l-flex--vcenter.row
 					.l-flex__item.col-xs-12.col-sm-6
 						//- Carousel
 						#owlCarouselHPTxt.owl-carousel.owl-carousel--hp-txt
 							.owl-carousel__slide(data-img="/dist/assets/img/slider/img1.jpg")
-								.owl-carousel__caption Salvați #[strong Pădurile României], cea mai importantă #[strong resursă naturală regenerabilă] 
+								.owl-carousel__caption #[strong Pădurile României] reprezintă cea mai importantă #[strong resursă naturală regenerabilă] a tării 
 							.owl-carousel__slide(data-img="/dist/assets/img/slider/img2.jpg")
-								.owl-carousel__caption Până în prezent, #[strong 80%] din pădurile lumii au fost degradate sau distruse. În România se pierd aproximativ #[strong trei hectare] de pădure pe oră.
+								.owl-carousel__caption Până în prezent, am distrus ca specie #[strong 50%] din pădurile lumii
 							.owl-carousel__slide(data-img="/dist/assets/img/slider/img3.jpg")
-								.owl-carousel__caption Prin distrugerea pădurilor pierdem șansa de a trăi într-o lume mai bună și mai curată alături de copiii noștri.
+								.owl-carousel__caption Prin distrugerea pădurilor pierdem șansa de a trăi într-o lume mai bună  alături de copiii noștri
 							.owl-carousel__slide(data-img="/dist/assets/img/slider/img4.jpg")
 								.owl-carousel__caption De existența și starea pădurilor depinde viața a mii de specii de animale, insecte și plante.
 							.owl-carousel__slide(data-img="/dist/assets/img/slider/img5.jpg")
-								.owl-carousel__caption O lume mai bună începe prin tine! Salvează pădurile din România!
-									//- br
-									//- | Intra si tu in "Echipa Nationala de Plantat a Romaniei"  plantand pentru Romania si hai sa scriem 
-									//- | istoria impreuna!
+								.owl-carousel__caption O lume mai bună poate incepe #[strong aici] si acum cu tine!] Fii si tu #[strong Prietenul Padurilor] din Romania!
 					.l-flex__item.col-xs-12.col-sm-6
 						a.btn.btn--secondary.h-pull-right-lrg(href="/#/planteaza") Planteaza un copac
-		
-		
-		
-		//- #owlCarouselHP.owl-carousel.owl-carousel--hp
-		//- 	.owl-carousel__slide
-		//- 		.owl-carousel__img(style="background-image: url('/dist/assets/img/slider/img1.jpg')")
-		//- 		.container.container--carousel
-		//- 			.owl-carousel__caption
-		//- 				strong Padurile Romaniei 
-		//- 				|  reprezinta cea mai importanta 
-		//- 				strong resursa naturala regenerabila
-		//- 				|  a tarii si indeplineste multiple roluri
-		//- 	.owl-carousel__slide(style="background-image: url('/dist/assets/img/slider/img2.jpg')")
-		//- 		.owl-carousel__caption
-		//- 			.l-flex.l-flex--lrg.l-flex--vcenter
-		//- 				.l-flex__item
-		//- 					.owl-carousel__text
-		//- 						| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam cumque, 
-		//- 						| nostrum, laboriosam ducimus qui officia provident eaque numquam minus enim?
-		//- 				.l-flex__item
-		//- 					a.btn.btn--secondary.h-pull-right-lrg(href="#") Doneaza un copac
-		//- 	.owl-carousel__slide(style="background-image: url('/dist/assets/img/slider/img3.jpg')")
-		//- 		.owl-carousel__caption
-		//- 			.l-flex.l-flex--lrg.l-flex--vcenter
-		//- 				.l-flex__item
-		//- 					.owl-carousel__text
-		//- 						| Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore, ut!
-		//- 				.l-flex__item
-		//- 					a.btn.btn--secondary.h-pull-right-lrg(href="#") Doneaza un copac
-		//- .container.container--carousel-cta				
-		//- 	a.btn.btn--secondary.h-pull-right-lrg(href="#") Doneaza un copac
