@@ -374,7 +374,8 @@
                                 $preloader.removeClass('make-hidden');
                             }
                             $.ajax({
-                                url: settings.sidebar.selectSection.pathToJSONDirectory+selectValue+"."+settings.sidebar.selectSection.fileTypes,
+                                url: settings.sidebar.selectSection.pathToJSONDirectory + selectValue +
+                                    (settings.sidebar.selectSection.fileTypes ? "." + settings.sidebar.selectSection.fileTypes : ''),
                                 dataType: 'json',
                                 success: function(data) {
                                     if(clearClusterer == true){

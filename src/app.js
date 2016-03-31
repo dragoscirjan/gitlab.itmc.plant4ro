@@ -27,17 +27,17 @@ export class App {
     configureRouter(config, router) {
         config.title = 'Planteaza pentru Romania';
         config.map([
-            { route: ['', 'acasa'],          name: 'hp',        moduleId: 'index',           nav: true,   title: 'Acasa' },
-            { route: 'despre-proiect',       name: 'about',     moduleId: 'about',           nav: true,   title: 'Despre Proiect' },
-            { route: 'parteneri',            name: 'partners',  moduleId: 'partners',        nav: true,   title: 'Parteneri' },
-            { route: 'implica-te',           name: 'support',   moduleId: 'support-router',  nav: true,   title: 'Implica-te' },
-            { route: 'planteaza',            name: 'plant',     moduleId: 'donate',          nav: true,   title: 'Planteaza' },
-            { route: 'blog',                 name: 'blog',      moduleId: 'blog',            nav: true,   title: 'Stiri' },
-            { route: 'planteaza/:t/esuat',   name: 'plant',     moduleId: 'donate',          nav: false,  title: 'Transactie Esuata' },
-            { route: 'diploma/:id/:t',       name: 'diploma',   moduleId: 'diploma',         nav: false,  title: 'Ai Plantat' },
-            { route: 'contact',              name: 'contact',   moduleId: 'contact',         nav: true,   title: 'Contact' },
-            { route: 'intrebari',            name: 'faq',       moduleId: 'faq',             nav: false,  title: 'Intrebari Frecvente' },
-            { route: 'termeni-si-conditii',  name: 'terms',     moduleId: 'terms-router',    nav: false,  title: 'Termeni si Conditii' }
+            { route: ['', 'acasa'],           name: 'hp',        moduleId: 'index',           nav: true,   title: 'Acasa' },
+            { route: 'despre-proiect',        name: 'about',     moduleId: 'about',           nav: true,   title: 'Despre Proiect' },
+            { route: 'parteneri',             name: 'partners',  moduleId: 'partners',        nav: true,   title: 'Parteneri' },
+            { route: 'implica-te',            name: 'support',   moduleId: 'support-router',  nav: true,   title: 'Implica-te' },
+            { route: 'planteaza',             name: 'plant',     moduleId: 'donate',          nav: true,   title: 'Planteaza' },
+            { route: 'blog',                  name: 'blog',      moduleId: 'blog',            nav: true,   title: 'Stiri' },
+            { route: 'planteaza/:t/esuat',    name: 'plant',     moduleId: 'donate',          nav: false,  title: 'Transactie Esuata' },
+            { route: 'diploma/:id/:t/:mode',  name: 'diploma',   moduleId: 'diploma',         nav: false,  title: 'Ai Plantat' },
+            { route: 'contact',               name: 'contact',   moduleId: 'contact',         nav: true,   title: 'Contact' },
+            { route: 'intrebari',             name: 'faq',       moduleId: 'faq',             nav: false,  title: 'Intrebari Frecvente' },
+            { route: 'termeni-si-conditii',   name: 'terms',     moduleId: 'terms-router',    nav: false,  title: 'Termeni si Conditii' }
         ]);
 
         this.router = router;

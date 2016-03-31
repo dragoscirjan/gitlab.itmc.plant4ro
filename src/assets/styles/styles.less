@@ -111,6 +111,16 @@ ul {
     outline: none;
 }
 
+@media print {
+    @page {
+        size: landscape;
+    }
+
+    * {
+        color: @text-color !important;
+    }
+}
+
 /* ==========================================================================
 Layout
 ========================================================================== */
@@ -153,6 +163,10 @@ Layout
             height: 22vmin;
         }
     }
+
+    @media print {
+        display: none;
+    }
 }
 
 #main {
@@ -192,6 +206,10 @@ Layout
 
     @media (min-width: 768px) {
         padding: 40px 70px;
+    }
+
+    @media print {
+        display: none;
     }
 }
 
@@ -2136,19 +2154,76 @@ Navbar
 
 
 /*
+   Print certificate
+   ========================================================================== */
+
+.print #header,
+.print #footer,
+.print .diploma .container > *:not(.certificate) {
+    display: none;
+}
+
+
+
+/*
    Certificate / Diploma
    ========================================================================== */
 
+.container > *:not(.certificate) {
+    @media print {
+        display: none;
+    }
+}
+
 .certificate {
     position: relative;
+    margin: 50px 0;
     padding: 45px 80px;
     border: 1px solid @border-color;
     background-color: #fff;
+
+    @media print {
+        display: flex;
+        align-items: center;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 8vw;
+    }
+
+    .print & {
+        display: flex;
+        align-items: center;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        width: 100vw;
+        height: 100vh;
+        margin: 0;
+        padding: 8vw;
+    }
 
     &__logo {
         width: 130px;
         margin: 0 auto;
         text-align: center;
+
+        .print & {
+            width: 15vw;
+            max-width: 200px;
+        }
+
+        @media print {
+            width: 15vw;
+            max-width: 200px;
+        }
 
         img {
             max-width: 100%;
@@ -2157,28 +2232,71 @@ Navbar
 
     &__title {
         margin: 20px 0;
+        font-family: Stentiga, sans-serif;
         font-size: 40px;
         font-weight: 700;
         text-transform: uppercase;
         text-align: center;
+
+        .print & {
+            margin: 3vw 0;
+            font-size: 4vw;
+        }
+
+        @media print {
+            margin: 3vw 0;
+            font-size: 4vw;
+        }
     }
 
     &__content {
         text-align: center;
+
+        .print & {
+            font-size: 1.5vw;
+        }
+
+        @media print {
+            font-size: 1.5vw;
+        }
     }
 
     &__input {
         height: 40px;
         padding: 10px 15px;
         border-width: 0 0 1px;
+
+        .print & {
+            font-size: 2vw;
+        }
+
+        @media print {
+            font-size: 2vw;
+        }
     }
 
     &__footer {
         margin-top: 20px;
+
+        .print & {
+            margin-top: 3vw;
+        }
+
+        @media print {
+            margin-top: 3vw;
+        }
     }
 
     &__signature {
         text-align: right;
+
+        .print & {
+            font-size: 1.5vw;
+        }
+
+        @media print {
+            font-size: 1.5vw;
+        }
 
         .form-group--inline {
             margin: 0;
@@ -2214,8 +2332,29 @@ Navbar
     background: transparent url('img/badge.png') no-repeat center;
     text-align: center;
 
+    .print & {
+        width: 15vw;
+        height: 15vw;
+        background-size: cover;
+    }
+
+    @media print {
+        width: 15vw;
+        height: 15vw;
+        background: transparent url('img/badge.png') no-repeat center !important;
+        background-size: cover !important;
+    }
+
     &__text {
         text-transform: uppercase;
+
+        .print & {
+            font-size: 1.5vw;
+        }
+
+        @media print {
+            font-size: 1.5vw;
+        }
     }
 
     &__number {
@@ -2224,6 +2363,15 @@ Navbar
         font-weight: 700;
         line-height: 1;
         color: @primary-color;
+
+        .print & {
+            font-size: 6vw;
+        }
+
+        @media print {
+            font-size: 6vw;
+            color: @primary-color !important;
+        }
     }
 }
 
@@ -2257,6 +2405,20 @@ Navbar
 
         &:nth-child(3) {
             background-color: #f41818;
+        }
+
+        @media print {
+            &:nth-child(1) {
+                background-color: #136be7 !important;
+            }
+
+            &:nth-child(2) {
+                background-color: #f4c811 !important;
+            }
+
+            &:nth-child(3) {
+                background-color: #f41818 !important;
+            }
         }
     }
 }

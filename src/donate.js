@@ -50,6 +50,7 @@ export class Component extends ViewModelAbstract {
         friends: [], // Donator's Friends @TODO: NOT Implemented yet
         anonymous: false, // Donator wants to remain anonymous
         trees: 10, // Donation => Tree Number
+        locationGps: '',
 
         donation: {
             method: 'mobilpay',
@@ -161,8 +162,28 @@ export class Component extends ViewModelAbstract {
      * @method attached
      */
     attached() {
+        let self = this;
         this.toggleRangeSlider();
         this.toggleCorporate();
+
+        this.detectGeolocation()
+            .catch(() => {
+                self.logger.warn('Unable to obtain browser geo location.');
+                self.detectIpGeoLocation()
+                    .catch(() => {
+                        self.logger.warn('Unable to obtain ');
+                    })
+                    .then((position) => {
+                        self.logger.debug('Detected IP Location: ', position);
+                        self.model.locationGps = position.locationGps;
+                        self.model.location = position.location;
+                    });
+            })
+            .then((position) => {
+                self.logger.debug('Detected Location: ', position);
+                self.model.locationGps = position.locationGps;
+                self.model.location = position.location;
+            });
 
         if (this.orderId) {
             return this.fetchMobilpayInfo(this.orderId);
@@ -170,6 +191,80 @@ export class Component extends ViewModelAbstract {
         }
     }
 
+    /**
+     * Detect geolocation by using browser geolocation and google maps API
+     * @method detectGeolocation
+     * @return Promise  resolve should return a structure like { locationGps: '', location: '' }
+     */
+    detectGeolocation() {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            if (navigator.geolocation) {
+                // navigator.geolocation.getCurrentPosition(resolve, error);
+                navigator.geolocation.getCurrentPosition((position) => {
+                    self.logger.debug('Browser geolocation obtained', position);
+                    $.ajax({
+                        error: (jqXHR, status, reason) => {
+                            self.logger.warn('Unable to obtain location from coordinates.', jqXHR, status, reason);
+                            reject();
+                        },
+                        dataType: 'xml',
+                        method: 'get',
+                        success: (doc) => {
+                            let pos = {
+                                locationGps: `${position.coords.latitude},${position.coords.longitude}`,
+                                location: ''
+                            };
+                            self.logger.debug('Location obtained', doc);
+                            self.logger.debug($(doc).find('address_component'));
+                            $(doc).find('address_component').each((i, address) => {
+                                self.logger.debug($(address).find('type').text(), $(address).find('short_name').text());
+                                if ($(address).find('type').text() === 'administrative_area_level_1political' && pos.location === '') {
+                                    pos.location = $(address).find('short_name').text().replace(/municipiul /i, '');
+                                }
+                            });
+                            resolve(pos);
+                        },
+                        url: `http://maps.googleapis.com/maps/api/geocode/xml?latlng=${position.coords.latitude},${position.coords.longitude}&sensor=true&l=ro`
+                    });
+                }, () => {
+                    reject();
+                });
+            } else {
+                reject();
+            }
+        });
+    }
+
+    /**
+     * Detects IP geo location from ip-api.com
+     * @method detectIpGeoLocation
+     * @return Promise  resolve should return a structure like { locationGps: '', location: '' }
+     */
+    detectIpGeoLocation() {
+        let self = this;
+        return new Promise((resolve, reject) => {
+            $.ajax({
+                error: (jqXHR, status, reason) => {
+                    self.logger.warn('IP geo location failed', jqXHR, status, reason);
+                },
+                dataType: 'jsonp',
+                method: 'get',
+                success: (doc) => {
+                    self.logger.debug('IP geo location obtained', doc);
+                    resolve({
+                        locationGps: `${doc.lat},${doc.lon}`,
+                        location: `${doc.regionName} ${doc.country}`
+                    });
+                },
+                url: `http://ip-api.com/json/`
+            });
+        });
+    }
+
+    /**
+     * @method destroyBraintreeForm
+     */
     destroyBraintreeForm() {
         $('#braintree-modal').modal('hide');
         // $('iframe').remove();
@@ -204,7 +299,6 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * [fetchMobilpayInfo description]
      * @method fetchMobilpayInfo
      * @param  {String}  t
      * @return {Promise}
@@ -503,7 +597,7 @@ export class Component extends ViewModelAbstract {
                         .then((done) => {
                             // hide payment form and redirect to diploma download (thank you) page
                             self.destroyBraintreeForm();
-                            window.location = `/#/diploma/${done.id}/${done.t}`;
+                            window.location = `/#/diploma/${done.id}/${done.t}/preview`;
                         });
                     break;
                 case 'wire':

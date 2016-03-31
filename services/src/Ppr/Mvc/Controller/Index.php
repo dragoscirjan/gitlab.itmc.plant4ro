@@ -5,6 +5,7 @@ namespace Ppr\Mvc\Controller;
 use Ppr\Application;
 use Ppr\Mvc\Model;
 use Ppr\Http\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class Index
@@ -24,7 +25,7 @@ class Index {
 
             return Response::response(array(
                     'error' => 0,
-                    'treeCount' => $treeCount,
+                    'treeCount' => $treeCount ? $treeCount : 0,
             ));
         } catch(\Exception $e) {
             $app->getLogger()->err("{$e->getMessage()}\n{$e->getTraceAsString()}");
@@ -100,29 +101,72 @@ class Index {
     public function updateDonations(Application $app) {
         $donations = require $app->getCOnfig('path') . '/../sql/insert-donations.php';
         $restoreUnits = [];
-        foreach ($donations as $donation) {
-            $donator = new Model\Donator($donation['donator']);
-            if ($app->getEm()->find('\Ppr\Mvc\Model\Donator', $donator->getId()) === null) {
-                $app->getEm()->persist($donator);
-            } else {
-                $app->getEm()->merge($donator);
-            }
-//            $app->getEm()->flush();
+        try {
+            foreach ($donations as $donation) {
+                $donator = new Model\Donator($donation['donator']);
+                if ($app->getEm()->find('\Ppr\Mvc\Model\Donator', $donator->getId()) === null) {
+                    $app->getEm()->persist($donator);
+                } else {
+                    $app->getEm()->merge($donator);
+                }
+    //            $app->getEm()->flush();
 
-            $donation = new Model\Donation($donation);
-            $donation->setDonator($donator);
-            if ($app->getEm()->find('\Ppr\Mvc\Model\Donation', $donation->getId()) === null) {
-                $app->getEm()->persist($donation);
-            } else {
-                $app->getEm()->merge($donation);
-            }
-            $app->getEm()->flush();
+                $donation = new Model\Donation($donation);
+                $donation->setDonator($donator);
+                if ($app->getEm()->find('\Ppr\Mvc\Model\Donation', $donation->getId()) === null) {
+                    $app->getEm()->persist($donation);
+                } else {
+                    $app->getEm()->merge($donation);
+                }
+                $app->getEm()->flush();
 
-            $donation = $donation->toArray();
-            $donation['donator'] = $donator->toArray();
-            $restoreUnits[] = $donation;
+                $donation = $donation->toArray();
+                $donation['donator'] = $donator->toArray();
+                $restoreUnits[] = $donation;
+            }
+            return Response::response($restoreUnits);
+        } catch (\Exception $e) {
+            return Response::response500([
+                'error' => 'Donations update error',
+                'e' => $e
+            ], $app);
         }
-        return Response::response($restoreUnits);
+    }
+
+    /**
+     * @param Application $app
+     * @param Request $request
+     * @return Response
+     */
+    public function eventLocations(Application $app, Request $request) {
+        $locations = [];
+        try {
+            $county = trim($request->get('county'));
+            $query = $app->getEm()
+                ->createQuery('SELECT m FROM \Ppr\Mvc\Model\ForestryUnit m WHERE m.gps != \'\' AND m.county LIKE ?1')
+                ->setParameter(1, '%' . $county . '%');
+            if ($county == 'all') {
+                $query = $app->getEm()
+                    ->createQuery('SELECT m FROM \Ppr\Mvc\Model\ForestryUnit m WHERE m.gps != \'\'');
+            }
+            $items = $query->getResult();
+            foreach ($items as $item) {
+                $locations[] = [
+                    "lat" => array_shift(explode(',', $item->getGps())),
+                    "lng" => array_pop(explode(',', $item->getGps())),
+                    "title" => $item->getUnitName(),
+                    "street" => $item->getTrees() . ' pomi',
+                    "city" => $item->getGpsDetails(),
+                    "zip" => $item->getGps()
+                ];
+            }
+            return Response::response($locations);
+        } catch (\Exception $e) {
+            return Response::response500([
+                'error' => 'Donations update error',
+                'e' => $e
+            ], $app);
+        }
     }
 
 }

@@ -312,7 +312,7 @@ class Donate {
                             $this->setDonationStatus($app, $donation, Model\Donation::STATUS_COMPLETED);
                         }
                         // redirect
-                        return $app->redirect(sprintf('/#/diploma/%s/%s', $donation->getId(), $donation->getUuid()));
+                        return $app->redirect(sprintf('/#/diploma/%s/%s/preview', $donation->getId(), $donation->getUuid()));
                     default:
                         // log error
                         $app->getLogger()->alert(sprintf(
@@ -432,6 +432,34 @@ class Donate {
         );
     }
 
+    /**
+     * @param Application $app
+     * @param Request $request
+     * @return Response
+     */
+    public function info(Application $app, Request $request) {
+        try {
+
+            $donation = $this->getDonationByUuid($app, $request->get('orderId'));
+            $donation = $donation->toArray();
+            $donation['hash'] = $app->decode($donation['hash']);
+
+            $donator = $app->getEm()->getRepository('\Ppr\Mvc\Model\Donator')->find($donation['donator']['id']);
+            $donation['donator'] = [
+                'name' => $donator->getName(),
+                'company' => $donator->getCompany()
+            ];
+
+            return new Response($app->encode($donation));
+        } catch (\Exception $e) {
+            // return exception
+            return Response::response500([
+                'error' => '(Donation/Info) :: FAIL Error interrogating database.',
+                'e' => $e,
+            ], $app);
+        }
+    }
+
     /********************************************************
      * Private Declarations
      ********************************************************/
@@ -487,7 +515,7 @@ class Donate {
                 'company' => $load->company,
                 'phone' => $load->phone,
                 'location' => 'Romania',
-                'locationgps' => '0;0',
+                'locationgps' => $load->locationGps,
                 'companyvat' => $load->vat,
             ]);
             $em->persist($donator);
