@@ -53,6 +53,9 @@ class Index {
                 ->setMaxResults(20)
                 ->getResult();
             foreach ($donations as $donation) {
+                if (!$donation->getDonator()) {
+                    continue;
+                }
                 $list[] = array(
                     'hash' => $donation->getUuid(),
                     'name' => $donation->getDonator()->getCompany() ? $donation->getDonator()->getCompany() : $donation->getDonator()->getName(),
