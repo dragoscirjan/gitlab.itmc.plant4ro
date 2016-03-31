@@ -53,10 +53,11 @@ class Index {
                 ->setMaxResults(20)
                 ->getResult();
             foreach ($donations as $donation) {
+                $donator = $app->getEm()->find('\Ppr\Mvc\Model\Donator', $donation['donator']['id']);
                 $list[] = array(
                     'hash' => $donation->getUuid(),
-                    'name' => $donation->getDonator()->getCompany() ? $donation->getDonator()->getCompany() : $donation->getDonator()->getName(),
-                    'location' => $donation->getDonator()->getLocation(),
+                    'name' => $donator->getCompany() ? $donator->getCompany() : $donator->getName(),
+                    'location' => $donator->getLocation(),
                     'trees' => $donation->getTrees()
                 );
             }
