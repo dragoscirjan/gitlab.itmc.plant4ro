@@ -46,6 +46,7 @@ System.config({
     "font-awesome": "npm:font-awesome@4.5.0",
     "google-recaptcha": "github:itmcdev/aurelia-google-recaptcha@master",
     "jquery": "github:components/jquery@2.2.0",
+    "jspdf": "npm:jspdf@1.2.61",
     "jspm/nodelibs-crypto": "github:jspm/nodelibs-crypto@0.1.0",
     "parsleyjs": "github:guillaumepotier/Parsley.js@2.3.4",
     "text": "github:systemjs/plugin-text@0.0.3",
@@ -393,6 +394,10 @@ System.config({
     },
     "npm:inherits@2.0.1": {
       "util": "github:jspm/nodelibs-util@0.1.0"
+    },
+    "npm:jspdf@1.2.61": {
+      "buffer": "github:jspm/nodelibs-buffer@0.1.0",
+      "process": "github:jspm/nodelibs-process@0.1.2"
     },
     "npm:miller-rabin@4.0.0": {
       "bn.js": "npm:bn.js@4.10.5",

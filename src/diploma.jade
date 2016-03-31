@@ -1,12 +1,12 @@
 template
-	require(from='../3rdpt/owl.carousel/owl-carousel/owl.carousel.min.js')
+	//- require(from='../3rdpt/jsPDF/jspdf.min.js')
 
 	section(class.bind="'au-animate ' + routeConfig.name")
 		.container
 			h1.page-title ${heading}
 			p Iti multumim pentru donatia facuta. Copacelul la plantarea caruia tu ai contribuit astazi va creste mare si va avea grija de planeta ta. 
 			
-			.certificate
+			#diploma.certificate
 				.certificate__inner
 					.certificate__logo
 						img(src="/dist/assets/img/logo.png", alt="")
@@ -42,7 +42,7 @@ template
 					.flag__colour
 					
 			.text-center
-				button.btn.btn--sm.btn--secondary(click.delegate="print()") Printeaza
+				button.btn.btn--sm.btn--secondary(click.delegate="pdf()") Printeaza
 
 			//- .text-center.btn__group
 			//- 	a.btn.btn--sm.btn--secondary(href="") Trimite pe mail
