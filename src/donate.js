@@ -597,7 +597,7 @@ export class Component extends ViewModelAbstract {
                         .then((done) => {
                             // hide payment form and redirect to diploma download (thank you) page
                             self.destroyBraintreeForm();
-                            window.location = `/#/diploma/${done.id}/${done.t}`;
+                            window.location = `/#/diploma/${done.id}/${done.t}/preview`;
                         });
                     break;
                 case 'wire':

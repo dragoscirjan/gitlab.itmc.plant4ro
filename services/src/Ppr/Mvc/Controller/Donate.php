@@ -312,7 +312,7 @@ class Donate {
                             $this->setDonationStatus($app, $donation, Model\Donation::STATUS_COMPLETED);
                         }
                         // redirect
-                        return $app->redirect(sprintf('/#/diploma/%s/%s', $donation->getId(), $donation->getUuid()));
+                        return $app->redirect(sprintf('/#/diploma/%s/%s/preview', $donation->getId(), $donation->getUuid()));
                     default:
                         // log error
                         $app->getLogger()->alert(sprintf(

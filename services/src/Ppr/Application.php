@@ -133,7 +133,8 @@ class Application extends \Silex\Application {
             $config = ORM\Tools\Setup::createAnnotationMetadataConfiguration(
                 array($this['path'] .'/src/Ppr/Mvc/Model'),
                 $this['debug'],
-                $this['path'] .'/src/Ppr/Mvc/Model/Proxy',
+//                $this['path'] .'/src/Ppr/Mvc/Model/Proxy',
+                $this['path'] .'/cache',
                 $cache,
                 false
             );
