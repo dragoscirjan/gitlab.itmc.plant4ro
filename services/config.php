@@ -105,6 +105,13 @@ return [
         ],
     ],
     'production' => [
+        'db' => [
+            'dbname' => 'plant4ro_live_do',
+            'user' => 'plant4ro',
+            'password' => 'plant4roma',
+            'host' => 'localhost',
+            'driver' => 'pdo_mysql',
+        ],
         'js' => [
             'servicesBase' => '//planteazapentruromania.ro/services/index.php/'
         ],
