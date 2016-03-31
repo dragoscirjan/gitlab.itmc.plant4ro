@@ -70,18 +70,23 @@ Vagrant.configure(2) do |config|
   #   # end
   # end
 
+
+
   # Ubuntu Machine
   config.vm.define :ubuntu do |ubuntu|
     # --provider lxc
     ubuntu.vm.provider :lxc do |lxc, override|
-      lxc.customize "network.ipv4", "10.0.3.10/24"
+      lxc.customize "network.ipv4", "10.0.3.101/24"
 
       override.vm.box = "dragosc/trusty64"
     end
 
     # --provider virtualbox
     ubuntu.vm.provider :virtualbox do |virtualbox, override|
-      override.vm.network "private_network", ip: "192.168.50.10"
+      override.vm.network "private_network", ip: "192.168.50.101"
+
+      virtualbox.memory = 2048
+      # virtualbox.cpus = 1
 
       # override.vm.box = "ubuntu/xenial64" # 16.04 - NOT LAUNCHED
       # override.vm.box = "ubuntu/wily64" # 15.10
@@ -178,5 +183,5 @@ Vagrant.configure(2) do |config|
   # For more info please read
   # @link https://docs.vagrantup.com/v2/provisioning/file.html
   config.vm.provision "shell", path: ".provision.sh"
-  # config.vm.provision "shell", path: ".provision-boot.sh", run: "always"
+  config.vm.provision "shell", path: ".provision-boot.sh", run: "always"
 end
