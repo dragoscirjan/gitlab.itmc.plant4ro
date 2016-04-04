@@ -22,6 +22,8 @@ $app->get('/donate/mobilpay/{orderId}/{status}', '\Ppr\Mvc\Controller\Donate::mo
 $app->post('/donate/mobilpay/{orderId}/{status}', '\Ppr\Mvc\Controller\Donate::mobilpay');
 $app->get('/donation/{orderId}', '\Ppr\Mvc\Controller\Donate::info');
 
+$app->get('/pdf/{orderId}', '\Ppr\Mvc\Controller\Pdf::index');
+
 $app->get('/config-js', '\Ppr\Mvc\Controller\Config::configJs');
 
 $app->get('/update-forestry-units', '\Ppr\Mvc\Controller\Index::updateForestryUnits');
