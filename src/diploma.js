@@ -11,6 +11,8 @@ import 'fetch';
 // import {HttpClient, json} from 'aurelia-fetch-client';
 import {HttpClient} from 'aurelia-fetch-client';
 
+import jsPDF from 'jspdf';
+
 // import {Recaptcha} from 'google-recaptcha';
 
 import {AppConfig} from 'lib/app/config';
@@ -47,9 +49,19 @@ export class Component extends ViewModelAbstract {
      */
     activate(params, routeConfig) {
         super.activate(params, routeConfig);
+        let self = this;
         this.params = params;
         this.logger.debug('Page params: ', this.params);
-        return this.fetchDonationInfo(this.params.t);
+        // return new Promise((resolve, reject) => {
+        //     Promise.all([
+        //         self.fetchDonationInfo(this.params.t),
+        //         self.fetchPdf()
+        //     ]).then(resolve).catch(reject);
+        // });
+        return Promise.all([
+            self.fetchDonationInfo(this.params.t),
+            self.fetchPdf(this.params.t)
+        ]);
     }
 
     /**
@@ -83,6 +95,25 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
+     * @method fetchPdf
+     * @param  {String}  t
+     * @return {Promise} [description]
+     */
+    fetchPdf(t) {
+        let self = this;
+        return this.http
+            .fetch(`pdf/generate/${t}`)
+            .catch(error => {
+                self.logger.warn('PDF generation failed', error);
+            })
+            .then(response => response.text())
+            .then((data) => {
+                self.pdf = `/services/index.php/pdf/download/${t}`;
+                self.logger.debug('PDF Created', self.pdf, data);
+            });
+    }
+
+    /**
      * Initialize sliders on this page
      * @method initSliders
      */
@@ -103,6 +134,29 @@ export class Component extends ViewModelAbstract {
             autoHeight: false
             // transitionStyle: 'fade'
         });
+    }
+
+    /**
+     * @method pdfDownload
+     */
+    pdfDownload() {
+        $(`<iframe src="${this.appConfig.getPhpUrl('../../' + this.pdf)}" />`).appendTo(document.body);
+    }
+
+    /**
+     * @method pdfMail
+     */
+    pdfMail() {
+        return this.http
+            .fetch(`pdf/mail/${this.params.t}`)
+            .catch(error => {
+                self.logger.warn('Failed sending email', error);
+            })
+            .then(response => response.text())
+            .then((data) => {
+                // TODO: Add alert box
+                self.logger.debug('Mail Sent', self.pdf, data);
+            });
     }
 
     print() {
