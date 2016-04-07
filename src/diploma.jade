@@ -41,9 +41,9 @@ template
 					.flag__colour
 					.flag__colour
 					
-			.text-center
-				button.btn.btn--sm.btn--secondary(click.delegate="pdf()") Printeaza
+			//- .text-center
+			//- 	button.btn.btn--sm.btn--secondary(click.delegate="pdf()") Printeaza
 
-			//- .text-center.btn__group
-			//- 	a.btn.btn--sm.btn--secondary(href="") Trimite pe mail
-			//- 	a.btn.btn--sm.btn--secondary(href="") Descarca PDF
+			.text-center.btn__group
+				button.btn.btn--sm.btn--secondary(click.delegate="pdfMail()") Trimite pe mail
+				button.btn.btn--sm.btn--secondary(click.delegate="pdfDownload()") Descarca PDF

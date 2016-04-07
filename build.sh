@@ -2,6 +2,8 @@
 
 git pull
 
+apt-get install wkhtmltopdf xvfb
+
 echo "$*" | grep +npm && {
     npm install
     jspm install

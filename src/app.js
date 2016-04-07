@@ -31,9 +31,9 @@ export class App {
             { route: 'despre-proiect',        name: 'about',     moduleId: 'about',           nav: true,   title: 'Despre Proiect' },
             { route: 'parteneri',             name: 'partners',  moduleId: 'partners',        nav: true,   title: 'Parteneri' },
             { route: 'implica-te',            name: 'support',   moduleId: 'support-router',  nav: true,   title: 'Implica-te' },
-            { route: 'planteaza',             name: 'plant',     moduleId: 'donate',          nav: false,  title: 'Planteaza' },
+            { route: 'planteaza',             name: 'plant',     moduleId: 'donate',          nav: true,  title: 'Planteaza' },
             { route: 'intrebari',             name: 'faq',       moduleId: 'faq',             nav: true,   title: 'Intrebari' },
-            { route: 'blog',                  name: 'blog',      moduleId: 'blog',            nav: false,   title: 'Stiri' },
+            { route: 'blog',                  name: 'blog',      moduleId: 'blog',            nav: true,   title: 'Stiri' },
             { route: 'contact',               name: 'contact',   moduleId: 'contact',         nav: true,   title: 'Contact' },
 
             { route: 'planteaza/:t/esuat',    name: 'plant',     moduleId: 'donate',          nav: false,  title: 'Transactie Esuata' },
