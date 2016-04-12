@@ -44,13 +44,13 @@ export class App {
         this.router = router;
     }
 
-    /**
-     * [activate description]
-     * @method activate
-     */
-    activate() {
-        return this.fbLoadScript();
-    }
+    // /**
+    //  * [activate description]
+    //  * @method activate
+    //  */
+    // activate() {
+    //     return this.fbLoadScript();
+    // }
 
     /**
      * [attached description]
