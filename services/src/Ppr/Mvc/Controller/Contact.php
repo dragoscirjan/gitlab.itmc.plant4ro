@@ -45,6 +45,8 @@ si va contactez in legatura cu: %s\n
                 $transport->setOptions(new $class($app->getConfig('contact.mail.options')->toArray()));
             }
 
+//            die(var_dump($mail));
+
             $transport->send($mail);
 
             return Response::response(array(
@@ -56,8 +58,10 @@ si va contactez in legatura cu: %s\n
                 'error' => 'Failed to send email',
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
-            ));
+            ), $app);
         }
     }
+
+
 
 }
