@@ -30,7 +30,36 @@ template
         .form-group.h-margin-bottom-40.form-wrap
           textarea.form-control#message(placeholder="Mesajul meu: *", value.bind="model.message", required="")
         .form-group.h-margin-bottom-40.form-wrap
-          recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='toggleRecaptchaValidate')
+          recaptcha.recaptcha.recaptcha--center(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='toggleRecaptchaValidate')
           input#rc.sr-only(type="checkbox", name="rc", checked.bind="model.notRobot", required="")
         .form-group.form-wrap.text-center
           button.btn.btn--secondary(type="submit") Contacteaza-ne
+
+  #message-box-success.modal.modal-msg.fade(tabindex='-1', role='dialog')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          .modal-icon
+            i.fa.fa-info-circle
+          .modal-body-content
+            p Mesajul tau a fost transmis. Un reprezentant al Asociatiei Prietenii padurilor te va contacta cat mai curand.
+        .modal-footer
+          button.btn.btn--sm.btn--neutral(data-dismiss="modal") OK
+
+  #message-box-error.modal.modal-msg.fade(tabindex='-1', role='dialog')
+    .modal-dialog
+      .modal-content
+        .modal-header
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          .modal-icon
+            i.fa.fa-exclamation-triangle
+          .modal-body-content
+            p Nu am putut transmite mesajul. Va rugram sa ne scrieti pe adresa de mail 
+              a(href="mailto:office@prieteniipadurilor.ro") office@prieteniipadurilor.ro
+        .modal-footer
+          button.btn.btn--sm.btn--neutral(data-dismiss="modal") OK
