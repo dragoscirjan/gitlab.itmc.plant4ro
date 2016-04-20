@@ -13,10 +13,10 @@ template
 					.certificate__content
 						span Se acorda titlul de #[strong "Prieten(a) al Padurilor din Romania"] companiei/persoanei
 						.form-group
-							input.certificate__input.form-control.form-control--full.text-center(type="text", name="", value.bind="donation.donator.company || donation.donator.name")
+							span.certificate__input.form-control.form-control--full.text-center ${donation.donator.company || donation.donator.name}
 						span Pentru ca a sustinut proiectul #[strong "Planteaza pentru Romania"] editia nr. 1 din 2016 adoptand
 						.form-group.form-group--inline
-							input.certificate__input.form-control.text-center(type="text", name="", value.bind="donation.trees")
+							span.certificate__input.form-control.text-center ${donation.trees}
 						span puieti.
 						p *Suma primita de la oricine o impartim la 5 RON care este unitatea standard de masura a implicarii financiare in cadrul acestui proiect (cu fiecare 5 RON sponsorii sau donatorii adopta un arbore).
 					.certificate__footer
@@ -34,12 +34,11 @@ template
 										| ing. silvic Florin Nan
 									br
 									.form-group.form-group--inline
-										input.certificate__input.form-control.text-right(type="text", name="", value="")
+										span.certificate__input.form-control.text-right
 				.flag.flag--ro.flag--diploma
 					.flag__colour
 					.flag__colour
 					.flag__colour
-
 			.text-center.btn__group
 				button.btn.btn--sm.btn--secondary(click.delegate="pdfMail()") Trimite pe mail
 				button.btn.btn--sm.btn--secondary(click.delegate="pdfDownload()") Descarca PDF

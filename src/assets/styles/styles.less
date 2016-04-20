@@ -67,6 +67,11 @@ Imports
 Base
 ========================================================================== */
 
+// html,
+// body {
+//     height: 100%; // needed for flexbox sticky footer on IE10/11
+// }
+
 body {
     color: @text-color;
     background-color: @bg-color;
@@ -137,6 +142,7 @@ Layout
     display: -ms-flexbox;
     display:         flex; // [1]
 
+    // height: 100%;
     min-height: 100vh; // [2]
 
     -webkit-box-direction: normal;
@@ -145,11 +151,11 @@ Layout
         -ms-flex-direction: column;
             flex-direction: column; // [3]
 
-    overflow: hidden;
 
     &.wrapper-hp {
         position: relative;
         color: #fff;
+        overflow: hidden;
 
         .l-content-wrap {
             width: 100%; // required for vertical centering the content on HP
@@ -689,6 +695,13 @@ hr,
         height: 200px;
         // border-color: @border-color transparent;
         resize: none;
+    }
+}
+
+// Recaptcha
+.recaptcha {
+    &--center > div > div {
+        margin: 0 auto;
     }
 }
 
@@ -2066,6 +2079,7 @@ Navbar
 
     &--select {
         position: relative;
+        height: auto;
 
         .metro & {
             padding: 0;
@@ -2115,11 +2129,13 @@ Navbar
 
     &--search {
         .metro .ct-googleMap--sidebar & {
+            height: 50px;
             padding: 10px 30px;
             border: 1px solid @border-color;
             background-color: transparent;
             font-weight: 700;
             color: @text-color;
+            line-height: 1;
         }
     }
 }
@@ -2262,6 +2278,7 @@ Navbar
     }
 
     &__input {
+        min-width: 120px;
         height: 40px;
         padding: 10px 15px;
         border-width: 0 0 1px;

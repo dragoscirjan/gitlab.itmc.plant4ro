@@ -30,7 +30,7 @@ template
         .form-group.h-margin-bottom-40.form-wrap
           textarea.form-control#message(placeholder="Mesajul meu: *", value.bind="model.message", required="")
         .form-group.h-margin-bottom-40.form-wrap
-          recaptcha(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='toggleRecaptchaValidate')
+          recaptcha.recaptcha.recaptcha--center(sitekey='6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4', theme='light', callback='toggleRecaptchaValidate')
           input#rc.sr-only(type="checkbox", name="rc", checked.bind="model.notRobot", required="")
         .form-group.form-wrap.text-center
           button.btn.btn--secondary(type="submit") Contacteaza-ne
