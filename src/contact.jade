@@ -1,13 +1,12 @@
 template
   section(class.bind="'au-animate ' + routeConfig.name")
     .container
-      //- TODO: #125 Design
-      //- TODO: #92 Frontend Implementation
-      //- TODO: #93 Backend Implementation
       h1.page-title ${heading}
-      p
-        strong Planteaza pentru Romania 
-        |  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere.
+      p.text-center
+        | Vrei sa contribui si tu la 
+        a(href="http://www.prieteniipadurilor.ro") protejarea, conservarea, refacerea si dezvoltarea padurilor din Romania
+        | ? 
+        strong Contacteaza-ne!
       form#contactForm.form--contact(action="", submit.delegate="sendEmail()")
         span Buna ziua, numele meu este
         .form-group--inline.form-wrap
