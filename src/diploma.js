@@ -154,7 +154,11 @@ export class Component extends ViewModelAbstract {
             })
             .then(response => response.text())
             .then((data) => {
-                // TODO: Add alert box
+                if (data.error === 0) {
+                    $('#message-box-success').modal('show');
+                } else {
+                    $('#message-box-error').modal('show');
+                }
                 self.logger.debug('Mail Sent', self.pdf, data);
             });
     }

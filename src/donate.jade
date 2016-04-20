@@ -164,15 +164,18 @@ template
 		.modal-dialog
 			.modal-content
 				.modal-header
-					button.close(data-dismiss="modal" aria-label="Close")
+					button.close(data-dismiss="modal" aria-label="Close" data-resolve="close")
 						span(aria-hidden="true") &times;
 				.modal-body
-					i.fa.fa-exclamation-triangle
-					h4.text-danger Tranzactia dumneavoastra a esuat cu urmatorul mesaj:
-					p 
-						i ${donationErrorModal.message}
-					p 
-						| Pentru mai multe detalii, va rugam sa ne contactati la adresa de mail 
-						a(href="mailto:office@prieteniipadurilor.ro") office@prieteniipadurilor.ro
-						| .
-					a.btn.btn--sm.btn--neutral.h-margin-top-30(href="") Mai incearca o data
+					.modal-icon
+						i.fa.fa-exclamation-triangle
+					.modal-body-content
+						h4.text-danger Tranzactia dumneavoastra a esuat cu urmatorul mesaj:
+						p 
+							i ${donationErrorModal.message}
+						p 
+							| Pentru mai multe detalii, va rugam sa ne contactati la adresa de mail 
+							a(href="mailto:office@prieteniipadurilor.ro") office@prieteniipadurilor.ro
+							| .
+				.modal-footer
+					button.btn.btn--sm.btn--neutral.h-margin-top-30(data-dismiss="modal") Mai incearca o data
