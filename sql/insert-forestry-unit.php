@@ -12,6 +12,7 @@ return [
         'trees' => '10000',
         'gps' => '',
         'gpuDetails' => '',
+        'county' => '',
     ], [
         'id' => 2,
         'unitName' => 'RPLP Piatra Craiului RA',

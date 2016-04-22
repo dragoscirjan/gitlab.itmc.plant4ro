@@ -11,12 +11,41 @@ template
 				.tab-content
 					#individualDonations(role="tabpanel", class.bind="'tab-pane ' + (isCorporate ? '' : 'active')")
 						p
-							strong Planteaza pentru Romania 
-							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
+							strong Dragi Prieteni ai Padurilor din Romania 
+							|  pentru transparenta totala a proiectelor dezvoltate si implementate de noi, facem publice numele si cuantumul
+							| donatilor cu ajutorul carora contribuim la “protejarea,conservarea,refacerea si dezvoltarea padurilor din Romania”
+						p
+							strong Plecand de la faptul
+							|  ca esenta notiunii de prietenie inseamna Respect , Iubire dar si Ajutor Reciproc va invitam si pe voi sa va
+							| alaturati comunitatii : “Prietenii Padurilor din Romania” sustinand financiar proiectele si actiunile dezvoltate de
+							| noi...pentru ca uniti suntem mai puternici si mai eficienti!
+						p
+							strong Unitatea de masura 
+							| a sustinerii financiare in cadrul Proiectului “Planteaza Pentru Romania” este “Certificatul de Prieten
+							| al Padurilor” ce are o valoare de 5 ron! Pentru fiecare donatie de 5 ron alocam un nr ce corespunde unui
+							| arbore plantat in cadrul proiectului Planteaza Pentru Romania creand astfel legatura intre donator si
+							| padure prin intermediul proiectului!	
+						p
+							strong Uniti suntem mai puternici si mai eficienti!
+									
 					#corporateDonations(role="tabpanel", class.bind="'tab-pane ' + (isCorporate ? 'active' : '')")
 						p
-							strong Planteaza pentru Romania (corporate)
-							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
+							strong Dragi Prieteni ai Padurilor din Romania 
+							|  pentru transparenta totala a proiectelor dezvoltate si implementate de noi, facem publice numele si cuantumul
+							| donatilor cu ajutorul carora contribuim la “protejarea,conservarea,refacerea si dezvoltarea padurilor din Romania”
+						p
+							strong Plecand de la faptul
+							|  ca esenta notiunii de prietenie inseamna Respect , Iubire dar si Ajutor Reciproc va invitam si pe voi sa va
+							| alaturati comunitatii : “Prietenii Padurilor din Romania” sustinand financiar proiectele si actiunile dezvoltate de
+							| noi...pentru ca uniti suntem mai puternici si mai eficienti!
+						p
+							strong Unitatea de masura 
+							| a sustinerii financiare in cadrul Proiectului “Planteaza Pentru Romania” este “Certificatul de Prieten
+							| al Padurilor” ce are o valoare de 5 ron! Pentru fiecare donatie de 5 ron alocam un nr ce corespunde unui
+							| arbore plantat in cadrul proiectului Planteaza Pentru Romania creand astfel legatura intre donator si
+							| padure prin intermediul proiectului!	
+						p
+							strong Uniti suntem mai puternici si mai eficienti!
 				form#donationsForm.form--plant(action="", validate.bind="validation", submit.delegate="proceedToPayment()", data-parsley-excluded="input[type=button], input[type=submit], input[type=reset], input[type=hidden], [disabled], :hidden, #anonymous, #total")
 					div(class.bind="'form-group' + (isCorporate ? '' : ' sr-only')")
 						.form-group
