@@ -124,9 +124,11 @@ class Pdf
             $command = sprintf(
 //                'xvfb-run --server-args="-screen 0 1920x1080x24" wkhtmltopdf -O landscape  --page-size A4 ' .
 //                'xvfb-run --server-args="-screen 0 1024x768x24" wkhtmltopdf --orientation landscape  --page-size A4 ' .
-                'xvfb-run --server-args="-screen 0 1024x768x24" ' . __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64 --orientation landscape  --page-size A4 ' .
+                // 'xvfb-run --server-args="-screen 0 1366x965x24" ' . __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64 --orientation landscape  --page-size A4 ' .
+                __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64 --orientation landscape  --page-size A4 ' .
 //                    '--javascript-delay 2000 ' .
-                    '-B 1mm -L 1mm -R 1mm -T 1mm ' .
+                    '-B 3mm -L 3mm -R 3mm -T 3mm ' .
+                    // '-B 0mm -L 0mm -R 0mm -T 0mm ' .
                     ' "%s/services/index.php/pdf/%s" %s/cache/%s.pdf',
                 $app->getConfig('url'),
                 $request->get('orderId'),

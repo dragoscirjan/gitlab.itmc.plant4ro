@@ -2207,7 +2207,8 @@ Navbar
         left: 0;
 
         width: 100vw;
-        height: 100vh;
+        // height: calc(100vh - 6mm);
+        height: 200mm;
         margin: 0;
         padding: 8vw;
     }
@@ -2284,10 +2285,12 @@ Navbar
         border-width: 0 0 1px;
 
         .print & {
+            height: 4vw;
             font-size: 2vw;
         }
 
         @media print {
+            height: 4vw;
             font-size: 2vw;
         }
     }
