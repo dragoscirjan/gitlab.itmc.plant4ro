@@ -33,4 +33,8 @@ $app->get('/update-forestry-units', '\Ppr\Mvc\Controller\Index::updateForestryUn
 $app->get('/update-donations', '\Ppr\Mvc\Controller\Index::updateDonations');
 $app->get('/event-locations/{county}', '\Ppr\Mvc\Controller\Index::eventLocations');
 
+$app->get('/partners/companies', '\Ppr\Mvc\Controller\Partners::companies');
+$app->get('/partners/donators', '\Ppr\Mvc\Controller\Partners::donators');
+$app->get('/partners/forestry-units', '\Ppr\Mvc\Controller\Partners::forestryUnits');
+
 $app->run();
