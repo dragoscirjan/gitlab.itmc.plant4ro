@@ -1,139 +1,86 @@
 template
+  require(from="./lib/value-converters/array/filterOnProperty")
+  require(from="./lib/value-converters/array/slice")
   section.au-animate
     .container
       h1.page-title ${heading}
-      .row
-        .col-sm-4
-          .box.box--partners-l1
-            .box__img
-              a(href="http://www.primariarasnov.ro/", title="Primaria Rasnov")
-                img(src="/dist/assets/img/partners/primaria-rasnov-logo-200x140.png", alt="Logo Primaria Rasnov")
-        .col-sm-4
-          .box.box--partners-l1
-            .box__img
-              a(href="http://www.osrasnov.ro/", title="Ocolul Silvic Rasnov")
-                img(src="/dist/assets/img/partners/ocolul-silvic-rasnov-logo-200x140.png", alt="Logo Ocolul Silvic Rasnov")
-        .col-sm-4
-          .box.box--partners-l1
-            .box__img
-              a(href="http://apmbv.anpm.ro/", title="Agentia pentru Protectia Mediului Brasov")
-                img(src="/dist/assets/img/partners/apm-brasov-logo-200x140.png", alt="Logo Agentia pentru Protectia Mediului Brasov")
-        .col-sm-4
-          .box.box--partners-l1
-            .box__img
-              a(href="http://www.casacontelui.ro/", title="Pensiunea Casa Contelui")
-                img(src="/dist/assets/img/partners/casa-contelui-logo-200x140.png", alt="Logo Pensiunea Casa Contelui")
-        .col-sm-4
-          .box.box--partners-l1
-            .box__img
-              a(href="", title="SC IT Media Connect SRL")
-                img(src="/dist/assets/img/partners/itmcd-logo-200x140.png", alt="Logo SC IT Media Connect SRL")
-        .col-sm-4
-          .box.box--partners-l1
-            .box__img
-              a(href="http://www.isjbrasov.ro/", title="Inspectoratul Scolar Judetean Brasov")
-                img(src="/dist/assets/img/partners/isj-brasov-logo-200x140.png", alt="Logo Inspectoratul Scolar Judetean Brasov")
-        .col-sm-4
-          .box.box--partners-l1
-            .box__img
-              a(href="http://www.oscodriicetatilor.ro/", title="Ocolul Silvic Codrii Cetatilor Codlea")
-                img(src="/dist/assets/img/partners/ocolul-silvic-codrii-cetatilor-codlea-logo-200x140.png", alt="Logo Ocolul Silvic Codrii Cetatilor Codlea")
-        .col-sm-4
-          .box.box--partners-l1
-            .box__img
-              a(href="http://www.primaria-codlea.ro/", title="Primaria Municipiului Codlea")
-                img(src="/dist/assets/img/partners/primaria-codlea-logo-200x140.png", alt="Logo Primaria Municipiului Codlea")
-      //- .row
-      //-   .col-xs-6.col-sm-2
-      //-     .box.box--partners-l2
-      //-       .box__img
-      //-         a(href="")
-      //-           img(src="http://placehold.it/185x85", alt="")
-      //-   .col-xs-6.col-sm-2
-      //-     .box.box--partners-l2
-      //-       .box__img
-      //-         a(href="")
-      //-           img(src="http://placehold.it/185x85", alt="")
-      //-   .col-xs-6.col-sm-2
-      //-     .box.box--partners-l2
-      //-       .box__img
-      //-         a(href="")
-      //-           img(src="http://placehold.it/185x85", alt="")
-      //-   .col-xs-6.col-sm-2
-      //-     .box.box--partners-l2
-      //-       .box__img
-      //-         a(href="")
-      //-           img(src="http://placehold.it/185x85", alt="")
-      //-   .col-xs-6.col-sm-2
-      //-     .box.box--partners-l2
-      //-       .box__img
-      //-         a(href="")
-      //-           img(src="http://placehold.it/185x85", alt="")
-      //-   .col-xs-6.col-sm-2
-      //-     .box.box--partners-l2
-      //-       .box__img
-      //-         a(href="")
-      //-           img(src="http://placehold.it/185x85", alt="")
-      
-      //- .tabs
-      //-   ul.nav.nav-tabs(role="tablist")
-      //-     li.active(role="presentation")
-      //-       a(href="#institutionalPartners", role="tab", aria-controls="institutionalPartners", data-toggle="tab") Parteneri institutionali
-      //-     li(role="presentation")
-      //-       a(href="#companyPartners", role="tab", aria-controls="companyPartners", data-toggle="tab") Companii partenere
-      //-     li(role="presentation")
-      //-       a(href="#individual", role="tab", aria-controls="individual", data-toggle="tab") Individual
-      //-     li(role="presentation")
-      //-       a(href="#mediaPartners", role="tab", aria-controls="mediaPartners", data-toggle="tab") Parteneri media    
-      //-   .tab-content
-      //-     #institutionalPartners.tab-pane.active(role="tabpanel")
-      //-       .row
-      //-         .col-sm-4
-      //-           .box.box--partners-l1
-      //-             .box__img
-      //-               a(href="")
-      //-                 img(src="http://placehold.it/240x140", alt="")
-      //-         .col-sm-4
-      //-           .box.box--partners-l1
-      //-             .box__img
-      //-               a(href="")
-      //-                 img(src="http://placehold.it/240x140", alt="")
-      //-         .col-sm-4
-      //-           .box.box--partners-l1
-      //-             .box__img
-      //-               a(href="")
-      //-                 img(src="http://placehold.it/240x140", alt="")
-      //-       .row
-      //-         .col-xs-6.col-sm-2
-      //-           .box.box--partners-l2
-      //-             .box__img
-      //-               a(href="")
-      //-                 img(src="http://placehold.it/185x85", alt="")
-      //-         .col-xs-6.col-sm-2
-      //-           .box.box--partners-l2
-      //-             .box__img
-      //-               a(href="")
-      //-                 img(src="http://placehold.it/185x85", alt="")
-      //-         .col-xs-6.col-sm-2
-      //-           .box.box--partners-l2
-      //-             .box__img
-      //-               a(href="")
-      //-                 img(src="http://placehold.it/185x85", alt="")
-      //-         .col-xs-6.col-sm-2
-      //-           .box.box--partners-l2
-      //-             .box__img
-      //-               a(href="")
-      //-                 img(src="http://placehold.it/185x85", alt="")
-      //-         .col-xs-6.col-sm-2
-      //-           .box.box--partners-l2
-      //-             .box__img
-      //-               a(href="")
-      //-                 img(src="http://placehold.it/185x85", alt="")
-      //-         .col-xs-6.col-sm-2
-      //-           .box.box--partners-l2
-      //-             .box__img
-      //-               a(href="")
-      //-                 img(src="http://placehold.it/185x85", alt="")
-      //-     #companyPartners.tab-pane.active(role="tabpanel")
-      //-     #individual.tab-pane.active(role="tabpanel")
-      //-     #mediaPartners.tab-pane.active(role="tabpanel")
+      .tabs
+        ul.nav.nav-tabs(role="tablist")
+          li.active(role="presentation")
+            a(href="#forestryUnits", role="tab", aria-controls="forestryUnits", data-toggle="tab") Ocoale Silvice
+          li(role="presentation")
+            a(href="#institutions", role="tab", aria-controls="institutions", data-toggle="tab") Institutii si ONG-uri
+          li(role="presentation")
+            a(href="#companies", role="tab", aria-controls="companies", data-toggle="tab") Companii
+          li(role="presentation")
+            a(href="#donators", role="tab", aria-controls="donators", data-toggle="tab") Donatori companiesi
+      .tab-content
+        #forestryUnits.tab-pane.active(role="tabpanel")
+          .row
+            .col-sm-4(repeat.for="item of forestryUnits | slice:0:9" )
+              .box.box--partners-l1
+                .box__img(class.bind="item.logo ? '' : 'hide'")
+                  img(src="${item.logo}", alt="")
+                  //- a(href="${item.url}", target="_blank")
+                .box__text(class.bind="item.logo ? 'hide' : ''")
+                  h3 
+                    ${item.unitName}
+                    //- a(href="${item.url}", target="_blank") ${item.unitName}
+                  p a plantat ${item.treesSum} de puieti in 2016/04
+          .row
+            .col-xs-6.col-sm-2(repeat.for="item of forestryUnits | slice:9" )
+              .box.box--partners-l1
+                .box__img(class.bind="item.logo ? '' : 'hide'")
+                  a(href="${item.url}", target="_blank")
+                    img(src="${item.logo}", alt="")
+                .box__text(class.bind="item.logo ? 'hide' : ''")
+                  h4 
+                    a(href="${item.url}", target="_blank") ${item.unitName}
+                  p ${item.treesSum}  in 2016/04
+        #institutions.tab-pane(role="tabpanel")
+          .row
+            .col-sm-4(repeat.for="item of institutions | slice:0:9")
+              .box.box--partners-l1
+                .box__img(class.bind="item.logo ? '' : 'hide'")
+                  a(href="${item.url}", target="_blank")
+                    img(src="${item.logo}", alt="")
+                .box__text(class.bind="item.logo ? 'hide' : ''")
+                  h3 
+                    a(href="${item.url}", target="_blank") ${item.name}
+          .row
+            .col-xs-6.col-sm-2(repeat.for="item of institutions | slice:9")
+              .box.box--partners-l1
+                .box__img(class.bind="item.logo ? '' : 'hide'")
+                  a(href="${item.url}", target="_blank")
+                    img(src="${item.logo}", alt="")
+                .box__text(class.bind="item.logo ? 'hide' : ''")
+                  h4 
+                    a(href="${item.url}", target="_blank") ${item.name}
+        #companies.tab-pane(role="tabpanel")
+          .row
+            .col-sm-4(repeat.for="item of companies | slice:0:9")
+              .box.box--partners-l1
+                .box__img(class.bind="item.logo ? '' : 'hide'")
+                  a(href="${item.url}", target="_blank")
+                    img(src="${item.logo}", alt="")
+                .box__text(class.bind="item.logo ? 'hide' : ''")
+                  h3 ${item.name}
+          .row
+            .col-xs-6.col-sm-2(repeat.for="item of companies | slice:9")
+              .box.box--partners-l1
+                .box__img(class.bind="item.logo ? '' : 'hide'")
+                  a(href="${item.url}", target="_blank")
+                    img(src="${item.logo}", alt="")
+                .box__text(class.bind="item.logo ? 'hide' : ''")
+                  h3 ${item.name}
+        #donators.tab-pane(role="tabpanel")
+          .row
+            .col-sm-4(repeat.for="item of donators | slice:0:9")
+              .box.box--partners-l1
+                .box__text(class.bind="item.logo ? 'hide' : ''")
+                  h3 ${item.name}
+          .row
+            .col-xs-6.col-sm-2(repeat.for="item of donators | slice:9")
+              .box.box--partners-l1
+                .box__text(class.bind="item.logo ? 'hide' : ''")
+                  h3 ${item.name}
