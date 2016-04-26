@@ -19,8 +19,9 @@ template
 				.donation__btn-wrap
 					button#donationToggler.donation__btn(type="button", click.trigger="toggleDonators()")
 						i.fa.fa-search
-				span.donation__title Copaci donati
-				span#donationAmount.donation__amount(innerHtml.bind="treeCount")
+				span.donation__title Copaci plantati in aprilie 2016
+				//- span#donationAmount.donation__amount(innerHtml.bind="treeCount")
+				span#donationAmount.donation__amount 1.000.307
 				.donation__toggle
 					button#donationClose.donation__close(type="button", click.trigger="toggleDonators()") &times;
 					.donation__wrap
