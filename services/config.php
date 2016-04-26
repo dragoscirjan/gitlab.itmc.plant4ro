@@ -66,7 +66,7 @@ return [
         ],
         'path' => __DIR__,
         'pdf' => [
-            'zoom' => '0.99977'
+            'zoom' => '0.9985'
         ],
         'url' => $domain,
     ],
