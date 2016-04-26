@@ -4,13 +4,12 @@ template
   section.au-animate
     .container
       h1.page-title ${heading}
-      .row
-        p Multumim public partenerilor nostri impreuna cu care am plantat 1 milion de puieti intr-o singura zi ducand 
-          | Romania pe locul doi in lume la acest capitol!
-        p Cu sprijinul lor dar si a altor Prieteni ai Padurilor din Romania ne propunem ca in 2017 sa transformam 
-          | Romania in “Campioana Mondiala la Plantat”, obiectiv pentru care va trebui sa plantam mai mult de 1,2 
-          | milioane de puieti intr-o singura zi! 
-        p Partenerii nostri in cadrul proiectului “Planteaza Pentru Romania” editia 1, 2016 sunt:
+      p Multumim public partenerilor nostri impreuna cu care am plantat 1 milion de puieti intr-o singura zi ducand 
+        | Romania pe locul doi in lume la acest capitol!
+      p Cu sprijinul lor dar si a altor Prieteni ai Padurilor din Romania ne propunem ca in 2017 sa transformam 
+        | Romania in “Campioana Mondiala la Plantat”, obiectiv pentru care va trebui sa plantam mai mult de 1,2 
+        | milioane de puieti intr-o singura zi! 
+      p Partenerii nostri in cadrul proiectului “Planteaza Pentru Romania” editia 1, 2016 sunt:
       .tabs
         ul.nav.nav-tabs(role="tablist")
           li.active(role="presentation")
@@ -30,7 +29,7 @@ template
                   img(src="${item.logo}", alt="")
                   //- a(href="${item.url}", target="_blank")
                 .box__text(class.bind="item.logo ? 'hide' : ''")
-                  h3 
+                  h3.box__title 
                     | ${item.unitName}
                     //- a(href="${item.url}", target="_blank") ${item.unitName}
                   p a plantat ${item.treesSum} de puieti in 2016/04
@@ -41,53 +40,53 @@ template
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
                 .box__text(class.bind="item.logo ? 'hide' : ''")
-                  h4 
+                  h4.box__title 
                     a(href="${item.url}", target="_blank") ${item.unitName}
                   p ${item.treesSum}  in 2016/04
         #institutions.tab-pane(role="tabpanel")
-          .row
-            .col-sm-4(repeat.for="item of institutions | slice:0:9")
-              .box.box--partners-l1
+          .row.l-flex.l-flex--lrg
+            .col-sm-4.l-flex__item.l-flex(repeat.for="item of institutions | slice:0:9")
+              .box.box--partners-l1.l-flex__item
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
                 .box__text(class.bind="item.logo ? 'hide' : ''")
-                  h3 
+                  h3.box__title 
                     a(href="${item.url}", target="_blank") ${item.name}
-          .row
-            .col-xs-6.col-sm-2(repeat.for="item of institutions | slice:9")
-              .box.box--partners-l1
+          .row.l-flex.l-flex--lrg
+            .col-sm-4.l-flex__item.l-flex(repeat.for="item of institutions | slice:9")
+              .box.box--partners-l1.l-flex__item
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
                 .box__text(class.bind="item.logo ? 'hide' : ''")
-                  h4 
+                  h4.box__title 
                     a(href="${item.url}", target="_blank") ${item.name}
         #companies.tab-pane(role="tabpanel")
-          .row
-            .col-sm-4(repeat.for="item of companies | slice:0:9")
-              .box.box--partners-l1
+          .row.l-flex.l-flex--lrg
+            .col-sm-4.l-flex__item.l-flex(repeat.for="item of companies | slice:0:9")
+              .box.box--partners-l1.l-flex__item
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
                 .box__text(class.bind="item.logo ? 'hide' : ''")
-                  h3 ${item.name}
-          .row
-            .col-xs-6.col-sm-2(repeat.for="item of companies | slice:9")
-              .box.box--partners-l1
+                  h3.box__title ${item.name}
+          .row.l-flex.l-flex--lrg
+            .col-sm-4.l-flex__item.l-flex(repeat.for="item of companies | slice:9")
+              .box.box--partners-l1.l-flex__item
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
                 .box__text(class.bind="item.logo ? 'hide' : ''")
-                  h3 ${item.name}
+                  h3.box__title ${item.name}
         #donators.tab-pane(role="tabpanel")
-          .row
-            .col-sm-4(repeat.for="item of donators | slice:0:9")
-              .box.box--partners-l1
+          .row.l-flex.l-flex--lrg
+            .col-sm-4.l-flex__item.l-flex(repeat.for="item of donators | slice:0:9")
+              .box.box--partners-l1.l-flex__item
                 .box__text(class.bind="item.logo ? 'hide' : ''")
-                  h3 ${item.name}
-          .row
-            .col-xs-6.col-sm-2(repeat.for="item of donators | slice:9")
-              .box.box--partners-l1
+                  h3.box__title ${item.name}
+          .row.l-flex.l-flex--lrg
+            .col-sm-4.l-flex__item.l-flex(repeat.for="item of donators | slice:9")
+              .box.box--partners-l1.l-flex__item
                 .box__text(class.bind="item.logo ? 'hide' : ''")
-                  h3 ${item.name}
+                  h3.box__title ${item.name}
