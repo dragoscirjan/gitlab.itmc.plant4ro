@@ -2,7 +2,7 @@
 
 git pull
 
-apt-get install wkhtmltopdf xvfb
+apt-get install wkhtmltopdf xvfb pdftk
 
 echo "$*" | grep +npm && {
     npm install

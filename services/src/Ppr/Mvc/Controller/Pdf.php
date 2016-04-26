@@ -121,20 +121,28 @@ class Pdf
     public function generate(Application $app, Request $request)
     {
         try {
+            $path = sprintf(
+                '%s/cache/%s.pdf',
+                $app->getConfig('path'),
+                $request->get('orderId')
+            );
             $command = sprintf(
 //                'xvfb-run --server-args="-screen 0 1920x1080x24" wkhtmltopdf -O landscape  --page-size A4 ' .
 //                'xvfb-run --server-args="-screen 0 1024x768x24" wkhtmltopdf --orientation landscape  --page-size A4 ' .
                 // 'xvfb-run --server-args="-screen 0 1366x965x24" ' . __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64' .
+                'FILE="%s"; ' .
                 __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64 --orientation landscape  --page-size A4 ' .
 //                    '--javascript-delay 2000 ' .
                     // ' --zoom ' . $app->getConfig('pdf.zoom') .
                     ' --orientation landscape --page-size A4' .
                     // ' -B 3mm -L 3mm -R 3mm -T 3mm ' .
                     ' -B 0mm -L 0mm -R 0mm -T 0mm ' .
-                    ' "%s/services/index.php/pdf/%s" %s/cache/%s.pdf',
+                    ' "%s/services/index.php/pdf/%s"' .
+                    ' "$FILE";' .
+                    ' pdftk "$FILE" cat 1 output "$FILE.1";' .
+                    ' cp "$FILE.1" "$FILE"',
+                $path,
                 $app->getConfig('url'),
-                $request->get('orderId'),
-                $app->getConfig('path'),
                 $request->get('orderId')
             );
 
