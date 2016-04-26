@@ -65,6 +65,9 @@ return [
             ]
         ],
         'path' => __DIR__,
+        'pdf' => [
+            'zoom' => '0.99977'
+        ],
         'url' => $domain,
     ],
     'testing' => [
@@ -84,6 +87,9 @@ return [
 //                'returnUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
 //            ]
 //        ],
+        'pdf' => [
+            'zoom' => '1.0325'
+        ],
     ],
     'staging' => [
         'db' => [

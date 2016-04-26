@@ -127,7 +127,7 @@ class Pdf
                 // 'xvfb-run --server-args="-screen 0 1366x965x24" ' . __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64' .
                 __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64 --orientation landscape  --page-size A4 ' .
 //                    '--javascript-delay 2000 ' .
-                    ' --zoom 0.99977' .
+                    ' --zoom ' . $app->getConfig('pdf.zoom') .
                     ' --orientation landscape --page-size A4' .
                     // ' -B 3mm -L 3mm -R 3mm -T 3mm ' .
                     ' -B 0mm -L 0mm -R 0mm -T 0mm ' .
