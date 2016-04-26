@@ -1,0 +1,17 @@
+/**
+ * Mixins
+ */
+
+/* Generate top and bottom margins from 0 to 100px in increments of 5 */
+// See http://lesscss.org/features/#loops-feature
+.h-margins(@counter) when (@counter <= 100) {
+    .h-margin-top-@{counter} {
+        margin-top: @counter * 1px;
+    }
+
+    .h-margin-bottom-@{counter} {
+        margin-bottom: @counter * 1px;
+    }
+    
+    .h-margins((@counter + 5)); // next iteration
+}

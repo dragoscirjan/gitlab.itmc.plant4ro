@@ -1,0 +1,9 @@
+template
+	//- require(from='bootstrap/css/bootstrap.css')
+	#wrapper(class.bind="'au-animate wrapper-' + router.activeRoute.name")
+		require(from='header-elem.html')
+		header-elem(router.bind='router')
+		main#main
+			router-view
+		require(from='footer-elem.html')
+		footer-elem(router.bind='router')
