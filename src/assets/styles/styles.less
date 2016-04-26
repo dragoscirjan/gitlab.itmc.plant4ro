@@ -2226,9 +2226,13 @@ Navbar
         position: absolute;
         top: 0;
         left: 0;
+        // bottom: 0;
+        // right: 0;
 
         width: 100vw;
         height: 100vh;
+        // height: calc(100vh - 6mm);
+        border: 0;
         margin: 0;
         padding: 8vw;
     }
@@ -2413,13 +2417,17 @@ Navbar
     left: 50%;
     font-size: 0;
     line-height: 0;
+    width: 100%;
+    // display: flex;
 
     transform: translateX(-50%);
 
     &__colour {
         display: inline-block;
-        width: 20px;
-        height: 10px;
+        // width: 20px;
+        height: 5px;
+        // flex: 1 1 auto;
+        width: 33.333%;
 
         &:nth-child(1) {
             background-color: #136be7;
