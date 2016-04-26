@@ -16,7 +16,7 @@ npm install -g gulp jspm
 debconf-set-selections <<< 'mysql-server mysql-server/root_password password weltest'
 debconf-set-selections <<< 'mysql-server mysql-server/root_password_again password weltest'
 
-apt-get install -y apache2 php5 php5-cli php5-mysql php5-gd php5-curl mysql-server mysql-client
+apt-get install -y apache2 php5 php5-cli php5-mysql php5-gd php5-curl mysql-server mysql-client pdftk
 
 service mysql restart
 
