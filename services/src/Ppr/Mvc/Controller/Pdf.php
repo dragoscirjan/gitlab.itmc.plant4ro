@@ -124,8 +124,8 @@ class Pdf
             $command = sprintf(
 //                'xvfb-run --server-args="-screen 0 1920x1080x24" wkhtmltopdf -O landscape  --page-size A4 ' .
 //                'xvfb-run --server-args="-screen 0 1024x768x24" wkhtmltopdf --orientation landscape  --page-size A4 ' .
-                'xvfb-run --server-args="-screen 0 1366x965x24" ' . __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64' .
-                // __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64 --orientation landscape  --page-size A4 ' .
+                // 'xvfb-run --server-args="-screen 0 1366x965x24" ' . __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64' .
+                __DIR__ . '/../../../../vendor/bin/wkhtmltopdf-amd64 --orientation landscape  --page-size A4 ' .
 //                    '--javascript-delay 2000 ' .
                     ' --zoom 0.99977' .
                     ' --orientation landscape --page-size A4' .
