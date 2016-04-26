@@ -57,11 +57,11 @@ class Pdf
             <div class="certificate__content">
                 <span>Se acordă titlul de <strong>"Prieten(ă) al Pădurilor din Romania"</strong> companiei/persoanei</span>
                 <div class="form-group">
-                    <input class="certificate__input form-control form-control--full text-center" type="text" name="" value="<?php echo $donation->getDonator()->getCompany() ? $donation->getDonator()->getCompany() : $donation->getDonator()->getName  (); ?>">
+                    <span class="certificate__input form-control form-control--full text-center"><?php echo $donation->getDonator()->getCompany() ? $donation->getDonator()->getCompany() : $donation->getDonator()->getName  (); ?></span>
                 </div>
                 <span>Pentru că a susținut proiectul <strong>"Plantează pentru România"</strong> ediția nr. 1 din 2016 adoptând</span>
                 <div class="form-group form-group--inline">
-                    <input type="text" name="" value="<?php echo $donation->getTrees(); ?>" class="certificate__input form-control text-center">
+                    <span class="certificate__input form-control text-center"><?php echo $donation->getTrees(); ?></span>
                 </div>
                 <span>puieți.</span>
                 <p>*Suma primită de la oricine o împărțim la 5 RON care este unitatea standard de măsură a implicării financiare în cadrul acestui proiect (cu fiecare 5 RON sponsorii sau donatorii adoptă un arbore).</p>
@@ -85,7 +85,7 @@ class Pdf
                             </span>
                             <br>
                             <div class="form-group form-group--inline">
-                                <input type="text" name="" value="" class="certificate__input form-control text-right">
+                                <span class="certificate__input form-control text-right"></span>
                             </div>
                         </div>
                     </div>
