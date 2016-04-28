@@ -23,8 +23,8 @@ template
       .tab-content
         #forestryUnits.tab-pane.active(role="tabpanel")
           .row.l-flex.l-flex--lrg
-            .col-sm-4.l-flex__item.l-flex(repeat.for="item of forestryUnits | slice:0:9" )
-              .box.box--partners-l1.l-flex__item
+            .col-sm-4.l-flex(repeat.for="item of forestryUnits | slice:0:9" )
+              .box.box--partners-l1
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   img(src="${item.logo}", alt="")
                   //- a(href="${item.url}", target="_blank")
@@ -34,8 +34,8 @@ template
                     //- a(href="${item.url}", target="_blank") ${item.unitName}
                   p a plantat ${item.treesSum} de puieti in 2016/04
           .row.l-flex.l-flex--lrg
-            .col-sm-3.l-flex__item.l-flex(repeat.for="item of forestryUnits | slice:9" )
-              .box.box--partners-l1.l-flex__item
+            .col-sm-3.l-flex(repeat.for="item of forestryUnits | slice:9" )
+              .box.box--partners-l1
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
@@ -45,8 +45,8 @@ template
                   p ${item.treesSum}  in 2016/04
         #institutions.tab-pane(role="tabpanel")
           .row.l-flex.l-flex--lrg
-            .col-sm-4.l-flex__item.l-flex(repeat.for="item of institutions | slice:0:9")
-              .box.box--partners-l1.l-flex__item
+            .col-sm-4.l-flex(repeat.for="item of institutions | slice:0:9")
+              .box.box--partners-l1
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
@@ -54,8 +54,8 @@ template
                   h3.box__title 
                     a(href="${item.url}", target="_blank") ${item.name}
           .row.l-flex.l-flex--lrg
-            .col-sm-4.l-flex__item.l-flex(repeat.for="item of institutions | slice:9")
-              .box.box--partners-l1.l-flex__item
+            .col-sm-4.l-flex(repeat.for="item of institutions | slice:9")
+              .box.box--partners-l1
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
@@ -64,16 +64,16 @@ template
                     a(href="${item.url}", target="_blank") ${item.name}
         #companies.tab-pane(role="tabpanel")
           .row.l-flex.l-flex--lrg
-            .col-sm-4.l-flex__item.l-flex(repeat.for="item of companies | slice:0:9")
-              .box.box--partners-l1.l-flex__item
+            .col-sm-4.l-flex(repeat.for="item of companies | slice:0:9")
+              .box.box--partners-l1
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
                 .box__text(class.bind="item.logo ? 'hide' : ''")
                   h3.box__title ${item.name}
           .row.l-flex.l-flex--lrg
-            .col-sm-4.l-flex__item.l-flex(repeat.for="item of companies | slice:9")
-              .box.box--partners-l1.l-flex__item
+            .col-sm-4.l-flex(repeat.for="item of companies | slice:9")
+              .box.box--partners-l1
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
@@ -81,12 +81,12 @@ template
                   h3.box__title ${item.name}
         #donators.tab-pane(role="tabpanel")
           .row.l-flex.l-flex--lrg
-            .col-sm-4.l-flex__item.l-flex(repeat.for="item of donators | slice:0:9")
-              .box.box--partners-l1.l-flex__item
+            .col-sm-4.l-flex(repeat.for="item of donators | slice:0:9")
+              .box.box--partners-l1
                 .box__text(class.bind="item.logo ? 'hide' : ''")
                   h3.box__title ${item.name}
           .row.l-flex.l-flex--lrg
-            .col-sm-4.l-flex__item.l-flex(repeat.for="item of donators | slice:9")
-              .box.box--partners-l1.l-flex__item
+            .col-sm-4.l-flex(repeat.for="item of donators | slice:9")
+              .box.box--partners-l1
                 .box__text(class.bind="item.logo ? 'hide' : ''")
                   h3.box__title ${item.name}
