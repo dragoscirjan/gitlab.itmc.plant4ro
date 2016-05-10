@@ -58,7 +58,8 @@ class Partners {
             foreach ($donators as $donator) {
                 $list[] = [
                     'name' => $donator->getCompany(),
-                    'logo' => ''
+                    'logo' => $donator->getLogo(),
+                    'url' => $donator->getUrl()
                 ];
             }
             return Response::response(array(
@@ -81,13 +82,24 @@ class Partners {
         // TODO: Implement donator list from database
         try {
             $list = [];
-            $donators = $app->getEm()
-                ->createQuery('SELECT d FROM \Ppr\Mvc\Model\Donator d WHERE d.company = \'\' ORDER BY d.id DESC')
+            $donations = $app->getEm()
+//                ->createQuery('SELECT d FROM \Ppr\Mvc\Model\Donator d WHERE d.company = \'\' ORDER BY d.id DESC')
+                ->createQuery('SELECT d.name, d.company, d.location, SUM(do.trees) as strees 
+FROM \Ppr\Mvc\Model\Donation do
+JOIN do.donator d
+GROUP BY do.donator
+HAVING strees != 0 
+ORDER BY do.id DESC')
                 ->getResult();
-            foreach ($donators as $donator) {
+//            die(var_dump($donations));
+//            foreach ($donators as $donator) {
+            foreach ($donations as $donation) {
                 $list[] = [
-                    'name' => $donator->getName(),
-                    'town' => $donator->getLocation()
+//                    'name' => $donator->getName(),
+//                    'town' => $donator->getLocation()
+                    'name' => trim($donation['company']) ? $donation['company'] : $donation['name'],
+                    'town' => $donation['location'],
+                    'trees' => $donation['strees']
                 ];
             }
             return Response::response(array(

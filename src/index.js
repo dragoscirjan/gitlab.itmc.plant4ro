@@ -182,7 +182,7 @@ export class Component extends ViewModelAbstract {
             stopOnHover: false,
             navigation: false,
             pagination: false,
-            paginationSpeed: 3000,
+            paginationSpeed: 5000,
             goToFirstSpeed: 2000,
             singleItem: true,
             transitionStyle: 'fade'
@@ -193,7 +193,7 @@ export class Component extends ViewModelAbstract {
             stopOnHover: false,
             navigation: false,
             pagination: true,
-            paginationSpeed: 3000,
+            paginationSpeed: 5000,
             goToFirstSpeed: 2000,
             singleItem: true,
             transitionStyle: 'fade',

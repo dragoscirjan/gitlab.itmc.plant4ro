@@ -13,6 +13,6 @@ import {ViewModelAbstract} from '../lib/view/model/abstract';
  */
 export class Component extends ViewModelAbstract {
 
-    heading = 'Avem nevoie de tine!';
+    heading = 'Actioneaza!';
 
 }

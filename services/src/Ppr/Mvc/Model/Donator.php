@@ -40,6 +40,20 @@ class Donator {
     /**
      * @var string
      *
+     * @ORM\Column(name="url", type="string", length=256, nullable=true)
+     */
+    private $url;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="logo", type="string", length=256, nullable=true)
+     */
+    private $logo;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="company", type="string", length=256, nullable=true)
      */
     private $company;
