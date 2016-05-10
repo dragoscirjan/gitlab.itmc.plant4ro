@@ -11,20 +11,15 @@ template
 				.tab-content
 					#individualDonations(role="tabpanel", class.bind="'tab-pane ' + (isCorporate ? '' : 'active')")
 						p
-							strong Dragi Prieteni ai Padurilor din Romania 
-							|  pentru transparenta totala a proiectelor dezvoltate si implementate de noi, facem publice numele si cuantumul
-							| donatilor cu ajutorul carora contribuim la “protejarea,conservarea,refacerea si dezvoltarea padurilor din Romania”
-						p
-							strong Plecand de la faptul
-							|  ca esenta notiunii de prietenie inseamna Respect , Iubire dar si Ajutor Reciproc va invitam si pe voi sa va
-							| alaturati comunitatii : “Prietenii Padurilor din Romania” sustinand financiar proiectele si actiunile dezvoltate de
-							| noi...pentru ca uniti suntem mai puternici si mai eficienti!
+							| Pentru transparenta totala a proiectelor dezvoltate si implementate de noi, facem publice numele si cuantumul
+							| donatilor cu ajutorul carora contribuim la 
+							strong 
+								a(href="#") “protejarea, conservarea, refacerea si dezvoltarea padurilor din Romania”
 						p
 							strong Unitatea de masura 
-							| a sustinerii financiare in cadrul Proiectului “Planteaza Pentru Romania” este “Certificatul de Prieten
-							| al Padurilor” ce are o valoare de 5 ron! Pentru fiecare donatie de 5 ron alocam un nr ce corespunde unui
-							| arbore plantat in cadrul proiectului Planteaza Pentru Romania creand astfel legatura intre donator si
-							| padure prin intermediul proiectului!	
+							| a implicarii financiare in cadrul Proiectului “Planteaza Pentru Romania” este “Certificatul de Prieten
+							| al Padurilor” ce are o valoare de 5 ron! Pentru fiecare donatie de 5 ron alocam un numar ce corespunde unui
+							| arbore plantat, creand astfel legatura intre donator si padure!	
 						p
 							strong Uniti suntem mai puternici si mai eficienti!
 									
@@ -120,15 +115,15 @@ template
 							label(for="payMethodM") 
 								strong MobilPay
 								| : ${paymentModel.donation.total} RON
-						.radio(class.bind="(!model.donation.exchange) ? 'hide' : ''")
-							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method')
-							label(for="payMethodPP")
-								strong Braintree (Paypal)
-								| : ${paymentModel.donation.totalEur} EUR 
-								i (curs valutar 1 EUR = ${model.donation.exchange} RON)
-						div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
-							input#payMethoTB.sr-only(type='radio', name="payMethod", value='transfer', checked.bind='model.donation.method')
-							label(for="payMethoTB") Transfer bancar ${paymentModel.donation.total} RON
+						//- .radio(class.bind="(!model.donation.exchange) ? 'hide' : ''")
+						//- 	input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method')
+						//- 	label(for="payMethodPP")
+						//- 		strong Braintree (Paypal)
+						//- 		| : ${paymentModel.donation.totalEur} EUR 
+						//- 		i (curs valutar 1 EUR = ${model.donation.exchange} RON)
+						//- div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
+						//- 	input#payMethoTB.sr-only(type='radio', name="payMethod", value='transfer', checked.bind='model.donation.method')
+						//- 	label(for="payMethoTB") Transfer bancar ${paymentModel.donation.total} RON
 					hr
 					.form-group
 						.checkbox.form-wrap

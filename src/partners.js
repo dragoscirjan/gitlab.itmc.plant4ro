@@ -51,8 +51,12 @@ export class Component extends ViewModelAbstract {
         { name: 'Primaria Rasnov', url: 'http://www.primariarasnov.ro/portal/', logo: '/dist/assets/img/partners/primaria-rasnov-logo-200x140.png' },
         { name: 'Agentia pentru Protectia Mediului Brasov', url: 'http://apmbv.anpm.ro/', logo: '/dist/assets/img/partners/apm-brasov-logo-200x140.png' },
         { name: 'Inspectoratul Scolar Judetean Brasov', url: 'http://www.isjbrasov.ro/', logo: '/dist/assets/img/partners/isj-brasov-logo-200x140.png' },
-        { name: 'Primaria Municipiului Codlea', url: 'http://www.primaria-codlea.ro/', logo: '/dist/assets/img/partners/primaria-codlea-logo-200x140.png' },
-        { name: 'T.E.N.T.', url: 'http://', logo: '' }
+        // { name: 'Primaria Municipiului Codlea', url: 'http://www.primaria-codlea.ro/', logo: '/dist/assets/img/partners/primaria-codlea-logo-200x140.png' },
+        { name: 'Garda Forestiera Brasov', url: 'http://www.gfbrasov.ro/', logo: '/dist/assets/img/partners/GF-BV.png' },
+        { name: 'Regia Nationala a Padurilor', url: 'http://www.rosilva.ro/', logo: '/dist/assets/img/partners/romsilva.png' },
+        { name: 'Directia Silvica Brasov', url: 'http://brasov.rosilva.ro/', logo: '' },
+        { name: 'Directia Silvica Mures', url: 'http://mures.rosilva.ro/', logo: '' }//,
+        // { name: 'T.E.N.T.', url: 'http://', logo: '' }
     ]
 
     /**

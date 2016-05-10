@@ -4,9 +4,9 @@ template
   section.au-animate
     .container
       h1.page-title ${heading}
-      p Multumim public partenerilor nostri impreuna cu care am plantat 1 milion de puieti intr-o singura zi ducand 
+      p Multumim public partenerilor nostri alaturi de care am plantat 1 milion de puieti intr-o singura zi, ducand 
         | Romania pe locul doi in lume la acest capitol!
-      p Cu sprijinul lor dar si a altor Prieteni ai Padurilor din Romania ne propunem ca in 2017 sa transformam 
+      p Cu sprijinul lor dar si al altor Prieteni ai Padurilor din Romania ne propunem ca in 2017 sa transformam 
         | Romania in “Campioana Mondiala la Plantat”, obiectiv pentru care va trebui sa plantam mai mult de 1,2 
         | milioane de puieti intr-o singura zi! 
       p Partenerii nostri in cadrul proiectului “Planteaza Pentru Romania” editia 1, 2016 sunt:
@@ -15,11 +15,11 @@ template
           li.active(role="presentation")
             a(href="#forestryUnits", role="tab", aria-controls="forestryUnits", data-toggle="tab") Ocoale Silvice
           li(role="presentation")
-            a(href="#institutions", role="tab", aria-controls="institutions", data-toggle="tab") Institutii si ONG-uri
+            a(href="#institutions", role="tab", aria-controls="institutions", data-toggle="tab") Institutii
           li(role="presentation")
             a(href="#companies", role="tab", aria-controls="companies", data-toggle="tab") Companii
           li(role="presentation")
-            a(href="#donators", role="tab", aria-controls="donators", data-toggle="tab") Donatori companiesi
+            a(href="#donators", role="tab", aria-controls="donators", data-toggle="tab") Donatori individuali
       .tab-content
         #forestryUnits.tab-pane.active(role="tabpanel")
           .row.l-flex.l-flex--lrg
@@ -68,9 +68,10 @@ template
               .box.box--partners-l1
                 .box__img(class.bind="item.logo ? '' : 'hide'")
                   a(href="${item.url}", target="_blank")
-                    img(src="${item.logo}", alt="")
+                    img(src="/dist/assets/img/partners/${item.logo}", alt="")
                 .box__text(class.bind="item.logo ? 'hide' : ''")
-                  h3.box__title ${item.name}
+                  h3.box__title 
+                    a(href="${item.url}", target="_blank") ${item.name}
           .row.l-flex.l-flex--lrg
             .col-sm-4.l-flex(repeat.for="item of companies | slice:9")
               .box.box--partners-l1
@@ -85,8 +86,10 @@ template
               .box.box--partners-l1
                 .box__text(class.bind="item.logo ? 'hide' : ''")
                   h3.box__title ${item.name}
+                  span ${item.town}
           .row.l-flex.l-flex--lrg
             .col-sm-4.l-flex(repeat.for="item of donators | slice:9")
               .box.box--partners-l1
                 .box__text(class.bind="item.logo ? 'hide' : ''")
                   h3.box__title ${item.name}
+                  span ${item.town}
