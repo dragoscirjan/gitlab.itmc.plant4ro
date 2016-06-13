@@ -8,7 +8,7 @@ template
         | ? 
         strong Contacteaza-ne!
       form#contactForm.form--contact(action="", submit.delegate="sendEmail()")
-        span Buna ziua, numele meu este
+        span Buna, numele meu este
         .form-group--inline.form-wrap
           input#name.form-control(type="text", placeholder="(Adauga nume) *", value.bind="model.name", required="", data-parsley-minlength="3")
         span si ma puteti contacta la adresa de email
