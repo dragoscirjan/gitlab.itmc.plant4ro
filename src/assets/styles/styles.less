@@ -67,6 +67,11 @@ Imports
 Base
 ========================================================================== */
 
+// html,
+// body {
+//     height: 100%; // needed for flexbox sticky footer on IE10/11
+// }
+
 body {
     color: @text-color;
     background-color: @bg-color;
@@ -137,6 +142,7 @@ Layout
     display: -ms-flexbox;
     display:         flex; // [1]
 
+    // height: 100%;
     min-height: 100vh; // [2]
 
     -webkit-box-direction: normal;
@@ -145,11 +151,11 @@ Layout
         -ms-flex-direction: column;
             flex-direction: column; // [3]
 
-    overflow: hidden;
 
     &.wrapper-hp {
         position: relative;
         color: #fff;
+        overflow: hidden;
 
         .l-content-wrap {
             width: 100%; // required for vertical centering the content on HP
@@ -667,14 +673,14 @@ hr,
     text-align: center;
 
     span {
-        font-family: 'Stentiga', Roboto, sans-serif;
+        // font-family: 'Stentiga', Roboto, sans-serif;
         line-height: 3.5;
         vertical-align: middle;
         text-transform: uppercase;
     }
 
     .form-control {
-        font-family: 'Stentiga', Roboto, sans-serif;
+        // font-family: 'Stentiga', Roboto, sans-serif;
         padding: 10px 0;
         border-color: transparent transparent @border-color transparent;
         font-size: 16px;
@@ -690,6 +696,19 @@ hr,
         // border-color: @border-color transparent;
         resize: none;
     }
+}
+
+// Recaptcha
+.recaptcha {
+    &--center > div > div {
+        margin: 0 auto;
+    }
+}
+
+.parsley-errors-list {
+    overflow: hidden;
+    height: 0;
+    width: 0;
 }
 
 // Validation
@@ -1291,6 +1310,15 @@ Navbar
     }
 
     &--partners-l1 {
+        width: 100%;
+        // min-width: 0;
+
+        .box__title {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
         img {
             width: auto;
             max-width: 100%;
@@ -2066,6 +2094,7 @@ Navbar
 
     &--select {
         position: relative;
+        height: auto;
 
         .metro & {
             padding: 0;
@@ -2115,11 +2144,13 @@ Navbar
 
     &--search {
         .metro .ct-googleMap--sidebar & {
+            height: 50px;
             padding: 10px 30px;
             border: 1px solid @border-color;
             background-color: transparent;
             font-weight: 700;
             color: @text-color;
+            line-height: 1;
         }
     }
 }
@@ -2191,6 +2222,7 @@ Navbar
         left: 0;
 
         width: 100vw;
+        // height: calc(100vh - 6mm);
         height: 100vh;
         margin: 0;
         padding: 8vw;
@@ -2204,8 +2236,13 @@ Navbar
         top: 0;
         left: 0;
 
-        width: 100vw;
-        height: 100vh;
+        // width: 100vw;
+        // height: 100vh;
+        width: 297mm;
+        height: 210mm;
+        // height: calc(100vh - 6mm);
+
+        border: 0;
         margin: 0;
         padding: 8vw;
     }
@@ -2262,15 +2299,18 @@ Navbar
     }
 
     &__input {
+        min-width: 120px;
         height: 40px;
         padding: 10px 15px;
         border-width: 0 0 1px;
 
         .print & {
+            height: 4vw;
             font-size: 2vw;
         }
 
         @media print {
+            height: 4vw;
             font-size: 2vw;
         }
     }
@@ -2387,13 +2427,14 @@ Navbar
     left: 50%;
     font-size: 0;
     line-height: 0;
-
     transform: translateX(-50%);
+    width: 100%;
 
     &__colour {
         display: inline-block;
         width: 20px;
-        height: 10px;
+        height: 5px;
+        width: 33.33333%;
 
         &:nth-child(1) {
             background-color: #136be7;
@@ -2555,6 +2596,10 @@ Navbar
     &__answer {
         p {
             text-indent: 2em;
+        }
+
+        span, div {
+            display: none;
         }
     }
 }
@@ -2769,5 +2814,18 @@ Keyframes
     100% {
         -webkit-transform: rotate(360deg);
                 transform: rotate(360deg);
+    }
+}
+
+
+.modal-icon {
+    float: left;
+    color: #a94442;
+    font-size: 4em;
+    line-height: 1.5em;
+    opacity: .3;
+
+    .fa-info-circle {
+        color: navy;
     }
 }

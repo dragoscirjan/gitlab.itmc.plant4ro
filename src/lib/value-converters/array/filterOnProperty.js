@@ -6,13 +6,14 @@
  * @license   http://planteazapentruromania.ro/#/application-license Commercial
  */
 
-import {ViewModelAbstract} from '../lib/view/model/abstract';
-
 /**
  *
  */
-export class Component extends ViewModelAbstract {
+export class FilterOnPropertyValueConverter {
 
-    heading = 'Actioneaza!';
+    toView(array: Array, key: String, value: String) : Array {
+        console.log(key, value);
+        return array.filter((item) => item[key] === value);
+    }
 
 }

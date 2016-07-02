@@ -50,7 +50,7 @@ export class Component extends ViewModelAbstract {
      * @param  {HttpClient}    http [description]
      * @return {this}
      */
-    constructor(appConfig, http, validation) {
+    constructor(appConfig, http, modalBox) {
         super(appConfig);
         let self = this;
         this.http = appConfig.configHttp(http);
@@ -93,26 +93,18 @@ export class Component extends ViewModelAbstract {
      * @return {[type]}  [description]
      */
     sendEmail() {
-        console.log(this.model);
         if (grecaptcha.getResponse().length > 0 && this.formInstance.isValid()) {
             this.http.fetch('contact', {
                 method: 'post',
                 body: json(this.model)
             }).then(response => response.json())
             .then((data) => {
-                console.log(data);
-
-                // TODO: Display success or error messages
+                if (data.error === 0) {
+                    $('#message-box-success').modal('show');
+                } else {
+                    $('#message-box-error').modal('show');
+                }
             });
-
-            // $.ajax({
-            //     error: (jqXHR, status, reason) => {  },
-            //     data: this.model,
-            //     dataType: 'json',
-            //     method: 'post',
-            //     success: (token) => {  },
-            //     url: this.appConfig.getPhpUrl('contact')
-            // });
         }
     }
 

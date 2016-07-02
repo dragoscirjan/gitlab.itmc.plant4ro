@@ -182,10 +182,9 @@ export class Component extends ViewModelAbstract {
             stopOnHover: false,
             navigation: false,
             pagination: false,
-            paginationSpeed: 1000,
+            paginationSpeed: 5000,
             goToFirstSpeed: 2000,
             singleItem: true,
-            autoHeight: false,
             transitionStyle: 'fade'
         });
 
@@ -194,21 +193,18 @@ export class Component extends ViewModelAbstract {
             stopOnHover: false,
             navigation: false,
             pagination: true,
-            paginationSpeed: 1000,
+            paginationSpeed: 5000,
             goToFirstSpeed: 2000,
             singleItem: true,
-            autoHeight: true,
             transitionStyle: 'fade',
             afterInit: function(slider) {
                 // Move the controls before the content
                 this.owlControls.prependTo(slider);
+            },
+            afterMove: function(slider) {
+                const number = this.currentItem;
+                $sliderImg.trigger('owl.goTo', number);
             }
-        });
-
-        $sliderTxt.on('click', '.owl-page', function(e) {
-            // e.preventDefault();
-            const number = $(this).data('owlPage');
-            $sliderImg.trigger('owl.goTo', number);
         });
     }
 

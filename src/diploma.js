@@ -12,7 +12,6 @@ import 'fetch';
 import {HttpClient} from 'aurelia-fetch-client';
 
 import jsPDF from 'jspdf';
-console.log('CURVE', jsPDF);
 
 // import {Recaptcha} from 'google-recaptcha';
 
@@ -50,9 +49,19 @@ export class Component extends ViewModelAbstract {
      */
     activate(params, routeConfig) {
         super.activate(params, routeConfig);
+        let self = this;
         this.params = params;
         this.logger.debug('Page params: ', this.params);
-        return this.fetchDonationInfo(this.params.t);
+        // return new Promise((resolve, reject) => {
+        //     Promise.all([
+        //         self.fetchDonationInfo(this.params.t),
+        //         self.fetchPdf()
+        //     ]).then(resolve).catch(reject);
+        // });
+        return Promise.all([
+            self.fetchDonationInfo(this.params.t),
+            self.fetchPdf(this.params.t)
+        ]);
     }
 
     /**
@@ -86,6 +95,25 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
+     * @method fetchPdf
+     * @param  {String}  t
+     * @return {Promise} [description]
+     */
+    fetchPdf(t) {
+        let self = this;
+        return this.http
+            .fetch(`pdf/generate/${t}`)
+            .catch(error => {
+                self.logger.warn('PDF generation failed', error);
+            })
+            .then(response => response.text())
+            .then((data) => {
+                self.pdf = `/services/index.php/pdf/download/${t}`;
+                self.logger.debug('PDF Created', self.pdf, data);
+            });
+    }
+
+    /**
      * Initialize sliders on this page
      * @method initSliders
      */
@@ -109,53 +137,30 @@ export class Component extends ViewModelAbstract {
     }
 
     /**
-     * Create PDF from element in page
-     * @param  {Object} $elem - jQuery element to convert to PDF
+     * @method pdfDownload
      */
-    pdf() {
-        let pdf = new jsPDF('p', 'pt', 'letter');
-        // source can be HTML-formatted string, or a reference
-        // to an actual DOM element from which the text will be scraped.
-        let source = $('#diploma').get(0);
+    pdfDownload() {
+        $(`<iframe src="${this.appConfig.getPhpUrl('../../' + this.pdf)}" />`).appendTo(document.body);
+    }
 
-        // we support special element handlers. Register them with jQuery-style
-        // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-        // There is no support for any other type of selectors
-        // (class, of compound) at this time.
-        // specialElementHandlers = {
-        //     // element with id of "bypass" - jQuery style selector
-        //     '#bypassme': function (element, renderer) {
-        //         // true = "handled elsewhere, bypass text extraction"
-        //         return true
-        //     }
-        // };
-
-        let margins = {
-            top: 80,
-            bottom: 60,
-            left: 40,
-            width: 'auto'
-        };
-
-        console.log('XAXAXAXA', pdf);
-
-        // all coords and widths are in jsPDF instance's declared units
-        // 'inches' in this case
-        // pdf.fromHTML(
-        //     source, // HTML string or DOM elem ref.
-        //     margins.left, // x coord
-        //     margins.top, // y coord
-        //     {
-        //         'width': margins.width // max width of content on PDF
-        //         // 'elementHandlers': specialElementHandlers
-        //     },
-        //     function (dispose) {
-        //         // dispose: object with X, Y of the last line add to the PDF
-        //         //          this allow the insertion of new lines after html
-        //         pdf.save('Test.pdf');
-        //     },
-        //     margins
-        // );
+    /**
+     * @method pdfMail
+     */
+    pdfMail() {
+        return this.http
+            .fetch(`pdf/mail/${this.params.t}`)
+            .catch(error => {
+                self.logger.warn('Failed sending email', error);
+            })
+            .then(response => response.text())
+            .then((data) => {
+                if (data.error === 0) {
+                    $('#message-box-success').modal('show');
+                } else {
+                    $('#message-box-error').modal('show');
+                }
+                self.logger.debug('Mail Sent', self.pdf, data);
+            });
     }
 
     print() {

@@ -27,6 +27,8 @@
     "zendframework/zend-cache": "2.6.1",
     "zendframework/zend-config": "2.6.0",
     "zendframework/zend-mail": "2.6.1",
-    "zendframework/zend-log": "2.7.1"
+    "zendframework/zend-log": "2.7.1",
+    "mikehaertl/phpwkhtmltopdf": "^2.1",
+    "h4cc/wkhtmltopdf-amd64": "^0.12.3"
   }
 }
