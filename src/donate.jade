@@ -10,11 +10,11 @@ template
 						a(href="#corporateDonations", role="tab", aria-controls="corporateDonations", data-toggle="tab", click.trigger="toggleCorporate()") Donatii corporate
 				.tab-content
 					#individualDonations(role="tabpanel", class.bind="'tab-pane ' + (isCorporate ? '' : 'active')")
-						p
-							| Pentru transparenta totala a proiectului, facem publice numele celor implicati si cuantumul
-							| donatiilor. Sumele atrase sunt utilizate pentru indeplinirea 
-							a(href="/#/despre-proiect") obiectivelor
-							|  proiectului.
+						//- p
+						//- 	| Pentru transparenta totala a proiectului, facem publice numele celor implicati si cuantumul
+						//- 	| donatiilor. Sumele atrase sunt utilizate pentru indeplinirea 
+						//- 	a(href="/#/despre-proiect") obiectivelor
+						//- 	|  proiectului.
 						p
 							strong Unitatea de masura 
 							| a implicarii financiare in cadrul Proiectului “Planteaza Pentru Romania” este “Certificatul de Prieten
@@ -24,18 +24,18 @@ template
 							strong Uniti suntem mai puternici si mai eficienti!
 									
 					#corporateDonations(role="tabpanel", class.bind="'tab-pane ' + (isCorporate ? 'active' : '')")
-						p
-							| Pentru transparenta totala a proiectului, facem publice numele celor implicati si cuantumul
-							| donatiilor. Sumele atrase sunt utilizate pentru indeplinirea 
-							a(href="/#/despre-proiect") obiectivelor
-							|  proiectului.
+						//- p
+						//- 	| Pentru transparenta totala a proiectului, facem publice numele celor implicati si cuantumul
+						//- 	| donatiilor. Sumele atrase sunt utilizate pentru indeplinirea 
+						//- 	a(href="/#/despre-proiect") obiectivelor
+						//- 	|  proiectului.
 						p
 							strong Unitatea de masura 
 							| a implicarii financiare in cadrul Proiectului “Planteaza Pentru Romania” este “Certificatul de Prieten
-							| al Padurilor” ce are o valoare de 5 ron! Pentru fiecare donatie de 5 ron alocam un numar ce corespunde unui
-							| arbore plantat, creand astfel legatura intre donator si padure!	
+							| al Padurilor” ce are o valoare de 5 ron! Pentru fiecare donatie de 5 ron vom planta un puiet in numele tau, 
+							| urmand sa iti comunicam locul si data plantarii. Astfel creem legatura intre donator si padure.
 						p
-							strong Uniti suntem mai puternici si mai eficienti!
+							strong Planteaza pentru Romania!
 						
 				form#donationsForm.form--plant(action="", validate.bind="validation", submit.delegate="proceedToPayment()", data-parsley-excluded="input[type=button], input[type=submit], input[type=reset], input[type=hidden], [disabled], :hidden, #anonymous, #total")
 					div(class.bind="'form-group' + (isCorporate ? '' : ' sr-only')")
