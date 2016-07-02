@@ -39,7 +39,7 @@ wget --no-check-certificate -q $URL -O src/lib/app/config.js
 
 case $ENV in
     'development') gulp build;;
-    'testing') gulp bundle;;
+    'testing') gulp build;;
     'staging') gulp bundle;;
     'production') gulp bundle;;
 esac
@@ -48,4 +48,4 @@ chmod -R 777 services/cache services/src/Ppr/Mvc/Model/Proxy
 
 touch services/.log
 chmod -R 777 services/.log
-chmod -R 777 blog/wp-content/uploads
+chmod -R 777 blog/wp-contents/uploads
