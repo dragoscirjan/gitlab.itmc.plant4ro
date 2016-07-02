@@ -4,6 +4,16 @@ git pull
 
 apt-get install wkhtmltopdf xvfb pdftk
 
+ENV='development'
+[ -f services/.env ] && ENV=`cat services/.env`
+
+case $ENV in
+    'development') URL='http://planteazapentruromania.local';;
+    'testing') URL='https://test.planteazapentruromania.ro';;
+    'staging') URL='https://stage.planteazapentruromania.ro';;
+    'production') URL='https://planteazapentruromania.ro';;
+esac
+
 echo "$*" | grep +npm && {
     npm install
     jspm install
@@ -22,20 +32,12 @@ echo "$*" | grep +doctrine && {
     cd services
     ./vendor/bin/doctrine orm:schema-tool:update -f
     cd ..
+    wget --no-check-certificate -q "$URL/services/index.php/update-donations" -O /dev/nullv
+    wget --no-check-certificate -q "$URL/services/index.php/update-forestry-units" -O /dev/nullv
 }
 
-ENV='development'
-[ -f services/.env ] && ENV=`cat services/.env`
-
-case $ENV in
-    'development') URL='http://planteazapentruromania.local/services/index.php/config-js';;
-    'testing') URL='https://test.planteazapentruromania.ro/services/index.php/config-js';;
-    'staging') URL='https://stage.planteazapentruromania.ro/services/index.php/config-js';;
-    'production') URL='https://planteazapentruromania.ro/services/index.php/config-js';;
-esac
-
-echo wget -q $URL -O src/lib/app/config.js
-wget --no-check-certificate -q $URL -O src/lib/app/config.js
+echo wget -q "$URL/services/index.php/config-js" -O src/lib/app/config.js
+wget --no-check-certificate -q "$URL/services/index.php/config-js" -O src/lib/app/config.js
 
 case $ENV in
     'development') gulp build;;

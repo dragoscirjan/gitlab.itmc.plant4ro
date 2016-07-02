@@ -22,7 +22,7 @@ export class AppConfig {
 
     env = 'staging';
 
-    phpAppBase = '//stage.planteazapentruromania.ro/services/index.php/';
+    phpAppBase = '//planteazapentruromania.local/services/index.php/';
 
     constructor(http) { }
 
