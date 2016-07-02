@@ -39,7 +39,7 @@ wget --no-check-certificate -q $URL -O src/lib/app/config.js
 
 case $ENV in
     'development') gulp build;;
-    'testing') gulp build;;
+    'testing') gulp bundle;;
     'staging') gulp bundle;;
     'production') gulp bundle;;
 esac
