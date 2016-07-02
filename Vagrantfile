@@ -77,6 +77,7 @@ Vagrant.configure(2) do |config|
     # --provider lxc
     ubuntu.vm.provider :lxc do |lxc, override|
       lxc.customize "network.ipv4", "10.0.3.101/24"
+      lxc.backingstore = 'btrfs'
 
       override.vm.box = "dragosc/trusty64"
     end
