@@ -20,9 +20,9 @@ export class AppConfig {
     ENV_STAGING = 'staging';
     ENV_PRODUCT = 'production';
 
-    env = 'development';
+    env = 'staging';
 
-    phpAppBase = '//planteazapentruromania.local/services/index.php/';
+    phpAppBase = '//stage.planteazapentruromania.ro/services/index.php/';
 
     constructor(http) { }
 
@@ -65,7 +65,7 @@ export class AppConfig {
      * @return {String}
      */
     encode(obj) {
-        return JSON.stringify(obj);
+        return btoa(JSON.stringify(obj));
     }
 
     /**
@@ -75,6 +75,6 @@ export class AppConfig {
      * @return {Object}
      */
     decode(str) {
-        return JSON.parse(str);
+        return JSON.parse(atob(str));
     }
 }
