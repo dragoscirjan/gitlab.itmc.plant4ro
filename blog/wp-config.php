@@ -42,7 +42,8 @@ if ($_SERVER['SERVER_NAME'] === 'planteazapentruromania.local') {
 
 	// ** MySQL settings - You can get this info from your web host ** //
 	/** The name of the database for WordPress */
-	define('DB_NAME', 'plant4ro_' . str_replace('.planteazapentruromania.ro', '', $_SERVER['SERVER_NAME']) . '_wp' );
+	$db = str_replace('.planteazapentruromania.ro', '', $_SERVER['SERVER_NAME']);
+	define('DB_NAME', 'plant4ro_' . ($db ? $db : 'live') . '_wp' );
 
 	/** MySQL database username */
 	define('DB_USER', 'plant4ro');
