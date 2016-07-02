@@ -189,6 +189,8 @@ export class Component extends ViewModelAbstract {
             return this.fetchMobilpayInfo(this.orderId);
             // this.showDonationError('Lorem ipsum sit dolor....');
         }
+
+        // $('#donation-error-modal').modal('show');
     }
 
     /**

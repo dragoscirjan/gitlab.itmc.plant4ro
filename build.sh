@@ -2,6 +2,8 @@
 
 git pull
 
+apt-get install wkhtmltopdf xvfb pdftk
+
 echo "$*" | grep +npm && {
     npm install
     jspm install
@@ -46,3 +48,4 @@ chmod -R 777 services/cache services/src/Ppr/Mvc/Model/Proxy
 
 touch services/.log
 chmod -R 777 services/.log
+chmod -R 777 blog/wp-contents/uploads

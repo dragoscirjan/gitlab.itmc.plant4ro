@@ -1,11 +1,10 @@
 template
-	//- require(from='../3rdpt/jsPDF/jspdf.min.js')
 
 	section(class.bind="'au-animate ' + routeConfig.name")
 		.container
 			h1.page-title ${heading}
 			p Iti multumim pentru donatia facuta. Copacelul la plantarea caruia tu ai contribuit astazi va creste mare si va avea grija de planeta ta. 
-			
+
 			#diploma.certificate
 				.certificate__inner
 					.certificate__logo
@@ -14,10 +13,10 @@ template
 					.certificate__content
 						span Se acorda titlul de #[strong "Prieten(a) al Padurilor din Romania"] companiei/persoanei
 						.form-group
-							input.certificate__input.form-control.form-control--full.text-center(type="text", name="", value.bind="donation.donator.company || donation.donator.name")
+							span.certificate__input.form-control.form-control--full.text-center ${donation.donator.company || donation.donator.name}
 						span Pentru ca a sustinut proiectul #[strong "Planteaza pentru Romania"] editia nr. 1 din 2016 adoptand
 						.form-group.form-group--inline
-							input.certificate__input.form-control.text-center(type="text", name="", value.bind="donation.trees")
+							span.certificate__input.form-control.text-center ${donation.trees}
 						span puieti.
 						p *Suma primita de la oricine o impartim la 5 RON care este unitatea standard de masura a implicarii financiare in cadrul acestui proiect (cu fiecare 5 RON sponsorii sau donatorii adopta un arbore).
 					.certificate__footer
@@ -35,15 +34,41 @@ template
 										| ing. silvic Florin Nan
 									br
 									.form-group.form-group--inline
-										input.certificate__input.form-control.text-right(type="text", name="", value="")
+										span.certificate__input.form-control.text-right
 				.flag.flag--ro.flag--diploma
 					.flag__colour
 					.flag__colour
 					.flag__colour
-					
-			.text-center
-				button.btn.btn--sm.btn--secondary(click.delegate="pdf()") Printeaza
+			.text-center.btn__group
+				button.btn.btn--sm.btn--secondary(click.delegate="pdfMail()") Trimite pe mail
+				button.btn.btn--sm.btn--secondary(click.delegate="pdfDownload()") Descarca PDF
 
-			//- .text-center.btn__group
-			//- 	a.btn.btn--sm.btn--secondary(href="") Trimite pe mail
-			//- 	a.btn.btn--sm.btn--secondary(href="") Descarca PDF
+	#message-box-success.modal.modal-msg.fade(tabindex='-1', role='dialog')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+				.modal-body
+					.modal-icon
+						i.fa.fa-info-circle
+					.modal-body-content
+						p Diploma dumneavoastra a fost trimisa pe mail cu succes.
+				.modal-footer
+					button.btn.btn--sm.btn--neutral(data-dismiss="modal") OK
+
+	#message-box-error.modal.modal-msg.fade(tabindex='-1', role='dialog')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(type='button', data-dismiss='modal', aria-label='Close')
+						span(aria-hidden='true') &times;
+				.modal-body
+					.modal-icon
+						i.fa.fa-exclamation-triangle
+					.modal-body-content
+						p Nu am putut trimite diploma pe mail. Va rugam sa ne 
+							a(href="/#/contact") contactati
+							| in aceasta privinta.
+				.modal-footer
+					button.btn.btn--sm.btn--neutral(data-dismiss="modal") OK

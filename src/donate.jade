@@ -1,13 +1,4 @@
-//- TODO: #122 Slider doesn't work on click
-//- TODO: #116 Finish Design for corporate
-//- TODO: #118 Finish Payment options
-//- TODO: #117 Implement payment functionality with both Paypal and mobilpay
-//- TODO: #119 Frinish Recaptcha plugin
-//- TODO: #120 Finish functionality on 'planteaza cu un prieten'
-//- TODO: #121 Form validation
 template
-	//- require(from='./lib/renderer/recaptcha')
-	//- require(from='google-recaptcha')
 	section.au-animate
 		.container
 			h1.page-title ${heading}
@@ -19,13 +10,37 @@ template
 						a(href="#corporateDonations", role="tab", aria-controls="corporateDonations", data-toggle="tab", click.trigger="toggleCorporate()") Donatii corporate
 				.tab-content
 					#individualDonations(role="tabpanel", class.bind="'tab-pane ' + (isCorporate ? '' : 'active')")
+						//- p
+						//- 	| Pentru transparenta totala a proiectului, facem publice numele celor implicati si cuantumul
+						//- 	| donatiilor. Sumele atrase sunt utilizate pentru indeplinirea 
+						//- 	a(href="/#/despre-proiect") obiectivelor
+						//- 	|  proiectului.
 						p
-							strong Planteaza pentru Romania 
-							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
+							//- strong Unitatea de masura 
+							//- | a implicarii financiare in cadrul Proiectului “Planteaza Pentru Romania” este “Certificatul de Prieten
+							//- | al Padurilor” ce are o valoare de 5 ron! 
+							strong Pentru fiecare donatie de 5 ron 
+							| vom planta un puiet in numele tau, 
+							| urmand sa iti comunicam locul si data plantarii. Astfel creem legatura intre tine si padure.
+						p
+							strong Planteaza pentru Romania!
+									
 					#corporateDonations(role="tabpanel", class.bind="'tab-pane ' + (isCorporate ? 'active' : '')")
+						//- p
+						//- 	| Pentru transparenta totala a proiectului, facem publice numele celor implicati si cuantumul
+						//- 	| donatiilor. Sumele atrase sunt utilizate pentru indeplinirea 
+						//- 	a(href="/#/despre-proiect") obiectivelor
+						//- 	|  proiectului.
 						p
-							strong Planteaza pentru Romania (corporate)
-							|  este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.
+							//- strong Unitatea de masura 
+							//- | a implicarii financiare in cadrul Proiectului “Planteaza Pentru Romania” este “Certificatul de Prieten
+							//- | al Padurilor” ce are o valoare de 5 ron! 
+							strong Pentru fiecare donatie de 5 ron 
+							| vom planta un puiet in numele tau, 
+							| urmand sa iti comunicam locul si data plantarii. Astfel creem legatura intre tine si padure.
+						p
+							strong Planteaza pentru Romania!
+						
 				form#donationsForm.form--plant(action="", validate.bind="validation", submit.delegate="proceedToPayment()", data-parsley-excluded="input[type=button], input[type=submit], input[type=reset], input[type=hidden], [disabled], :hidden, #anonymous, #total")
 					div(class.bind="'form-group' + (isCorporate ? '' : ' sr-only')")
 						.form-group
@@ -100,15 +115,15 @@ template
 							label(for="payMethodM") 
 								strong MobilPay
 								| : ${paymentModel.donation.total} RON
-						.radio(class.bind="(!model.donation.exchange) ? 'hide' : ''")
-							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method')
-							label(for="payMethodPP")
-								strong Braintree (Paypal)
-								| : ${paymentModel.donation.totalEur} EUR 
-								i (curs valutar 1 EUR = ${model.donation.exchange} RON)
-						div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
-							input#payMethoTB.sr-only(type='radio', name="payMethod", value='transfer', checked.bind='model.donation.method')
-							label(for="payMethoTB") Transfer bancar ${paymentModel.donation.total} RON
+						//- .radio(class.bind="(!model.donation.exchange) ? 'hide' : ''")
+						//- 	input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method')
+						//- 	label(for="payMethodPP")
+						//- 		strong Braintree (Paypal)
+						//- 		| : ${paymentModel.donation.totalEur} EUR 
+						//- 		i (curs valutar 1 EUR = ${model.donation.exchange} RON)
+						//- div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
+						//- 	input#payMethoTB.sr-only(type='radio', name="payMethod", value='transfer', checked.bind='model.donation.method')
+						//- 	label(for="payMethoTB") Transfer bancar ${paymentModel.donation.total} RON
 					hr
 					.form-group
 						.checkbox.form-wrap
@@ -138,7 +153,7 @@ template
 						input.sr-only(type='submit', value='Planteaza')
 				.modal-footer
 					button.btn.btn--sm.btn--neutral(type='button', data-dismiss='modal') Renunta
-					button.btn.btn--sm.btn--secondary(type='button') Planteaza
+					button.btn.btn--sm.btn--secondary(type='button') Doneaza
 
 	#mobilpay-modal.modal.modal-mobilpay.fade(tabindex='-1', role='dialog') 
 		.modal-dialog
@@ -164,15 +179,18 @@ template
 		.modal-dialog
 			.modal-content
 				.modal-header
-					button.close(data-dismiss="modal" aria-label="Close")
+					button.close(data-dismiss="modal" aria-label="Close" data-resolve="close")
 						span(aria-hidden="true") &times;
 				.modal-body
-					i.fa.fa-exclamation-triangle
-					h4.text-danger Tranzactia dumneavoastra a esuat cu urmatorul mesaj:
-					p 
-						i ${donationErrorModal.message}
-					p 
-						| Pentru mai multe detalii, va rugam sa ne contactati la adresa de mail 
-						a(href="mailto:office@prieteniipadurilor.ro") office@prieteniipadurilor.ro
-						| .
-					a.btn.btn--sm.btn--neutral.h-margin-top-30(href="") Mai incearca o data
+					.modal-icon
+						i.fa.fa-exclamation-triangle
+					.modal-body-content
+						h4.text-danger Tranzactia dumneavoastra a esuat cu urmatorul mesaj:
+						p 
+							i ${donationErrorModal.message}
+						p 
+							| Pentru mai multe detalii, va rugam sa ne contactati la adresa de mail 
+							a(href="mailto:office@prieteniipadurilor.ro") office@prieteniipadurilor.ro
+							| .
+				.modal-footer
+					button.btn.btn--sm.btn--neutral.h-margin-top-30(data-dismiss="modal") Mai incearca o data
