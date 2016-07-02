@@ -53,7 +53,6 @@ return [
             ],
             'mobilpay' => [
                 'paymentUrl' => 'http://sandboxsecure.mobilpay.ro',
-//                'paymentUrl' => 'http://sandboxsecure.mobilpay.ro/card3',
                 'certPath' => __DIR__ . '/cert/sandbox.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
                 'keyPath' => __DIR__ . '/cert/sandbox.UQUX-6E8G-G8TG-B88U-N9UGprivate.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
@@ -81,12 +80,6 @@ return [
         'js' => [
             'servicesBase' => '//test.planteazapentruromania.ro/services/index.php/'
         ],
-//        'payment' => [
-//            'mobilpay' => [
-//                'confirmUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-//                'returnUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
-//            ]
-//        ],
         'pdf' => [
             'zoom' => '1.0325'
         ],
@@ -108,8 +101,6 @@ return [
                 'certPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
                 'keyPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UGprivate.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
-//                'confirmUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-//                'returnUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
             ]
         ],
     ],
@@ -124,11 +115,5 @@ return [
         'js' => [
             'servicesBase' => '//planteazapentruromania.ro/services/index.php/'
         ],
-//        'payment' => [
-//            'mobilpay' => [
-//                'confirmUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-//                'returnUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
-//            ]
-//        ],
     ],
 ];
