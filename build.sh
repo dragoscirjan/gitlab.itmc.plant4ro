@@ -21,9 +21,11 @@ echo "$*" | grep +npm && {
 
 echo "$*" | grep +composer && {
     cd services
+    rm -rf composer.lock
     [ -f composer.phar ] && ./composer.phar selfupdate
     [ -f composer.phar ] || wget -q https://getcomposer.org/installer -O - | php
     [ -d vendor ] && rm -rf vendor
+    rm -rf composer.lock
     ./composer.phar install
     cd ..
 }
@@ -49,5 +51,4 @@ esac
 chmod -R 777 services/cache services/src/Ppr/Mvc/Model/Proxy
 
 touch services/.log
-chmod -R 777 services/.log
-chmod -R 777 blog/wp-content/uploads
+chmod -R 777 services/.log services/cache blog/wp-content/uploads
