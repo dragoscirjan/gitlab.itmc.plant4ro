@@ -227,7 +227,7 @@ export class Component extends ViewModelAbstract {
                             });
                             resolve(pos);
                         },
-                        url: `http://maps.googleapis.com/maps/api/geocode/xml?latlng=${position.coords.latitude},${position.coords.longitude}&sensor=true&l=ro`
+                        url: `//maps.googleapis.com/maps/api/geocode/xml?latlng=${position.coords.latitude},${position.coords.longitude}&sensor=true&l=ro`
                     });
                 }, () => {
                     reject();
