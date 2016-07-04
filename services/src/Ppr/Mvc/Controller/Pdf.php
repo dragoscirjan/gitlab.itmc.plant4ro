@@ -217,7 +217,7 @@ class Pdf
             $mail->setSubject(sprintf('Multumim pentru donatie', $request->get('subject')));
 
             call_user_func_array([$mail, 'setFrom'], $app->getConfig('contact.from')->toArray());
-//            call_user_func_array([$mail, 'addTo'], $app->getConfig('contact.to')->toArray());
+            // call_user_func_array([$mail, 'addTo'], $app->getConfig('contact.to')->toArray());
             $mail->addTo($donation->getDonator()->getEmail(), $donation->getDonator()->getName());
 
             $class = $app->getConfig('contact.mail.transport');
