@@ -97,7 +97,7 @@ return [
         ],
         'payment' => [
             'mobilpay' => [
-                'paymentUrl' => 'http://secure.mobilpay.ro',
+                'paymentUrl' => 'https://secure.mobilpay.ro',
                 'certPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
                 'keyPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UGprivate.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
