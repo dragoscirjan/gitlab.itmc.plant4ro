@@ -167,10 +167,10 @@ class Application extends \Silex\Application {
      * @throws \Exception
      */
     public function encode($object) {
-        if ($this->getEnv() == self::ENV_DEVELOP || $this->getEnv() == self::ENV_TESTING) {
-            return json_encode($object);
-        }
-        return base64_encode(json_encode($object));
+//        if ($this->getEnv() == self::ENV_STAGING|| $this->getEnv() == self::ENV_PRODUCT) {
+//            return base64_encode(json_encode($object));
+//        }
+        return json_encode($object);
     }
     /**
      * @param $strign string
@@ -178,10 +178,10 @@ class Application extends \Silex\Application {
      * @throws \Exception
      */
     public function decode($string) {
-        if ($this->getEnv() == self::ENV_DEVELOP || $this->getEnv() == self::ENV_TESTING) {
-            return json_decode($string);
-        }
-        return json_decode(base64_decode($string));
+//        if ($this->getEnv() == self::ENV_STAGING|| $this->getEnv() == self::ENV_PRODUCT) {
+//            return json_decode(base64_decode($string));
+//        }
+        return json_decode($string);
     }
 
     /**
