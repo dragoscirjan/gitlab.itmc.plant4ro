@@ -87,13 +87,13 @@ export class AppConfig {
      * @return {String}
      */
     encode(obj) {
-<?php if ($app->getEnv() == Application::ENV_DEVELOP
+<?php /*if ($app->getEnv() == Application::ENV_DEVELOP
             || $app->getEnv() == Application::ENV_TESTING
-) : ?>
+) : /**/?>
         return JSON.stringify(obj);
-<?php else: ?>
+<?php /*else: ?>
         return btoa(JSON.stringify(obj));
-<?php endif; ?>
+<?php endif; /**/?>
     }
 
     /**
@@ -103,13 +103,13 @@ export class AppConfig {
      * @return {Object}
      */
     decode(str) {
-<?php if ($app->getEnv() == Application::ENV_DEVELOP
+<?php /*if ($app->getEnv() == Application::ENV_DEVELOP
             || $app->getEnv() == Application::ENV_TESTING
-) : ?>
+) : /**/?>
         return JSON.parse(str);
 <?php else: ?>
         return JSON.parse(atob(str));
-<?php endif; ?>
+<?php endif; /**/?>
     }
 }
 <?php
