@@ -154,6 +154,7 @@ export class Component extends ViewModelAbstract {
             })
             .then(response => response.text())
             .then((data) => {
+                data = self.appConfig.decode(data);
                 if (data.error === 0) {
                     $('#message-box-success').modal('show');
                 } else {
