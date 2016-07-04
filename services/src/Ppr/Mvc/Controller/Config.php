@@ -107,7 +107,7 @@ export class AppConfig {
             || $app->getEnv() == Application::ENV_TESTING
 ) : /**/?>
         return JSON.parse(str);
-<?php else: ?>
+<?php /*else: ?>
         return JSON.parse(atob(str));
 <?php endif; /**/?>
     }
