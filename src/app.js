@@ -26,6 +26,9 @@ export class App {
      */
     configureRouter(config, router) {
         config.title = 'Planteaza pentru Romania';
+        if (window.location.hostname !== 'localhost' && window.location.port !== 9000) {
+            config.options.pushState = true;
+        }
         config.map([
             { route: ['', 'acasa'],           name: 'hp',        moduleId: 'index',           nav: true,   title: 'Acasa' },
             { route: 'despre-proiect',        name: 'about',     moduleId: 'about',           nav: true,   title: 'Despre Proiect' },

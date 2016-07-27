@@ -38,9 +38,18 @@ export class ViewModelAbstract  {
 
         this.routeConfig.navModel.router.activeRoute = this.routeConfig;
 
-        this.logger.debug(`Google Analytics Plugin Won't work. Tracking url '${navigationInstruction.fragment || '/'}' with title: '${navigationInstruction.config.title}'`);
-        ga('set', {page: navigationInstruction.fragment || '/', title: navigationInstruction.config.title});
-		ga('send', 'pageview');
+        console.log(routeConfig, navigationInstruction);
+        if (typeof ga === 'function') {
+            let page = '/';
+            let title = routeConfig.title;
+            if (typeof navigationInstruction !== 'undefined') {
+                page = navigationInstruction.fragment;
+                title = navigationInstruction.config.title;
+            }
+            this.logger.debug(`Google Analytics Plugin Won't work. Tracking url '${page}' with title: '${title}'`);
+            ga('set', { page: page, title: title });
+    		ga('send', 'pageview');
+        }
     }
 
     /**
