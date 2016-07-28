@@ -17,12 +17,13 @@ const options = {
 Sophia.getInstance()
     .indexUrls('https://planteazapentruromania.ro', options)
     .then((urls) => {
-        console.log(url);
+        console.log(urls);
+        console.log(urls.length);
         // var result = htmlSnapshots.run({
         //     input: 'array',
         //     source: urls,
         //     outputDir: './snapshots',
-        //     outputDirClean: true,  
+        //     outputDirClean: true,
         //     selector: options.selectors
         // });
     });
