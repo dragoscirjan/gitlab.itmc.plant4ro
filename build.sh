@@ -1,7 +1,5 @@
 #! /bin/bash
 
-git pull
-
 apt-get install wkhtmltopdf xvfb pdftk
 
 ENV='development'
@@ -13,6 +11,12 @@ case $ENV in
     'staging') URL='https://stage.planteazapentruromania.ro';;
     'production') URL='https://planteazapentruromania.ro';;
 esac
+
+if [ "$ENV" == "production" ]; then
+    git pull origin master
+else
+    git pull origin develop
+fi
 
 echo "$*" | grep +npm && {
     npm install
