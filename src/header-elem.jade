@@ -6,7 +6,7 @@ template(bindable='router')
 					span.icon-bar            
 					span.icon-bar             
 					span.icon-bar
-				a.navbar-brand(href='#')            
+				a.navbar-brand(href.bind='router.navigation[0].href')            
 					img(src='/dist/assets/img/logo.png', alt='${router.title} Logo')
 				.navbar-wrapper
 					ul.nav.navbar-nav
