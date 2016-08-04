@@ -38,6 +38,8 @@ export class Component extends ViewModelAbstract {
      */
     heading = 'Planteaza!';
 
+    morePaymentOptions = true;
+
     /**
      * To save to database model
      * @type {Object}

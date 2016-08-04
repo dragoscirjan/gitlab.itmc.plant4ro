@@ -109,50 +109,50 @@ template
 					hr
 					p.h-margin-bottom-20.h-text-primary
 						strong Modalitatea de donatie
-					.form-group
-						.radio
+					#accordion.form-group(role="tablist")
+						.radio.panel
 							input#payMethodM.sr-only(type='radio', name="payMethod", value='mobilpay', checked.bind='model.donation.method')
-							label(for="payMethodM") 
+							label(for="payMethodM", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethodMDet", aria-expanded="true") 
 								strong Credit/Debit Card folosind 
 									a(href="http://mobilpay.ro/", target="_blank") MobilPay
-								span.dots #[b ...] 
-								span.trans ${paymentModel.donation.total} RON
-						.radio(class.bind="(!model.donation.exchange) ? 'hide' : ''")
-							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method', disabled='disabled')
-							label(for="payMethodPP")
+							#payMethodMDet.collapse.in(role="tabpanel")
+								img(src="https://s.emag.ro/layout/ro/images/cart/credit_cards2.jpg", style="float: right;")
+								.small
+									| Veti fi taxat de catre procesatorul de plati suma de #[strong ${paymentModel.donation.total} RON]
+									br
+									| Va rugam verificati daca dispuneti cu un card compatibil cu procesatorul de plati.
+						.radio.panel(class.bind="(!model.donation.exchange) ? 'hide' : ''")
+							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method')
+							label(for="payMethodPP", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethodPPDet", aria-expanded="false") 
 								strong Credit/Debit Card folosind 
 									a(href="https://www.braintreepayments.com/", target="_blank") Braintree (Paypal)
-								| : ${paymentModel.donation.totalEur} EUR 
+							#payMethodPPDet.collapse(role="tabpanel")
+								img(src="http://www.turnersworkshop.co.uk/paypal.png", style="float: right;")
+								| Donatie: ${paymentModel.donation.totalEur} EUR 
 								i (curs valutar 1 EUR = ${model.donation.exchange} RON)
-						.radio(class.bind="(!model.donation.exchangeUsd) ? 'hide' : ''")
-							input#payMethodPPUsd.sr-only(type='radio', name="payMethod", value='braintree-usd', checked.bind='model.donation.method', disabled='disabled')
-							label(for="payMethodPPUsd")
-							strong Credit/Debit Card folosind 
-								a(href="https://www.braintreepayments.com/", target="_blank") Braintree (Paypal)
-								| : ${paymentModel.donation.totalUsd} USD 
+						.radio.panel(class.bind="(!model.donation.exchangeUsd) ? 'hide' : ''")
+							input#payMethodPPUsd.sr-only(type='radio', name="payMethod", value='braintree-usd', checked.bind='model.donation.method')
+							label(for="payMethodPPUsd", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethodPPUsdDet", aria-expanded="false") 
+								strong Credit/Debit Card folosind 
+									a(href="https://www.braintreepayments.com/", target="_blank") Braintree (Paypal)
+							#payMethodPPUsdDet.collapse(role="tabpanel")
+								img(src="http://www.turnersworkshop.co.uk/paypal.png", style="float: right;")
+								| Donatie: ${paymentModel.donation.totalUsd} USD 
 								i (curs valutar 1 USD = ${model.donation.exchangeUsd} RON)
-						a#showMorePayOptions(click.delegate="showBankTransfer()", href="javascript:;") Mai multe optiuni ... 
-						//- div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
-						.radio
+						.radio.panel(class.bind="(!morePaymentOptions) ? 'hide' : ''")
 							input#payMethoTBRon.sr-only(type='radio', name="payMethod", value='transfer-ron', checked.bind='model.donation.method')
-							label(for="payMethoTBRON") 
-								| Am transferat 
-								.input-group
-									.input-group-addon RON
-									input(type=text, placeholder="${paymentModel.donation.total}")
-								| in contul #[b RO31RZBR0000060016840199]
-								span.dots #[b ...] 
-								span.trans 
-									| , avand 
+							label(for="payMethoTBRon", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethoTBRonDet", aria-expanded="false") 
+								strong Ordin de plata (RON) 
+								| in contul 
+								strong RO31RZBR0000060016840199
+							#payMethoTBRonDet.collapse(role="tabpanel")
+								p Am donat 
+									.input-group
+										.input-group-addon RON
+										input(type=text, placeholder="${paymentModel.donation.total}")
+									| , avand numarul tranzactiei
 									input(type=text, placeholder="Numarul tranzactiei ...")
-						//- div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
-						.radio
-							input#payMethoTBEur.sr-only(type='radio', name="payMethod", value='transfer-eur', checked.bind='model.donation.method')
-							label(for="payMethoTBEUR") Transfer bancar ${paymentModel.donation.totalEur} EUR in contul #[b RO31RZBR0000060016840199]
-						//- div(class.bind="'radio' + (isCorporate ? '' : ' hide')")
-						.radio
-							input#payMethoTBUsd.sr-only(type='radio', name="payMethod", value='transfer-usd', checked.bind='model.donation.method')
-							label(for="payMethoTBUSD") Transfer bancar ${paymentModel.donation.totalUsd} USD in contul #[b RO31RZBR0000060016840199]
+						//- a#showMorePayOptions(click.delegate="showBankTransfer()", href="javascript:;") Mai multe optiuni ... 
 					hr
 					.form-group
 						.checkbox.form-wrap
