@@ -54,7 +54,8 @@ export class Component extends ViewModelAbstract {
 
         donation: {
             method: 'mobilpay',
-            exchange: 0
+            exchange: 0,
+            exchnageUSD: 0
             // currency: 'RON' // can be RON | EUR ; not needed because we can diferentiate currency by method
 
         }
@@ -295,6 +296,7 @@ export class Component extends ViewModelAbstract {
                 self.logger.debug('Exchange rates obtained:', data);
                 if (!data.error) {
                     self.model.donation.exchange = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
+                    self.model.donation.exchangeUsd = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'USD'; })[0]['#text'];
                     self.logger.debug('Exchange rates obtained EUR:', self.model.donation.exchange);
                 }
             });
@@ -347,6 +349,7 @@ export class Component extends ViewModelAbstract {
         });
         model.donation.total = model.trees * this.treePrice;
         model.donation.totalEur = Math.floor(model.donation.total / this.model.donation.exchange * 100) / 100;
+        model.donation.totalUsd = Math.floor(model.donation.total / this.model.donation.exchangeUsd * 100) / 100;
         return model;
     }
 
