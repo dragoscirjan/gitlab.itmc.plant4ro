@@ -2467,6 +2467,46 @@ Navbar
 
 
 
+/*
+   Payment
+   ========================================================================== */
+
+.payment {
+    &__option {
+        background: none;
+    }
+
+    &__description {
+        padding-left: 30px;
+        font-size: 90%;
+        line-height: 1.45;
+    }
+
+    &__card {
+        @media (min-width: 768px) {
+            display: flex;
+            align-items: center;
+        }
+
+        p {
+            flex: 1 1 auto;
+            margin-bottom: 0;
+        }
+
+        img {
+            width: 175px;
+            margin-top: 10px;
+
+            @media (min-width: 768px) {
+                margin-top: 0;
+                margin-left: 10px;
+            }
+        }
+    }
+}
+
+
+
 
 /*
    Footer

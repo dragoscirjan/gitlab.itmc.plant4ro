@@ -24,7 +24,7 @@ template
 							| urmand sa iti comunicam locul si data plantarii. Astfel creem legatura intre tine si padure.
 						p
 							strong Planteaza pentru Romania!
-									
+
 					#corporateDonations(role="tabpanel", class.bind="'tab-pane ' + (isCorporate ? 'active' : '')")
 						//- p
 						//- 	| Pentru transparenta totala a proiectului, facem publice numele celor implicati si cuantumul
@@ -40,7 +40,7 @@ template
 							| urmand sa iti comunicam locul si data plantarii. Astfel creem legatura intre tine si padure.
 						p
 							strong Planteaza pentru Romania!
-						
+
 				form#donationsForm.form--plant(action="", validate.bind="validation", submit.delegate="proceedToPayment()", data-parsley-excluded="input[type=button], input[type=submit], input[type=reset], input[type=hidden], [disabled], :hidden, #anonymous, #total")
 					div(class.bind="'form-group' + (isCorporate ? '' : ' sr-only')")
 						.form-group
@@ -109,49 +109,56 @@ template
 					hr
 					p.h-margin-bottom-20.h-text-primary
 						strong Modalitatea de donatie
-					#accordion.form-group(role="tablist")
-						.radio.panel
+					#accordion.form-group.payment(role="tablist")
+						.radio.panel.payment__option
 							input#payMethodM.sr-only(type='radio', name="payMethod", value='mobilpay', checked.bind='model.donation.method')
 							label(for="payMethodM", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethodMDet", aria-expanded="true") 
 								strong Credit/Debit Card folosind 
 									a(href="http://mobilpay.ro/", target="_blank") MobilPay
 							#payMethodMDet.collapse.in(role="tabpanel")
-								img(src="https://s.emag.ro/layout/ro/images/cart/credit_cards2.jpg", style="float: right;")
-								.small
-									| Veti fi taxat de catre procesatorul de plati suma de #[strong ${paymentModel.donation.total} RON]
-									br
-									| Va rugam verificati daca dispuneti cu un card compatibil cu procesatorul de plati.
-						.radio.panel(class.bind="(!model.donation.exchange) ? 'hide' : ''")
+								.payment__description.payment__card
+									p
+										| Veti fi taxat de catre procesatorul de plati suma de #[strong ${paymentModel.donation.total} RON]
+										br
+										| Va rugam verificati daca dispuneti cu un card compatibil cu procesatorul de plati.
+									img.img-responsive(src="https://s.emag.ro/layout/ro/images/cart/credit_cards2.jpg")
+						.radio.panel.payment__option(class.bind="(!model.donation.exchange) ? 'hide' : ''")
 							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method')
 							label(for="payMethodPP", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethodPPDet", aria-expanded="false") 
 								strong Credit/Debit Card folosind 
 									a(href="https://www.braintreepayments.com/", target="_blank") Braintree (Paypal)
 							#payMethodPPDet.collapse(role="tabpanel")
-								img(src="http://www.turnersworkshop.co.uk/paypal.png", style="float: right;")
-								| Donatie: ${paymentModel.donation.totalEur} EUR 
-								i (curs valutar 1 EUR = ${model.donation.exchange} RON)
-						.radio.panel(class.bind="(!model.donation.exchangeUsd) ? 'hide' : ''")
+								.payment__description.payment__card
+									p
+										| Donatie: ${paymentModel.donation.totalEur} EUR 
+										i (curs valutar 1 EUR = ${model.donation.exchange} RON)
+									img.img-responsive(src="http://www.turnersworkshop.co.uk/paypal.png")
+						.radio.panel.payment__option(class.bind="(!model.donation.exchangeUsd) ? 'hide' : ''")
 							input#payMethodPPUsd.sr-only(type='radio', name="payMethod", value='braintree-usd', checked.bind='model.donation.method')
 							label(for="payMethodPPUsd", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethodPPUsdDet", aria-expanded="false") 
 								strong Credit/Debit Card folosind 
 									a(href="https://www.braintreepayments.com/", target="_blank") Braintree (Paypal)
 							#payMethodPPUsdDet.collapse(role="tabpanel")
-								img(src="http://www.turnersworkshop.co.uk/paypal.png", style="float: right;")
-								| Donatie: ${paymentModel.donation.totalUsd} USD 
-								i (curs valutar 1 USD = ${model.donation.exchangeUsd} RON)
-						.radio.panel(class.bind="(!morePaymentOptions) ? 'hide' : ''")
+								.payment__description.payment__card
+									p
+										| Donatie: ${paymentModel.donation.totalUsd} USD 
+										i (curs valutar 1 USD = ${model.donation.exchangeUsd} RON)
+									img.img-responsive(src="http://www.turnersworkshop.co.uk/paypal.png")
+						.radio.panel.payment__option(class.bind="(!morePaymentOptions) ? 'hide' : ''")
 							input#payMethoTBRon.sr-only(type='radio', name="payMethod", value='transfer-ron', checked.bind='model.donation.method')
 							label(for="payMethoTBRon", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethoTBRonDet", aria-expanded="false") 
 								strong Ordin de plata (RON) 
 								| in contul 
 								strong RO31RZBR0000060016840199
 							#payMethoTBRonDet.collapse(role="tabpanel")
-								p Am donat 
-									.input-group
-										.input-group-addon RON
-										input(type=text, placeholder="${paymentModel.donation.total}")
-									| , avand numarul tranzactiei
-									input(type=text, placeholder="Numarul tranzactiei ...")
+								.payment__description
+									.row
+										.col-sm-6
+											.input-group
+												.input-group-addon RON
+												input.form-control(type=text, placeholder="${paymentModel.donation.total}")
+										.col-sm-6
+											input.form-control(type=text, placeholder="Numarul tranzactiei ...")
 						//- a#showMorePayOptions(click.delegate="showBankTransfer()", href="javascript:;") Mai multe optiuni ... 
 					hr
 					.form-group
