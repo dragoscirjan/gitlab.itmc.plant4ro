@@ -100,6 +100,8 @@
     }
   },
   "dependencies": {
-    "html-snapshots": "^0.12.3"
+    "dalia": "0.0.2",
+    "html-snapshots": "^0.12.3",
+    "mkdir-recursive": "^0.2.2"
   }
 }
