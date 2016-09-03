@@ -50,6 +50,10 @@ return [
                 'merchantId' => '89pcx4ss3kz8x5q7',
                 'publicKey' => 'twp79qy2pg755nhz',
                 'privateKey' => '7c97f0a849a5cba4bbbc8ad9b2fe578f',
+                'merchantAccountId' => [
+                    'eur' => '89pcx4ss3kz8x5q7',
+                    'usd' => 'itmediaconnect'
+                ]
             ],
             'mobilpay' => [
                 'paymentUrl' => 'http://sandboxsecure.mobilpay.ro',

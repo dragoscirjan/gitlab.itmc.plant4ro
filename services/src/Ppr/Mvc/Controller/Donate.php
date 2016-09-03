@@ -82,7 +82,7 @@ class Donate {
     /**
      * @param Application $app
      */
-    public function mobilpayClientToken(Application $app, Request $request) {
+        public function mobilpayClientToken(Application $app, Request $request) {
         // decode load to obtain information
         $load = $app->decode($request->get('load'));
         $orderId = $this->uuid();
@@ -143,7 +143,11 @@ class Donate {
         $load = $app->decode($request->get('load'));
         // create sale data
         $sale = [
-            'amount' => $load->donation->totalEur,
+            'amount' => ($load->donation->method === 'braintree-usd') ? $load->donation->totalUsd : $load->donation->totalEur,
+            'merchantAccountId' => $app->getConfig(
+                'payment.braintree.merchantAccountId.' .
+                (($load->donation->method === 'braintree-usd') ? 'usd' : 'eur')
+            ),
             'orderId' => $this->uuid(),
             'paymentMethodNonce' => $load->donation->braintree->nonce,
             'options' => [
@@ -551,9 +555,13 @@ class Donate {
             }
             // create donator (for the 1st time)
             $donation = new Model\Donation([
-                'donation' => ($load->donation->method=== 'braintree') ? $load->donation->totalEur : $load->donation->total,
-                'currency' => ($load->donation->method=== 'braintree') ? 'EUR' : 'RON',
-                'exchange' => ($load->donation->method=== 'braintree') ? $load->donation->exchange : '',
+                'donation' => (strpos($load->donation->method, 'braintree') !== FALSE) ?
+                    (($load->donation->method === 'braintree-usd') ? $load->donation->totalUsd : $load->donation->totalEur) :
+                    $load->donation->total,
+                'currency' => (strpos($load->donation->method, 'braintree') !== FALSE) ?
+                    (($load->donation->method === 'braintree-usd') ? 'USD' : 'EUR') : 'RON',
+                'exchange' => (strpos($load->donation->method, 'braintree') !== FALSE) ?
+                    (($load->donation->method === 'braintree-usd') ? $load->donation->exchangeUsd : $load->donation->exchangeEur) : '',
                 'trees' => $load->trees,
                 'uuid' => $uuid,
                 'status' => Model\Donation::STATUS_PENDING,

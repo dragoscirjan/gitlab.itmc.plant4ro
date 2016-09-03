@@ -121,9 +121,10 @@ template
 										| Veti fi taxat de catre procesatorul de plati suma de #[strong ${paymentModel.donation.total} RON]
 										br
 										| Va rugam verificati daca dispuneti cu un card compatibil cu procesatorul de plati.
-									img.img-responsive(src="https://s.emag.ro/layout/ro/images/cart/credit_cards2.jpg")
-						.radio.panel.payment__option(class.bind="(!model.donation.exchange) ? 'hide' : ''")
-							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree', checked.bind='model.donation.method')
+									img.img-responsive(src="/dist/assets/img/credit-card-mobilpay.png")
+									//- img.img-responsive(src="https://s.emag.ro/layout/ro/images/cart/credit_cards2.jpg")
+						.radio.panel.payment__option(class.bind="(!model.donation.exchangeEur) ? 'hide' : ''")
+							input#payMethodPP.sr-only(type='radio', name="payMethod", value='braintree-eur', checked.bind='model.donation.method')
 							label(for="payMethodPP", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethodPPDet", aria-expanded="false") 
 								strong Credit/Debit Card folosind 
 									a(href="https://www.braintreepayments.com/", target="_blank") Braintree (Paypal)
@@ -131,8 +132,8 @@ template
 								.payment__description.payment__card
 									p
 										| Donatie: ${paymentModel.donation.totalEur} EUR 
-										i (curs valutar 1 EUR = ${model.donation.exchange} RON)
-									img.img-responsive(src="http://www.turnersworkshop.co.uk/paypal.png")
+										i (curs valutar 1 EUR = ${model.donation.exchangeEur} RON)
+									img.img-responsive(src="/dist/assets/img/credit-card-braintree.png")
 						.radio.panel.payment__option(class.bind="(!model.donation.exchangeUsd) ? 'hide' : ''")
 							input#payMethodPPUsd.sr-only(type='radio', name="payMethod", value='braintree-usd', checked.bind='model.donation.method')
 							label(for="payMethodPPUsd", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethodPPUsdDet", aria-expanded="false") 
@@ -143,22 +144,22 @@ template
 									p
 										| Donatie: ${paymentModel.donation.totalUsd} USD 
 										i (curs valutar 1 USD = ${model.donation.exchangeUsd} RON)
-									img.img-responsive(src="http://www.turnersworkshop.co.uk/paypal.png")
-						.radio.panel.payment__option(class.bind="(!morePaymentOptions) ? 'hide' : ''")
-							input#payMethoTBRon.sr-only(type='radio', name="payMethod", value='transfer-ron', checked.bind='model.donation.method')
-							label(for="payMethoTBRon", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethoTBRonDet", aria-expanded="false") 
-								strong Ordin de plata (RON) 
-								| in contul 
-								strong RO31RZBR0000060016840199
-							#payMethoTBRonDet.collapse(role="tabpanel")
-								.payment__description
-									.row
-										.col-sm-6
-											.input-group
-												.input-group-addon RON
-												input.form-control(type=text, placeholder="${paymentModel.donation.total}")
-										.col-sm-6
-											input.form-control(type=text, placeholder="Numarul tranzactiei ...")
+									img.img-responsive(src="/dist/assets/img/credit-card-braintree.png")
+						//- .radio.panel.payment__option(class.bind="(!morePaymentOptions) ? 'hide' : ''")
+						//- 	input#payMethoTBRon.sr-only(type='radio', name="payMethod", value='transfer-ron', checked.bind='model.donation.method')
+						//- 	label(for="payMethoTBRon", role="button", data-toggle="collapse", data-parent="#accordion", data-target="#payMethoTBRonDet", aria-expanded="false") 
+						//- 		strong Ordin de plata (RON) 
+						//- 		| in contul 
+						//- 		strong RO31RZBR0000060016840199
+						//- 	#payMethoTBRonDet.collapse(role="tabpanel")
+						//- 		.payment__description
+						//- 			.row
+						//- 				.col-sm-6
+						//- 					.input-group
+						//- 						.input-group-addon RON
+						//- 						input.form-control(type=text, placeholder="${paymentModel.donation.total}")
+						//- 				.col-sm-6
+						//- 					input.form-control(type=text, placeholder="Numarul tranzactiei ...")
 						//- a#showMorePayOptions(click.delegate="showBankTransfer()", href="javascript:;") Mai multe optiuni ... 
 					hr
 					.form-group
