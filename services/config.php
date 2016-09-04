@@ -100,6 +100,16 @@ return [
             'servicesBase' => '//stage.planteazapentruromania.ro/services/index.php/'
         ],
         'payment' => [
+            'braintree' => [
+                'environment' =>'production',
+                'merchantId' => 'cqgpm48h5hgkhvb4',
+                'publicKey' => '5jc7b3v3ywc9tc4f',
+                'privateKey' => '3c5ce5385f63843dd8d41f1656f668d5',
+                'merchantAccountId' => [
+                    'eur' => 'prieteniipadurilordinromaniaEUR',
+                    'usd' => 'prieteniipadurilordinromaniaUSD'
+                ]
+            ],
             'mobilpay' => [
                 'paymentUrl' => 'https://secure.mobilpay.ro',
                 'certPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
