@@ -54,6 +54,7 @@ esac
 
 echo "$*" | grep +snapshot && {
     export DEBUG="dalia:*"
+    sed -e "s/http:\/\/planteazapentruromania.local/$URL/g" -i .gulp/tasks/snapshot.js
     gulp snapshot
 }
 
