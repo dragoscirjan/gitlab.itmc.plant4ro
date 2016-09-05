@@ -20,8 +20,8 @@ return [
                     'port' => 587,
                     'connection_class' => 'plain',
                     'connection_config' => [
-                        'username' => 'dr@itmcd.ro',
-                        'password' => 'strumph##',
+                        'username' => 'debug@prieteniipadurilor.ro',
+                        'password' => 'F4s95RDEUVz6',
                         'ssl' => 'tls',
                     ],
                 ],
@@ -34,15 +34,17 @@ return [
         ],
         'logger' => [
             ['stream', null, ['stream' => __DIR__ . '/.log']],
-//            ['mail', null, ['dragos.cirjan+debug-ppr@itmediaconnect.ro', [
-//                'name'              => 'localhost.localdomain',
-//                'host'              => '127.0.0.1',
-//                'connection_class'  => 'login',
-//                'connection_config' => array(
-//                    'username' => 'user',
-//                    'password' => 'pass',
-//                ),
-//            ]]]
+            ['mail', null, ['suport+debug-ppr@itmediaconnect.ro', [
+                'name' => 'mail.itmediaconnect.ro',
+                'host' => 'mail.itmediaconnect.ro',
+                'port' => 587,
+                'connection_class'  => 'plain',
+                'connection_config' => [
+                    'username' => 'debug@prieteniipadurilor.ro',
+                    'password' => 'F4s95RDEUVz6',
+                    'ssl' => 'tls',
+                ],
+            ]]]
         ],
         'payment' => [
             'braintree' => [
@@ -125,6 +127,10 @@ return [
             'password' => 'plant4roma',
             'host' => 'localhost',
             'driver' => 'pdo_mysql',
+        ],
+        'contact' => [
+            'from' => ['noreply@prieteniipadurilor.ro', 'Planteaza pentru Romania Contact'],
+            'to' => ['office@prieteniipadurilor.ro', 'Prietenii Padurilor']
         ],
         'js' => [
             'servicesBase' => '//planteazapentruromania.ro/services/index.php/'
