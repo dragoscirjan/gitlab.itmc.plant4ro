@@ -52,6 +52,11 @@ case $ENV in
     'production') gulp bundle;;
 esac
 
+echo "$*" | grep +snapshot && {
+    export DEBUG="dalia:*"
+    gulp snapshot
+}
+
 if [ "$ENV" != "production" ]; then
     cat > robots.txt <<ROBOTS
 User-agent: *
