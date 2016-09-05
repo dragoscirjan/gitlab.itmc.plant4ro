@@ -1,0 +1,277 @@
+<!DOCTYPE html><html lang="ro"><head>
+    <title>Planteaza | Planteaza pentru Romania</title>
+    <link rel="stylesheet" href="/jspm_packages/github/twbs/bootstrap@3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/jspm_packages/npm/font-awesome@4.5.0/css/font-awesome.min.css">
+    <link href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700&amp;subset=latin,latin-ext" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/3rdpt/owl.carousel/owl-carousel/owl.carousel.css">
+    <!-- <link rel="stylesheet" href="3rdpt/owl.carousel/owl-carousel/owl.theme.css"> -->
+    <link rel="stylesheet" href="/3rdpt/owl.carousel/owl-carousel/owl.transitions.css">
+    <link rel="stylesheet" href="/3rdpt/jquery-shop-locator/src/style/css/pluginStyle.css">
+
+    <link rel="stylesheet" href="/dist/assets/styles/styles.css">
+
+    <meta name="description" content="Planteaza pentru Romania :: O lume mai bunÄƒ poate incepe aici si acum, cu tine! Fii si tu Prietenul Padurilor din RomÃ¢nia!">
+<style type="text/css">.aurelia-hide { display:none !important; }</style><script type="text/javascript" async="" src="https://www.gstatic.com/recaptcha/api2/r20160830132105/recaptcha__ro.js"></script><script src="https://www.google.com/recaptcha/api.js?onload=setRecaptchaReady&amp;render=explicit&amp;hl=ro" async="" defer=""></script></head>
+
+<body aurelia-app="main"><!--<view>-->
+  <div id="wrapper" class.bind="'au-animate wrapper-' + router.activeRoute.name" class="au-target au-animate wrapper-plant" au-target-id="11">
+    
+    <header-elem router.bind="router" class="au-target" au-target-id="12"><!--<view>-->
+  <header id="header">
+    <nav role="navigation" class="navbar">
+      <div class="navbar-header">
+        <button type="button" class.bind="router.isNavigating ? 'navbar-toggler spinner' : 'navbar-toggler'" click.delegate="menuToggle" class="au-target navbar-toggler" au-target-id="1">              <span class="icon-bar">           </span><span class="icon-bar">            </span><span class="icon-bar"></span></button><a href.bind="router.navigation[0].href" class="navbar-brand au-target" au-target-id="2" href="/">           <img src="/dist/assets/img/logo.png" class="au-target" au-target-id="3" alt="Planteaza pentru Romania Logo"></a>
+        <div class="navbar-wrapper">
+          <ul class="nav navbar-nav">
+            <!--<view>--><li class="au-target" au-target-id="4"><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href" class="au-target" au-target-id="5" href="/">Acasa</a>
+            </li><!--</view>--><!--<view>--><li class="au-target" au-target-id="4"><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href" class="au-target" au-target-id="5" href="/despre-proiect">Despre Proiect</a>
+            </li><!--</view>--><!--<view>--><li class="au-target" au-target-id="4"><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href" class="au-target" au-target-id="5" href="/parteneri">Parteneri</a>
+            </li><!--</view>--><!--<view>--><li class="au-target" au-target-id="4"><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href" class="au-target" au-target-id="5" href="/implica-te">Implica-te</a>
+            </li><!--</view>--><!--<view>--><li class="au-target active" au-target-id="4"><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href" class="au-target" au-target-id="5" href="/planteaza">Planteaza</a>
+            </li><!--</view>--><!--<view>--><li class="au-target" au-target-id="4"><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href" class="au-target" au-target-id="5" href="/intrebari">Intrebari</a>
+            </li><!--</view>--><!--<view>--><li class="au-target" au-target-id="4"><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href" class="au-target" au-target-id="5" href="/blog">Stiri</a>
+            </li><!--</view>--><!--<view>--><li class="au-target" au-target-id="4"><a data-toggle="collapse" data-target="#skeleton-navigation-navbar-collapse.in" href.bind="row.href" class="au-target" au-target-id="5" href="/contact">Contact</a>
+            </li><!--</view>--><!--anchor-->
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+<!--</view>--></header-elem>
+    <main id="main">
+      <router-view class="au-target" au-target-id="13"><!--<view>-->
+  <section class="au-animate">
+    <div class="container">
+      <h1 class="page-title">Planteaza!</h1>
+      <div class="tabs">
+        <ul role="tablist" class="nav nav-tabs">
+          <li role="presentation" class.bind="isCorporate ? '' : 'active'" class="au-target active" au-target-id="16"><a href="#individualDonations" role="tab" aria-controls="individualDonations" data-toggle="tab" click.trigger="toggleCorporate()" class="au-target" au-target-id="17">Donatii individuale</a></li>
+          <li role="presentation" class.bind="isCorporate ? 'active' : ''" class="au-target" au-target-id="18"><a href="#corporateDonations" role="tab" aria-controls="corporateDonations" data-toggle="tab" click.trigger="toggleCorporate()" class="au-target" au-target-id="19">Donatii corporate</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="individualDonations" role="tabpanel" class.bind="'tab-pane ' + (isCorporate ? '' : 'active')" class="au-target tab-pane active" au-target-id="20">
+            <p><strong>Pentru fiecare donatie de 5 ron </strong>vom planta un puiet in numele tau, 
+              urmand sa iti comunicam locul si data plantarii. Astfel creem legatura intre tine si padure.
+            </p>
+            <p><strong>Planteaza pentru Romania!</strong></p>
+          </div>
+          <div id="corporateDonations" role="tabpanel" class.bind="'tab-pane ' + (isCorporate ? 'active' : '')" class="au-target tab-pane" au-target-id="21">
+            <p><strong>Pentru fiecare donatie de 5 ron </strong>vom planta un puiet in numele tau, 
+              urmand sa iti comunicam locul si data plantarii. Astfel creem legatura intre tine si padure.
+            </p>
+            <p><strong>Planteaza pentru Romania!</strong></p>
+          </div>
+        </div>
+        <form id="donationsForm" action="" validate.bind="validation" submit.delegate="proceedToPayment()" data-parsley-excluded="input[type=button], input[type=submit], input[type=reset], input[type=hidden], [disabled], :hidden, #anonymous, #total" class="form--plant au-target" au-target-id="22" novalidate="">
+          <div class.bind="'form-group' + (isCorporate ? '' : ' sr-only')" class="au-target form-group sr-only" au-target-id="23">
+            <div class="form-group">
+              <label for="company">Companie<span class="h-text-primary">&nbsp;*</span></label>
+              <div class="form-wrap">
+                <input id="company" type="text" value.bind="model.company" required.bind="isCorporate" data-parsley-minlength.bind="isCorporate ? 6 : 0" class="form-control au-target" au-target-id="24" data-parsley-minlength="0">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="vatNumber">Numar de inregistrare<span class="h-text-primary">&nbsp;*</span></label>
+              <div class="form-wrap">
+                <input id="vatNumber" type="text" value.bind="model.vat" required.bind="isCorporate" data-parsley-pattern.bind="isCorporate ? '(RO)?\\d{}' : '.*'" class="form-control au-target" au-target-id="25" data-parsley-pattern=".*">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="name"><span innerhtml.bind="isCorporate ? 'Persoana de contact' : 'Nume'" class="au-target" au-target-id="26">Nume</span><span class="h-text-primary">&nbsp;*</span></label>
+            <div class="form-wrap">
+              <input id="name" type="text" value.bind="model.name" required="" data-parsley-minlength="3" class="form-control au-target" au-target-id="27">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email<span class="h-text-primary">&nbsp;*</span></label>
+            <div class="form-wrap">
+              <input id="email" type="email" value.bind="model.email" required="" data-parsley-type="email" class="form-control au-target" au-target-id="28">
+            </div>
+          </div>
+          <div class.bind="'form-group' + (isCorporate ? '' : ' sr-only')" class="au-target form-group sr-only" au-target-id="29">
+            <div class="form-group">
+              <label for="phone">Telefon</label>
+              <div class="form-wrap">
+                <input id="phone" type="text" value.bind="model.phone" required.bind="isCorporate" data-parsley-pattern.bind="isCorporate ? '(\\+|00)?\\d{5,}' : '.*'" class="form-control au-target" au-target-id="30" data-parsley-pattern=".*">
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="treesQty">Cati copaci vrei sa plantezi?<span class="h-text-primary">&nbsp;*</span></label>
+            <div class="slider-wrapper"><span id="treesQtyVal" class="slider-value">10</span>
+              <div class="slider slider-horizontal" id=""><div class="slider-track"><div class="slider-track-low" style="left: 0px; width: 0%;"></div><div class="slider-selection" style="left: 0%; width: 1.2658227848101267%;"></div><div class="slider-track-high" style="right: 0px; width: 98.73417721518987%;"></div><div class="slider-handle min-slider-handle round" role="slider" aria-valuemin="5" aria-valuemax="400" aria-valuenow="10" tabindex="0" style="left: 1.2658227848101267%;"></div><div class="slider-handle max-slider-handle round hide" role="slider" aria-valuemin="5" aria-valuemax="400" aria-valuenow="5" tabindex="0" style="left: 0%;"></div></div><div class="tooltip tooltip-main top hide" role="presentation" style="left: 1.2658227848101267%; margin-left: -15px;"><div class="tooltip-arrow"></div><div class="tooltip-inner">10</div></div><div class="tooltip tooltip-min top hide" role="presentation"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div><div class="tooltip tooltip-max bottom hide" role="presentation" style="top: 18px;"><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div></div><input id="treesQty" type="text" data-slider-min="5" data-slider-step="1" value.bind="model.trees" data-slider-tooltip="hide" class="au-target" au-target-id="32" data-slider-max="400" data-slider-value="10" style="display: none;" data-value="10" value="10">
+            </div>
+          </div>
+          <div class="form-group h-margin-top-40 h-margin-bottom-40">
+            <label for="total">Total de plata</label>
+            <div class="form-wrap">
+              <div class="input-group">
+                <div class="input-group-addon">RON</div>
+                <input id="total" type="text" readonly="readonly" class="form-control au-target" au-target-id="33">
+              </div>
+            </div>
+          </div>
+          <p>Dragi prieteni ai padurilor, pentru donatii mai mari de 2000 RON va rugam sa ne <a href="/#/contact">contactati</a></p>
+          <hr>
+          <p class="h-margin-bottom-20 h-text-primary"><strong>Modalitatea de donatie</strong></p>
+          <div id="accordion" role="tablist" class="form-group payment">
+            <div class="radio panel payment__option">
+              <input id="payMethodM" type="radio" name="payMethod" value="mobilpay" checked.bind="model.donation.method" class="sr-only au-target" au-target-id="35" data-parsley-multiple="payMethod">
+              <label for="payMethodM" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#payMethodMDet" aria-expanded="true"> <strong>Credit/Debit Card folosind <a href="http://mobilpay.ro/" target="_blank">MobilPay</a></strong></label>
+              <div id="payMethodMDet" role="tabpanel" class="collapse in">
+                <div class="payment__description payment__card">
+                  <p>Veti fi taxat de catre procesatorul de plati suma de <strong>50 RON</strong><br>Va rugam verificati daca dispuneti cu un card compatibil cu procesatorul de plati.</p><img src="/dist/assets/img/credit-card-mobilpay.png" class="img-responsive">
+                </div>
+              </div>
+            </div>
+            <div class.bind="(!model.donation.exchangeEur) ? 'hide' : ''" class="radio panel payment__option au-target" au-target-id="37">
+              <input id="payMethodPP" type="radio" name="payMethod" value="braintree-eur" checked.bind="model.donation.method" class="sr-only au-target" au-target-id="38" data-parsley-multiple="payMethod">
+              <label for="payMethodPP" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#payMethodPPDet" aria-expanded="false"> <strong>Credit/Debit Card folosind <a href="https://www.braintreepayments.com/" target="_blank">Braintree (Paypal)</a></strong></label>
+              <div id="payMethodPPDet" role="tabpanel" class="collapse">
+                <div class="payment__description payment__card">
+                  <p>Donatie: 11.24 EUR <i>(curs valutar 1 EUR = 4.4469 RON)</i></p><img src="/dist/assets/img/credit-card-braintree.png" class="img-responsive">
+                </div>
+              </div>
+            </div>
+            <div class.bind="(!model.donation.exchangeUsd) ? 'hide' : ''" class="radio panel payment__option au-target" au-target-id="41">
+              <input id="payMethodPPUsd" type="radio" name="payMethod" value="braintree-usd" checked.bind="model.donation.method" class="sr-only au-target" au-target-id="42" data-parsley-multiple="payMethod">
+              <label for="payMethodPPUsd" role="button" data-toggle="collapse" data-parent="#accordion" data-target="#payMethodPPUsdDet" aria-expanded="false"> <strong>Credit/Debit Card folosind <a href="https://www.braintreepayments.com/" target="_blank">Braintree (Paypal)</a></strong></label>
+              <div id="payMethodPPUsdDet" role="tabpanel" class="collapse">
+                <div class="payment__description payment__card">
+                  <p>Donatie: 12.55 USD <i>(curs valutar 1 USD = 3.9822 RON)</i></p><img src="/dist/assets/img/credit-card-braintree.png" class="img-responsive">
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="form-group">
+            <div class="checkbox form-wrap">
+              <div>
+                <input id="anonymous" type="checkbox" checked.bind="anonymous" class="sr-only au-target" au-target-id="45">
+                <label for="anonymous">Doresc sa raman anonim (Numele tau nu va aparea in nicio zona a site-ului)</label>
+              </div>
+            </div>
+            <div class="checkbox form-wrap">
+              <div>
+                <input id="agreement" type="checkbox" checked.bind="agreement" required="" class="sr-only au-target" au-target-id="46" data-parsley-multiple="agreement">
+                <label for="agreement">Sunt de acord cu <a route-href="route:terms" class="au-target" au-target-id="47" href="/termeni-si-conditii">termenii si conditiile</a></label>
+              </div>
+            </div>
+          </div>
+          <div class="form-group h-margin-top-40 h-margin-bottom-40">
+            <div class="form-wrap">
+              <div>
+                <recaptcha sitekey="6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4" theme="light" callback="toggleRecaptchaValidate" class="au-target" au-target-id="48"><div><div style="width: 302px; height: 422px; position: relative;"><div style="width: 302px; height: 422px; position: absolute;"><iframe src="https://www.google.com/recaptcha/api/fallback?k=6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4&amp;hl=ro&amp;v=r20160830132105&amp;t=1&amp;ff=true" frameborder="0" scrolling="no" style="width: 302px; height: 422px; border-style: none;"></iframe></div></div><div style="border-style: none; bottom: 12px; left: 25px; margin: 0px; padding: 0px; right: 25px; background: #f9f9f9; border: 1px solid #c1c1c1; border-radius: 3px; height: 60px; width: 300px;"><textarea id="g-recaptcha-response" name="g-recaptcha-response" class="g-recaptcha-response" style="width: 250px; height: 40px; border: 1px solid #c1c1c1; margin: 10px 25px; padding: 0px; resize: none; "></textarea></div></div></recaptcha>
+                <input id="rc" type="checkbox" checked.bind="notRobot" required="" class="sr-only au-target" au-target-id="49" data-parsley-multiple="rc">
+              </div>
+            </div>
+          </div>
+          <div class="form-group text-center">
+            <button type="submit" class="btn btn--secondary">Planteaza</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+  <div id="braintree-modal" tabindex="-1" role="dialog" class="modal modal-braintree fade"> 
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header"><img src="/dist/assets/img/braintree-logo.jpg" alt="Braintree - A Paypal Company Logo"></div>
+        <div class="modal-body">
+          <form id="checkout" method="post" action="/services/index.php/donate/braintree/pay">
+            <div id="braintree-payment-form"></div>
+            <input type="submit" value="Planteaza" class="sr-only">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" data-dismiss="modal" class="btn btn--sm btn--neutral">Renunta</button>
+          <button type="button" class="btn btn--sm btn--secondary">Doneaza</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="mobilpay-modal" tabindex="-1" role="dialog" class="modal modal-mobilpay fade"> 
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header"><img src="/dist/assets/img/mobilpay-logo.png" alt="Braintree - A Paypal Company Logo" width="100%"></div>
+        <div class="modal-body">
+          <div class="splash splash--sm center-block">
+            <div class="splash__circle"></div>
+            <div class="splash__mask">
+              <div class="splash__line"></div>
+            </div><img src="/dist/assets/img/loader-logo.png" alt="" class="splash__logo">
+          </div>
+          <form method="post" action.bind="mobilpay.url" class="au-target" au-target-id="50" action="">
+            <input type="hidden" name="env_key" value.bind="mobilpay.env_key" class="au-target" au-target-id="51">
+            <input type="hidden" name="data" value.bind="mobilpay.data" class="au-target" au-target-id="52">
+          </form>
+        </div>
+        <div class="modal-footer">
+          <p>Vei redirectat catre pagina de plati securizata a <a href="http://mobilpay.ro" target="_blank">mobilpay.ro</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="donation-error-modal" tabindex="-1" role="dialog" class="modal modal-msg fade"> 
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button data-dismiss="modal" aria-label="Close" data-resolve="close" class="close"><span aria-hidden="true">×</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-icon"><i class="fa fa-exclamation-triangle"></i></div>
+          <div class="modal-body-content">
+            <h4 class="text-danger">Tranzactia dumneavoastra a esuat cu urmatorul mesaj:</h4>
+            <p> <i></i></p>
+            <p>
+               
+              Pentru mai multe detalii, va rugam sa ne contactati la adresa de mail <a href="mailto:office@prieteniipadurilor.ro">office@prieteniipadurilor.ro</a>.
+            </p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" class="btn btn--sm btn--neutral h-margin-top-30">Mai incearca o data</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--</view>--></router-view>
+    </main>
+    
+    <footer-elem router.bind="router" class="au-target" au-target-id="14"><!--<view>-->
+  <footer id="footer">
+    <div class="footer__info">
+      <div class="footer__col">
+        <div class="footer__details">
+          <div class="footer__contact">
+            <p> <a href="http://prieteniipadurilor.ro" target="_blank" title="Un proiect al asociatiei Prietenii Padurilor din Romania">Prietenii Padurilor din Romania</a></p>
+            <p><a href="mailto:office@prieteniipadurilor.ro">office@prieteniipadurilor.ro</a></p>
+          </div>
+          <ul class="footer__social">
+            <li><a href="https://www.facebook.com/Prietenii.Padurilor"><i class="fa fa-fw fa-facebook"></i></a></li>
+            <li><a href="https://www.instagram.com/prieteniipadurilor"><i class="fa fa-fw fa-instagram"></i></a></li>
+            <li><a href="https://www.youtube.com/channel/UCB8V7u8wiB3GdlbeN54Mszg"><i class="fa fa-fw fa-youtube"></i></a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer__col">
+        <ul class="footer__menu">
+          <li><a route-href="route: terms" class="au-target" au-target-id="8" href="/termeni-si-conditii">Termeni si Conditii</a></li>
+          <li><a route-href="route: terms-data" class="au-target" au-target-id="9" href="/protectia-datelor">Protectia Datelor</a></li>
+          <li><a route-href="route: terms-cookie" class="au-target" au-target-id="10" href="/politica-cookieurilor">Politica Cookie-urilor</a></li>
+          <li><a href="http://www.anpc.gov.ro/" target="_blank">Autoritatea Nationala pentru Protectia Consumatorilor</a></li>
+        </ul>
+      </div>
+      <div class="footer__col">
+        <p>
+           
+          Copyright © 2016 <a href="http://prieteniipadurilor.ro" target="_blank">Prietenii Padurilor</a>
+        </p>
+        <p>Dezvoltat de <a href="http://itmediaconnect.ro" target="_blank" title="Developer, Maintainer, Hoster">IT Media Connect</a></p>
+      </div>
+    </div>
+  </footer>
+<!--</view>--></footer-elem>
+  </div>
+<!--</view>--></body></html>

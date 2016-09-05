@@ -39,8 +39,7 @@ template
                   a(href="${item.url}", target="_blank")
                     img(src="${item.logo}", alt="")
                 .box__text(class.bind="item.logo ? 'hide' : ''")
-                  h4.box__title 
-                    a(href="${item.url}", target="_blank") ${item.unitName}
+                  h4.box__title  ${item.unitName}
                   p ${item.treesSum}  in 2016/04
         #institutions.tab-pane(role="tabpanel")
           .row.l-flex.l-flex--lrg

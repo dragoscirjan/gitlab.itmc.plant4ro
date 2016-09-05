@@ -63,7 +63,7 @@ gulp.task('snapshot', function() {
             // sitemapOptions.urls = urls.map(url => { return { url: url.replace(/^http(s?):\/\/[^\/]*/, ''), changefreq: 'weekly', priority: 0.8 } });
             sitemapOptions.urls = urls.map(function(url) { return { url: url, changefreq: 'weekly', priority: 0.8 } });
             var sitemap = sm.createSitemap(sitemapOptions);
-            fs.writeFileSync(path.join(paths.root, '../sitemap.xml'), sitemap.toString());
+            fs.writeFileSync(path.join(paths.root, 'sitemap.xml'), sitemap.toString());
             console.log(JSON.stringify(urls), 'have been indexed');
 
             return urls;

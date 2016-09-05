@@ -26,9 +26,9 @@ export class App {
      */
     configureRouter(config, router) {
         config.title = 'Planteaza pentru Romania';
-        // if (window.location.hostname !== 'localhost' && window.location.port !== 9000) {
-        //     config.options.pushState = true;
-        // }
+        if (window.location.hostname !== 'localhost' && window.location.port !== 9000) {
+            config.options.pushState = true;
+        }
         config.map([
             { route: ['', 'acasa'],           name: 'hp',        moduleId: 'index',           nav: true,   title: 'Acasa' },
             { route: 'despre-proiect',        name: 'about',     moduleId: 'about',           nav: true,   title: 'Despre Proiect' },
@@ -39,9 +39,13 @@ export class App {
             { route: 'blog',                  name: 'blog',      moduleId: 'blog',            nav: true,   title: 'Stiri' },
             { route: 'contact',               name: 'contact',   moduleId: 'contact',         nav: true,   title: 'Contact' },
 
-            { route: 'planteaza/:t/esuat',    name: 'plant',     moduleId: 'donate',          nav: false,  title: 'Transactie Esuata' },
+            { route: 'planteaza/:t/esuat',    name: 'plant-d',   moduleId: 'donate',          nav: false,  title: 'Transactie Esuata' },
             { route: 'diploma/:id/:t/:mode',  name: 'diploma',   moduleId: 'diploma',         nav: false,  title: 'Ai Plantat' },
-            { route: 'termeni-si-conditii',   name: 'terms',     moduleId: 'terms-router',    nav: false,  title: 'Termeni si Conditii' }
+
+
+            { route: 'termeni-si-conditii',   name: 'terms',     moduleId: 'terms-router',    nav: false,  title: 'Termeni si Conditii' },
+                { route: 'protectia-datelor',     name: 'terms-data',    moduleId: 'terms/data',    nav: false,  title: 'Protectia Datelor' },
+                { route: 'politica-cookieurilor', name: 'terms-cookie',  moduleId: 'terms/cookie',  nav: false,  title: 'Politica Cookie-uri' }
         ]);
 
         this.router = router;

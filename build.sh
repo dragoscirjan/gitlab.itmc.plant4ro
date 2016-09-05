@@ -52,6 +52,13 @@ case $ENV in
     'production') gulp bundle;;
 esac
 
+if [ "$ENV" != "production" ]; then
+    cat > robots.txt <<ROBOTS
+User-agent: *
+Disallow: /
+ROBOTS
+fi
+
 chmod -R 777 services/cache services/src/Ppr/Mvc/Model/Proxy
 
 touch services/.log

@@ -12,3 +12,4 @@ template(bindable='router')
 					ul.nav.navbar-nav
 						li(repeat.for='row of router.navigation', class="${row.isActive ? 'active' : ''}")
 							a(data-toggle='collapse', data-target='#skeleton-navigation-navbar-collapse.in', href.bind='row.href') ${row.title}
+							//- a(data-toggle='collapse', data-target='#skeleton-navigation-navbar-collapse.in', route-href="route.bind: row.route") ${row.title}
