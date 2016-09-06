@@ -614,11 +614,16 @@ class Donate {
 //    }
 
     /**
+     * @param Application $app
      * @return string
      */
-    private function uuid() {
+    private function uuid(Application $app) {
         srand((double) microtime() * 1000000);
-        return uniqid('PPR' . rand(), true);
+        $prefix = 'PPR';
+        if ($app->getEnv() != Application::ENV_PRODUCT) {
+            $prefix .= ':' . substr(strtoupper($app->getEnv()), 0, 3);
+        }
+        return uniqid($prefix . rand(), true);
     }
 
 //    private function test() {
