@@ -21,7 +21,7 @@ return [
                     'connection_class' => 'plain',
                     'connection_config' => [
                         'username' => 'debug@prieteniipadurilor.ro',
-                        'password' => 'F4s95RDEUVz6',
+                        'password' => 'qGYp998cI7IW',
                         'ssl' => 'tls',
                     ],
                 ],
@@ -34,17 +34,28 @@ return [
         ],
         'logger' => [
             ['stream', null, ['stream' => __DIR__ . '/.log']],
-            ['mail', null, ['suport+debug-ppr@itmediaconnect.ro', [
-                'name' => 'mail.itmediaconnect.ro',
-                'host' => 'mail.itmediaconnect.ro',
-                'port' => 587,
-                'connection_class'  => 'plain',
-                'connection_config' => [
-                    'username' => 'debug@prieteniipadurilor.ro',
-                    'password' => 'F4s95RDEUVz6',
-                    'ssl' => 'tls',
+            ['mail', \Zend\Log\Logger::NOTICE, [
+                'mail' => [
+                    'subject_prepend_text' => 'PLANT4RO/DEBUG ',
+                    'subject' => 'PLANT4RO/DEBUG ',
+                    'from' => 'debug@prieteniipadurilor.ro',
+                    'to' => 'suport+debug-ppr@itmediaconnect.ro',
                 ],
-            ]]]
+                'transport' => [
+                    'type' => 'smtp',
+                    'options' => [
+                        'name' => 'mail.itmediaconnect.ro',
+                        'host' => 'mail.itmediaconnect.ro',
+                        'port' => 587,
+                        'connection_class' => 'plain',
+                        'connection_config' => [
+                            'username' => 'debug@prieteniipadurilor.ro',
+                            'password' => 'qGYp998cI7IW',
+                            'ssl' => 'tls',
+                        ],
+                    ],
+                ],
+            ]]
         ],
         'payment' => [
             'braintree' => [

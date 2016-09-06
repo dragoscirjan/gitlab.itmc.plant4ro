@@ -94,16 +94,34 @@ export class Component extends ViewModelAbstract {
      */
     sendEmail() {
         if (grecaptcha.getResponse().length > 0 && this.formInstance.isValid()) {
-            this.http.fetch('contact', {
+            // this.http.fetch('contact', {
+            //     method: 'post',
+            //     body: json(this.model)
+            // }).then(response => response.json())
+            // .then((data) => {
+            //     if (data.error === 0) {
+            //         $('#message-box-success').modal('show');
+            //     } else {
+            //         $('#message-box-error').modal('show');
+            //     }
+            // });
+            $.ajax({
+                error: (jqXHR, status, reason) => {
+                    this.logger.warn('braintree:post:/ contact failed', jqXHR, status, reason);
+                },
+                data: this.model,
+                dataType: 'json',
                 method: 'post',
-                body: json(this.model)
-            }).then(response => response.json())
-            .then((data) => {
-                if (data.error === 0) {
-                    $('#message-box-success').modal('show');
-                } else {
-                    $('#message-box-error').modal('show');
-                }
+                success: (data) => {
+                    this.logger.debug('braintree:post:/ contact', data);
+                    if (data.error === 0) {
+                        $('#message-box-success').modal('show');
+                    } else {
+                        $('#message-box-error').modal('show');
+                        document.forms[0].reset();
+                    }
+                },
+                url: this.appConfig.getPhpUrl('contact')
             });
         }
     }

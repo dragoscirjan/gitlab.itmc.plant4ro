@@ -18,6 +18,7 @@ class Config {
      * @return Response
      */
     public function configJs(Application $app, Request $request) {
+
         ob_start();
 ?>
 /**
@@ -113,6 +114,9 @@ export class AppConfig {
     }
 }
 <?php
+
+        $app->getLogger()->warn('New config was generated for environment' . $app->getEnv());
+
         return new Response(
             ob_get_clean(),
             Response::HTTP_OK,

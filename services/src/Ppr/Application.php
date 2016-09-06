@@ -155,8 +155,10 @@ class Application extends \Silex\Application {
             $this['logger'] = new \Zend\Log\Logger;
 //            $this['logger']->addWriter(new \Zend\Log\Writer\Stream($this['path'] . '/.log2'));
             foreach ($this->getConfig('logger')->toArray() as $writer) {
+//                var_dump($writer);
                 call_user_func_array([$this['logger'], 'addWriter'], $writer);
             }
+//            var_dump($this['logger']->getWriters());
         }
         return $this['logger'];
     }
