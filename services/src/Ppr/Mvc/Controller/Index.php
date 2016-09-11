@@ -73,7 +73,7 @@ class Index {
                     'error' => 'Failed grabbing tree count',
                     'message' => $e->getMessage(),
                     'trace' => $e->getTraceAsString(),
-            ));
+            ), $app);
         }
     }
 
