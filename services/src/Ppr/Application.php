@@ -123,6 +123,9 @@ class Application extends \Silex\Application {
                throw new \Exception('Application has no database configured');
             }
 
+            /**
+             * @see http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/advanced-configuration.html
+             */
             if ($this['debug']) {
                 $cache = new \Doctrine\Common\Cache\ArrayCache;
 //                $cache = new \Doctrine\Common\Cache\FilesystemCache($this->getConfig('path') . '/cache');
@@ -138,6 +141,7 @@ class Application extends \Silex\Application {
                 $cache,
                 false
             );
+            $config->setAutoGenerateProxyClasses(true);
             $config->setProxyNamespace('Ppr\Mvc\Model\Proxy');
             $config->setMetadataCacheImpl($cache);
             $config->setQueryCacheImpl($cache);
