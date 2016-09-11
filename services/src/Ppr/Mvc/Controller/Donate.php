@@ -85,7 +85,7 @@ class Donate {
         public function mobilpayClientToken(Application $app, Request $request) {
         // decode load to obtain information
         $load = $app->decode($request->get('load'));
-        $orderId = $this->uuid();
+        $orderId = $this->uuid($app);
         try {
             // save donator
             $donator = $this->getDonatorByEmail($app, $load->email, $load);
@@ -148,7 +148,7 @@ class Donate {
                 'payment.braintree.merchantAccountId.' .
                 (($load->donation->method === 'braintree-usd') ? 'usd' : 'eur')
             ),
-            'orderId' => $this->uuid(),
+            'orderId' => $this->uuid($app),
             'paymentMethodNonce' => $load->donation->braintree->nonce,
             'options' => [
                 'submitForSettlement' => True
