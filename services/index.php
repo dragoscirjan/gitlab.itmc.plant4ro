@@ -37,4 +37,8 @@ $app->get('/partners/companies', '\Ppr\Mvc\Controller\Partners::companies');
 $app->get('/partners/donators', '\Ppr\Mvc\Controller\Partners::donators');
 $app->get('/partners/forestry-units', '\Ppr\Mvc\Controller\Partners::forestryUnits');
 
-$app->run();
+try {
+    $app->run();
+} catch (\Exception $e) {
+    $app->getLogger()->err($e->getMessage() . "\n<pre>" . $e->getTraceAsString() . '</pre>');
+}
