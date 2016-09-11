@@ -47,7 +47,7 @@ wget --no-check-certificate -q "$URL/services/index.php/config-js" -O src/lib/ap
 
 case $ENV in
     'development') gulp build;;
-    'testing') gulp bundle;;
+    'testing') gulp build;;
     'staging') gulp bundle;;
     'production') gulp bundle;;
 esac
