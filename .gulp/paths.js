@@ -49,6 +49,8 @@ module.exports = {
 
     output: appOutput,
 
+    snapshots: appRoot + 'snapshots',
+
     exportSrv: './export/',
 
     doc: './doc',

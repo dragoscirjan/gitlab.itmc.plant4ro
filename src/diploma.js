@@ -152,7 +152,7 @@ export class Component extends ViewModelAbstract {
             .catch(error => {
                 self.logger.warn('Failed sending email', error);
             })
-            .then(response => response.text())
+            .then(response => response.json())
             .then((data) => {
                 if (data.error === 0) {
                     $('#message-box-success').modal('show');

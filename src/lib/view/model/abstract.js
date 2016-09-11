@@ -37,6 +37,19 @@ export class ViewModelAbstract  {
         this.logger = LogManager.getLogger(`view-model-${this.routeConfig.name}`);
 
         this.routeConfig.navModel.router.activeRoute = this.routeConfig;
+
+        console.log(routeConfig, navigationInstruction);
+        if (typeof ga === 'function') {
+            let page = '/';
+            let title = routeConfig.title;
+            if (typeof navigationInstruction !== 'undefined') {
+                page = navigationInstruction.fragment;
+                title = navigationInstruction.config.title;
+            }
+            this.logger.debug(`Google Analytics Plugin Won't work. Tracking url '${page}' with title: '${title}'`);
+            ga('set', { page: page, title: title });
+    		ga('send', 'pageview');
+        }
     }
 
     /**

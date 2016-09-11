@@ -1,0 +1,13 @@
+# FallbackResource /index.html
+
+RewriteEngine on
+
+RewriteCond %{HTTP_USER_AGENT} (facebook|bot) [NC]
+# RewriteCond %{HTTP_USER_AGENT} (chrome) [NC]
+RewriteCond %{REQUEST_URI} !^/(3rdpt|blog|dist|snapshots)/
+RewriteRule ^ /snapshots/$1index.html [L]
+# RewriteRule ^ /snapshots/$1index.html [L,R=301]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.html [L]

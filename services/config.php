@@ -20,8 +20,8 @@ return [
                     'port' => 587,
                     'connection_class' => 'plain',
                     'connection_config' => [
-                        'username' => 'dr@itmcd.ro',
-                        'password' => 'strumph##',
+                        'username' => 'debug@prieteniipadurilor.ro',
+                        'password' => 'qGYp998cI7IW',
                         'ssl' => 'tls',
                     ],
                 ],
@@ -34,15 +34,28 @@ return [
         ],
         'logger' => [
             ['stream', null, ['stream' => __DIR__ . '/.log']],
-//            ['mail', null, ['dragos.cirjan+debug-ppr@itmediaconnect.ro', [
-//                'name'              => 'localhost.localdomain',
-//                'host'              => '127.0.0.1',
-//                'connection_class'  => 'login',
-//                'connection_config' => array(
-//                    'username' => 'user',
-//                    'password' => 'pass',
-//                ),
-//            ]]]
+            ['mail', \Zend\Log\Logger::NOTICE, [
+                'mail' => [
+                    'subject_prepend_text' => 'PLANT4RO/DEBUG ',
+                    'subject' => 'PLANT4RO/DEBUG ',
+                    'from' => 'debug@prieteniipadurilor.ro',
+                    'to' => 'suport+debug-ppr@itmediaconnect.ro',
+                ],
+                'transport' => [
+                    'type' => 'smtp',
+                    'options' => [
+                        'name' => 'mail.itmediaconnect.ro',
+                        'host' => 'mail.itmediaconnect.ro',
+                        'port' => 587,
+                        'connection_class' => 'plain',
+                        'connection_config' => [
+                            'username' => 'debug@prieteniipadurilor.ro',
+                            'password' => 'qGYp998cI7IW',
+                            'ssl' => 'tls',
+                        ],
+                    ],
+                ],
+            ]]
         ],
         'payment' => [
             'braintree' => [
@@ -50,10 +63,13 @@ return [
                 'merchantId' => '89pcx4ss3kz8x5q7',
                 'publicKey' => 'twp79qy2pg755nhz',
                 'privateKey' => '7c97f0a849a5cba4bbbc8ad9b2fe578f',
+                'merchantAccountId' => [
+                    'eur' => '89pcx4ss3kz8x5q7',
+                    'usd' => 'itmediaconnect'
+                ]
             ],
             'mobilpay' => [
                 'paymentUrl' => 'http://sandboxsecure.mobilpay.ro',
-//                'paymentUrl' => 'http://sandboxsecure.mobilpay.ro/card3',
                 'certPath' => __DIR__ . '/cert/sandbox.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
                 'keyPath' => __DIR__ . '/cert/sandbox.UQUX-6E8G-G8TG-B88U-N9UGprivate.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
@@ -81,12 +97,6 @@ return [
         'js' => [
             'servicesBase' => '//test.planteazapentruromania.ro/services/index.php/'
         ],
-//        'payment' => [
-//            'mobilpay' => [
-//                'confirmUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-//                'returnUrl' => 'https://test.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
-//            ]
-//        ],
         'pdf' => [
             'zoom' => '1.0325'
         ],
@@ -103,13 +113,21 @@ return [
             'servicesBase' => '//stage.planteazapentruromania.ro/services/index.php/'
         ],
         'payment' => [
+            'braintree' => [
+                'environment' =>'production',
+                'merchantId' => 'cqgpm48h5hgkhvb4',
+                'publicKey' => '5jc7b3v3ywc9tc4f',
+                'privateKey' => '3c5ce5385f63843dd8d41f1656f668d5',
+                'merchantAccountId' => [
+                    'eur' => 'prieteniipadurilordinromaniaEUR',
+                    'usd' => 'prieteniipadurilordinromaniaUSD'
+                ]
+            ],
             'mobilpay' => [
-                'paymentUrl' => 'http://secure.mobilpay.ro',
+                'paymentUrl' => 'https://secure.mobilpay.ro',
                 'certPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UG.public.cer',
                 'keyPath' => __DIR__ . '/cert/live.UQUX-6E8G-G8TG-B88U-N9UGprivate.key',
                 'signature' => 'UQUX-6E8G-G8TG-B88U-N9UG',
-//                'confirmUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-//                'returnUrl' => 'https://stage.planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
             ]
         ],
     ],
@@ -121,14 +139,12 @@ return [
             'host' => 'localhost',
             'driver' => 'pdo_mysql',
         ],
+        'contact' => [
+            'from' => ['noreply@prieteniipadurilor.ro', 'Planteaza pentru Romania Contact'],
+            'to' => ['office@prieteniipadurilor.ro', 'Prietenii Padurilor']
+        ],
         'js' => [
             'servicesBase' => '//planteazapentruromania.ro/services/index.php/'
         ],
-//        'payment' => [
-//            'mobilpay' => [
-//                'confirmUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/confirm',
-//                'returnUrl' => 'https://planteazapentruromania.ro/services/index.php/donate/mobilpay/%s/return',
-//            ]
-//        ],
     ],
 ];

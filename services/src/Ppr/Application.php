@@ -155,8 +155,10 @@ class Application extends \Silex\Application {
             $this['logger'] = new \Zend\Log\Logger;
 //            $this['logger']->addWriter(new \Zend\Log\Writer\Stream($this['path'] . '/.log2'));
             foreach ($this->getConfig('logger')->toArray() as $writer) {
+//                var_dump($writer);
                 call_user_func_array([$this['logger'], 'addWriter'], $writer);
             }
+//            var_dump($this['logger']->getWriters());
         }
         return $this['logger'];
     }
@@ -167,10 +169,10 @@ class Application extends \Silex\Application {
      * @throws \Exception
      */
     public function encode($object) {
-        if ($this->getEnv() == self::ENV_DEVELOP || $this->getEnv() == self::ENV_TESTING) {
-            return json_encode($object);
-        }
-        return base64_encode(json_encode($object));
+//        if ($this->getEnv() == self::ENV_STAGING|| $this->getEnv() == self::ENV_PRODUCT) {
+//            return base64_encode(json_encode($object));
+//        }
+        return json_encode($object);
     }
     /**
      * @param $strign string
@@ -178,10 +180,10 @@ class Application extends \Silex\Application {
      * @throws \Exception
      */
     public function decode($string) {
-        if ($this->getEnv() == self::ENV_DEVELOP || $this->getEnv() == self::ENV_TESTING) {
-            return json_decode($string);
-        }
-        return json_decode(base64_decode($string));
+//        if ($this->getEnv() == self::ENV_STAGING|| $this->getEnv() == self::ENV_PRODUCT) {
+//            return json_decode(base64_decode($string));
+//        }
+        return json_decode($string);
     }
 
     /**

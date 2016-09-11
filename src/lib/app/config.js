@@ -43,7 +43,7 @@ export class AppConfig {
                         'X-Requested-With': 'AureliaAPI'
                     }
                 });
-            console.log(config);
+            // console.log(config);
         });
         return http;
     }

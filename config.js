@@ -8,9 +8,9 @@ System.config({
     ]
   },
   paths: {
-    "*": "dist/*",
-    "github:*": "jspm_packages/github/*",
-    "npm:*": "jspm_packages/npm/*"
+    "*": "/dist/*",
+    "github:*": "/jspm_packages/github/*",
+    "npm:*": "/jspm_packages/npm/*"
   },
 
   meta: {
@@ -26,6 +26,7 @@ System.config({
     "aurelia-bootstrapper": "npm:aurelia-bootstrapper@1.0.0-beta.1.0.2",
     "aurelia-fetch-client": "npm:aurelia-fetch-client@1.0.0-beta.1.0.2",
     "aurelia-framework": "npm:aurelia-framework@1.0.0-beta.1.1.3",
+    "aurelia-google-analytics": "github:dragoscirjan/aurelia-google-analytics@master",
     "aurelia-history-browser": "npm:aurelia-history-browser@1.0.0-beta.1.0.1",
     "aurelia-loader-default": "npm:aurelia-loader-default@1.0.0-beta.1.0.2",
     "aurelia-logging-console": "npm:aurelia-logging-console@1.0.0-beta.1",
@@ -57,6 +58,11 @@ System.config({
       "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.1.1",
       "aurelia-metadata": "npm:aurelia-metadata@1.0.0-beta.1.1.4",
       "aurelia-templating": "npm:aurelia-templating@1.0.0-beta.1.1.1"
+    },
+    "github:dragoscirjan/aurelia-google-analytics@master": {
+      "aurelia-dependency-injection": "npm:aurelia-dependency-injection@1.0.0-rc.1.0.0",
+      "aurelia-event-aggregator": "npm:aurelia-event-aggregator@1.0.0-rc.1.0.0",
+      "aurelia-logging": "npm:aurelia-logging@1.0.0-rc.1.0.0"
     },
     "github:guillaumepotier/Parsley.js@2.3.4": {
       "jquery": "github:components/jquery@2.2.0"
@@ -145,8 +151,15 @@ System.config({
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.1.1",
       "core-js": "npm:core-js@2.1.1"
     },
+    "npm:aurelia-dependency-injection@1.0.0-rc.1.0.0": {
+      "aurelia-metadata": "npm:aurelia-metadata@1.0.0-rc.1.0.0",
+      "aurelia-pal": "npm:aurelia-pal@1.0.0-rc.1.0.0"
+    },
     "npm:aurelia-event-aggregator@1.0.0-beta.1": {
       "aurelia-logging": "npm:aurelia-logging@1.0.0-beta.1.1.1"
+    },
+    "npm:aurelia-event-aggregator@1.0.0-rc.1.0.0": {
+      "aurelia-logging": "npm:aurelia-logging@1.0.0-rc.1.0.0"
     },
     "npm:aurelia-fetch-client@1.0.0-beta.1.0.2": {
       "core-js": "npm:core-js@1.2.6"
@@ -184,6 +197,9 @@ System.config({
     "npm:aurelia-metadata@1.0.0-beta.1.1.4": {
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.1.1",
       "core-js": "npm:core-js@2.1.1"
+    },
+    "npm:aurelia-metadata@1.0.0-rc.1.0.0": {
+      "aurelia-pal": "npm:aurelia-pal@1.0.0-rc.1.0.0"
     },
     "npm:aurelia-pal-browser@1.0.0-beta.1.0.3": {
       "aurelia-pal": "npm:aurelia-pal@1.0.0-beta.1.1.1",

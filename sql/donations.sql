@@ -1,40 +1,175 @@
-DROP DATABASE `donations`;
-CREATE DATABASE `donations`;
-USE `donations`;
+-- MySQL dump 10.13  Distrib 5.5.49, for debian-linux-gnu (x86_64)
+--
+-- Host: localhost    Database: plant4ro_live_do
+-- ------------------------------------------------------
+-- Server version	5.5.49-0ubuntu0.12.04.1
 
-CREATE TABLE IF NOT EXISTS `donator` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `name` VARCHAR(256) DEFAULT '',
-    `email` VARCHAR(256) DEFAULT '',
-    `company` VARCHAR(256) DEFAULT '',
-    `companyId` VARCHAR(256) DEFAULT '',
-    `phone` VARCHAR(256) DEFAULT '',
-    `location` VARCHAR(256) DEFAULT '',
-    `locationGps` VARCHAR(256) DEFAULT '',
-    PRIMARY KEY(`id`)
-);
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
+--
+-- Table structure for table `diplomas`
+--
 
-CREATE TABLE IF NOT EXISTS `donation` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `donatorId` INT NOT NULL DEFAULT 0,
-    `donation` DECIMAL(10,2) NOT NULL DEFAULT 0,
-    `currency` VARCHAR(3) NOT NULL DEFAULT 'RON',
-    `exchange` DECIMAL(6,4) NOT NULL DEFAULT 0,
-    `trees` INT NOT NULL DEFAULT 0,
-    `startingCode` INT NOT NULL DEFAULT 0,
-    `started` INT NOT NULL DEFAULT 0,
-    `completed` INT NOT NULL DEFAULT 0,
-    `transactions` BLOB DEFAULT '',
-    PRIMARY KEY(`id`)
-);
+DROP TABLE IF EXISTS `diplomas`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `diplomas` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `diplomaType` int(11) NOT NULL,
+  `sent` int(11) NOT NULL,
+  `donationId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_EEED2AD51E057D48` (`donationId`),
+  CONSTRAINT `FK_EEED2AD51E057D48` FOREIGN KEY (`donationId`) REFERENCES `donations` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `diplomas`
+--
 
-CREATE TABLE IF NOT EXISTS `diplomas` (
-    `id` INT NOT NULL AUTO_INCREMENT,
-    `donatorId` INT NOT NULL DEFAULT 0,
-    `donationId` INT NOT NULL DEFAULT 0,
-    `diplomaType` TINYINT NOT NULL DEFAULT 0,
-    `sent` INT NOT NULL DEFAULT 0,
-    PRIMARY KEY(`id`)
-);
+LOCK TABLES `diplomas` WRITE;
+/*!40000 ALTER TABLE `diplomas` DISABLE KEYS */;
+/*!40000 ALTER TABLE `diplomas` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `donations`
+--
+
+DROP TABLE IF EXISTS `donations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `donations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `donation` decimal(10,2) NOT NULL,
+  `currency` varchar(3) COLLATE utf8_unicode_ci NOT NULL,
+  `exchange` decimal(6,4) NOT NULL,
+  `trees` int(11) NOT NULL,
+  `uuid` varchar(48) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `status` int(11) NOT NULL,
+  `hash` text COLLATE utf8_unicode_ci,
+  `hash_method` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `donatorId` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_CDE98962A56AD13F` (`donatorId`),
+  CONSTRAINT `FK_CDE98962A56AD13F` FOREIGN KEY (`donatorId`) REFERENCES `donators` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `donations`
+--
+
+LOCK TABLES `donations` WRITE;
+/*!40000 ALTER TABLE `donations` DISABLE KEYS */;
+INSERT INTO `donations` VALUES (1,4500.00,'RON',0.0000,900,'PPR61100359556f46885ea6554.19501402',512,'','',1),(2,300.00,'RON',0.0000,60,'PPR89164425556f4697188c510.15347533',512,'','',2),(3,0.00,'RON',0.0000,0,'PPR116149266256f97c0f2fe046.05302495',512,'','',3),(4,0.00,'RON',0.0000,0,'PPR61100359556f46885ea6554.19501403',512,'','',4),(5,5.00,'RON',0.0000,1,'PPR15436043125777c0171795e7.89849669',10,'W3sibmFtZSI6IkRyYWdvcyBDaXJqYW4iLCJlbWFpbCI6ImRyYWdvcy5jaXJqYW5AZ21haWwuY29tIiwiY29tcGFueSI6Ik5pbnRoIFN0cmVldCBQaGFybWFjeSIsInZhdCI6IiIsImZyaWVuZHMiOltdLCJhbm9ueW1vdXMiOmZhbHNlLCJ0cmVlcyI6IjEiLCJsb2NhdGlvbkdwcyI6IiIsImRvbmF0aW9uIjp7Im1ldGhvZCI6Im1vYmlscGF5IiwiZXhjaGFuZ2UiOiI0LjUxNDgiLCJ0b3RhbCI6NSwidG90YWxFdXIiOjEuMX0sInBob25lIjoiOTU0NzU2MTgyNyIsInJlY2FwdGNoYSI6IjAzQUhKX1Z1czUyclQ4dUdQRHluZjgyMEZBSVJCT3lYOUNoUl9jOGRhR2QxOVdFV19FbGp1ZkRBY01taXU1QmRvUXlxYjZnMmRBdG9iY1VOd2lQelpKWjJYSk9PaHRhY3RpOGZnVm1RaFNwMmIybGtDNm4tWTNDdjA5dFZvT28tdkNLaDRxTmxpRnpUWkpOdVlmMDR0OC1Rd0tQOHFHdGxXMlZ1SUlmdVFITGRYdUcwSHZaYW56TmkzT2xzNzRLX3pFeWh1Vi0xUTFheUctMl9weE92ZTNLcDd5NEZPNTl4WmcwRUdDdjQ4ejJZSlA1TnpMV1FPVmp5SEVFNlp2QXgweXZUR1hRQ3pxWHVGa1dRdHN5QjU1czQ0UzY2VjRHVHRyNEh2MFFLRVhPblRLaHJFWGIzNW5CSE5iaS1tVzFYNmlacm5LWUU3ekRCRmRrNGJ0azdncTJzeEJXekJTRXJKVWtXVWNPVS1FaFRQRndFZWowS2RsNF9nREhHMm81bThnbkEwU1pST0lOb3NiVHN1U1E1NHNKTjl3cklwZWFHczdleld0WlRUN2J0bnBUdl83TWtIeTgwMTZBTS1KYnBoZjEwem1GN3U2ck1yQnQ1RmdyQ1NNendXQ2MzbmU0TnNmeXVPMzZKMGU0bHk1ajNoODRaSEp4c19YeFp3UWt4MjdsOFl4YXkxcVFCS0g0U0FVVjUyQ1BVdE5fX19xRjdqcS1yMTJiZEhLYlBsRXZVRmM2M2YwUjBnbE5uSzdRendVVVc3OXA2TEdpLTF1UC1teDlac1p5ZnlqWC0zOHNsc0dsV21ycjYxdVpkUENfeDZxampEVHFqS2R6N0x1bUpCT0NvTTlXRGxZQnJnSnVvdTFWREFldVZ4dzQwU0R2SFlfenRlMkVIT1dlODFublI5dTBvcHZQMGxiV2huLWtmMnhQMkgxQmYteU1XUC1zMFpwbWNPdXp4R0QxUDB3cXZqaS1nNUlsTGtoUkpyaXptRnUxV0ZaeTZUdU9iSmFwRWVlaC1Pa0xfSkVZT3JUVmpOM1hrcjRpM3ozdE11Ry1Rb1dGV1lTU1A0bUt1amg5WTU0Yl9tT29vcndlYWpqcF9JVFJsUGl5N1EwdVF2OWRJZlI0aUc3YklrQ3hpRkhXTjB0SjBqN2FCbkRFVWJ2cHROZkNfWjZ6dkQxbWs5WmRzdTFLS2tvZE4zeDk4X3JXMU1xM1NFcU9Rcl9vRFR4bTdyWG9ROWZXTU1fMDdmbk40YkF4V2JCS0tBX0JKaWN0NzB0di15cU80aUE2cU9TIn1d','base64',3),(6,50.00,'RON',0.0000,10,'PPR20049855535777c220d0c675.43078825',10,'W3sibmFtZSI6IkRyYWdvcyBDaXJqYW4iLCJlbWFpbCI6ImRyYWdvcy5jaXJqYW5AZ21haWwuY29tIiwiY29tcGFueSI6Ik5pbnRoIFN0cmVldCBQaGFybWFjeSIsInZhdCI6IiIsImZyaWVuZHMiOltdLCJhbm9ueW1vdXMiOmZhbHNlLCJ0cmVlcyI6MTAsImxvY2F0aW9uR3BzIjoiIiwiZG9uYXRpb24iOnsibWV0aG9kIjoibW9iaWxwYXkiLCJleGNoYW5nZSI6IjQuNTE0OCIsInRvdGFsIjo1MCwidG90YWxFdXIiOjExLjA3fSwicGhvbmUiOiI5NTQ3NTYxODI3IiwicmVjYXB0Y2hhIjoiMDNBSEpfVnV1ZmkyMkhDWlQ5LWtNanBHaHFQYWVHTkhVVmdyVWQ0ak5IVVJDNjBtZUttOHpXTnJiQWZBNHktUXBsczkyd0VBcGtQdEJmTElHUi02dGktLTduVkJDS1JIVVJ3OGd1TUJ0UTlaSFVybzdUSTBOU1FFYTBiVFdESUt5UnB2eGRRVGh3ZjNjRzlXY0VTY0JUMGphbFJUakljRkR4emR6ZWJWTVAyRkozQlBmbTFaa3J0SHN2WWZWUkxjU3l3Vi0xVDZyZk5pWldZLTBoTHplNmtKcExleGN6blhuZ0lkX0czUEx0ZjNrTVR3WEUzM0oxU0F4UjdOcUVaeVhjbXN1QUJ3X25wdVFqcVZuWUlnN0xMMlVGaDV3dEZUeVdoZExzODUxTnB5c1JRc1NxLUt3Z01WSkY2T2lpWGs4cGp0UHZmc1VZZVdJaHh0VjdkUFRTTmh0S3IyamNoRXlrbVIwNllhcmZUcXFIcG5wUEs1cjNXUnFkZ3VncUFPTnpRb0JxX0ZFY2UtWElFSkp1UmJHRWtVa180SkN0clQ4eXFKRXJTLVhITU5jVVlRSDA0ZGoxMVBBVDhjczVrMWp2SzNZSENzOVRXYVBiUDJYUm9nSGhSRW1kbGpWREVwbFVRbU9VVkhzRDluYzBOeTFfRldGVmxFdmNrUmpQa1c2bGgyZE1QVW5WMVZVczFtYjZodzhfbjBrTy01Wnc0V3hfOG5rRHY1U0VGZ1dHMGJFOC05LUNlRmtqRGlvOWdMMUFJcmhvOXpGeUhWVzkwaUZMZ1dzQ2tvV2FoQkVQbmdDc21jU2hLLUV0dDNMSmtvZ1hQeVYwdkk3dVFKaUxyQV83RGtROHpLbGVNa3FtWHZWVE9mZG5jV0h3M1ppX1NzYmgtemtveFBNYTluS3JycHRVWTBsZXhBcFNMTjdNVENFVFNPYWhhTzMzQzBEWGpDdmdvZGw0UmFPTjNDejdkM1ZXbTNQaU83ajY3V19jWWx1bGhlV2s0MWRLSldVZlBOYWxHdllTMHE1S3k1ZzdCOXdVNm0wWXNhRUVSdGhwcE1SdERQQnVGU1F2UEdoNjJsZ3FKRzFtVllCZ3RxT3owX09vRlRRLWFlOGliSGh5aG9nRS1IcFR6WG12SWlrdDJZN1V2bUhYdzBwem44UHJZbkxFa0VicDk3cF9DNmg2eW5KODJqcVdrQ1ctUnQza1NZLW5jVldOb2J6cWpPZ3pGN2s4b2F6ckVITDR2UUNOTHlobDhoWmU2NDZoUkFCaVVpb3JYMUw5Ym5FME52NWMifV0=','base64',3),(7,50.00,'RON',0.0000,10,'PPR17740281565777ca8bf13317.96041913',10,'W3sibmFtZSI6IkRyYWdvcyBDaXJqYW4iLCJlbWFpbCI6ImRyYWdvcy5jaXJqYW5AZ21haWwuY29tIiwiY29tcGFueSI6IklUIE1lZGlhIENvbm5lY3QiLCJ2YXQiOiIiLCJmcmllbmRzIjpbXSwiYW5vbnltb3VzIjpmYWxzZSwidHJlZXMiOjEwLCJsb2NhdGlvbkdwcyI6IiIsImRvbmF0aW9uIjp7Im1ldGhvZCI6Im1vYmlscGF5IiwiZXhjaGFuZ2UiOiI0LjUxNDgiLCJ0b3RhbCI6NTAsInRvdGFsRXVyIjoxMS4wN30sInBob25lIjoiNzI2MzU1NzYyIiwicmVjYXB0Y2hhIjoiMDNBSEpfVnV2bFZ0a3p1bENWM0FVVlJveVAyWjRYaXp3aU54OEgxUmRBcm84S210N1gyT2dDRGpaZUxiNGxWYTd1NWdmN3p6VFVPTVp4bTBHMW9MQm95UG9kdlBVM0ZnVnNzT2twREpiUVM3X0NyV1ZyR3RUZ0hPMEs0SXdHZ2xpcWRtT2VQdDZ6dUR3VzhGOFV4TFcyWEdqcUhQYnpfYzNGSU1kLWRyeW9FOHBoN2JIYkpRbllWc0hMVkU5Y1lQTm9NclFLUjBMd1FvUnN2MHRJOFNWY3lsbzZKT3piMnVzZTJQVGgtVDh3b3I2cUNFNEhTWGtQMGNCR0RYaUprS0RDRDZ3QXdMRXJHNDBiRjNVRHRfRTdXazBtMFczZ3d5YTFxVWZydFlLbEpVRlo3NVBIMDZkd2d3TUE1aTlPRXpjM2tGNDk0MXAxdWhzZGZXQ3B2TkpHLWJrem9tTEJPMEItTFRWdmxjWUpZVEFRaHpJUDFhcmNYcXhYLXFoRmlzU2gzX3BDUG9EcFVFc1BiYW9pMG5Qd0pjcTdjOTBWbjFtWEdXRDRRcHlmcEYyS1VkNFRPVEEwV3VzQzBTcGRNbENYMnU2eWVxTmdzRDBkSGs2Rkk0SE9hOURuWVd5VDdubkFFajEzeU9CTEk3WXBteVVrTmdyOExPelV3eVBLdm1EcEtMdzN4TnRBbVVoVDZTNUFCZG1sX3F6OG5UY0c4RGQ5Z0V6Zl9WcTRlc2dEZjZUUldKMmhkRFFOcGhkN2VZTnk0am5CNnZLNEkzN0g0SG1VUDRqQm9IU2Z6c2hqQmIwd2psNHRMVEp0S2h2b25Wa0YyM29vdlhqdWhmZjc3cjRCY3p6bFdFa0lxTGpMdU12R19rX0lvZUFoWDZldDdqRDhiTGZkNDZaUkF4bGlKME13SVVLTEhpSXdaank0YU5YWFlLQ1lDV3RrbE1xZERkUDdLZHZ0Ym9va2hwUE1LeWdjZjU1YzN6T056clM5RTYtY2l6UjIzSG5idFJnUmJhSWlTS0VoTHNVZGFjcDAtT0V3UnZHN1RMSXdzcElpdVMtQkp3cy1CeEROV0t4M1lnWEFxMjk0d2NrUU4tMXlhMlJGQ3hndkhhbnpPazNCMVpOa2FnNjdIQzRLeTFCbnlLcDd1VWg5d3RVRks4SjJOSTRPMVNMX2RGQmk3NDljX0tZamtQMFdVbFFQejdZUXJjNVhTYW8zZkVPRGJzYmRPbjZDdUhTSmpmV0dSQUhwYjRmRm55SlpLdmxjbGNhTnAtOGhBdmZCTmtvUklEZXFLdjN6NF9raDJ5M3c1Y3JFeUo1YjdsSW5RaEk3WXNUZ0dXWDlVb3FCS21FIn1d','base64',3),(8,50.00,'RON',0.0000,10,'PPR513702148577a14cba829d3.71737649',10,'W3sibmFtZSI6InRlc3QgdGVzdCIsImVtYWlsIjoidGVzdEBkZW1vLnJvIiwiY29tcGFueSI6IiIsInZhdCI6IiIsImZyaWVuZHMiOltdLCJhbm9ueW1vdXMiOmZhbHNlLCJ0cmVlcyI6MTAsImxvY2F0aW9uR3BzIjoiIiwiZG9uYXRpb24iOnsibWV0aG9kIjoibW9iaWxwYXkiLCJleGNoYW5nZSI6IjQuNTE0OCIsInRvdGFsIjo1MCwidG90YWxFdXIiOjExLjA3fSwicGhvbmUiOiI3MjIxMjMxMjMiLCJyZWNhcHRjaGEiOiIwM0FISl9WdXRjRWZMeEozTnhKZktpUnY1elZxMEl0bmtVeWNqS00wMXd5Unh4LVRvTTNibnBMQkRkdmdfajJQcnlGRVpCcHplMmIzV1BZMjNtMlViQ2dLV0t5WHJKV1dXaVJWWHhQcXMtdWh1cU8tTGxicTZSSnNiTElaUGdXNTNwdE52d1NWNGktRW5sbmwwYnJBSU9JRXQxQ1JCT1NxOExJdTFSSmZGamlfWE8xM0FwWTNJVlNZeW9RYlVLSzRKbThqaFBQTFVQSXMydzZfZGdaWnRGMnJUNGpjckNXNzRja0F5UmJLSW8xTkJlWENOYkppQU9feTZrQ2tzX2dSZzRyRnBhV255LWJZblQ0Z1ZYeFZNU3JkZVJLMEFNU3piNkJoVWFHMU9lREYwOGZ2Qy1pcmFNeEhuOTVkUl9sYk9iajNTclZHa1gtenhPSzN5X0p2NVg2VDMtTElpbFZ3VFpncEY3NmRqX2FDMUJYMzlGbS1kZkpCNVp4ZWNpNUtVOVRnNU53OHpuTEFTYXJsUVFfWEpiOUFQUDIwS2dGSDlGOEJ5SWo1VVpfR1lTWVJPbEVWWUZOaGduNkV5SkJETEpGM2VUNVZBN0x1UHdkMEtIbm8yUFJpaXRCN19YS2pMTE1Jc2pKQUsxWlc1d3BnZHFiSHVaMzhCNjdlWko5MFk5Zm5qSU81SnBpdEIyblF0eDM4WWNzWWVNNVZpWE1mbUFRYzYxcExHZkNHSWlvQXBpRGU4eV9TNnRZR2FMSmppNWg2b3pwMHlIN1o1ZlhsaU1reHY4UnRNUFlmbkk5ckpBTE1jR2dqOVRLc1pxY2lBOVIwbkFwc045RVoxRFBmRGpub1N0cmF5aEVhRmhuNUF0eWlLVFh4ZmNsMjBuYm4wbUZyWlVxc0hzOU9ZSFhwNjJQMEF4M3RIYktjRUF0WFFCaHg1aVNqZ25CbFdfaGhkaXgtZUYtRVFIeS12aGE0RGV2bjVHTzNuSWVOUmN4ZVk4T1pBSkxHMGVXNmZRT0UtcllzQVhIVjBMZzZrbFNMdkowMmxRUVEyMHQ0TlFmVkJ0ZXRTbldqdFZnQTVvcDJmdWVkbXhsamZaMDZ2ZURqSEszdEdVV3hqeEtXZEgwdWoxcndQelZ6dWtJak1LWndOQ0U1YUZzeWw1ZlhOUk9qTUpINWd1MDRzQ2MyWTR4SktfQ1ZnS1NBRXltWUFZcmhJZ1FEWVdqY1BMaTN6Q0NqSHFmdlc1OTBMdVA0bzBmbGsySWVHWWI2aU9wVEpPd3phTFkxbzJJU0FaX294YiJ9XQ==','base64',5),(9,50.00,'RON',0.0000,10,'PPR690658375577a1d30aba255.41643518',10,'W3sibmFtZSI6IkRyYWdvcyBDaXJqYW4iLCJlbWFpbCI6ImRyYWdvcy5jaXJqYW5AZ21haWwuY29tIiwiY29tcGFueSI6Ik5pbnRoIFN0cmVldCBQaGFybWFjeSIsInZhdCI6IiIsImZyaWVuZHMiOltdLCJhbm9ueW1vdXMiOmZhbHNlLCJ0cmVlcyI6MTAsImxvY2F0aW9uR3BzIjoiIiwiZG9uYXRpb24iOnsibWV0aG9kIjoibW9iaWxwYXkiLCJleGNoYW5nZSI6IjQuNTE0OCIsInRvdGFsIjo1MCwidG90YWxFdXIiOjExLjA3fSwicGhvbmUiOiI5NTQ3NTYxODI3IiwicmVjYXB0Y2hhIjoiMDNBSEpfVnV2SFdtZ0xLWXBCZ0VsYWswYmxHX2dCc09IckliTjZMVlJNOG5sTWlYaDNqMVA4VEZKTVlTbXRDNkpwMS1fLXVZaDdIeENXcnNhd1J5MWdudzBGSXFjSkRtTGcwd0FGTmFhX2tBeWlSMG04MGlLdllxbElnNFVETmk5OEJYSl9JQnhqVGFaRlJQYnFuX3VqbjVYRHVkUHdCQVFsYXlmbGVUQkxWWWxOWnN2b2NJV1g1ZXVoRjF4bk9DbmFLZWJxX1dWV21ZUWtIdWtsS0EwTU9oRnRnZHZ1MnRDMFZqaldkUUpzVzFIdE9JeUhDVlREUzNNSlVpa2Y3dG9TVzZueVJFc2p2QXNzNU56SzhnbG9jeF82SURwUHpfb0tIeElyeHhReFR4TFBMZUhaQlhmMElvWlFpX0k4Q3JaQmhCRG9FOS1fTTVnbGJHS2J2ZDRGekRsTXhpT1RUak5CTUVfVHJlVzdCSkxZLUNwTDU0bmNlazA4aVJfaW53M282TTRodGVSWGxSTWVCMjF2MG8zQ2JpbnE2R2diMzRySWxVRHJGVjk3LXduMUhHd3NGcmNkSWVZV1dSczZiYkJOUGpHVTVIbzQ1WS1XLURkZUU5Q0VTT3lCOHBKSjNENXZNVWtmNVlRbTdoWHRpdlpXZUNvLXVzMnowMzYyQS1QaW5zQjFGaG5raWlyTy1aTUtSdEx2WTBrNDk3WWRSSnBJbkx5a3lVY0liMFVCQ25GSlQ2UlhzbGJiaVdWYkotTkpDUm1WUXF4UFFpLWswZENFRGFodEMtZ0JpaHNkS2loYTFrR083clRzNGVQRktUWWRHalJ1ZFUxU0IyVHRZTWt5aFNRWHlFcE83YmNJUmZRbEtSX3pRTkVZOV9wUWY5ZzF6bHRZZXhQSGhWNXNnVGtvYkZNOWhZZkNTSjlzUWVPOFF0dW1JM3BIbGFGUUlTSjU0WlRsb2ItbGMwQUZZTW1zQUJvVHVuRDRRZ0lZSGJiSkVrYXRobXFwNU81VlNnYk1seWdNaGgtS19mandRajNIOHpXbXgxWWhWNVBLcm9xbTNWYW1Uc2Y4dFh0VVM1dkRXLVc4Zi00ZHRmd1BGZ3dNVjZfV1dCNXVsMjZNa2FCQUg2a2RPSXdVdmd3RW1JZGIzamZOOG5zb2EtMXdkOU14UjJnZWxKRWtCNXNaTjhFQ0hKU0trY3Yxc0dUTCJ9XQ==','base64',3),(10,50.00,'RON',0.0000,10,'PPR608319943577a255640c499.14609925',10,'W3sibmFtZSI6IkRyYWdvcyBDaXJqYW4iLCJlbWFpbCI6ImRyYWdvcy5jaXJqYW5AZ21haWwuY29tIiwiY29tcGFueSI6Ik5pbnRoIFN0cmVldCBQaGFybWFjeSIsInZhdCI6IiIsImZyaWVuZHMiOltdLCJhbm9ueW1vdXMiOmZhbHNlLCJ0cmVlcyI6MTAsImxvY2F0aW9uR3BzIjoiIiwiZG9uYXRpb24iOnsibWV0aG9kIjoibW9iaWxwYXkiLCJleGNoYW5nZSI6IjQuNTE0OCIsInRvdGFsIjo1MCwidG90YWxFdXIiOjExLjA3fSwicGhvbmUiOiI5NTQ3NTYxODI3IiwicmVjYXB0Y2hhIjoiMDNBSEpfVnV1VU45OTdZVWFLc05UWlBxbngyVHpMNUs2V2xwU3p4eUZnaWhXSzdlN0NoVkllLUNYVmpxR1N4dXhWNzFaek5FNFZnbVd4bG1ydFBJVThkT081ZmphX3hMSUdkQ3FpRGh5Ul9PeGVYclZKUWk4a0JMTFZNRHM5Si1wcGthd0ZYM2RzN3oxc2FSenJrQzNDaTJBOGVMY29LdmdVcmxuQlNmYlVHR1hQeVhKZE5xWlNLSzFuMXBGblVXb0VmdC03WDlCZGsyQkp6Y3E2dUhhRnd5RU9LM1EtQldNcHFTQThPWDJIcTZlMmg5UlJkTnR4aEZWN0JUUmFhTE4zQktheE1oWlhKaThNNWtVSkhBUktxZlZUdDN5b3NhckIxZGZrUWdMNXZCbHJDY1J4RXFqYXdkMTV0ZkxTQjNDZzdmd1YzR3hLVl8yVllkcWFVcmc2RTJLbUx2cmQyel9Jb3VYYjk3ZHVyMmRvOWM3dHF2NzFfUjVEMWVkMDMzWDR6a3ZudlZrZUFucDRFMXpsZlp3YTQyUDNPUGZucGJubmZHcjk4blhlNl9oalRKVk5JYks1b3BhZmFWUHhwZ1JoSGtXdTN5VDRaYm9UanlTMk9jeEV5UmgtSUZCaWhCQXctMmFiM1hBRV9saWJCR3NoTURoU3FQekxKbE5oa18yM2lWWG9wOEJBRV9NTThuU2NWUHJ5ckhvaFNKSmxSQ092aGpOeWFsbXlNSlgtRXRDY05VN0xEcUY2WTVvOExpajBIbGNWLVJsOGE0NUtqdGU3RC1xbWg4bFhNOEhEX1I3b0FmZzR0VzBBaGJpWUFVLVRPOVF4Y0pJckNSLXJnaGxic0NtbHBUOU9LUXJQSGdIZk1IQ3VSS2Z1ZWVpcnJwWjVjaW1RdmFCYm9hSEcwbnVibnNXSVlvV1JVTDV3WF9Fa3hwMzRIeFlkWS1MWnB3V0xIbUVRZ2NfcVNFTGRlMkthWGI5TndVcjFWVGtXbklONVZYYmNSQ0JIV1VDRXVhNFpicmxZWjhZdU5LemoxcnJnSVBCbG9ZV1ZWRXV5eW1iSGpvVU5HQlJRbVdFaHpBYU5pbU9US3MzTnZQX2RjbE1CX2lST1RkVlI5azZkeENnVFJHZEVoME1idGNIeVg3bzBZQzI5MlQ0TUxlb2gyX3dsVjc4dUttaDBzbEJ0R0hneW5TYnFNUGVYbDM0aE50eXFobG1ZRmVZaFowei1uRmRkdUs0SWhpYmFndHFEbkpDeTdQLXA5NkEifV0=','base64',3),(11,50.00,'RON',0.0000,10,'PPR308288344577a2571786059.11797125',10,'W3sibmFtZSI6IkRyYWdvcyBDaXJqYW4iLCJlbWFpbCI6ImRyYWdvcy5jaXJqYW5AZ21haWwuY29tIiwiY29tcGFueSI6Ik5pbnRoIFN0cmVldCBQaGFybWFjeSIsInZhdCI6IiIsImZyaWVuZHMiOltdLCJhbm9ueW1vdXMiOmZhbHNlLCJ0cmVlcyI6MTAsImxvY2F0aW9uR3BzIjoiIiwiZG9uYXRpb24iOnsibWV0aG9kIjoibW9iaWxwYXkiLCJleGNoYW5nZSI6IjQuNTE0OCIsInRvdGFsIjo1MCwidG90YWxFdXIiOjExLjA3fSwicGhvbmUiOiI5NTQ3NTYxODI3IiwicmVjYXB0Y2hhIjoiMDNBSEpfVnV2aW1RQllTYzZSRmlWSVhiNV9ka0lHSXJ1Qk1TZ0VVT0o0QlBXTWh2bGVuc3ktemZRYS16SHVYX2wxTlV0R1dxZl9VUEh6TEtLcW04a3pZcDlNTThUT3ZCUWJqOGVJbEhnaUVyWnlaSzNxYU1ydzNlaDlkV0VNZHZVTUNvSXZGbHdLSjFDR2JyWkdVdkJLNVBCNm5JTFJBRzNwanc1dHVIeEtvRWdHcmNpclNaXzlsOXZIOFJPZ0tJbHR2OFRHTlJjMkpZcEVaZ3lONzNSbWhyVU5fUHpzR2I4a1REWnMwcHJLczBXNFlNMzZoazZVSjBCbnFrQmowOHYyOG0yQzhfSXhZcHFiLWZVRmE5TzNRRW9leXJyX01xODd5WWM5NjlYemw4YlNnVG0xWFlLa0ExUnNJZnhvbUJKRXVzRU1qazVyQ1dtU3hrc2p0eUdmVGV2SmJZTGlaZEczMGtiNDJCaUM3YkZpc3BMSXpseExVZFZqbWRsSkRiaDQ3MjdrbG5mM2lSV3Ruem9KVWxnREh5ejRoSGdoSGdINk1Pa2x6QXhra192WFVUanF5bmFWX1JyaWJ6OUZzT01DZ194LXlyM0g5cE5HY0ZhQi0yNGw4RGIxRV8xbThCRVB6aGtrYXdacXpVNmFGMkk5NlRlZWhDaENESHJWcW1pNzE3cGJIVEprOFVKRlp6QUZhRHUwOUVFSXZVTmFwR2gtQlBaUlR5bkFXZGJZS3g1TXZrWWRQV0xsaV9yZnpHdDZPZ3dQUTZhSjUtUnM4Q0J2V0ZlQXhBMmNWOEo2OGQzMFB2ald4TVpaX2xKTHBvc090eDB2T0U3bUVEM1c0b19LLWdKcGhyNnNlNnotcGltQm9rVUlqTGxGelVGcC0xbjc4Mmx3d1dVUzBQSFc2ZFFTUFIyY2tDMVk2UUNkUkVaMEZoaldNMVRQRTd1TTZ1anZ4ekk2RzlYYVNvUFFfa3FiUVl0VUY4cHRHTkI0NjRQUkhDUEdlaV9VTUFNUjJGT3pQR2YzdnNldElxOVg2SUdldl9GTGZIU3FlVUpmTnM4azEyMHBSbGRaVTVHZVdfZFpZZEZvWURZU1NvdlhuZjhaQ2hhOF9BVUN0cFVtLVZxQ1FsMHN0eGVjZXdJRXZZNWwyTjUyUUlaOGtzYU0zNjlQMHE4U0Z6dGRRQXlxMDN3UWdKcG04WmdHalgtZjY5T1hGS2FfdU9qcndyVEFKUWZYdTJFeUZhMTNFbGpiaXNua3cwTUlJYk9lRWY5RlhyODVSWG9fczEybE1pRU1WbjNORnhpejJOZnkwODU3SXVENjRyVjdkM05SR1VFdDZTZnRKd2x5enlZIn1d','base64',3),(12,50.00,'RON',0.0000,10,'PPR1895507459577a311fafce49.03413076',10,'[{\"name\":\"Dragos Cirjan\",\"email\":\"dragos.cirjan@gmail.com\",\"company\":\"Ninth Street Pharmacy\",\"vat\":\"\",\"friends\":[],\"anonymous\":false,\"trees\":10,\"locationGps\":\"44.43476400000001,26.0957054\",\"donation\":{\"method\":\"mobilpay\",\"exchange\":\"4.5148\",\"total\":50,\"totalEur\":11.07},\"phone\":\"9547561827\",\"recaptcha\":\"03AHJ_Vuve3kOU0IZRV4fM5vWOQE92rM88u5bvP0ghD0erBWQBLmUnyicnkx8qbNnt4HFVkdNCEKa7NV6VKes4FKZqg8mMFim75ta4u7uAGzFWWEzwe1pLartXdXPFbjN49rUUYL9WFGTWl6LfhCERtMzp_VWCR2-aqC61clEILp8XemCr490FtHFMCNIK7rceN_oaqqPy_K9pc-vz9VoXfA5EXHoCknVQUHpct_kUEF-z4FnrqZ5xH6YPqXiP2VWfJOOZPEtyRGCKjh4Y0VGflLd9gZ7X3pjzFeMtTOh81K9I4877_oGenASn5DnkTGP55vTVu3e-NrYWw-mQ2vlP6G2PqLnxdwHX41f1GOC79jcDbrEcUQ9ZGOFTBwumyoWIkVwBIVAEJqLqGBndfpTo7hI_CJf7b-DTb90IoJbJN4V8ZLXHxcUV8gtCihJOE548boDDHT-FQcPrJClog8mZP0b11QOREkTC0sL9NymlpPY-_bqML37JN0v6WYsl-F2sCl0k7Yz7ne9PyPtdejhm4wNX-cV7qEPKcaU8egHhE8cp5w1UHE-SN_G3tTmvEtQme5xYCkR0BSGYUL-iGVpfNjE8Jcyt1yKrEpea2udEa2_xbxayTMgk4P-_Vcy5cH6CuYTJ7eG80Y9bS3QPvqrVJDmGxrpCXSPcwaIuN2Wb_h6nojn9z2CpcylbYazrRXlEr4XdQR4zKq0rNUf7RzTKeVCnBCoqxJ-nhjdw9SkDwiR4CGWGNRV5EGhYfZIyCRADs_rPYSagi8ExfAVjglySBchmd5v9beyK2hdbtQCKW3RGZvzSqwEP2618PfM4YuByQGNjQraEoMXHyc6Y8F8CXvuDF3pjmydZqeKQD_bTG7XihvIakN4CWtRsMhjw-9-xx44ck6X_Xz_LVKE5kv0kAOe4Ck58h5UukGO6cCnnUbhS4xdjm8xbePg\",\"location\":\"Bucure\\u0219ti\"}]','base64',3),(13,50.00,'RON',0.0000,10,'PPR1516094719577a311fd33385.45294005',10,'[{\"name\":\"Dragos Cirjan\",\"email\":\"dragos.cirjan@gmail.com\",\"company\":\"Ninth Street Pharmacy\",\"vat\":\"\",\"friends\":[],\"anonymous\":false,\"trees\":10,\"locationGps\":\"44.43476400000001,26.0957054\",\"donation\":{\"method\":\"mobilpay\",\"exchange\":\"4.5148\",\"total\":50,\"totalEur\":11.07},\"phone\":\"9547561827\",\"recaptcha\":\"03AHJ_Vuve3kOU0IZRV4fM5vWOQE92rM88u5bvP0ghD0erBWQBLmUnyicnkx8qbNnt4HFVkdNCEKa7NV6VKes4FKZqg8mMFim75ta4u7uAGzFWWEzwe1pLartXdXPFbjN49rUUYL9WFGTWl6LfhCERtMzp_VWCR2-aqC61clEILp8XemCr490FtHFMCNIK7rceN_oaqqPy_K9pc-vz9VoXfA5EXHoCknVQUHpct_kUEF-z4FnrqZ5xH6YPqXiP2VWfJOOZPEtyRGCKjh4Y0VGflLd9gZ7X3pjzFeMtTOh81K9I4877_oGenASn5DnkTGP55vTVu3e-NrYWw-mQ2vlP6G2PqLnxdwHX41f1GOC79jcDbrEcUQ9ZGOFTBwumyoWIkVwBIVAEJqLqGBndfpTo7hI_CJf7b-DTb90IoJbJN4V8ZLXHxcUV8gtCihJOE548boDDHT-FQcPrJClog8mZP0b11QOREkTC0sL9NymlpPY-_bqML37JN0v6WYsl-F2sCl0k7Yz7ne9PyPtdejhm4wNX-cV7qEPKcaU8egHhE8cp5w1UHE-SN_G3tTmvEtQme5xYCkR0BSGYUL-iGVpfNjE8Jcyt1yKrEpea2udEa2_xbxayTMgk4P-_Vcy5cH6CuYTJ7eG80Y9bS3QPvqrVJDmGxrpCXSPcwaIuN2Wb_h6nojn9z2CpcylbYazrRXlEr4XdQR4zKq0rNUf7RzTKeVCnBCoqxJ-nhjdw9SkDwiR4CGWGNRV5EGhYfZIyCRADs_rPYSagi8ExfAVjglySBchmd5v9beyK2hdbtQCKW3RGZvzSqwEP2618PfM4YuByQGNjQraEoMXHyc6Y8F8CXvuDF3pjmydZqeKQD_bTG7XihvIakN4CWtRsMhjw-9-xx44ck6X_Xz_LVKE5kv0kAOe4Ck58h5UukGO6cCnnUbhS4xdjm8xbePg\",\"location\":\"Bucure\\u0219ti\"}]','base64',3),(14,10000.00,'RON',0.0000,2000,'PPR2070774922577ac1dd14be57.68074132',512,'[{\"name\":\"Dragos Cirjan\",\"email\":\"dragos.cirjan@gmail.com\",\"company\":\"Ninth Street Pharmacy\",\"vat\":\"\",\"friends\":[],\"anonymous\":false,\"trees\":\"1\",\"locationGps\":\"44.426312599999996,26.0522368\",\"donation\":{\"method\":\"mobilpay\",\"exchange\":\"4.5164\",\"total\":5,\"totalEur\":1.1},\"phone\":\"9547561827\",\"recaptcha\":\"03AHJ_Vuv6vvwcO7tFop7WF_5bLMzMlhuJtZqRQbW2fOaMq7Tkau6ifW2_eWmkUqQxL3dYqtklNb9cShmpU8m9brfeVthcSofBmcbq50Lo2zVxV0jczeUxWE3AJuqBEGt5XkdgGoIvgugeOCSp8F7OQz7_nEc-L8vjTIQljbuC0cnS0vxT5JLkZ8GQ_w5x6UP3mVQKgc8rlsGpov0t-i6DWVrBnUEhGNUYeUV1SF4fbnfzVrHuxfck_NzdcDAlpfYL5ZrsV4gxw-q0ZUBpMrgLcuC06X-aTldQUopA52tkqAhOVegZZAxvWvBxdbPFXc7UuNOJL0UWDVRWBQD364Y0KW9zNnppREuC7AVAIho24zeOFR58cTWYL7CmtnzblzP3YkFFNXdll1QWWAC3-IYHEfmkBg9VZLiZeVnstKM7hcfi58IhwDjS0NOwp4WJqjavgysibZu_tn31mVUuim2iEVFJWIDs6q828Z_KPYOMrqb8wxDNKA7DoQoMvBprANhu1oysfLQsHq3EguI7G7B3sAr4Ckw1i_f4p9QXlH_l2HBCp9tJsxmT8nOyNDvh-5c6KjMjBW570jM0_DIP0zzLhyhW_580wc1hw2hB7GFQ-X_3K6CYd1uM4_WlTMOF62c6CGgcZx0cj2UwpAQg4EW2-wqaF3ZCho4y8qdEvrUOFgZBqVZ-xcDxPy0ZsreoJQjOOxoBVpWaWYSGqjtVZnd0A2bKpedHAW3mg_k54PmP4v2I48pKQiL-q37PN-p3buHuzqjUg6XVDGUaywTuaCXdcz_z7HoAROGYQu-TxSAfMviZVY6Hx9rGv3GpR-X-JOB43OtDbf3tQMFKHs7vEwwwsfckMbotpiJe4KN42RISOahFXxvuWlYAZNwy1Tkw4WCLWoH_fIXTidhuwUYyZF-kZYqHJGV9pQKtaF485d7uHopTLPqSLjD4MS2zGVBEXPCE6kJ0sV_j7ShM\",\"location\":\"Bucure\\u0219ti\"},{\"invoice\":{\"currency\":\"RON\",\"amount\":\"5.00\",\"details\":\"Donatie cu card-ul prin mobilPay\",\"installments\":null,\"selectedInstallments\":null,\"tokenId\":null,\"promotionCode\":null},\"signature\":\"UQUX-6E8G-G8TG-B88U-N9UG\",\"service\":null,\"orderId\":\"PPR2070774922577ac1dd14be57.68074132\",\"timestamp\":null,\"type\":\"card\",\"objPmNotify\":{\"purchaseId\":\"30222668\",\"action\":\"confirmed\",\"errorCode\":\"0\",\"errorMessage\":\"Tranzactia aprobata\",\"timestamp\":\"20160704230416\",\"originalAmount\":\"5.00\",\"processedAmount\":\"5.00\",\"promotionAmount\":null,\"pan_masked\":\"4****7677\",\"token_id\":null,\"token_expiration_date\":null,\"customer_id\":null,\"customer_type\":null,\"customer\":{\"type\":\"person\",\"firstName\":\"CIRJAN DRAGOS\",\"lastName\":null,\"address\":\"Lt. Col. C. Marinescu, 3\",\"email\":\"dragos.cirjan@gmail.com\",\"mobilePhone\":\"0726355762\"},\"issuer\":null,\"paidByPhone\":null,\"validationCode\":null,\"installments\":\"1\",\"current_payment_count\":\"1\",\"paymentInstrumentId\":\"4607533\",\"discounts\":[],\"params\":[]},\"returnUrl\":\"https:\\/\\/planteazapentruromania.ro\\/services\\/index.php\\/donate\\/mobilpay\\/PPR2070774922577ac1dd14be57.68074132\\/return\",\"confirmUrl\":\"https:\\/\\/planteazapentruromania.ro\\/services\\/index.php\\/donate\\/mobilpay\\/PPR2070774922577ac1dd14be57.68074132\\/confirm\",\"params\":[],\"objReqNotify\":null}]','base64',3),(15,100.00,'RON',0.0000,20,'PPR1188953454578541731eac78.40512282',512,'[{\"friends\":[],\"anonymous\":false,\"locationGps\":\"\",\"company\":\"\",\"vat\":\"\",\"name\":\"Marius\",\"email\":\"marius.state2008@gmail.com\",\"trees\":\"20\",\"recaptcha\":\"03AHJ_VuujVQ3_20wR10r5O2ViPlkGgRhx65qjYo3ne5__uw94Bu98HFIPnKvwHgOvJdBuP8wTYnvUESFIdkuoV1VLVGClaiOujEA_uvI35PpUlc7In5iKaLD8siFl9F6sFqWOc0anDoq3M7v-9BoL0_UKAlMomx4PQkT14Plqg1Dvc_qmZn1dwYfyaW4ER0ddg1yM_gaQtEYkZ4sjX89uHMDNEraHcJzVgbw7Zi8Gg43uhng6Kc0ifC5NnlWmeicO98Yc77azqgdibqfK1cXHECLoThDAZmlRnywJOsbFhY0CMb9DRd0SaKgLDuesJnSCoZCP_QIx3xEMPuaIE9ONUivxe7gC1Vrk7FiZ0MvLfLjc_Yij2VCDzHnJxvG5VOx73ekMglS1kTIAvmIJodBT-QjwOuq8pBCViwVrMxPvjTXuyaahwq2nwVwqSq0ycETKrV6lkAAwQ9gAnLX8EdQ0hdznHBpq2SZ2aYw8lv1Br_jkTP7FAKrnFtuu1eSshmrTAirl3eEcewB5km86n8IfbWi5gl4C7nI8Q6xIripFV-aRJgT6bSqc_7y8oO6PeOlrfpHkhTh7Uj_I8_ylge6DLECDAD_Qj6MBSyJZ6U4CMlVYnAzBv03n3zEKYabgIV3kzybohxvLWWC5fvOIS72W8hsZcWND9e28Hfh03VHQ1HY1yomBrS0C73N8Gen6UrYwyHejSZShvoxV9E1KuI-ry5mCyqZBsNTCdSrnGmx-AbGMl5EBSgOnGz4mBVQOZmjJgb2WWVB-hEg5IlEOEjXXPqbNhyrFTwRz47JGK5odxM2ad4nIxolwbWnnP7y_m_TkV6CJHfSmOkgi8yijUdoX54j6oBN6FDdeBuD03XPyNevSXbL7OIqVvw19qsPTFqrB90IoB1ljLEoey2Lvh0psxf5gIViXyjn6oiC0037WXwoarj3as_7Q1lLhkPnUxKQqmRRYPkMgk_jGqNDDkFuDGlAf5sSejnoVGUa1l-LErbDUbzWldMAsdsvdUiBpXBn1AjYZ6L-f1Kuk6jIRbLDIBH-U5BAbw4lKua6XavHj_b3sQhpQehIRY7dqLO2ED8ISdknRy_fWXtbIjznEZYCrZ4ND1YsH0GaJdA\",\"donation\":{\"exchange\":\"4.4900\",\"totalEur\":22.27,\"total\":100,\"method\":\"mobilpay\"}},{\"invoice\":{\"currency\":\"RON\",\"amount\":\"100.00\",\"details\":\"Donatie cu card-ul prin mobilPay\",\"installments\":null,\"selectedInstallments\":null,\"tokenId\":null,\"promotionCode\":null},\"signature\":\"UQUX-6E8G-G8TG-B88U-N9UG\",\"service\":null,\"orderId\":\"PPR1188953454578541731eac78.40512282\",\"timestamp\":null,\"type\":\"card\",\"objPmNotify\":{\"purchaseId\":\"30593635\",\"action\":\"confirmed\",\"errorCode\":\"0\",\"errorMessage\":\"Tranzactia aprobata\",\"timestamp\":\"20160712221142\",\"originalAmount\":\"100.00\",\"processedAmount\":\"100.00\",\"promotionAmount\":null,\"pan_masked\":\"5****2545\",\"token_id\":null,\"token_expiration_date\":null,\"customer_id\":null,\"customer_type\":null,\"customer\":{\"type\":\"person\",\"firstName\":\"STATE MARIUS\",\"lastName\":null,\"address\":\"Bucuresti\",\"email\":\"marius.state2008@gmail.com\",\"mobilePhone\":\"0730416612\"},\"issuer\":null,\"paidByPhone\":null,\"validationCode\":null,\"installments\":\"1\",\"current_payment_count\":\"1\",\"paymentInstrumentId\":\"4981545\",\"discounts\":[],\"params\":[]},\"returnUrl\":\"https:\\/\\/planteazapentruromania.ro\\/services\\/index.php\\/donate\\/mobilpay\\/PPR1188953454578541731eac78.40512282\\/return\",\"confirmUrl\":\"https:\\/\\/planteazapentruromania.ro\\/services\\/index.php\\/donate\\/mobilpay\\/PPR1188953454578541731eac78.40512282\\/confirm\",\"params\":[],\"objReqNotify\":null}]','base64',6),(16,50.00,'RON',0.0000,10,'PPR1881511034578542030ba939.50939776',10,'[{\"name\":\"Ruican Ghe. - Cosmin \",\"email\":\"gettodac20@yahoo.ro\",\"company\":\"\",\"vat\":\"\",\"friends\":[],\"anonymous\":false,\"trees\":10,\"locationGps\":\"\",\"donation\":{\"method\":\"mobilpay\",\"exchange\":\"4.4900\",\"total\":50,\"totalEur\":11.13},\"recaptcha\":\"03AHJ_VuvP5jj_vxy-ZSEpBa43IteSxSEaGPg3mXl-uktTsvTKrtdFwhqi3Uf56BGXNR4MPAyeZX1Stv6QxTw72nLeQDhervy9BC5k7PAOfyoXDIunYE0Hs7lAblpFON1uBTYjp-KZripjoGfLfWn1fyruSKbn_xUZ1rtnpwZSAafx-M9Ul9wX2g2ZiCk2JbNfDajd8F5pc0PiEnGORu663nn7dh2_IhxREVadR7od_xSALsZHGzRgOBC8ySjo2NpzJp-WeyZLG7NEeTu8ZYBEq86vQNJctfmnEuSe4MuP4EjP9sUStPJp-5_lfMWGS-zEjEMC_q7af6eoEtSzO2FS2ae43SL7y_xq1QrEj1s8rRsmYk4NuGOONzXN01dlw3hNCwldPqUGUd8GFbsvuLfUnfy_kMtiSW5llif4x_AWSqAOoco6qpkPd7ALtbuDbMiMPM0n2-aG2Y0uTH6BmT2j_hxi_0rtdZhyQdpV4euES3cOyz3UIfjMLdWRPjX1sMFC_UWs6BxqHNcmGdz0CObRrtLsi40vznku-5rMK1VpcMu-pPBAbug1Rarxwifa-DyYvueOQRJSROk3eLYH_CgxwQA4Feuc4lmdoTKBLpugDzeDE1b-insTld_cezMrskIW1OgW-8NgzVHVRZgInUbot1GodWn0YnPZH3dq39jo8m_uZ7vtkxhpBXG7xC5ymAqYMezsUPwPln5CcD6u5NZYduy4hqS-hkyoYEJ6usS5nJAXxhDiEGoi311mYoODA4bE99UK540y2TpXlTfLqKhf8hHQp39DoOZSRiQ7S_YTXWvWWLBOo3ktGuOfHz-QYiofVfZeJ0ow6kyPgc8Le8Kg-1pFSSEM_1nI5gWfofgT_hgc1ZdfWusCG6kPO4FoO0OTpcISFbh1Rzp5noAK5xN3yJ8JPSfxeqIQPCD_KwfEhM-dI5p4N6Px3Pw\"}]','base64',7),(17,15.00,'RON',0.0000,3,'PPR15982231905785d63ae4f5e4.68408501',10,'[{\"friends\":[],\"anonymous\":false,\"locationGps\":\"44.19617721999999,28.645736879999998\",\"company\":\"\",\"vat\":\"\",\"name\":\"Madalina Delia Bectemir\",\"email\":\"madalina.delia.paun@gmail.com\",\"trees\":\"3\",\"recaptcha\":\"03AHJ_Vusxw-WKodMGUQMZRXnznaQPeINOKwSFotOBt2R16T-GZHDFrdlhx1ThW5m1e7InyGOr3aJ5nRCFsMhfSTmOgEQC_nCkx1kA8JQImmiR7k_TehlCurlfRq4EAJtewjDBF2EMPjydDpyOVEUkKgGp00Ip8S78OI25MNk-cKUyS4Dt4YRCxjnNIWpDQK7eepXROP2AaJ7wNCEVs1fDv3Tgjrt3R-wg2ceDzD-4udlBwIvcrqhOjWWG-fPVXe4LWnEp6U80DxEjIyU5IvX7z9S3RWRS1CH59HRAmpWLrSosC0bwvxz9szOmeqvjKG7UVAlN8BViIW1W5T2YfmrpW5HkEV-3vjJcy6ZtyllZ7p965OC_c_8O37uCkx4raqVD4yfJtUtHbgJM98If9DnNGklCnOLH39OHa9diCHrFpp4LJuqf10PxeRVt4f68H4KBX_9OSQstZUEDrwt0UnmC7TZ5fJZ3ZBow3R2qRnQz5sZeKjrqAzVke7IDiqjsQdW_PiM-NJNaUkPcCdK12MTqzRC2aMs6iwYaqRDEfOjN-cSnjz68UNX86GnWvjF5nOc3VSJ0q2hzhYagHTVQPbRYNeMjliz1M6yVlut8mj_3nhuR9iie3jN9hnAuqAdl0-26qS2XC4Qwhp-EFtUq2HHCLJX319dhyt6cyexR_TH2LmXoM5NsDRoDijX_X9KfrTmau7sQEBxUga7KubwD_7yugn7P1Gkq7rVfpes8Gxh1MPFo71-hSw0az0yjMWiWCpyhODbgPExsypMVny9uRqGoQkO3L2GkkLSDuBP_sfDeDtpn-mW5tS1NvZzwdjbGOhoDTHbyhLPrxPALoG_ibeRaxufwiIg_gen56D1tIv1_WF0uk5VOojvm4ezlZJvz-2Y5YCThNaWlX8jO8_onny5bri9Gqm17-Hf9aw\",\"donation\":{\"exchange\":\"4.4900\",\"totalEur\":3.34,\"total\":15,\"method\":\"mobilpay\"},\"location\":\"CT\"}]','base64',8),(18,100.00,'RON',0.0000,20,'PPR1154021025794e5e7884dd1.76610361',512,'[{\"name\":\"Tiuca Lavinia\",\"email\":\"laviniatiuca@yahoo.com\",\"company\":\"\",\"vat\":\"\",\"friends\":[],\"anonymous\":false,\"trees\":\"20\",\"locationGps\":\"\",\"donation\":{\"method\":\"mobilpay\",\"exchange\":\"4.4612\",\"total\":100,\"totalEur\":22.41},\"recaptcha\":\"03AHJ_VuunzHz4BVGBcyDH-UTUqmNtmQx-SJPpQKYL2SWzQgc9sXL4_xpjM0V0-NDwwirBxBzAV-jCHvL_elkJ5rO32h3fUcPFUPdHg6WhyCkaGmhmuxU7vJOiBuWNURzoRLqelxZWrbEpLWymDVnTwiG5acAiDluuOvQMuSLgb_50CbCknpTLpRg4h7CJS-NqmxdWaHHyDyyDpwswSHw1VXs79LCIm23UYA0hDDA7F0Y4gKo25JrrALxvwTHy2sQMoHrceWImO20ZTTDYslJe8_O9_WE2uykAj1x13Etm9IL0e2dxINpA8OjEKyriLOZzMPxs03u6VV4j87pPmadjVjSSK2Q9Efb5hD4MKZZZsQwsUbd5qYqWcPLTIG7iruETftCLupb3E4Vtkmi_qJEcxc3q-9EXa388nRwZdl1fMyrg9VGiQfCDP24dHjQHMgrXjegWnAZu04FLC_Fz1CCzMtv4YELChAON_Zi3mIIEh-pIuvnB5HvEPAASN9l89O68JhLAnJRDtbZ86tCXbKKPX10eSPMPFw7ZJM78e6Z0-ILbsYignVD9RwvZ6XjAdTEa8mShXDZ6P5wzrTezOYKicM5OdomTiBwo19OuNkmw_wcb2IFzdmTJLIrOvj3LANmquo9A6zXAZjkesNxemg-kB742Zx4IqITRGhICqTXoS0S8BFrKnWpKzHWEHgV9CnWDnG1j_9CSkYnpNd3UjML-UD5ujcEiqFIGhQe22t6PLyUItSkNTOTG1MvRwJLL89_U1cQucmpF5fJ-P-cikuoNJwJYny0Cg4o9_x3R4UOD18kj_bbAnUryntCGVdRrizNHW4PtnGXZ0uByQVtLxnBR6yBnfnOJzMw-vaTUhHj8Pgjdgv23xdrZUCNYguWB4YywcuX7CIGCJVV3o395TGjRPOvxafXxm4TeeaCk3iKWC16x0xjBRLfxeP51nhmQIKAErKPuwM6tThNHSAaK28-YeVMbKEnfQxsq-A\"},{\"invoice\":{\"currency\":\"RON\",\"amount\":\"100.00\",\"details\":\"Donatie cu card-ul prin mobilPay\",\"installments\":null,\"selectedInstallments\":null,\"tokenId\":null,\"promotionCode\":null},\"signature\":\"UQUX-6E8G-G8TG-B88U-N9UG\",\"service\":null,\"orderId\":\"PPR1154021025794e5e7884dd1.76610361\",\"timestamp\":null,\"type\":\"card\",\"objPmNotify\":{\"purchaseId\":\"31145553\",\"action\":\"confirmed\",\"errorCode\":\"0\",\"errorMessage\":\"Tranzactia aprobata\",\"timestamp\":\"20160724185745\",\"originalAmount\":\"100.00\",\"processedAmount\":\"100.00\",\"promotionAmount\":null,\"pan_masked\":\"4****2522\",\"token_id\":null,\"token_expiration_date\":null,\"customer_id\":null,\"customer_type\":null,\"customer\":{\"type\":\"person\",\"firstName\":\"TIUCA LAVINIA CRISTINA\",\"lastName\":null,\"address\":\"Brasov\",\"email\":\"laviniatiuca@yahoo.com\",\"mobilePhone\":\"0746029090\"},\"issuer\":null,\"paidByPhone\":null,\"validationCode\":null,\"installments\":\"1\",\"current_payment_count\":\"1\",\"paymentInstrumentId\":\"3217669\",\"discounts\":[],\"params\":[]},\"returnUrl\":\"https:\\/\\/planteazapentruromania.ro\\/services\\/index.php\\/donate\\/mobilpay\\/PPR1154021025794e5e7884dd1.76610361\\/return\",\"confirmUrl\":\"https:\\/\\/planteazapentruromania.ro\\/services\\/index.php\\/donate\\/mobilpay\\/PPR1154021025794e5e7884dd1.76610361\\/confirm\",\"params\":[],\"objReqNotify\":null}]','base64',9),(19,50.00,'RON',0.0000,10,'PPR126872861357a35183161496.60896949',10,'[{\"name\":\"Fuzzy Wuzzy\",\"email\":\"dragos.cirjan+fuzzy@gmail.com\",\"company\":\"\",\"vat\":\"\",\"friends\":[],\"anonymous\":false,\"trees\":10,\"locationGps\":\"44.4347411,26.0957138\",\"donation\":{\"method\":\"mobilpay\",\"exchange\":\"4.4564\",\"total\":50,\"totalEur\":11.21},\"recaptcha\":\"03AHJ_VuvI22qAgo2DgYP38IX_Kgw4ctQXsGh5Q6PypGNO_kvHmjQj2618UTs0-RLUxAr6Ecr0iYachvLzOIYuaSZnFxVqQUyqUe5Jvef-WNdsy2JFmrNhzQ4DEZC33YK2KxgVERF2o5DrvZfYs9JStHT6eqyecCUgEsIVOAlFFdX65zZJti5PZKHm7SzmGLVtpRs1EZ_Iv_S2ANVI4A5S4jO_NaKPB62A25pzBwzTYbXOyZA329MmZ1SNnVhJualBh0o57ToGbyMwTx8X9DWzsFzbh0MaEroqZUSjjrxLAe3q9m_EAo1zCUBeJTIXLmExiFEBiNmQa3a9m7UnTPLyJXMiDyAhKQQtD7W1xwghUcQIfu7phcgxsAHFACT8TcNWjJk6sJigculXM8I2uvkWaWp3J-D6C_8hD79I5MfvWtZno9ItdllYLGxqyqljFo_BzNRg-sQcMF-W-HjLG4KlsGG5jhh3Wizhp6revUH1vcJb9QjC6wFf0UoCWKVpRwjzjRycfackvopCs36wjalW8ob5JkB3EQ_ZChrkpXYR3AMWCx18XQkU8yQf7NiawAXcaVsqF_mzrYwS0z9Thn9z3VTtvpPxYNekC8-8OqxYYeLhq6q64XSFXMC50e99NPvLw-TJcsW3MkxElU_llXN6kQ0ZUk55vLexGqK6MdKtQpGx46CsyRwQ7t1-dPQ4sReNwGMFPabpOj1hGOTUoc8HrmANmPCwxwyYEPxbujmW_v24sOH4E5Rk1mW3G_lrR-dgVzyofICCMC3XRDMD13rvVhc3CTev9DO797jTMcyVHbnoQO9Y7uEHWtCO4npAe-Y08lPnEOKQFJBQLYuBdIvu96seIW5IcxAJ5MGkivUJFcW6gXJ-bR6wVmJrZctKgf1r-oQmwJ4LMQsmkuB5ZrB39lgVCv8IWx6tw1eSq5ANKHduR2Z-Q9jisxFfe1W7rQq7VVzgQsgBZZSSQ5a-KhCTeN6CN457tiWXCkyKg90NvoiBXZ-fbrqBt1g7QwddzG0wykja8Vz3HkB0uKzdJ1RFbzuCNWURDpxwRoaMBQ-RU_CHvw4drHiVP2Gm_zzAXpiMKJBOuDvV0-C9D4odEnO7qdfv-f3gH6rHRQ\",\"location\":\"Bucure\\u0219ti\"}]','base64',10);
+/*!40000 ALTER TABLE `donations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `donators`
+--
+
+DROP TABLE IF EXISTS `donators`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `donators` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `company` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `location` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `locationGps` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `companyVAT` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `url` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `logo` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `donators`
+--
+
+LOCK TABLES `donators` WRITE;
+/*!40000 ALTER TABLE `donators` DISABLE KEYS */;
+INSERT INTO `donators` VALUES (1,'','comunicare.comerciala@ro.sabmiller.com','Ursus Breweries','+40213140420','Bucuresti, Romania',NULL,'RO199095','http://ursus-breweries.ro/','ursus-breweries.jpg'),(2,'Florin Nan','florin.nan@gmail.com','','+40755022608','Rasnov, Romania',NULL,NULL,NULL,NULL),(3,'Dragos Cirjan','dragos.cirjan@gmail.com','IT Media Connect','+40726355762','Bucuresti, Romania',NULL,NULL,'http://itmediaconnect.ro/','itmcd-logo-200x140.png'),(4,'','','Casa Contelui','','Rasnov, Romania',NULL,NULL,'http://casacontelui.ro/','casacontelui.png'),(5,'test test','test@demo.ro','','722123123','Romania','','',NULL,NULL),(6,'Marius','marius.state2008@gmail.com','',NULL,'Romania','','',NULL,NULL),(7,'Ruican Ghe. - Cosmin ','gettodac20@yahoo.ro','',NULL,'Romania','','',NULL,NULL),(8,'Madalina Delia Bectemir','madalina.delia.paun@gmail.com','',NULL,'Romania','44.19617721999999,28.645736879999998','',NULL,NULL),(9,'Tiuca Lavinia','laviniatiuca@yahoo.com','',NULL,'Romania','','',NULL,NULL),(10,'Fuzzy Wuzzy','dragos.cirjan+fuzzy@gmail.com','',NULL,'Romania','44.4347411,26.0957138','',NULL,NULL);
+/*!40000 ALTER TABLE `donators` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `forestry_units`
+--
+
+DROP TABLE IF EXISTS `forestry_units`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `forestry_units` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `unit_name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `trees` int(11) NOT NULL,
+  `gps` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gpsDetails` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `city` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `county` varchar(1024) COLLATE utf8_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `forestry_units`
+--
+
+LOCK TABLES `forestry_units` WRITE;
+/*!40000 ALTER TABLE `forestry_units` DISABLE KEYS */;
+INSERT INTO `forestry_units` VALUES (1,'RPLP Kronstadt RA',3500,'',NULL,'',''),(2,'RPLP Piatra Craiului RA',10500,'',NULL,'',''),(3,'OS CiucaÅŸ RA',5075,'',NULL,'',''),(4,'RPL OS RÃ¢ÅŸnov RA',10200,'',NULL,'',''),(5,'RPLP Stejarul RA',15000,'',NULL,'',''),(6,'OS PÄƒdurea BogÄƒÅ£ii RA',10000,'',NULL,'',''),(7,'RPL OS PÄƒdurile Åžincii RA',5900,'',NULL,'',''),(8,'RPLP SÄƒcele RA',0,'45.9824000,24.9486139',NULL,'',''),(9,'OS Codrii CetÄƒÅ£ilor RA',8000,'',NULL,'',''),(10,'RPLP MÄƒieruÅŸ RA',6500,'',NULL,'',''),(11,'RPL Bucegi Piatra Craiului RA',0,'',NULL,'',''),(12,'OS Padurile Fagarasului',5000,'45.8824000,24.8486139',NULL,'',''),(13,'OS BraÅŸov',4500,'45.4938889,26.0213889',NULL,'',''),(14,'OS Teliu',0,'45.5130556,26.0436111',NULL,'',''),(15,'OS FÄƒgÄƒraÅŸ',4300,'',NULL,'',''),(16,'PL Sacele (ICAS)',0,'',NULL,'',''),(17,'OS BuzÄƒul Ardelean RA',10300,'',NULL,'',''),(18,'OSP Baraolt',0,'',NULL,'',''),(19,'OSP BreÅ£cu',10150,'',NULL,'',''),(20,'OSP Mereni',10000,'',NULL,'',''),(21,'OSP Zagon',0,'',NULL,'',''),(22,'OS Hatod SRL',0,'',NULL,'',''),(23,'OSP TÃ¢rgu Secuiesc',2500,'',NULL,'',''),(24,'OS BreÅ£cu',0,'',NULL,'',''),(25,'OS ComandÄƒu',0,'',NULL,'',''),(26,'OS Covasna',0,'',NULL,'',''),(27,'OS TÄƒliÅŸoara',0,'',NULL,'',''),(28,'OS Frumoasa SRL',11150,'',NULL,'',''),(29,'OSR Ciuc',0,'',NULL,'',''),(30,'OSP Liban-Zetea',11200,'',NULL,'',''),(31,'OSR Gheorgheni SA',4500,'',NULL,'',''),(32,'OSP Odorheiu Secuiesc',2500,'',NULL,'',''),(33,'OSP Praid',13000,'',NULL,'',''),(34,'OSP Gheorgheni',11530,'',NULL,'',''),(35,'OS Borsec',0,'',NULL,'',''),(36,'OS Homorod',0,'',NULL,'',''),(37,'OS Miercurea Ciuc',0,'',NULL,'',''),(38,'OS TopliÅ£a',0,'',NULL,'',''),(39,'OS TulgheÅŸ',0,'',NULL,'',''),(40,'OS Ghindari',8000,'',NULL,'',''),(41,'OS VÄƒtava',4000,'',NULL,'',''),(42,'Filiala OS Muresul Sovata',0,'',NULL,'',''),(43,'OS FÃ¢ncel',0,'',NULL,'',''),(44,'OS Gurghiu',0,'',NULL,'',''),(45,'OS LuduÅŸ',0,'',NULL,'',''),(46,'OS Lunca Bradului',0,'',NULL,'',''),(47,'OS RÄƒstoliÅ£a',0,'',NULL,'',''),(48,'OS Reghin',0,'',NULL,'',''),(49,'OS SighiÅŸoara',0,'',NULL,'',''),(50,'OS Tg. MureÅŸ',0,'',NULL,'',''),(51,'OS TÃ¢rnÄƒveni',0,'',NULL,'',''),(52,'OS Sovata',19450,'',NULL,'',''),(53,'O.S. RÄƒÅŸinari RA',0,'',NULL,'',''),(54,'S.C. O.S. Jina SRL',6000,'',NULL,'',''),(55,'RPL O.S. Dealul Sibiului RA',10500,'',NULL,'',''),(56,'O.S. Izvorul Florii RA',0,'',NULL,'',''),(57,'RPL. O.S. Cindrel RA',10600,'',NULL,'',''),(58,'RPL O.S. TÄƒlmaciu RA',0,'',NULL,'',''),(59,'RPL.O.S. Gura â€“ RÃ¢ului RA',10100,'',NULL,'',''),(60,'O.S. Valea Frumoasei RA',8000,'',NULL,'',''),(61,'RPL O.S. Valea Sadului RA',10850,'',NULL,'',''),(62,'OS Agnita',0,'',NULL,'',''),(63,'OS ArpaÅŸ',0,'',NULL,'',''),(64,'OS Avrig',0,'',NULL,'',''),(65,'OS DumbrÄƒveni',0,'',NULL,'',''),(66,'OS MediaÅŸ',0,'',NULL,'',''),(67,'OS Miercuea Sibiului',0,'',NULL,'',''),(68,'OS Sibiu',0,'',NULL,'',''),(69,'OS Vl. Cibinului-SÄƒliÅŸte',0,'',NULL,'',''),(70,'R.P.L. O.S. Valea Orastiei R.A.',3300,'',NULL,'',''),(71,'SC Nordix Gheron SRL	',10000,'',NULL,'',''),(72,'OS Feldru',10000,'',NULL,'',''),(73,'OS Dealu Negru',6000,'',NULL,'',''),(74,'O.S.C Romuli R.A',6200,'',NULL,'','');
+/*!40000 ALTER TABLE `forestry_units` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `mobilpay`
+--
+
+DROP TABLE IF EXISTS `mobilpay`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `mobilpay` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `uuid` varchar(48) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `hash` mediumtext COLLATE utf8_unicode_ci,
+  `hash_method` varchar(8) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `stamp` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `mobilpay`
+--
+
+LOCK TABLES `mobilpay` WRITE;
+/*!40000 ALTER TABLE `mobilpay` DISABLE KEYS */;
+/*!40000 ALTER TABLE `mobilpay` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2016-08-05 11:21:57

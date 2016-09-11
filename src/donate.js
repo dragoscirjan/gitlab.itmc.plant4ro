@@ -38,6 +38,8 @@ export class Component extends ViewModelAbstract {
      */
     heading = 'Planteaza!';
 
+    morePaymentOptions = true;
+
     /**
      * To save to database model
      * @type {Object}
@@ -54,7 +56,8 @@ export class Component extends ViewModelAbstract {
 
         donation: {
             method: 'mobilpay',
-            exchange: 0
+            exchange: 0,
+            exchnageUSD: 0
             // currency: 'RON' // can be RON | EUR ; not needed because we can diferentiate currency by method
 
         }
@@ -227,7 +230,7 @@ export class Component extends ViewModelAbstract {
                             });
                             resolve(pos);
                         },
-                        url: `http://maps.googleapis.com/maps/api/geocode/xml?latlng=${position.coords.latitude},${position.coords.longitude}&sensor=true&l=ro`
+                        url: `//maps.googleapis.com/maps/api/geocode/xml?latlng=${position.coords.latitude},${position.coords.longitude}&sensor=true&l=ro`
                     });
                 }, () => {
                     reject();
@@ -294,8 +297,10 @@ export class Component extends ViewModelAbstract {
             .then((data) => {
                 self.logger.debug('Exchange rates obtained:', data);
                 if (!data.error) {
-                    self.model.donation.exchange = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
-                    self.logger.debug('Exchange rates obtained EUR:', self.model.donation.exchange);
+                    self.model.donation.exchangeEur = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'EUR'; })[0]['#text'];
+                    self.logger.debug('Exchange rates obtained EUR:', self.model.donation.exchangeEur);
+                    self.model.donation.exchangeUsd = data.exchange.DataSet.Body.Cube.Rate.filter(v => { return v['-currency'] === 'USD'; })[0]['#text'];
+                    self.logger.debug('Exchange rates obtained USD:', self.model.donation.exchangeUsd);
                 }
             });
     }
@@ -346,7 +351,8 @@ export class Component extends ViewModelAbstract {
             recaptcha: recaptcahaResponse
         });
         model.donation.total = model.trees * this.treePrice;
-        model.donation.totalEur = Math.floor(model.donation.total / this.model.donation.exchange * 100) / 100;
+        model.donation.totalEur = Math.floor(model.donation.total / this.model.donation.exchangeEur * 100) / 100;
+        model.donation.totalUsd = Math.floor(model.donation.total / this.model.donation.exchangeUsd * 100) / 100;
         return model;
     }
 
@@ -590,6 +596,8 @@ export class Component extends ViewModelAbstract {
                         });
                     break;
                 case 'braintree':
+                case 'braintree-usd':
+                case 'braintree-eur':
                     promise = this.paymentWithBraintreeInit()
                         .catch((reason) => {
                             $('#braintree-modal').modal('hide');

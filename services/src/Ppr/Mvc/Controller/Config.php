@@ -18,6 +18,7 @@ class Config {
      * @return Response
      */
     public function configJs(Application $app, Request $request) {
+
         ob_start();
 ?>
 /**
@@ -65,7 +66,7 @@ export class AppConfig {
                         'X-Requested-With': 'AureliaAPI'
                     }
                 });
-            console.log(config);
+            // console.log(config);
         });
         return http;
     }
@@ -87,13 +88,13 @@ export class AppConfig {
      * @return {String}
      */
     encode(obj) {
-<?php if ($app->getEnv() == Application::ENV_DEVELOP
+<?php /*if ($app->getEnv() == Application::ENV_DEVELOP
             || $app->getEnv() == Application::ENV_TESTING
-) : ?>
+) : /**/?>
         return JSON.stringify(obj);
-<?php else: ?>
+<?php /*else: ?>
         return btoa(JSON.stringify(obj));
-<?php endif; ?>
+<?php endif; /**/?>
     }
 
     /**
@@ -103,16 +104,19 @@ export class AppConfig {
      * @return {Object}
      */
     decode(str) {
-<?php if ($app->getEnv() == Application::ENV_DEVELOP
+<?php /*if ($app->getEnv() == Application::ENV_DEVELOP
             || $app->getEnv() == Application::ENV_TESTING
-) : ?>
+) : /**/?>
         return JSON.parse(str);
-<?php else: ?>
+<?php /*else: ?>
         return JSON.parse(atob(str));
-<?php endif; ?>
+<?php endif; /**/?>
     }
 }
 <?php
+
+        $app->getLogger()->warn('New config was generated for environment' . $app->getEnv());
+
         return new Response(
             ob_get_clean(),
             Response::HTTP_OK,

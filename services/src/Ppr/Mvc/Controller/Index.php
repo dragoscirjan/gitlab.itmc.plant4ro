@@ -33,7 +33,7 @@ class Index {
                 'error' => 'Failed grabbing tree count',
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString(),
-            ));
+            ), $app);
         }
     }
 
@@ -47,7 +47,7 @@ class Index {
         try {
             $list = [];
             $donations = $app->getEm()
-                ->createQuery('SELECT d FROM \Ppr\Mvc\Model\Donation d WHERE d.status = ?1 OR d.status = ?2 ORDER BY d.id DESC')
+                ->createQuery('SELECT d FROM \Ppr\Mvc\Model\Donation d WHERE d.donation != 0 AND (d.status = ?1 OR d.status = ?2) ORDER BY d.id DESC')
                 ->setParameter(1, Model\Donation::STATUS_COMPLETED)
                 ->setParameter(2, Model\Donation::STATUS_EMAILED)
                 ->setMaxResults(20)
