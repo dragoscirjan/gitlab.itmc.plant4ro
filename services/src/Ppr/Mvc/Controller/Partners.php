@@ -87,6 +87,7 @@ class Partners {
                 ->createQuery('SELECT d.name, d.company, d.location, SUM(do.trees) as strees 
 FROM \Ppr\Mvc\Model\Donation do
 JOIN do.donator d
+WHERE do.status > 10
 GROUP BY do.donator
 HAVING strees != 0 
 ORDER BY do.id DESC')
