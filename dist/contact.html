@@ -1,0 +1,72 @@
+
+<template>
+  <section class.bind="'au-animate ' + routeConfig.name">
+    <div class="container">
+      <h1 class="page-title">${heading}</h1>
+      <p class="text-center">Vrei sa contribui si tu la <a href="http://www.prieteniipadurilor.ro">protejarea, conservarea, refacerea si dezvoltarea padurilor din Romania</a>? <strong>Contacteaza-ne!</strong></p>
+      <form id="contactForm" action="" submit.delegate="sendEmail()" class="form--contact"><span>Buna, numele meu este</span>
+        <div class="form-group--inline form-wrap">
+          <input id="name" type="text" placeholder="(Adauga nume) *" value.bind="model.name" required="" data-parsley-minlength="3" class="form-control"/>
+        </div><span>si ma puteti contacta la adresa de email</span>
+        <div class="form-group--inline form-wrap">
+          <input id="email" type="email" placeholder="(Adauga adresa de email) *" value.bind="model.email" required="" data-parsley-type="email" class="form-control"/>
+        </div><br/><span>Fac parte din compania/institutia</span>
+        <div class="form-group--inline form-wrap">
+          <input id="company" type="text" placeholder="(Adauga numele companiei)" value.bind="model.company" class="form-control"/>
+        </div><span>cu codul fiscal</span>
+        <div class="form-group--inline form-wrap">
+          <input id="fiscal" type="text" placeholder="(Adauga cod fiscal)" value.bind="model.vat" required.bind="mode.company.trim()" data-parsley-pattern.bind="mode.company.trim() ? '(RO)?\\d{}' : '.*'" class="form-control"/>
+        </div><br/><span>si va contactez in legatura cu</span>
+        <div class="form-group form-wrap">
+          <input id="subject" type="text" placeholder="(Adauga subiectul mesajului) *" value.bind="model.subject" required="" class="form-control text-center"/>
+        </div><br/>
+        <div class="form-group h-margin-bottom-40 form-wrap">
+          <textarea id="message" placeholder="Mesajul meu: *" value.bind="model.message" required="" class="form-control"></textarea>
+        </div>
+        <div class="form-group h-margin-bottom-40 form-wrap">
+          <recaptcha sitekey="6LcY4xgTAAAAAMeib0PTHPWykIbArxuMUuMTknt4" theme="light" callback="toggleRecaptchaValidate" class="recaptcha recaptcha--center"></recaptcha>
+          <input id="rc" type="checkbox" name="rc" checked.bind="model.notRobot" required="" class="sr-only"/>
+        </div>
+        <div class="form-group form-wrap text-center">
+          <button type="submit" class="btn btn--secondary">Contacteaza-ne</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <div id="message-box-success" tabindex="-1" role="dialog" class="modal modal-msg fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-icon"><i class="fa fa-info-circle"></i></div>
+          <div class="modal-body-content">
+            <p>Mesajul tau a fost transmis. Un reprezentant al Asociatiei Prietenii padurilor te va contacta cat mai curand.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" class="btn btn--sm btn--neutral">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="message-box-error" tabindex="-1" role="dialog" class="modal modal-msg fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-icon"><i class="fa fa-exclamation-triangle"></i></div>
+          <div class="modal-body-content">
+            <p>Nu am putut transmite mesajul. Va rugram sa ne scrieti pe adresa de mail <a href="mailto:office@prieteniipadurilor.ro">office@prieteniipadurilor.ro</a></p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" class="btn btn--sm btn--neutral">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

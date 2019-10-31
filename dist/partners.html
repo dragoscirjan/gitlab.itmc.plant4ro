@@ -1,0 +1,121 @@
+
+<template>
+  <require from="./lib/value-converters/array/filterOnProperty"></require>
+  <require from="./lib/value-converters/array/slice"></require>
+  <section class="au-animate">
+    <div class="container">
+      <h1 class="page-title">${heading}</h1>
+      <p>
+        Multumim public partenerilor nostri alaturi de care am plantat, in data de 1 Aprilie 2016, 1 milion de puieti 
+        intr-o singura zi, ducand Romania pe locul doi in lume la acest capitol!
+      </p>
+      <p>
+        In 2017 ne propunem sa transformam  Romania in “Campioana Mondiala la Plantat”, obiectiv pentru care va trebui 
+        sa plantam mai mult de 1,2 milioane de puieti intr-o singura zi! 
+      </p>
+      <p>Partenerii proiectului “Planteaza Pentru Romania” editia 1, 2016 sunt:</p>
+      <div class="tabs">
+        <ul role="tablist" class="nav nav-tabs">
+          <li role="presentation" class="active"><a href="#forestryUnits" role="tab" aria-controls="forestryUnits" data-toggle="tab">Ocoale Silvice</a></li>
+          <li role="presentation"><a href="#institutions" role="tab" aria-controls="institutions" data-toggle="tab">Institutii</a></li>
+          <li role="presentation"><a href="#companies" role="tab" aria-controls="companies" data-toggle="tab">Companii</a></li>
+          <li role="presentation"><a href="#donators" role="tab" aria-controls="donators" data-toggle="tab">Donatori</a></li>
+        </ul>
+      </div>
+      <div class="tab-content">
+        <div id="forestryUnits" role="tabpanel" class="tab-pane active">
+          <div class="row l-flex l-flex--lrg">
+            <div repeat.for="item of forestryUnits | slice:0:9" class="col-sm-4 l-flex">
+              <div class="box box--partners-l1">
+                <div class.bind="item.logo ? '' : 'hide'" class="box__img"><img src="${item.logo}" alt=""/>
+                </div>
+                <div class.bind="item.logo ? 'hide' : ''" class="box__text">
+                  <h3 class="box__title">
+                     
+                    ${item.unitName}
+                  </h3>
+                  <p>a plantat ${item.treesSum} de puieti in 2016/04</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row l-flex l-flex--lrg">
+            <div repeat.for="item of forestryUnits | slice:9" class="col-sm-3 l-flex">
+              <div class="box box--partners-l1">
+                <div class.bind="item.logo ? '' : 'hide'" class="box__img"><a href="${item.url}" target="_blank"><img src="${item.logo}" alt=""/></a></div>
+                <div class.bind="item.logo ? 'hide' : ''" class="box__text">
+                  <h4 class="box__title"> <a href="${item.url}" target="_blank">${item.unitName}</a></h4>
+                  <p>${item.treesSum}  in 2016/04</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="institutions" role="tabpanel" class="tab-pane">
+          <div class="row l-flex l-flex--lrg">
+            <div repeat.for="item of institutions | slice:0:9" class="col-sm-4 l-flex">
+              <div class="box box--partners-l1">
+                <div class.bind="item.logo ? '' : 'hide'" class="box__img"><a href="${item.url}" target="_blank"><img src="${item.logo}" alt=""/></a></div>
+                <div class.bind="item.logo ? 'hide' : ''" class="box__text">
+                  <h3 class="box__title"> <a href="${item.url}" target="_blank">${item.name}</a></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row l-flex l-flex--lrg">
+            <div repeat.for="item of institutions | slice:9" class="col-sm-4 l-flex">
+              <div class="box box--partners-l1">
+                <div class.bind="item.logo ? '' : 'hide'" class="box__img"><a href="${item.url}" target="_blank"><img src="${item.logo}" alt=""/></a></div>
+                <div class.bind="item.logo ? 'hide' : ''" class="box__text">
+                  <h4 class="box__title"> <a href="${item.url}" target="_blank">${item.name}</a></h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="companies" role="tabpanel" class="tab-pane">
+          <div class="row l-flex l-flex--lrg">
+            <div repeat.for="item of companies | slice:0:9" class="col-sm-4 l-flex">
+              <div class="box box--partners-l1">
+                <div class.bind="item.logo ? '' : 'hide'" class="box__img"><a href="${item.url}" target="_blank"><img src="/dist/assets/img/partners/${item.logo}" alt=""/></a></div>
+                <div class.bind="item.logo ? 'hide' : ''" class="box__text">
+                  <h3 class="box__title"> <a href="${item.url}" target="_blank">${item.name}</a></h3>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row l-flex l-flex--lrg">
+            <div repeat.for="item of companies | slice:9" class="col-sm-4 l-flex">
+              <div class="box box--partners-l1">
+                <div class.bind="item.logo ? '' : 'hide'" class="box__img"><a href="${item.url}" target="_blank"><img src="${item.logo}" alt=""/></a></div>
+                <div class.bind="item.logo ? 'hide' : ''" class="box__text">
+                  <h3 class="box__title">${item.name}</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="donators" role="tabpanel" class="tab-pane">
+          <div class="row l-flex l-flex--lrg">
+            <div repeat.for="item of donators | slice:0:9" class="col-sm-4 l-flex">
+              <div class="box box--partners-l1">
+                <div class.bind="item.logo ? 'hide' : ''" class="box__text">
+                  <h3 class="box__title">${item.name}</h3><span>${item.town}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row l-flex l-flex--lrg">
+            <div repeat.for="item of donators | slice:9" class="col-sm-4 l-flex">
+              <div class="box box--partners-l1">
+                <div class.bind="item.logo ? 'hide' : ''" class="box__text">
+                  <h3 class="box__title">${item.name}</h3><span>${item.town}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>

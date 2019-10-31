@@ -1,0 +1,69 @@
+
+<template>
+  <require from="../3rdpt/owl.carousel/owl-carousel/owl.carousel.min.js"></require>
+  <div id="content">
+    <div class.bind="'au-animate ' + routeConfig.name" class="l-content-wrap au-animate">
+      <div id="owlCarouselHPImg" class="owl-carousel--hp-img">
+        <div class="owl-carousel__slide">
+          <div style="background-image: url('/dist/assets/img/slider/img1.jpg')" class="owl-carousel__img"></div>
+        </div>
+        <div class="owl-carousel__slide">
+          <div style="background-image: url('/dist/assets/img/slider/img2.jpg')" class="owl-carousel__img"></div>
+        </div>
+        <div class="owl-carousel__slide">
+          <div style="background-image: url('/dist/assets/img/slider/img3.jpg')" class="owl-carousel__img"></div>
+        </div>
+        <div class="owl-carousel__slide">
+          <div style="background-image: url('/dist/assets/img/slider/img4.jpg')" class="owl-carousel__img"></div>
+        </div>
+        <div class="owl-carousel__slide">
+          <div style="background-image: url('/dist/assets/img/slider/img5.jpg')" class="owl-carousel__img"></div>
+        </div>
+      </div>
+      <div id="donation" class.bind="toggleDonatorsActive ? 'is-donation-open' : ''" class="donation">
+        <div class="donation__shadow"></div>
+        <div class="donation__btn-wrap">
+          <button id="donationToggler" type="button" click.trigger="toggleDonators()" class="donation__btn"><i class="fa fa-search"></i></button>
+        </div><span class="donation__title">Puieti plantati pe 1 Aprilie 2016</span><span id="donationAmount" class="donation__amount">1.000.307</span>
+        <div class="donation__toggle">
+          <button id="donationClose" type="button" click.trigger="toggleDonators()" class="donation__close">&times;</button>
+          <div class="donation__wrap">
+            <div class="donation__side-title">
+              <div class="donation__rotate">Donatori</div>
+            </div>
+            <ul id="donationList" class="donation__list"></ul>
+          </div>
+        </div>
+      </div>
+      <div class="container container--hp">
+        <div class="l-flex l-flex--lrg l-flex--vcenter row">
+          <div class="l-flex__item col-xs-12 col-sm-6">
+            <div id="owlCarouselHPTxt" class="owl-carousel owl-carousel--hp-txt">
+              <div data-img="/dist/assets/img/slider/img1.jpg" class="owl-carousel__slide">
+                <div class="owl-carousel__caption"><strong>Pădurile României</strong> reprezintă cea mai importantă <strong>resursă naturală regenerabilă</strong> a tarii</div>
+              </div>
+              <div data-img="/dist/assets/img/slider/img2.jpg" class="owl-carousel__slide">
+                <div class="owl-carousel__caption">Până în prezent, am distrus ca specie <strong>50%</strong> din pădurile lumii iar ca popor am redus suprafata impadurita a tarii de la <strong>80%</strong> la <strong>27%</strong></div>
+              </div>
+              <div data-img="/dist/assets/img/slider/img3.jpg" class="owl-carousel__slide">
+                <div class="owl-carousel__caption">Odata cu distrugerea padurilor pierdem si sansa de a trai intr-o lume mai buna si mai sigura alaturi de copii nostri</div>
+              </div>
+              <div data-img="/dist/assets/img/slider/img4.jpg" class="owl-carousel__slide">
+                <div class="owl-carousel__caption">De existența și starea pădurilor depinde viața noastra ca indivizi, popor si specie dar si viata a mii de specii de animale, insecte și plante.</div>
+              </div>
+              <div data-img="/dist/assets/img/slider/img5.jpg" class="owl-carousel__slide">
+                <div class="owl-carousel__caption">O lume mai bună poate incepe <strong>aici</strong> si acum, cu tine! Fii si tu <strong>Prietenul Padurilor</strong> din România!</div>
+              </div>
+            </div>
+          </div>
+          <div class="l-flex__item col-xs-12 col-sm-6"><a href="/#/planteaza" class="btn btn--secondary h-pull-right-lrg">Planteaza pentru România</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="flag flag--ro flag--diploma">
+      <div class="flag__colour"></div>
+      <div class="flag__colour"></div>
+      <div class="flag__colour"></div>
+    </div>
+  </div>
+</template>

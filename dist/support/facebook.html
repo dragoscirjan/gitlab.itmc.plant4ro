@@ -1,0 +1,72 @@
+
+<template>
+  <require from="../../assets/plugins/owl.carousel/owl-carousel/owl.carousel.min.js"></require>
+  <section class.bind="'au-animate ' + routeConfig.name">
+    <div class="container">
+      <h1 class="page-title">${heading}</h1>
+      <p> <strong>Planteaza pentru Romania </strong> este un proiect 100% transparent prin care donatia ta ajuta la refacerea, protejarea si conservarea padurilor. Salveaza padurile din Romania si doneaza pentru a fi tu cel care decide soarta ecosistemelor forestiere. Fiecarei donatii ii va corespunde un arbore care va fi plantat intr-una din padurile din imprejurimea zonei Brasov.</p>
+      <div class="tabs">
+        <ul role="tablist" class="nav nav-tabs">
+          <li role="presentation" class="active"><a href="#fbProfileImg" role="tab" aria-controls="fbProfileImg" data-toggle="tab">Alege poza de profil</a></li>
+          <li role="presentation"><a href="#fbCoverImg" role="tab" aria-controls="fbCoverImg" data-toggle="tab">Alege cover</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="fbProfileImg" role="tabpanel" class="tab-pane active">
+            <div class="fb-head">
+              <div class="fb-head__wrap">
+                <div class="fb-head__cover">
+                  <div class="fb-head__inner"><img src="dist/assets/img/fb/fb-default-cover-img.jpg" alt="" class="fb-head__cover-img"/></div>
+                  <div class="fb-head__profile">
+                    <div class="fb-head__inner"><img src="dist/assets/img/fb/fb-default-profile-img.jpg" alt="" class="fb-head__profile-img"/>
+                      <div id="owlCarouselFBProfile" class="owl-carousel--fb">
+                        <div class="owl-carousel__slide">
+                          <div class="owl-carousel__img"><img src="dist/assets/img/fb/fb-default-profile-img.jpg" alt=""/></div>
+                        </div>
+                        <div class="owl-carousel__slide">
+                          <div class="owl-carousel__img"><img src="http://placehold.it/170x170" alt=""/></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="owlCarouselFBProfileNav" class="owl-navigation">
+                <div class="owl-prev"><i class="fa fa-angle-left"></i></div>
+                <div class="owl-next"><i class="fa fa-angle-right"></i></div>
+              </div>
+            </div>
+          </div>
+          <div id="fbCoverImg" role="tabpanel" class="tab-pane">
+            <div class="fb-head">
+              <div class="fb-head__wrap">
+                <div class="fb-head__cover">
+                  <div class="fb-head__inner"><img src="dist/assets/img/fb/fb-default-cover-img.jpg" alt="" class="fb-head__cover-img"/>
+                    <div id="owlCarouselFBCover" class="owl-carousel--fb">
+                      <div class="owl-carousel__slide">
+                        <div class="owl-carousel__img"><img src="dist/assets/img/fb/fb-default-cover-img.jpg" alt=""/></div>
+                      </div>
+                      <div class="owl-carousel__slide">
+                        <div class="owl-carousel__img"><img src="http://placehold.it/850x314" alt=""/></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="fb-head__profile">
+                    <div class="fb-head__inner"><img src="dist/assets/img/fb/fb-default-profile-img.jpg" alt="" class="fb-head__profile-img"/></div>
+                  </div>
+                </div>
+              </div>
+              <div id="owlCarouselFBCoverNav" class="owl-navigation">
+                <div class="owl-prev"><i class="fa fa-angle-left"></i></div>
+                <div class="owl-next"><i class="fa fa-angle-right"></i></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div role="alert" if.bind="!fbIsLoggedIn" class="alert-facebook-auth text-center">
+        <button id="facebook-login" click.delegate="fbLogin()" class="btn btn--tertiary"><i class="fa fa-facebook"></i>Autentifica-te</button>
+      </div>
+      
+    </div>
+  </section>
+</template>

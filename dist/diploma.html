@@ -1,0 +1,77 @@
+
+<template>
+  <section class.bind="'au-animate ' + routeConfig.name">
+    <div class="container">
+      <h1 class="page-title">${heading}</h1>
+      <p>Iti multumim pentru donatia facuta. Copacelul la plantarea caruia tu ai contribuit astazi va creste mare si va avea grija de planeta ta. </p>
+      <div id="diploma" class="certificate">
+        <div class="certificate__inner">
+          <div class="certificate__logo"><img src="/dist/assets/img/logo.png" alt=""/></div>
+          <h3 class="certificate__title">Diploma</h3>
+          <div class="certificate__content"><span>Se acorda titlul de <strong>"Prieten(a) al Padurilor din Romania"</strong> companiei/persoanei</span>
+            <div class="form-group"><span class="certificate__input form-control form-control--full text-center">${donation.donator.company || donation.donator.name}</span></div><span>Pentru ca a sustinut proiectul <strong>"Planteaza pentru Romania"</strong> editia nr. 1 din 2016 adoptand</span>
+            <div class="form-group form-group--inline"><span class="certificate__input form-control text-center">${donation.trees}</span></div><span>puieti.</span>
+            <p>*Suma primita de la oricine o impartim la 5 RON care este unitatea standard de masura a implicarii financiare in cadrul acestui proiect (cu fiecare 5 RON sponsorii sau donatorii adopta un arbore).</p>
+          </div>
+          <div class="certificate__footer">
+            <div class="l-flex l-flex--vcenter">
+              <div class="l-flex__item">
+                <div class="stamp"><span class="stamp__text">Editia</span><span class="stamp__number">1</span></div>
+              </div>
+              <div class="l-flex__item">
+                <div class="certificate__signature"><span><strong>Prietenii Padurilor din Romania</strong></span><br/><span>Presedinte<br/>ing. silvic Florin Nan</span><br/>
+                  <div class="form-group form-group--inline"><span class="certificate__input form-control text-right"></span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="flag flag--ro flag--diploma">
+          <div class="flag__colour"></div>
+          <div class="flag__colour"></div>
+          <div class="flag__colour"></div>
+        </div>
+      </div>
+      <div class="text-center btn__group">
+        <button click.delegate="pdfMail()" class="btn btn--sm btn--secondary">Trimite pe mail</button>
+        <button click.delegate="pdfDownload()" class="btn btn--sm btn--secondary">Descarca PDF</button>
+      </div>
+    </div>
+  </section>
+  <div id="message-box-success" tabindex="-1" role="dialog" class="modal modal-msg fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-icon"><i class="fa fa-info-circle"></i></div>
+          <div class="modal-body-content">
+            <p>Diploma dumneavoastra a fost trimisa pe mail cu succes.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" class="btn btn--sm btn--neutral">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="message-box-error" tabindex="-1" role="dialog" class="modal modal-msg fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" data-dismiss="modal" aria-label="Close" class="close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="modal-icon"><i class="fa fa-exclamation-triangle"></i></div>
+          <div class="modal-body-content">
+            <p>Nu am putut trimite diploma pe mail. Va rugam sa ne <a href="/#/contact">contactati </a>in aceasta privinta.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button data-dismiss="modal" class="btn btn--sm btn--neutral">OK</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
